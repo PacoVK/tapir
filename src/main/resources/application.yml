@@ -1,0 +1,26 @@
+registry:
+  search:
+    backend: elasticsearch
+  storage:
+    backend: s3
+
+bucket:
+  name: tf-registry
+
+quarkus:
+  s3:
+    endpoint-override: http://localhost:4566
+    aws:
+      region: eu-central-1
+  elasticsearch:
+    hosts: localhost:9200
+
+
+"%dev":
+   quarkus:
+     http:
+       cors: true
+       ssl:
+         certificate:
+           files: "./dev/certs/cert.pem"
+           key-files: "./dev/certs/key.pem"
