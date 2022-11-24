@@ -27,10 +27,10 @@ public class UploadService {
   public void uploadModule(FormData archive) throws Exception {
     Module module = archive.getModule();
     storageService.uploadModule(archive);
-    searchService.ingestModuleMetaData(module);
+    searchService.ingestModuleData(module);
     File tmpArchiveFile = fileService.createTempModuleArchiveFile(archive.getModule());
     fileService.flushArchiveToFile(archive.getPayload(), tmpArchiveFile);
     archive.setCompressedModule(tmpArchiveFile);
-    eventBus.requestAndForget("module.upload", archive);
+    eventBus.requestAndForget("module.upload.finished", archive);
   }
 }

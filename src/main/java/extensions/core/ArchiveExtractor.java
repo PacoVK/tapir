@@ -23,17 +23,17 @@ public class ArchiveExtractor {
   FileService fileService;
   EventBus eventBus;
 
-  @ConsumeEvent("module.upload")
+  @ConsumeEvent("module.upload.finished")
   public void unpackArchive(FormData archive) {
     LOGGER.info(String.format("Start to unpack module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
     File tmpArchiveFile = archive.getCompressedModule();
     Path tmpDirectory = tmpArchiveFile.toPath().getParent();
     fileService.unpackArchive(tmpArchiveFile, tmpDirectory);
-    eventBus.requestAndForget("module.scan", archive);
+    eventBus.requestAndForget("module.extract.finished", archive);
   }
 
-  @ConsumeEvent("publish.result")
-  public void cleanUp(FormData archive) throws IOException {
+  @ConsumeEvent("module.processing.finished")
+  public void cleanUp(FormData  archive) throws IOException {
     LOGGER.info(String.format("Clean up temporary module files for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
     fileService.deleteAllFilesInDirectory(archive.getCompressedModule().getParentFile());
     LOGGER.info(String.format("Clean up successful for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));

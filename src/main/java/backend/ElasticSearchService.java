@@ -2,6 +2,7 @@ package backend;
 
 import core.service.backend.SearchService;
 import core.service.upload.FormData;
+import extensions.security.core.SastReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -29,7 +30,7 @@ public class ElasticSearchService extends SearchService {
   }
 
   @Override
-  public void ingestModuleMetaData(Module module) throws IOException {
+  public void ingestModuleData(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
             String.format("/modules/_update/%s-%s-%s",module.getNamespace(), module.getName(), module.getProvider())
@@ -47,18 +48,17 @@ public class ElasticSearchService extends SearchService {
   }
 
   @Override
-  public void updateSecurityScanResult(FormData archive) throws Exception {
-    Module module = archive.getModule();
+  public void ingestSecurityScanResult(SastReport sastReport) throws Exception {
+    String targetIndexName = String.format("%s-%s-reports",sastReport.getModuleNamespace(), sastReport.getModuleName());
+    createIndexIfNotExists(targetIndexName);
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/modules/_update/%s-%s-%s",module.getNamespace(), module.getName(), module.getProvider())
-    );
-    String payload = JsonObject.of("doc", JsonObject.of(
-            "reports", JsonObject.of(
-                    "security", module.getScanResults()
+            String.format("/%s/_doc/sast-report-%s",
+                    targetIndexName,
+                    sastReport.getModuleVersion()
             )
-    )).toString();
-    request.setJsonEntity(payload);
+    );
+    request.setJsonEntity(JsonObject.mapFrom(sastReport).toString());
     restClient.performRequest(request);
   }
 
@@ -119,5 +119,14 @@ public class ElasticSearchService extends SearchService {
     JsonObject json = new JsonObject(responseBody);
     return json.getJsonObject("_source").mapTo(Module.class);
   }
+
+  private void  createIndexIfNotExists(String indexName) throws IOException {
+    Integer statusCode = restClient.performRequest(
+            new Request(HttpMethod.HEAD, String.format("/%s", indexName))
+    ).getStatusLine().getStatusCode();
+    if(!statusCode.equals(200)){
+      Request request = new Request(HttpMethod.PUT, String.format("/%s", indexName));
+      restClient.performRequest(request);
+    }
+  }
 }
-//versions als list speichern

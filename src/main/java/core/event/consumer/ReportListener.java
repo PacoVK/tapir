@@ -1,7 +1,7 @@
 package core.event.consumer;
 
 import core.service.backend.SearchService;
-import core.service.upload.FormData;
+import extensions.security.core.SastReport;
 import io.quarkus.vertx.ConsumeEvent;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,9 +19,9 @@ public class ReportListener {
     this.searchService = searchServiceInstance.get();
   }
 
-  @ConsumeEvent("publish.result")
-  public void handleSecurityReportUpdate(FormData archive) throws Exception {
-    LOGGER.info(String.format("Publishing scan result for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
-    searchService.updateSecurityScanResult(archive);
+  @ConsumeEvent("module.report.finished")
+  public void handleSecurityReportUpdate(SastReport sastReport) throws Exception {
+    LOGGER.info(String.format("Publishing scan result for module %s, version %s", sastReport.getModuleName(), sastReport.getModuleVersion()));
+    searchService.ingestSecurityScanResult(sastReport);
   }
 }

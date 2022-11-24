@@ -1,6 +1,7 @@
-package extensions.security;
+package extensions.security.scanner;
 
 import core.service.upload.FormData;
+import extensions.security.core.SastReport;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mutiny.core.eventbus.EventBus;
@@ -23,9 +24,10 @@ public class TrivyScanner {
     this.eventBus = eventBus;
   }
 
-  @ConsumeEvent("module.scan")
+  @ConsumeEvent("module.extract.finished")
   public void scanModule(FormData archive) {
     LOGGER.info(String.format("Starting scan for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
+
     ProcessBuilder builder = new ProcessBuilder();
     builder.command("sh", "-c", "trivy config -f json .");
     builder.directory(archive.getCompressedModule().getParentFile());
@@ -38,12 +40,18 @@ public class TrivyScanner {
       int exitCode = process.waitFor();
       assert exitCode == 0;
       future.get(10, TimeUnit.SECONDS);
-      archive.getModule().setScanResults(Map.of(archive.getModule().getCurrentVersion(), new JsonObject(responseStrBuilder.toString())));
+      SastReport sastReport = new SastReport(
+              archive.getModule().getName(),
+              archive.getModule().getCurrentVersion(),
+              archive.getModule().getNamespace(),
+              new JsonObject(responseStrBuilder.toString())
+      );
+      eventBus.requestAndForget("module.report.finished", sastReport);
     } catch (IOException | ExecutionException | InterruptedException | TimeoutException e) {
       throw new RuntimeException(e);
     }
     LOGGER.info(String.format("Finished scan for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
-    eventBus.publish("publish.result", archive);
+    eventBus.requestAndForget("module.processing.finished", archive);
   }
 
   private record CommandOutputConsumer(InputStream inputStream, Consumer<String> consumer) implements Runnable {
