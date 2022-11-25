@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.vertx.core.json.JsonObject;
 
+import java.time.Instant;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,19 +25,19 @@ public class Module {
     this.namespace = namespace;
     this.name = name;
     this.provider = provider;
-    this.versions = List.of(new ModuleVersion(version));
+    this.versions = new LinkedList<>(List.of(new ModuleVersion(version)));
   }
 
   private String id;
   private String owner;
   private String namespace;
   private String name;
-  private List<ModuleVersion> versions;
+  private LinkedList<ModuleVersion> versions;
   private String provider;
   private String description;
   private String source;
-  private String published_at;
-  private Integer downloads;
+  private Instant published_at;
+  private Integer downloads = 0;
   private Boolean verified;
   private Map<String, JsonObject> scanResults;
 
@@ -46,7 +48,7 @@ public class Module {
 
   @JsonIgnore
   public String getCurrentVersion(){
-    return versions.get(0).getVersion();
+    return versions.getLast().getVersion();
   }
 
   public Map<String, JsonObject> getScanResults() {
@@ -88,11 +90,11 @@ public class Module {
     this.name = name;
   }
 
-  public List<ModuleVersion> getVersions() {
+  public LinkedList<ModuleVersion> getVersions() {
     return versions;
   }
 
-  public void setVersions(List<ModuleVersion> versions) {
+  public void setVersions(LinkedList<ModuleVersion> versions) {
     this.versions = versions;
   }
 
@@ -120,11 +122,11 @@ public class Module {
     this.source = source;
   }
 
-  public String getPublished_at() {
+  public Instant getPublished_at() {
     return published_at;
   }
 
-  public void setPublished_at(String published_at) {
+  public void setPublished_at(Instant published_at) {
     this.published_at = published_at;
   }
 

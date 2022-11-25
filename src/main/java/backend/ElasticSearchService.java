@@ -41,7 +41,7 @@ public class ElasticSearchService extends SearchService {
                       "ctx._source.versions.add(params.release)" +
                     "}",
             "lang", "painless",
-            "params", JsonObject.of("release", module.getVersions().get(0))
+            "params", JsonObject.of("release", module.getVersions().getLast())
     ), "upsert", module).toString();
     request.setJsonEntity(payload);
     restClient.performRequest(request);
@@ -59,6 +59,20 @@ public class ElasticSearchService extends SearchService {
             )
     );
     request.setJsonEntity(JsonObject.mapFrom(sastReport).toString());
+    restClient.performRequest(request);
+  }
+
+  @Override
+  public void increaseDownloadCounter(Module module) throws IOException {
+    Request request = new Request(
+            HttpMethod.POST,
+            String.format("/modules/_update/%s-%s-%s",module.getNamespace(), module.getName(), module.getProvider())
+    );
+    String payload = JsonObject.of("script", JsonObject.of(
+            "source", "ctx._source.downloads += 1",
+            "lang", "painless"
+    )).toString();
+    request.setJsonEntity(payload);
     restClient.performRequest(request);
   }
 
