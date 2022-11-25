@@ -31,8 +31,8 @@ function App() {
               </Typography>
           </Box>
           <Box>
-              <ModuleElement module={{ name: "bloo", namespace: "barr", provider: Provider.AZURE}} />
-              <ModuleElement module={{ name: "bloo", namespace: "barr", provider: Provider.AWS}} />
+              <ModuleElement module={{ name: "bloo", namespace: "larr", provider: Provider.AZURE, downloads: 100, published_at: "2022-11-25T19:55:58.416445Z", versions: [{version: "1.0.0"}, {version: "1.0.1"}]}} />
+              <ModuleElement module={{ name: "foo", namespace: "barr", provider: Provider.AWS, downloads: 3, published_at: "2022-11-24T11:55:58.416445Z", versions: [{version: "0.0.1"}]}} />
               <button onClick={fet}>tet</button>
           </Box>
       </Container>

@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Paper, Stack} from "@mui/material";
+import {Box, Chip, Paper, Stack} from "@mui/material";
 import awsLogo from "./../../assets/aws-icon.png";
 import gcpLogo from "./../../assets/google-icon.png";
 import azureLogo from "./../../assets/azurerm-icon.png";
@@ -7,6 +7,11 @@ import k8Logo from "./../../assets/kubernetes-icon.png";
 import defaultLogo from "./../../assets/terraform-icon.png";
 import {Module, Provider} from "../../types";
 import Typography from "@mui/material/Typography";
+import DownloadIcon from '@mui/icons-material/Download';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import InfoIcon from '@mui/icons-material/Info';
+
+
 
 const getProviderLogo = (provider: Provider) => {
     switch (provider) {
@@ -45,7 +50,11 @@ const ModuleElement = ({module}: {module: Module}) => {
                         </Typography>
                     </Box>
                 </Stack>
-                <Box style={{backgroundColor: "yellow"}}>t</Box>
+                <Box>
+                    <Chip icon={<DownloadIcon />} label={`Total downloads: ${module.downloads}`} />
+                    <Chip icon={<InfoIcon />} label={`Latest version: ${module.versions.at(module.versions.length -1)!.version}`} />
+                    <Chip icon={<RocketLaunchIcon />} label={`Last published at: ${module.published_at}`} />
+                </Box>
             </Paper>
         </Box>
     );
