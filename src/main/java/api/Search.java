@@ -1,8 +1,10 @@
-package controller;
+package api;
 
 import core.service.backend.SearchService;
 import core.terraform.Module;
+import io.quarkus.security.Authenticated;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

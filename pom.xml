@@ -13,6 +13,7 @@
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>2.14.1.Final</quarkus.platform.version>
+    <quarkus.quinoa.version>1.2.3</quarkus.quinoa.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
   </properties>
@@ -61,8 +62,17 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-oidc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.quinoa</groupId>
+      <artifactId>quarkus-quinoa</artifactId>
+      <version>${quarkus.quinoa.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -134,16 +144,6 @@
         <skipITs>false</skipITs>
         <quarkus.package.type>native</quarkus.package.type>
       </properties>
-      <build>
-        <resources>
-          <resource>
-            <directory>src/main/resources</directory>
-            <excludes>
-              <exclude>dev/**</exclude>
-            </excludes>
-          </resource>
-        </resources>
-      </build>
     </profile>
   </profiles>
 </project>

@@ -1,4 +1,4 @@
-package aws.storage;
+package storage.aws;
 
 import core.service.upload.FormData;
 import core.service.storage.StorageService;

@@ -1,12 +1,15 @@
-package controller;
+package api;
 
+import core.service.storage.StorageService;
 import core.service.upload.FormData;
 import core.service.upload.UploadService;
 import core.service.backend.SearchService;
 import core.terraform.Module;
-import core.terraform.ModuleVersion;
+import io.quarkus.security.Authenticated;
 import io.vertx.core.json.JsonObject;
+import io.vertx.mutiny.core.eventbus.EventBus;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,19 +19,25 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@Path("/terraform/modules/v1")
 @Produces(MediaType.APPLICATION_JSON)
+@Path("/terraform/modules/v1")
 public class Modules {
 
+  StorageService storageService;
   SearchService searchService;
   UploadService uploadService;
+  EventBus eventBus;
 
   public Modules(
+          Instance<StorageService> storageServiceInstance,
           Instance<SearchService> searchServiceInstance,
-          UploadService uploadService
+          UploadService uploadService,
+          EventBus eventBus
   ) {
+    this.storageService = storageServiceInstance.get();
     this.searchService = searchServiceInstance.get();
     this.uploadService = uploadService;
+    this.eventBus = eventBus;
   }
 
   @GET
@@ -55,7 +64,7 @@ public class Modules {
           @QueryParam("limit")Optional<Integer> limit,
           @QueryParam("provider")Optional<String> provider,
           @QueryParam("verified")Optional<Boolean> verified
-          ){
+  ){
     Module m = new Module();
     m.setName(namespace);
     return Response.ok(m).build();
@@ -79,4 +88,15 @@ public class Modules {
     JsonObject jsonObject = new JsonObject().put("modules", List.of(JsonObject.of("versions", module.getVersions())));
     return Response.ok(jsonObject).build();
   }
+
+  @GET
+  @Path("/{namespace}/{name}/{provider}/{version}/download")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getDownloadUrl(String namespace, String name, String provider, String version){
+    Module module = new Module(namespace, name, provider, version);
+    String downloadUrl = storageService.getDownloadUrlForModule(module);
+    eventBus.requestAndForget("module.download.requested", module);
+    return Response.noContent().header("X-Terraform-Get", downloadUrl).build();
+  }
 }
+

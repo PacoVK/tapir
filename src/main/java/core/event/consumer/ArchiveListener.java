@@ -1,4 +1,4 @@
-package extensions.core;
+package core.event.consumer;
 
 import core.service.upload.FileService;
 import core.service.upload.FormData;
@@ -11,11 +11,11 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 @ApplicationScoped
-public class ArchiveExtractor {
+public class ArchiveListener {
 
-  static final Logger LOGGER = Logger.getLogger(ArchiveExtractor.class.getName());
+  static final Logger LOGGER = Logger.getLogger(ArchiveListener.class.getName());
 
-  public ArchiveExtractor(FileService fileService, EventBus eventBus) {
+  public ArchiveListener(FileService fileService, EventBus eventBus) {
     this.fileService = fileService;
     this.eventBus = eventBus;
   }

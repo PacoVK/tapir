@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -8,6 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import AppRouter from "./components/AppRouter";
 
 
 const root = ReactDOM.createRoot(
@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <Header/>
-        <App />
+        <AppRouter/>
       <Footer/>
   </React.StrictMode>
 );
