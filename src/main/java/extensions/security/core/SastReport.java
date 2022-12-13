@@ -1,25 +1,26 @@
 package extensions.security.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import core.terraform.Module;
-import io.vertx.core.json.JsonObject;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SastReport {
 
   public SastReport() {}
 
-  public SastReport(String moduleName, String moduleVersion, String moduleNamespace, JsonObject report) {
+  public SastReport(String moduleName, String moduleVersion, String moduleNamespace, String provider, Map<String, Object> report) {
     this.moduleName = moduleName;
     this.moduleVersion = moduleVersion;
     this.moduleNamespace = moduleNamespace;
+    this.provider = provider;
     this.report = report;
   }
 
   private String moduleName;
   private String moduleVersion;
   private String moduleNamespace;
-  private JsonObject report;
+  private String provider;
+  private Map<String, Object> report;
 
   public String getModuleName() {
     return moduleName;
@@ -45,11 +46,19 @@ public class SastReport {
     this.moduleNamespace = moduleNamespace;
   }
 
-  public JsonObject getReport() {
+  public Map<String, Object> getReport() {
     return report;
   }
 
-  public void setReport(JsonObject report) {
+  public void setReport(Map<String, Object> report) {
     this.report = report;
+  }
+
+  public String getProvider() {
+    return provider;
+  }
+
+  public void setProvider(String provider) {
+    this.provider = provider;
   }
 }

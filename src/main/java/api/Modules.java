@@ -1,21 +1,19 @@
 package api;
 
+import api.dto.ModulePaginationDto;
 import core.service.storage.StorageService;
 import core.service.upload.FormData;
 import core.service.upload.UploadService;
 import core.service.backend.SearchService;
 import core.terraform.Module;
-import io.quarkus.security.Authenticated;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,13 +43,13 @@ public class Modules {
   public Response listModules(
           @DefaultValue("0")
           @QueryParam("offset") Optional<Integer> offset,
-          @DefaultValue("0")
+          @DefaultValue("10")
           @QueryParam("limit")Optional<Integer> limit,
           @QueryParam("provider")Optional<String> provider,
           @QueryParam("verified")Optional<Boolean> verified
   ) throws Exception {
-    Collection<Module> modules = searchService.getAllModules();
-    return Response.ok(modules).build();
+    ModulePaginationDto modulePaginationDto = searchService.getModulesByRange(offset.get(), limit.get());
+    return Response.ok(modulePaginationDto).build();
   }
 
   @GET
@@ -68,6 +66,14 @@ public class Modules {
     Module m = new Module();
     m.setName(namespace);
     return Response.ok(m).build();
+  }
+
+  @GET
+  @Path("{namespace}/{name}/{provider}")
+  public Response getModuleByName(String namespace, String name, String provider) throws Exception {
+    String moduleName = new StringBuilder(namespace).append("-").append(name).append("-").append(provider).toString();
+    Module module = searchService.getModuleByName(moduleName);
+    return Response.ok(module).build();
   }
 
   @POST

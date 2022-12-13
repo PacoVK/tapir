@@ -1,7 +1,7 @@
 package backend;
 
+import api.dto.ModulePaginationDto;
 import core.service.backend.SearchService;
-import core.service.upload.FormData;
 import extensions.security.core.SastReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonArray;
@@ -17,7 +17,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.HttpMethod;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "elasticsearch")
@@ -53,8 +52,9 @@ public class ElasticSearchService extends SearchService {
     createIndexIfNotExists(targetIndexName);
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/%s/_doc/sast-report-%s",
+            String.format("/%s/_doc/sast-report-%s-%s",
                     targetIndexName,
+                    sastReport.getProvider(),
                     sastReport.getModuleVersion()
             )
     );
@@ -76,6 +76,22 @@ public class ElasticSearchService extends SearchService {
     restClient.performRequest(request);
   }
 
+  @Override
+  public SastReport getReportByModuleVersion(Module module) throws IOException {
+    String reportIndex = String.format("%s-%s-reports", module.getNamespace(), module.getName());
+    String searchPath = new StringBuilder(reportIndex).append("/_doc/").append("sast-report-")
+            .append(module.getProvider())
+            .append("-")
+            .append(module.getCurrentVersion()).toString();
+    Request request = new Request(
+            HttpMethod.GET,
+            searchPath);
+    Response response = restClient.performRequest(request);
+    String responseBody = EntityUtils.toString(response.getEntity());
+    JsonObject json = new JsonObject(responseBody);
+    return json.getJsonObject("_source").mapTo(SastReport.class);
+  }
+
   public void bootstrap() throws IOException {
     Integer statusCode = restClient.performRequest(new Request(HttpMethod.HEAD, "/modules")).getStatusLine().getStatusCode();
     if(statusCode.equals(200)){
@@ -93,22 +109,25 @@ public class ElasticSearchService extends SearchService {
     restClient.performRequest(request);
   }
 
-  public Collection<Module> getAllModules() throws IOException {
+  public ModulePaginationDto getModulesByRange(Integer offset, Integer limit) throws IOException {
     Request request = new Request(
             HttpMethod.GET,
             "/modules/_search"
     );
+    String requestBody = String.format("{\"from\": %s,\"size\": %s}", offset, limit);
+    request.setJsonEntity(requestBody);
     HttpEntity httpEntity = restClient.performRequest(request).getEntity();
     String responseBody = EntityUtils.toString(httpEntity);
-    JsonObject json = new JsonObject(responseBody);
-    JsonArray hits = json.getJsonObject("hits").getJsonArray("hits");
+    JsonObject queryResult = new JsonObject(responseBody).getJsonObject("hits");
+    String totalModuleCount = queryResult.getJsonObject("total").getString("value");
+    JsonArray hits = queryResult.getJsonArray("hits");
     List<Module> results = new ArrayList<>(hits.size());
     for (int i = 0; i < hits.size(); i++) {
       JsonObject hit = hits.getJsonObject(i);
       Module module = hit.getJsonObject("_source").mapTo(Module.class);
       results.add(module);
     }
-    return results;
+    return new ModulePaginationDto(results, Integer.valueOf(totalModuleCount));
   }
 
   public Module getModuleByName(String name) throws IOException {

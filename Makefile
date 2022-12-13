@@ -5,7 +5,7 @@ endef
 export USAGE
 
 certDir := dev/certs
-webAppDir := src/main/webapp
+webAppDir := src/main/webui
 localstackUrl := http://localhost:4566
 
 help:

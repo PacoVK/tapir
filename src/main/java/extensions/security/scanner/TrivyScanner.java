@@ -1,9 +1,9 @@
 package extensions.security.scanner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import core.service.upload.FormData;
 import extensions.security.core.SastReport;
 import io.quarkus.vertx.ConsumeEvent;
-import io.vertx.core.json.JsonObject;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,6 +19,7 @@ public class TrivyScanner {
   static final Logger LOGGER = Logger.getLogger(TrivyScanner.class.getName());
 
   EventBus eventBus;
+  ObjectMapper mapper = new ObjectMapper();
 
   public TrivyScanner(EventBus eventBus) {
     this.eventBus = eventBus;
@@ -44,7 +45,8 @@ public class TrivyScanner {
               archive.getModule().getName(),
               archive.getModule().getCurrentVersion(),
               archive.getModule().getNamespace(),
-              new JsonObject(responseStrBuilder.toString())
+              archive.getModule().getProvider(),
+              mapper.readValue(responseStrBuilder.toString(), Map.class)
       );
       eventBus.requestAndForget("module.report.finished", sastReport);
     } catch (IOException | ExecutionException | InterruptedException | TimeoutException e) {
