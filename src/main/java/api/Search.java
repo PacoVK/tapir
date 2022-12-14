@@ -1,5 +1,6 @@
 package api;
 
+import api.dto.ModulePaginationDto;
 import core.service.backend.SearchService;
 import core.terraform.Module;
 import io.quarkus.security.Authenticated;
@@ -23,22 +24,18 @@ public class Search {
 
   @GET
   public Response searchModule(
-          @QueryParam("q") String query,
           @DefaultValue("0")
           @QueryParam("offset")Optional<Integer> offset,
-          @DefaultValue("0")
+          @DefaultValue("10")
           @QueryParam("limit")Optional<Integer> limit,
-          @QueryParam("provider")Optional<String> provider,
-          @QueryParam("namespace")Optional<String> namespace,
-          @QueryParam("verified")Optional<Boolean> verified
+          @QueryParam("q")Optional<String> query
           ) throws Exception {
-    Module mod = new Module();
-    mod.setName("HelloWorld");
-    if(provider.isPresent()){
-      System.out.println(provider);
+    ModulePaginationDto modulePaginationDto;
+    if(query.isEmpty()){
+      modulePaginationDto = searchService.getModulesByRange(offset.get(), limit.get());
     } else {
-      return Response.ok(searchService.getModuleByName(mod.getName())).build();
+      modulePaginationDto = searchService.getModulesByRangeAndTerm(query.get(), offset.get(), limit.get());
     }
-    return Response.ok().build();
+    return Response.ok(modulePaginationDto).build();
   }
 }

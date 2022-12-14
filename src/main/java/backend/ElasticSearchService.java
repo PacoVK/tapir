@@ -109,13 +109,12 @@ public class ElasticSearchService extends SearchService {
     restClient.performRequest(request);
   }
 
-  public ModulePaginationDto getModulesByRange(Integer offset, Integer limit) throws IOException {
+  ModulePaginationDto getModules(String query) throws IOException {
     Request request = new Request(
             HttpMethod.GET,
             "/modules/_search"
     );
-    String requestBody = String.format("{\"from\": %s,\"size\": %s}", offset, limit);
-    request.setJsonEntity(requestBody);
+    request.setJsonEntity(query);
     HttpEntity httpEntity = restClient.performRequest(request).getEntity();
     String responseBody = EntityUtils.toString(httpEntity);
     JsonObject queryResult = new JsonObject(responseBody).getJsonObject("hits");
@@ -128,6 +127,17 @@ public class ElasticSearchService extends SearchService {
       results.add(module);
     }
     return new ModulePaginationDto(results, Integer.valueOf(totalModuleCount));
+  }
+
+  public ModulePaginationDto getModulesByRange(Integer offset, Integer limit) throws IOException {
+    String query = String.format("{\"from\": %s,\"size\": %s}", offset, limit);
+    return getModules(query);
+  }
+
+  public ModulePaginationDto getModulesByRangeAndTerm(String term, Integer offset, Integer limit) throws IOException {
+    String sanitizedTerm = term.replace("/", " ");
+    String query = String.format("{\"from\": %s,\"size\": %s, \"query\": {\"query_string\": {\"query\": \"*%s*\", \"fields\": [\"name\", \"namespace\", \"provider\"]}}}", offset, limit, sanitizedTerm);
+    return getModules(query);
   }
 
   public Module getModuleByName(String name) throws IOException {

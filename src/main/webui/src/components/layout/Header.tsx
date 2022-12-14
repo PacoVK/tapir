@@ -109,13 +109,6 @@ const Header = () => {
                 {page}
               </Button>
             ))}
-            <MenuItem>
-              <TextField
-                id="outlined-search"
-                label="Search field"
-                type="search"
-              />
-            </MenuItem>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

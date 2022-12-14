@@ -38,7 +38,6 @@ public class Module {
   private String source;
   private Instant published_at;
   private Integer downloads = 0;
-  private Boolean verified;
   private Map<String, JsonObject> scanResults;
 
   @JsonProperty("reports")
@@ -136,14 +135,6 @@ public class Module {
 
   public void setDownloads(Integer downloads) {
     this.downloads = downloads;
-  }
-
-  public Boolean getVerified() {
-    return verified;
-  }
-
-  public void setVerified(Boolean verified) {
-    this.verified = verified;
   }
 
 }

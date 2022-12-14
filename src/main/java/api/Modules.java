@@ -44,28 +44,10 @@ public class Modules {
           @DefaultValue("0")
           @QueryParam("offset") Optional<Integer> offset,
           @DefaultValue("10")
-          @QueryParam("limit")Optional<Integer> limit,
-          @QueryParam("provider")Optional<String> provider,
-          @QueryParam("verified")Optional<Boolean> verified
+          @QueryParam("limit")Optional<Integer> limit
   ) throws Exception {
     ModulePaginationDto modulePaginationDto = searchService.getModulesByRange(offset.get(), limit.get());
     return Response.ok(modulePaginationDto).build();
-  }
-
-  @GET
-  @Path("/{namespace}")
-  public Response listModulesByNameSpace(
-          String namespace,
-          @DefaultValue("0")
-          @QueryParam("offset")Optional<Integer> offset,
-          @DefaultValue("0")
-          @QueryParam("limit")Optional<Integer> limit,
-          @QueryParam("provider")Optional<String> provider,
-          @QueryParam("verified")Optional<Boolean> verified
-  ){
-    Module m = new Module();
-    m.setName(namespace);
-    return Response.ok(m).build();
   }
 
   @GET

@@ -141,6 +141,7 @@ const ModuleDetails = () => {
         {
           // @ts-ignore
           reports && reports.report ? (
+            // @ts-ignore
             reports.report.Results.map((report) => {
               return (
                 <Accordion key={report.Target}>

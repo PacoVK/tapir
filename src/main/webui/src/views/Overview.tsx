@@ -9,39 +9,61 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import ModuleElement from "../components/list/ModuleElement";
 import { Module } from "../types";
+import useDebounce from "../hooks/useDebounce";
 
 const Overview = () => {
   const [modules, setModules] = useState([] as Module[]);
-  const [page, setPage] = React.useState(1);
-  const [totalModulesCount, setTotalModulesCount] = React.useState(0);
-  const [resultPerPage, setResultPerPage] = React.useState("10");
+  const [initializing, isInitializing] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalModulesCount, setTotalModulesCount] = useState(0);
+  const [resultPerPage, setResultPerPage] = useState("10");
+  const [searchString, setSearchString] = useState("");
+  const debouncedSearchTerm = useDebounce(searchString, 500);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
   useEffect(() => {
-    fetchModules();
-  }, [page, resultPerPage]);
+    if (!initializing) {
+      fetchModules(
+        `search?offset=${
+          parseInt(resultPerPage) * (page - 1)
+        }&limit=${resultPerPage}&q=${searchString}`
+      );
+    }
+  }, [debouncedSearchTerm]);
 
-  const handleResultPerPageChange = (event: SelectChangeEvent) => {
-    // @ts-ignore
-    setResultPerPage(event.target.value);
-    setPage(1);
-  };
-
-  const fetchModules = async () => {
-    const response = await fetch(
+  useEffect(() => {
+    fetchModules(
       `terraform/modules/v1?offset=${
         parseInt(resultPerPage) * (page - 1)
       }&limit=${resultPerPage}`
     );
+    isInitializing(false);
+  }, [page, resultPerPage]);
+
+  const handleResultPerPageChange = (event: SelectChangeEvent) => {
+    setResultPerPage(event.target.value);
+    setPage(1);
+  };
+
+  const fetchModules = async (path: string) => {
+    const response = await fetch(path);
     const result = await response.json();
     setModules(result.modules);
     setTotalModulesCount(result.totalModulesCount);
+  };
+
+  const handleSearchInputChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    console.log(event.target.value);
+    setSearchString(event.target.value);
   };
 
   return (
@@ -66,6 +88,13 @@ const Overview = () => {
         </Typography>
       </Box>
       <Stack spacing={2}>
+        <TextField
+          id="module-search"
+          label="Search module"
+          type="search"
+          value={searchString}
+          onChange={handleSearchInputChange}
+        />
         <Stack spacing={4} direction={"row"} alignItems={"center"}>
           <FormControl>
             <InputLabel id="module-version-select-label">
