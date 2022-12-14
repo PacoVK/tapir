@@ -40,8 +40,9 @@ const ModuleDetails = () => {
   }, [version]);
 
   const fetchModule = async () => {
+    const baseUrl = window.location.href.replace(location.pathname, "");
     const response = await fetch(
-      `http://localhost:8080/terraform/modules/v1/${routeParams.namespace}/${routeParams.name}/${routeParams.provider}`
+      `${baseUrl}/terraform/modules/v1/${routeParams.namespace}/${routeParams.name}/${routeParams.provider}`
     );
     const module = await response.json();
     setModule(module);
@@ -58,8 +59,9 @@ const ModuleDetails = () => {
     setVersion(event.target.value);
   };
   const fetchModuleReports = async () => {
+    const baseUrl = window.location.href.replace(location.pathname, "");
     const response = await fetch(
-      `http://localhost:8080/reports/${module.namespace}/${module.name}/${module.provider}/security/${version}`
+      `${baseUrl}/reports/${module.namespace}/${module.name}/${module.provider}/security/${version}`
     );
     const reports = await response.json();
     const misconfigurations = reports.report.Results.map((result: any) => {
