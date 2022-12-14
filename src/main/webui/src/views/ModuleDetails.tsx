@@ -15,7 +15,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Misconfiguration } from "../types";
+import { Misconfiguration, Severity } from "../types";
 import { getProviderLogo } from "../util/LogoUtil";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MisconfigurationItem from "../components/securityReportVisualization/MisconfigurationItem";
@@ -39,7 +39,7 @@ const ModuleDetails = () => {
     }
   }, [version]);
 
-  const fetchModuleVersions = async () => {
+  const fetchModule = async () => {
     const response = await fetch(
       `http://localhost:8080/terraform/modules/v1/${routeParams.namespace}/${routeParams.name}/${routeParams.provider}`
     );
@@ -49,7 +49,7 @@ const ModuleDetails = () => {
   };
 
   const loadingRoutine = () => {
-    fetchModuleVersions();
+    fetchModule();
     return <Typography>Loading...</Typography>;
   };
 
@@ -62,6 +62,14 @@ const ModuleDetails = () => {
       `http://localhost:8080/reports/${module.namespace}/${module.name}/${module.provider}/security/${version}`
     );
     const reports = await response.json();
+    const misconfigurations = reports.report.Results.map((result: any) => {
+      return result.Misconfigurations.sort((sevA: any, sevB: any) => {
+        return Severity[sevA.Severity] <= Severity[sevB.Severity];
+      });
+    });
+    reports.report.Results.forEach((report: any, index: number) => {
+      report.Misconfigurations = misconfigurations[index];
+    });
     setReports(reports);
   };
 
