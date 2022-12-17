@@ -8,15 +8,6 @@ bucket:
   name: tf-registry
 
 quarkus:
-  oidc:
-    auth-server-url: http://localhost:8180/realms/quarkus
-    client-id: frontend
-    application-type: hybrid
-    authorization-path: /protocol/openid-connect/auth
-    token-path: /protocol/openid-connect/token
-    authentication:
-      pkce-required: true
-      pkce-secret: EithiYu4aid6shai4Iu2aiNgiefor3Ee
   quinoa:
     enable-spa-routing: true
   s3:
@@ -25,15 +16,6 @@ quarkus:
   elasticsearch:
     hosts: localhost:9200
   http:
-    auth:
-      permission:
-        discovery:
-          paths: /.well-known/*
-          policy: permit
-          methods: GET,HEAD
-        authenticated:
-          paths: /*
-          policy: authenticated
     filter:
       others:
         header:
@@ -51,6 +33,8 @@ quarkus:
 
 "%dev":
    quarkus:
+     dynamodb:
+       endpoint-override: http://localhost:4566
      s3:
       endpoint-override: http://localhost:4566
      quinoa:

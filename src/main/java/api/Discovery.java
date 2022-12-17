@@ -1,8 +1,6 @@
 package api;
 
-import core.terraform.Login;
 import core.terraform.api.ServiceDiscovery;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
