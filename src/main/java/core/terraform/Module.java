@@ -2,13 +2,10 @@ package core.terraform;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.vertx.core.json.JsonObject;
 
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Module {
@@ -19,6 +16,7 @@ public class Module {
     this.namespace = namespace;
     this.name = name;
     this.provider = provider;
+    setId(computeId());
   }
 
   public Module(String namespace, String name, String provider, String version) {
@@ -26,51 +24,31 @@ public class Module {
     this.name = name;
     this.provider = provider;
     this.versions = new LinkedList<>(List.of(new ModuleVersion(version)));
+    setId(computeId());
   }
 
   private String id;
-  private String owner;
   private String namespace;
   private String name;
   private LinkedList<ModuleVersion> versions;
   private String provider;
-  private String description;
-  private String source;
   private Instant published_at;
   private Integer downloads = 0;
-  private Map<String, JsonObject> scanResults;
-
-  @JsonProperty("reports")
-  private void unpackNestedReports(Map<String,Map<String,JsonObject>> brand) {
-    this.scanResults = brand.get("security");
-  }
 
   @JsonIgnore
   public String getCurrentVersion(){
     return versions.getLast().getVersion();
   }
 
-  public Map<String, JsonObject> getScanResults() {
-    return scanResults;
+  private String computeId(){
+    return String.format("%s-%s-%s", getNamespace(), getName(), getProvider());
   }
-  public void setScanResults(Map<String, JsonObject> scanResults) {
-    this.scanResults = scanResults;
-  }
-
   public String getId() {
-    return id;
+    return computeId();
   }
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public String getOwner() {
-    return owner;
-  }
-
-  public void setOwner(String owner) {
-    this.owner = owner;
   }
 
   public String getNamespace() {
@@ -103,22 +81,6 @@ public class Module {
 
   public void setProvider(String provider) {
     this.provider = provider;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
   }
 
   public Instant getPublished_at() {

@@ -8,19 +8,28 @@ public class SastReport {
 
   public SastReport() {}
 
-  public SastReport(String moduleName, String moduleVersion, String moduleNamespace, String provider, Map<String, Object> report) {
-    this.moduleName = moduleName;
-    this.moduleVersion = moduleVersion;
+  public SastReport(String moduleNamespace, String moduleName, String provider, String moduleVersion, Map<String, Object> report) {
     this.moduleNamespace = moduleNamespace;
+    this.moduleName = moduleName;
     this.provider = provider;
+    this.moduleVersion = moduleVersion;
     this.report = report;
   }
 
+  private String id;
   private String moduleName;
   private String moduleVersion;
   private String moduleNamespace;
   private String provider;
   private Map<String, Object> report;
+
+  public String getId() {
+    return String.format("%s-%s-%s-%s", getModuleNamespace(), getModuleName(), getProvider(), getModuleVersion());
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 
   public String getModuleName() {
     return moduleName;

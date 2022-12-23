@@ -1,6 +1,6 @@
 package api;
 
-import api.dto.ModulePaginationDto;
+import api.dto.ModulePagination;
 import core.service.storage.StorageService;
 import core.service.upload.FormData;
 import core.service.upload.UploadService;
@@ -41,21 +41,23 @@ public class Modules {
   @GET
   @Path("/")
   public Response listModules(
-          @DefaultValue("0")
-          @QueryParam("offset") Optional<Integer> offset,
-          @DefaultValue("10")
-          @QueryParam("limit")Optional<Integer> limit
+          @QueryParam("limit")Optional<Integer> limit,
+          @QueryParam("q")Optional<String> query,
+          @QueryParam("lastKey")Optional<String> lastEvaluatedElementKey
   ) throws Exception {
-    ModulePaginationDto modulePaginationDto = searchService.getModulesByRange(offset.get(), limit.get());
-    return Response.ok(modulePaginationDto).build();
+    ModulePagination modulePagination = searchService.findModules(
+            lastEvaluatedElementKey.orElse(""),
+            limit.orElse(10),
+            query.orElse("")
+    );
+    return Response.ok(modulePagination).build();
   }
 
   @GET
   @Path("{namespace}/{name}/{provider}")
   public Response getModuleByName(String namespace, String name, String provider) throws Exception {
-    String moduleName = new StringBuilder(namespace).append("-").append(name).append("-").append(provider).toString();
-    Module module = searchService.getModuleByName(moduleName);
-    return Response.ok(module).build();
+    Module module = new Module(namespace, name, provider);
+    return Response.ok(searchService.getModuleById(module.getId())).build();
   }
 
   @POST

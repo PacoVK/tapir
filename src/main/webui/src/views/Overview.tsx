@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Box,
   Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Pagination,
-  Select,
-  SelectChangeEvent,
+  List,
   Stack,
   TextField,
   Typography,
@@ -16,53 +17,73 @@ import ModuleElement from "../components/list/ModuleElement";
 import { Module } from "../types";
 import useDebounce from "../hooks/useDebounce";
 
+const fetchDataLimit = 5;
 const Overview = () => {
+  const modulesTable = useRef();
   const [modules, setModules] = useState([] as Module[]);
-  const [initializing, isInitializing] = useState(true);
-  const [page, setPage] = useState(1);
-  const [totalModulesCount, setTotalModulesCount] = useState(0);
-  const [resultPerPage, setResultPerPage] = useState("10");
+  const [lastEvaluatedKey, setLastEvaluatedKey] = useState("");
   const [searchString, setSearchString] = useState("");
   const debouncedSearchTerm = useDebounce(searchString, 500);
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+
+  const [loading, setLoading] = useState(false);
+  const [distanceBottom, setDistanceBottom] = useState(0);
+
+  const loadMore = useCallback(() => {
+    setLoading(true);
+    fetchModules(
+      `terraform/modules/v1?limit=${fetchDataLimit}&lastKey=${lastEvaluatedKey}&q=${searchString}`
+    ).then((data) => {
+      // TODO handle no more modules available
+      const allModules = [...modules, ...data.modules];
+      setLastEvaluatedKey(allModules.at(allModules.length - 1).id);
+      setModules(allModules);
+      setLoading(false);
+    });
+  }, [modules]);
+
+  const scrollListener = useCallback(() => {
+    let bottom =
+      // @ts-ignore
+      modulesTable.current.scrollHeight - modulesTable.current.clientHeight;
+
+    if (!distanceBottom) {
+      setDistanceBottom(Math.round(bottom * 0.2));
+    }
+    // @ts-ignore
+    if (modulesTable.current.scrollTop > bottom - distanceBottom && !loading) {
+      loadMore();
+    }
+  }, [loadMore, loading, distanceBottom]);
+
+  useLayoutEffect(() => {
+    const tableRef = modulesTable.current;
+    // @ts-ignore
+    tableRef.addEventListener("scroll", scrollListener);
+    return () => {
+      // @ts-ignore
+      tableRef.removeEventListener("scroll", scrollListener);
+    };
+  }, [scrollListener]);
 
   useEffect(() => {
-    if (!initializing) {
-      fetchModules(
-        `search?offset=${
-          parseInt(resultPerPage) * (page - 1)
-        }&limit=${resultPerPage}&q=${searchString}`
-      );
-    }
+    setLoading(true);
+    fetchModules(
+      `terraform/modules/v1?limit=${fetchDataLimit}&q=${searchString}`
+    ).then((data) => {
+      setLastEvaluatedKey(data.modules.at(data.modules.length - 1).id);
+      setModules(data.modules);
+      setLoading(false);
+    });
   }, [debouncedSearchTerm]);
 
-  useEffect(() => {
-    fetchModules(
-      `terraform/modules/v1?offset=${
-        parseInt(resultPerPage) * (page - 1)
-      }&limit=${resultPerPage}`
-    );
-    isInitializing(false);
-  }, [page, resultPerPage]);
-
-  const handleResultPerPageChange = (event: SelectChangeEvent) => {
-    setResultPerPage(event.target.value);
-    setPage(1);
-  };
-
-  const fetchModules = async (path: string) => {
-    const response = await fetch(path);
-    const result = await response.json();
-    setModules(result.modules);
-    setTotalModulesCount(result.totalModulesCount);
+  const fetchModules = async (api: string) => {
+    const response = await fetch(api);
+    return await response.json();
   };
 
   const handleSearchInputChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    console.log(event.target.value);
     setSearchString(event.target.value);
   };
 
@@ -95,48 +116,22 @@ const Overview = () => {
           value={searchString}
           onChange={handleSearchInputChange}
         />
-        <Stack spacing={4} direction={"row"} alignItems={"center"}>
-          <FormControl>
-            <InputLabel id="module-version-select-label">
-              Results per page
-            </InputLabel>
-            <Select
-              labelId="module-versions-select-label"
-              id="module-versions-select"
-              value={resultPerPage}
-              label="Versions"
-              onChange={handleResultPerPageChange}
-            >
-              <MenuItem key={"page-2"} value={"2"}>
-                2
-              </MenuItem>
-              <MenuItem key={"page-10"} value={"10"}>
-                10
-              </MenuItem>
-              <MenuItem key={"page-20"} value={"20"}>
-                20
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Pagination
-            key={"pagination-top"}
-            count={Math.ceil(totalModulesCount / parseInt(resultPerPage))}
-            page={page}
-            onChange={handleChange}
-          />
-        </Stack>
-        {modules.map((module) => (
-          <ModuleElement
-            key={`${module.namespace}${module.name}${module.provider}`}
-            module={module}
-          />
-        ))}
-        <Pagination
-          key={"pagination-bottom"}
-          count={Math.ceil(totalModulesCount / parseInt(resultPerPage))}
-          page={page}
-          onChange={handleChange}
-        />
+        <List
+          component={Stack}
+          sx={{ maxHeight: "50vh", overflow: "auto" }}
+          // @ts-ignore
+          ref={modulesTable}
+        >
+          {modules
+            ? modules.map((module) => (
+                <ModuleElement
+                  key={`${module.namespace}${module.name}${module.provider}`}
+                  module={module}
+                />
+                //TODO no modules found
+              ))
+            : null}
+        </List>
       </Stack>
     </Container>
   );

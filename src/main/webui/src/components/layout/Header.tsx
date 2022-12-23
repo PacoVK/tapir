@@ -10,7 +10,6 @@ import AdbIcon from "@mui/icons-material/Adb";
 const pages = ["Modules", "Provider"];
 
 const Header = () => {
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">

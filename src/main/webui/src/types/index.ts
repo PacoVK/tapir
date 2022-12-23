@@ -1,4 +1,5 @@
 export interface Module {
+  id: string;
   namespace: string;
   name: string;
   provider: Provider;

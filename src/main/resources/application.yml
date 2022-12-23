@@ -35,6 +35,13 @@ quarkus:
    quarkus:
      dynamodb:
        endpoint-override: http://localhost:4566
+       aws:
+         credentials:
+           type: static
+           static-provider:
+             access-key-id: test
+             secret-access-key: test
+             session-token: test
      s3:
       endpoint-override: http://localhost:4566
      quinoa:
@@ -46,3 +53,17 @@ quarkus:
          certificate:
            files: "./dev/certs/cert.pem"
            key-files: "./dev/certs/key.pem"
+
+"%test":
+  quarkus:
+    dynamodb:
+      endpoint-override: http://localhost:4566
+      aws:
+        credentials:
+          type: static
+          static-provider:
+            access-key-id: test
+            secret-access-key: test
+            session-token: test
+    s3:
+      endpoint-override: http://localhost:4566

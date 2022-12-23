@@ -3,7 +3,7 @@ package core.terraform;
 public class ModuleVersion {
   public ModuleVersion() {}
 
-  ModuleVersion(String version) {
+  public ModuleVersion(String version) {
     this.version = version;
   }
 

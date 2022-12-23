@@ -1,6 +1,6 @@
 package backend;
 
-import api.dto.ModulePaginationDto;
+import api.dto.ModulePagination;
 import core.service.backend.SearchService;
 import extensions.security.core.SastReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
@@ -17,7 +17,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.HttpMethod;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "elasticsearch")
 @ApplicationScoped
@@ -109,7 +111,7 @@ public class ElasticSearchService extends SearchService {
     restClient.performRequest(request);
   }
 
-  ModulePaginationDto getModules(String query) throws IOException {
+  ModulePagination getModules(String query) throws IOException {
     Request request = new Request(
             HttpMethod.GET,
             "/modules/_search"
@@ -118,29 +120,31 @@ public class ElasticSearchService extends SearchService {
     HttpEntity httpEntity = restClient.performRequest(request).getEntity();
     String responseBody = EntityUtils.toString(httpEntity);
     JsonObject queryResult = new JsonObject(responseBody).getJsonObject("hits");
-    String totalModuleCount = queryResult.getJsonObject("total").getString("value");
     JsonArray hits = queryResult.getJsonArray("hits");
-    List<Module> results = new ArrayList<>(hits.size());
-    for (int i = 0; i < hits.size(); i++) {
-      JsonObject hit = hits.getJsonObject(i);
-      Module module = hit.getJsonObject("_source").mapTo(Module.class);
-      results.add(module);
+    List<Module> results = hits.stream()
+            .map(hit -> ((JsonObject) hit).getJsonObject("_source").mapTo(Module.class))
+            .collect(Collectors.toList());
+    return new ModulePagination(results);
+  }
+
+  public ModulePagination findModules(String identifier, Integer limit, String term) throws IOException {
+    StringBuilder queryBuilder = new StringBuilder("{").append(
+            String.format("\"sort\": [ {\"_id\": \"asc\"} ], \"size\": %s", limit)
+    );
+    if(!identifier.isEmpty()){
+      queryBuilder.append(String.format(",\"search_after\": [\"%s\"]", identifier));
     }
-    return new ModulePaginationDto(results, Integer.valueOf(totalModuleCount));
-  }
-
-  public ModulePaginationDto getModulesByRange(Integer offset, Integer limit) throws IOException {
-    String query = String.format("{\"from\": %s,\"size\": %s}", offset, limit);
+    if(!term.isEmpty()){
+      queryBuilder.append(
+              String.format(", \"query\": {\"query_string\": {\"query\": \"*%s*\", \"fields\": [\"name\", \"namespace\", \"provider\"]}}",term)
+      );
+    }
+    queryBuilder.append("}");
+    String query = queryBuilder.toString();
     return getModules(query);
   }
 
-  public ModulePaginationDto getModulesByRangeAndTerm(String term, Integer offset, Integer limit) throws IOException {
-    String sanitizedTerm = term.replace("/", " ");
-    String query = String.format("{\"from\": %s,\"size\": %s, \"query\": {\"query_string\": {\"query\": \"*%s*\", \"fields\": [\"name\", \"namespace\", \"provider\"]}}}", offset, limit, sanitizedTerm);
-    return getModules(query);
-  }
-
-  public Module getModuleByName(String name) throws IOException {
+  public Module getModuleById(String name) throws IOException {
     Request request = new Request(
             HttpMethod.GET,
             "/modules/_doc/" + name);

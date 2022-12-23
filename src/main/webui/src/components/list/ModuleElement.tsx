@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 const ModuleElement = ({ module }: { module: Module }) => {
   return (
     <Box
-      marginY={2}
+      marginBottom={2}
       component={Link}
       to={`module/${module.namespace}/${module.name}/${module.provider}`}
       state={{ data: module }}

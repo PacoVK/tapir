@@ -33,6 +33,16 @@ services:
       SERVICES: s3,dynamodb
       EXTRA_CORS_ALLOWED_ORIGINS: "*"
 
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      AWS_REGION: eu-central-1
+      AWS_ACCESS_KEY_ID: local
+      AWS_SECRET_ACCESS_KEY: local
+      DYNAMO_ENDPOINT: localstack:4566
+
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
     command:
