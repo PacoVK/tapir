@@ -1,14 +1,13 @@
-package extensions.security.core;
+package extensions.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SastReport {
 
   public SastReport() {}
 
-  public SastReport(String moduleNamespace, String moduleName, String provider, String moduleVersion, Map<String, Object> report) {
+  public SastReport(String moduleNamespace, String moduleName, String provider, String moduleVersion, AbstractSastReport report) {
     this.moduleNamespace = moduleNamespace;
     this.moduleName = moduleName;
     this.provider = provider;
@@ -21,7 +20,7 @@ public class SastReport {
   private String moduleVersion;
   private String moduleNamespace;
   private String provider;
-  private Map<String, Object> report;
+  private AbstractSastReport report;
 
   public String getId() {
     return String.format("%s-%s-%s-%s", getModuleNamespace(), getModuleName(), getProvider(), getModuleVersion());
@@ -55,11 +54,11 @@ public class SastReport {
     this.moduleNamespace = moduleNamespace;
   }
 
-  public Map<String, Object> getReport() {
+  public AbstractSastReport getReport() {
     return report;
   }
 
-  public void setReport(Map<String, Object> report) {
+  public void setReport(AbstractSastReport report) {
     this.report = report;
   }
 

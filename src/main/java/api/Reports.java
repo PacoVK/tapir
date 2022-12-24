@@ -2,7 +2,7 @@ package api;
 
 import core.service.backend.SearchService;
 import core.terraform.Module;
-import extensions.security.core.SastReport;
+import extensions.core.SastReport;
 
 import javax.enterprise.inject.Instance;
 import javax.ws.rs.GET;

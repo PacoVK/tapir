@@ -1,7 +1,7 @@
 package core.event.consumer;
 
 import core.service.backend.SearchService;
-import extensions.security.core.SastReport;
+import extensions.core.SastReport;
 import io.quarkus.vertx.ConsumeEvent;
 
 import javax.enterprise.context.ApplicationScoped;

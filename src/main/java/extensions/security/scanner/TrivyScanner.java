@@ -2,7 +2,8 @@ package extensions.security.scanner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.service.upload.FormData;
-import extensions.security.core.SastReport;
+import extensions.core.SastReport;
+import extensions.security.report.TrivyReport;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
@@ -42,11 +43,11 @@ public class TrivyScanner {
       assert exitCode == 0;
       future.get(10, TimeUnit.SECONDS);
       SastReport sastReport = new SastReport(
-              archive.getModule().getName(),
-              archive.getModule().getCurrentVersion(),
               archive.getModule().getNamespace(),
+              archive.getModule().getName(),
               archive.getModule().getProvider(),
-              mapper.readValue(responseStrBuilder.toString(), Map.class)
+              archive.getModule().getCurrentVersion(),
+              mapper.readValue(responseStrBuilder.toString(), TrivyReport.class)
       );
       eventBus.requestAndForget("module.report.finished", sastReport);
     } catch (IOException | ExecutionException | InterruptedException | TimeoutException e) {

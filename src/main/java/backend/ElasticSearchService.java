@@ -2,7 +2,7 @@ package backend;
 
 import api.dto.ModulePagination;
 import core.service.backend.SearchService;
-import extensions.security.core.SastReport;
+import extensions.core.SastReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -16,8 +16,6 @@ import core.terraform.Module;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.HttpMethod;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

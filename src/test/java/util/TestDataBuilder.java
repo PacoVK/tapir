@@ -1,6 +1,6 @@
 package util;
 
-import extensions.security.core.SastReport;
+import extensions.core.SastReport;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,8 @@ public class TestDataBuilder {
           "example",
           "provider",
           "0.0.0",
+          null
+          /*
           Map.of(
                   "SchemaVersion",2,
                   "ArtifactName", ".",
@@ -38,6 +40,7 @@ public class TestDataBuilder {
                           )
                   )
           )
+           */
   );
 
   public static SastReport getSastReportStub() {

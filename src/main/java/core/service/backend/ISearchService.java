@@ -2,7 +2,7 @@ package core.service.backend;
 
 import api.dto.ModulePagination;
 import core.terraform.Module;
-import extensions.security.core.SastReport;
+import extensions.core.SastReport;
 
 import java.io.IOException;
 

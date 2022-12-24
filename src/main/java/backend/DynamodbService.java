@@ -5,7 +5,9 @@ import api.dto.ModulePagination;
 import core.service.backend.SearchService;
 import core.terraform.Module;
 import core.terraform.ModuleVersion;
-import extensions.security.core.SastReport;
+import extensions.core.AbstractSastReport;
+import extensions.core.SastReport;
+import extensions.security.report.TrivyReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonObject;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
@@ -80,7 +82,7 @@ public class DynamodbService extends SearchService {
                   .addAttribute(String.class, a -> a.name("provider")
                           .getter(SastReport::getProvider)
                           .setter(SastReport::setProvider))
-                  .addAttribute(Map.class, a -> a.name("report")
+                  .addAttribute(AbstractSastReport.class, a -> a.name("report")
                           .getter(SastReport::getReport)
                           .setter(SastReport::setReport)
                           .attributeConverter((AttributeConverter) new ReportConverter())
@@ -123,7 +125,8 @@ public class DynamodbService extends SearchService {
 
   @Override
   public SastReport getReportByModuleVersion(Module module) {
-    return securityReportsTable.getItem(Key.builder().partitionValue(module.getId()).build());
+    String reportId = new StringBuilder(module.getId()).append("-").append(module.getCurrentVersion()).toString();
+    return securityReportsTable.getItem(Key.builder().partitionValue(reportId).build());
   }
 
   public void bootstrap() {
@@ -157,32 +160,6 @@ public class DynamodbService extends SearchService {
     modulesTable.putItem(module);
   }
 
-  ModulePagination getModules(String query){
-    ScanEnhancedRequest scanEnhancedRequest = ScanEnhancedRequest.builder().limit(5).build();
-    PageIterable<Module> pages = modulesTable.scan(scanEnhancedRequest);
-    pages.forEach(page -> page.lastEvaluatedKey().isEmpty());
-    /*
-    Request request = new Request(
-            HttpMethod.GET,
-            "/modules/_search"
-    );
-    request.setJsonEntity(query);
-    HttpEntity httpEntity = restClient.performRequest(request).getEntity();
-    String responseBody = EntityUtils.toString(httpEntity);
-    JsonObject queryResult = new JsonObject(responseBody).getJsonObject("hits");
-    String totalModuleCount = queryResult.getJsonObject("total").getString("value");
-    JsonArray hits = queryResult.getJsonArray("hits");
-    List<Module> results = new ArrayList<>(hits.size());
-    for (int i = 0; i < hits.size(); i++) {
-      JsonObject hit = hits.getJsonObject(i);
-      Module module = hit.getJsonObject("_source").mapTo(Module.class);
-      results.add(module);
-    }
-    return new ModulePaginationDto(results, Integer.valueOf(totalModuleCount));
-     */
-    return null;
-  }
-
   public ModulePagination findModules(String identifier, Integer limit, String terms) {
     ScanEnhancedRequest.Builder scanEnhancedRequestBuilder = ScanEnhancedRequest.builder().limit(limit);
     if(!identifier.isEmpty()){
@@ -212,7 +189,7 @@ public class DynamodbService extends SearchService {
   }
 
   @Override
-  public Module getModuleVersions(Module module) throws Exception {
+  public Module getModuleVersions(Module module) {
     return getModuleById(module.getId());
   }
 }
@@ -268,64 +245,25 @@ class ModuleVersionsConverter implements AttributeConverter<Collection<ModuleVer
   }
 }
 
-class ReportConverter implements AttributeConverter<Map<String, Object>> {
-
-  private final MapAttributeConverter<Map<String,Object>> mapAttributeConverter = MapAttributeConverter
-          .builder(EnhancedType.mapOf(String.class, Object.class))
-          .keyConverter(StringStringConverter.create())
-          .valueConverter(new ObjectConverter())
-          .mapConstructor(HashMap::new)
-          .build();
+class ReportConverter implements AttributeConverter<AbstractSastReport> {
 
   @Override
-  public AttributeValue transformFrom(Map<String, Object> stringObjectMap) {
-    return mapAttributeConverter.transformFrom(stringObjectMap);
+  public AttributeValue transformFrom(AbstractSastReport abstractSastReport) {
+    return AttributeValue.fromS(JsonObject.mapFrom(abstractSastReport).encode());
   }
 
   @Override
-  public Map<String, Object> transformTo(AttributeValue attributeValue) {
-    return mapAttributeConverter.transformTo(attributeValue);
+  public AbstractSastReport transformTo(AttributeValue attributeValue) {
+    return new JsonObject(attributeValue.s()).mapTo(TrivyReport.class);
   }
 
   @Override
-  public EnhancedType<Map<String, Object>> type() {
-    return mapAttributeConverter.type();
+  public EnhancedType<AbstractSastReport> type() {
+    return EnhancedType.of(AbstractSastReport.class);
   }
 
   @Override
   public AttributeValueType attributeValueType() {
-    return mapAttributeConverter.attributeValueType();
-  }
-
-  static class ObjectConverter implements AttributeConverter<Object> {
-    @Override
-    public AttributeValue transformFrom(Object o) {
-      if(o instanceof Map<?,?>){
-        return AttributeValue.fromS(JsonObject.mapFrom(o).encode());
-      }
-      else if(o instanceof List<?>){
-        List<AttributeValue> values = new LinkedList<>();
-        ((List<?>) o).forEach(entry -> values.add(AttributeValue.fromS(JsonObject.mapFrom(entry).encode())));
-        return AttributeValue.fromL(values);
-      }
-      else {
-        return AttributeValue.fromS(String.valueOf(o));
-      }
-    }
-
-    @Override
-    public Object transformTo(AttributeValue attributeValue) {
-      return JsonObject.mapFrom(attributeValue.s());
-    }
-
-    @Override
-    public EnhancedType<Object> type() {
-      return EnhancedType.of(Object.class);
-    }
-
-    @Override
-    public AttributeValueType attributeValueType() {
-      return AttributeValueType.S;
-    }
+    return AttributeValueType.S;
   }
 }
