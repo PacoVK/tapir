@@ -1,49 +1,34 @@
 package util;
 
+import core.terraform.Module;
 import extensions.core.SastReport;
+import extensions.security.report.TrivyReport;
+import io.vertx.core.json.JsonObject;
 
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TestDataBuilder {
 
-  static final SastReport sastReportStub = new SastReport(
-          "mycorp",
-          "example",
-          "provider",
-          "0.0.0",
-          null
-          /*
-          Map.of(
-                  "SchemaVersion",2,
-                  "ArtifactName", ".",
-                  "ArtifactType", "filesystem",
-                  "Metadata", Map.of("ImageConfig",
-                          Map.of("architecture", "",
-                                "created", "0001-01-01T00:00:00Z",
-                                "os", "",
-                                "rootfs", Map.of("type", "", "diff_ids", ""),
-                                "config", Map.of())),
-                  "Result", List.of(
-                          Map.of(
-                                  "Target", "foo.tf",
-                                  "Class", "config",
-                                  "Type", "terraform",
-                                  "MisconfSummary", Map.of(
-                                          "Successes", 0,
-                                          "Failures", 1,
-                                          "Exceptions", 0
-                                  ),
-                                  "Misconfigurations", List.of(
-                                          Map.of()
-                                  )
-                          )
-                  )
-          )
-           */
-  );
-
-  public static SastReport getSastReportStub() {
-    return sastReportStub;
+  public static SastReport getTrivyReportStub(Module module){
+    try (Reader reader = new InputStreamReader(Objects.requireNonNull(TestDataBuilder.class
+            .getResourceAsStream("/trivyReport.json")))) {
+      String report = new BufferedReader(reader).lines().collect(Collectors.joining());
+      TrivyReport trivyReport = new JsonObject(report).mapTo(TrivyReport.class);
+      return new SastReport(
+              module.getNamespace(),
+              module.getName(),
+              module.getProvider(),
+              module.getCurrentVersion(),
+              trivyReport
+      );
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

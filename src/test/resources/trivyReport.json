@@ -1,0 +1,215 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "Metadata": {
+    "ImageConfig": {
+      "architecture": "",
+      "created": "0001-01-01T00:00:00Z",
+      "os": "",
+      "rootfs": {
+        "type": "",
+        "diff_ids": null
+      },
+      "config": {}
+    }
+  },
+  "Results": [
+    {
+      "Target": "kms.tf",
+      "Class": "config",
+      "Type": "terraform",
+      "MisconfSummary": {
+        "Successes": 0,
+        "Failures": 2,
+        "Exceptions": 0
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Terraform Security Check",
+          "ID": "AVD-AWS-0065",
+          "AVDID": "AVD-AWS-0065",
+          "Title": "A KMS key is not configured to auto-rotate.",
+          "Description": "You should configure your KMS keys to auto rotate to maintain security and defend against compromise.",
+          "Message": "Key does not have rotation enabled.",
+          "Query": "data..",
+          "Resolution": "Configure KMS key to auto rotate",
+          "Severity": "MEDIUM",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/avd-aws-0065",
+          "References": [
+            "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html",
+            "https://avd.aquasec.com/misconfig/avd-aws-0065"
+          ],
+          "Status": "FAIL",
+          "Layer": {},
+          "CauseMetadata": {
+            "Resource": "aws_kms_key.encryption_key_private_repo",
+            "Provider": "AWS",
+            "Service": "kms",
+            "StartLine": 56,
+            "EndLine": 62,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 56,
+                  "Content": "resource \"aws_kms_key\" \"encryption_key_private_repo\" {",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": true,
+                  "LastCause": false
+                },
+                {
+                  "Number": 57,
+                  "Content": "  policy      = data.aws_iam_policy_document.kms_public_access.json",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 58,
+                  "Content": "  description = \"Key to encrypt private images in ECR\"",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 59,
+                  "Content": "  tags = {",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 60,
+                  "Content": "    Name = \"ECR_private\"",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 61,
+                  "Content": "  }",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 62,
+                  "Content": "}",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Terraform Security Check",
+          "ID": "AVD-AWS-0065",
+          "AVDID": "AVD-AWS-0065",
+          "Title": "A KMS key is not configured to auto-rotate.",
+          "Description": "You should configure your KMS keys to auto rotate to maintain security and defend against compromise.",
+          "Message": "Key does not have rotation enabled.",
+          "Query": "data..",
+          "Resolution": "Configure KMS key to auto rotate",
+          "Severity": "MEDIUM",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/avd-aws-0065",
+          "References": [
+            "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html",
+            "https://avd.aquasec.com/misconfig/avd-aws-0065"
+          ],
+          "Status": "FAIL",
+          "Layer": {},
+          "CauseMetadata": {
+            "Resource": "aws_kms_key.encryption_key_public_repo",
+            "Provider": "AWS",
+            "Service": "kms",
+            "StartLine": 31,
+            "EndLine": 37,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 31,
+                  "Content": "resource \"aws_kms_key\" \"encryption_key_public_repo\" {",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": true,
+                  "LastCause": false
+                },
+                {
+                  "Number": 32,
+                  "Content": "  policy      = data.aws_iam_policy_document.kms_public_access.json",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 33,
+                  "Content": "  description = \"Key to encrypt public available images in ECR\"",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 34,
+                  "Content": "  tags = {",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 35,
+                  "Content": "    Name = \"ECR_public\"",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 36,
+                  "Content": "  }",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 37,
+                  "Content": "}",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "FirstCause": false,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
