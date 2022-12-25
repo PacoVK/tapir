@@ -3,26 +3,25 @@ package extensions.security.scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.service.upload.FormData;
 import extensions.core.SastReport;
-import extensions.security.report.TrivyReport;
+import extensions.security.report.TfSecReport;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.*;
-import java.util.Map;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 @ApplicationScoped
-public class TrivyScanner {
+public class SecurityScanner {
 
-  static final Logger LOGGER = Logger.getLogger(TrivyScanner.class.getName());
+  static final Logger LOGGER = Logger.getLogger(SecurityScanner.class.getName());
 
   EventBus eventBus;
   ObjectMapper mapper = new ObjectMapper();
 
-  public TrivyScanner(EventBus eventBus) {
+  public SecurityScanner(EventBus eventBus) {
     this.eventBus = eventBus;
   }
 
@@ -31,7 +30,7 @@ public class TrivyScanner {
     LOGGER.info(String.format("Starting scan for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
 
     ProcessBuilder builder = new ProcessBuilder();
-    builder.command("sh", "-c", "trivy config -f json .");
+    builder.command("sh", "-c", "tfsec -f json  --ignore-hcl-errors .");
     builder.directory(archive.getCompressedModule().getParentFile());
     try {
       Process process = builder.start();
@@ -47,7 +46,7 @@ public class TrivyScanner {
               archive.getModule().getName(),
               archive.getModule().getProvider(),
               archive.getModule().getCurrentVersion(),
-              mapper.readValue(responseStrBuilder.toString(), TrivyReport.class)
+              mapper.readValue(responseStrBuilder.toString(), TfSecReport.class)
       );
       eventBus.requestAndForget("module.report.finished", sastReport);
     } catch (IOException | ExecutionException | InterruptedException | TimeoutException e) {

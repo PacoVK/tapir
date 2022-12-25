@@ -1,6 +1,5 @@
 package api;
 
-import api.dto.ModulePagination;
 import core.service.storage.StorageService;
 import core.service.upload.FormData;
 import core.service.upload.UploadService;
@@ -15,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/terraform/modules/v1")
@@ -36,21 +34,6 @@ public class Modules {
     this.searchService = searchServiceInstance.get();
     this.uploadService = uploadService;
     this.eventBus = eventBus;
-  }
-
-  @GET
-  @Path("/")
-  public Response listModules(
-          @QueryParam("limit")Optional<Integer> limit,
-          @QueryParam("q")Optional<String> query,
-          @QueryParam("lastKey")Optional<String> lastEvaluatedElementKey
-  ) throws Exception {
-    ModulePagination modulePagination = searchService.findModules(
-            lastEvaluatedElementKey.orElse(""),
-            limit.orElse(10),
-            query.orElse("")
-    );
-    return Response.ok(modulePagination).build();
   }
 
   @GET

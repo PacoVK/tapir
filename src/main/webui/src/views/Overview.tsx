@@ -31,7 +31,7 @@ const Overview = () => {
   const loadMore = useCallback(() => {
     setLoading(true);
     fetchModules(
-      `terraform/modules/v1?limit=${fetchDataLimit}&lastKey=${lastEvaluatedKey}&q=${searchString}`
+      `search?limit=${fetchDataLimit}&lastKey=${lastEvaluatedKey}&q=${searchString}`
     ).then((data) => {
       // TODO handle no more modules available
       const allModules = [...modules, ...data.modules];
@@ -68,7 +68,7 @@ const Overview = () => {
   useEffect(() => {
     setLoading(true);
     fetchModules(
-      `terraform/modules/v1?limit=${fetchDataLimit}&q=${searchString}`
+      `search?limit=${fetchDataLimit}&q=${searchString}`
     ).then((data) => {
       setLastEvaluatedKey(data.modules.at(data.modules.length - 1).id);
       setModules(data.modules);

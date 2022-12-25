@@ -143,8 +143,8 @@ const ModuleDetails = () => {
         </Stack>
         <Typography sx={{ mb: 2 }}>
           Security findings by{" "}
-          <Link href="https://trivy.dev/" rel="noopener" target="_blank">
-            Trivy
+          <Link href="https://aquasecurity.github.io/tfsec" rel="noopener" target="_blank">
+            Tfsec
           </Link>
           :
         </Typography>

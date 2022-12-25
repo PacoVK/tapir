@@ -5,18 +5,14 @@ import api.dto.ModulePagination;
 import core.service.backend.SearchService;
 import core.terraform.Module;
 import core.terraform.ModuleVersion;
-import extensions.core.AbstractSastReport;
 import extensions.core.SastReport;
-import extensions.security.report.TrivyReport;
+import extensions.security.report.TfSecReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonObject;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.*;
 import software.amazon.awssdk.enhanced.dynamodb.internal.converter.attribute.ListAttributeConverter;
-import software.amazon.awssdk.enhanced.dynamodb.internal.converter.attribute.MapAttributeConverter;
-import software.amazon.awssdk.enhanced.dynamodb.internal.converter.string.StringStringConverter;
 import software.amazon.awssdk.enhanced.dynamodb.model.Page;
-import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
@@ -82,9 +78,9 @@ public class DynamodbService extends SearchService {
                   .addAttribute(String.class, a -> a.name("provider")
                           .getter(SastReport::getProvider)
                           .setter(SastReport::setProvider))
-                  .addAttribute(AbstractSastReport.class, a -> a.name("report")
-                          .getter(SastReport::getReport)
-                          .setter(SastReport::setReport)
+                  .addAttribute(TfSecReport.class, a -> a.name("report")
+                          .getter(SastReport::getTfSecReport)
+                          .setter(SastReport::setTfSecReport)
                           .attributeConverter((AttributeConverter) new ReportConverter())
                   )
                   .build();
@@ -245,21 +241,21 @@ class ModuleVersionsConverter implements AttributeConverter<Collection<ModuleVer
   }
 }
 
-class ReportConverter implements AttributeConverter<AbstractSastReport> {
+class ReportConverter implements AttributeConverter<TfSecReport> {
 
   @Override
-  public AttributeValue transformFrom(AbstractSastReport abstractSastReport) {
-    return AttributeValue.fromS(JsonObject.mapFrom(abstractSastReport).encode());
+  public AttributeValue transformFrom(TfSecReport tfSecReport) {
+    return AttributeValue.fromS(JsonObject.mapFrom(tfSecReport).encode());
   }
 
   @Override
-  public AbstractSastReport transformTo(AttributeValue attributeValue) {
-    return new JsonObject(attributeValue.s()).mapTo(TrivyReport.class);
+  public TfSecReport transformTo(AttributeValue attributeValue) {
+    return new JsonObject(attributeValue.s()).mapTo(TfSecReport.class);
   }
 
   @Override
-  public EnhancedType<AbstractSastReport> type() {
-    return EnhancedType.of(AbstractSastReport.class);
+  public EnhancedType<TfSecReport> type() {
+    return EnhancedType.of(TfSecReport.class);
   }
 
   @Override

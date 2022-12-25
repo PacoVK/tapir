@@ -33,11 +33,11 @@ class ReportsTest {
             fakeModule.getProvider(),
             fakeModule.getCurrentVersion()
     );
-    when(searchService.getReportByModuleVersion(any())).thenReturn(TestDataBuilder.getTrivyReportStub(fakeModule));
+    when(searchService.getReportByModuleVersion(any())).thenReturn(TestDataBuilder.getTfSecReportStub(fakeModule));
     given().
             when().get(fakeUrl)
             .then()
             .statusCode(200)
-            .body(is(Objects.requireNonNull(JsonObject.mapFrom(TestDataBuilder.getTrivyReportStub(fakeModule))).encode()));
+            .body(is(Objects.requireNonNull(JsonObject.mapFrom(TestDataBuilder.getTfSecReportStub(fakeModule))).encode()));
   }
 }
