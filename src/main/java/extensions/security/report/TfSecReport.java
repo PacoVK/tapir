@@ -3,7 +3,6 @@ package extensions.security.report;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,7 +19,7 @@ public class TfSecReport {
     this.results = results;
   }
 
-  static class TfSecResult {
+  public static class TfSecResult {
     private String rule_id;
     private String long_id;
     private String rule_description;
@@ -30,7 +29,7 @@ public class TfSecReport {
     private String resolution;
     private List<String> links;
     private String description;
-    private String severity;
+    private Severity severity;
     private Boolean warning;
     private Integer status;
     private String resource;
@@ -108,11 +107,11 @@ public class TfSecReport {
       this.description = description;
     }
 
-    public String getSeverity() {
+    public Severity getSeverity() {
       return severity;
     }
 
-    public void setSeverity(String severity) {
+    public void setSeverity(Severity severity) {
       this.severity = severity;
     }
 
@@ -149,7 +148,7 @@ public class TfSecReport {
     }
 
     @JsonDeserialize(using = LocationDeserializer.class)
-    static class Location {
+    public static class Location {
       private String filename;
       private Integer start_line;
       private Integer end_line;

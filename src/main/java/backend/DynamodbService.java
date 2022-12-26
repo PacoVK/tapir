@@ -2,16 +2,14 @@ package backend;
 
 import api.dto.ModulePagination;
 
+import backend.aws.dynamodb.converter.ModuleVersionsConverter;
+import backend.aws.dynamodb.converter.SecurityReportConverter;
 import core.service.backend.SearchService;
 import core.terraform.Module;
-import core.terraform.ModuleVersion;
 import extensions.core.SastReport;
-import extensions.security.report.TfSecReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
-import io.vertx.core.json.JsonObject;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.*;
-import software.amazon.awssdk.enhanced.dynamodb.internal.converter.attribute.ListAttributeConverter;
 import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -78,10 +76,10 @@ public class DynamodbService extends SearchService {
                   .addAttribute(String.class, a -> a.name("provider")
                           .getter(SastReport::getProvider)
                           .setter(SastReport::setProvider))
-                  .addAttribute(TfSecReport.class, a -> a.name("report")
-                          .getter(SastReport::getTfSecReport)
-                          .setter(SastReport::setTfSecReport)
-                          .attributeConverter((AttributeConverter) new ReportConverter())
+                  .addAttribute(Map.class, a -> a.name("report")
+                          .getter(SastReport::getSecurityReport)
+                          .setter(SastReport::setSecurityReport)
+                          .attributeConverter((AttributeConverter) new SecurityReportConverter())
                   )
                   .build();
 
@@ -187,79 +185,5 @@ public class DynamodbService extends SearchService {
   @Override
   public Module getModuleVersions(Module module) {
     return getModuleById(module.getId());
-  }
-}
-
-class ModuleVersionsConverter implements AttributeConverter<Collection<ModuleVersion>> {
-
-  private final ListAttributeConverter<Collection<ModuleVersion>> listAttributeConverter =  ListAttributeConverter
-          .builder(EnhancedType.collectionOf(ModuleVersion.class))
-          .collectionConstructor(LinkedList::new)
-          .elementConverter(new ModuleVersionConverter()).build();;
-
-  @Override
-  public AttributeValue transformFrom(Collection<ModuleVersion> moduleVersions) {
-    return listAttributeConverter.transformFrom(moduleVersions);
-  }
-
-  @Override
-  public Collection<ModuleVersion> transformTo(AttributeValue attributeValue) {
-    return listAttributeConverter.transformTo(attributeValue);
-  }
-
-  @Override
-  public EnhancedType<Collection<ModuleVersion>> type() {
-    return listAttributeConverter.type();
-  }
-
-  @Override
-  public AttributeValueType attributeValueType() {
-    return listAttributeConverter.attributeValueType();
-  }
-
-  static class ModuleVersionConverter implements AttributeConverter<ModuleVersion> {
-
-    @Override
-    public AttributeValue transformFrom(ModuleVersion moduleVersion) {
-      return AttributeValue.fromS(moduleVersion.getVersion());
-    }
-
-    @Override
-    public ModuleVersion transformTo(AttributeValue attributeValue) {
-      return new ModuleVersion(attributeValue.s());
-    }
-
-    @Override
-    public EnhancedType<ModuleVersion> type() {
-      return EnhancedType.of(ModuleVersion.class);
-    }
-
-    @Override
-    public AttributeValueType attributeValueType() {
-      return AttributeValueType.S;
-    }
-  }
-}
-
-class ReportConverter implements AttributeConverter<TfSecReport> {
-
-  @Override
-  public AttributeValue transformFrom(TfSecReport tfSecReport) {
-    return AttributeValue.fromS(JsonObject.mapFrom(tfSecReport).encode());
-  }
-
-  @Override
-  public TfSecReport transformTo(AttributeValue attributeValue) {
-    return new JsonObject(attributeValue.s()).mapTo(TfSecReport.class);
-  }
-
-  @Override
-  public EnhancedType<TfSecReport> type() {
-    return EnhancedType.of(TfSecReport.class);
-  }
-
-  @Override
-  public AttributeValueType attributeValueType() {
-    return AttributeValueType.S;
   }
 }

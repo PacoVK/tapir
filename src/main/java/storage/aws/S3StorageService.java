@@ -24,7 +24,7 @@ public class S3StorageService extends StorageService{
 
   S3Client s3;
 
-  @ConfigProperty(name = "bucket.name")
+  @ConfigProperty(name = "registry.storage.s3.bucket.name")
   String bucketName;
 
   S3Presigner presigner;

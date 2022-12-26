@@ -3,9 +3,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Box,
   Chip,
-  Container,
   FormControl,
   InputLabel,
   Link,
@@ -64,131 +62,122 @@ const ModuleDetails = () => {
       `${baseUrl}/reports/${module.namespace}/${module.name}/${module.provider}/security/${version}`
     );
     const reports = await response.json();
-    const misconfigurations = reports.report.Results.map((result: any) => {
-      return result.Misconfigurations.sort((sevA: any, sevB: any) => {
-        return Severity[sevA.Severity] <= Severity[sevB.Severity];
-      });
-    });
-    reports.report.Results.forEach((report: any, index: number) => {
-      report.Misconfigurations = misconfigurations[index];
-    });
-    setReports(reports);
+    setReports(reports.securityReport);
   };
 
   return module && version ? (
-    <Container maxWidth={"xl"}>
-      <Box margin={"5vh"}>
-        <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-          <img
-            style={{
-              width: 64,
-              height: 64,
-            }}
-            alt={"Provider logo"}
-            src={getProviderLogo(module.provider)}
-          />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            alignItems={"center"}
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            {module.namespace}/{module.name}/{module.provider}
-          </Typography>
-        </Stack>
-        <Stack direction="row" spacing={2} sx={{ mb: 5 }} alignItems={"center"}>
-          <FormControl>
-            <InputLabel id="module-version-select-label">Version</InputLabel>
-            <Select
-              labelId="module-versions-select-label"
-              id="module-versions-select"
-              value={version}
-              label="Versions"
-              onChange={handleVersionChange}
-            >
-              {module.versions.map((version: { version: string }) => {
-                return (
-                  <MenuItem key={version.version} value={version.version}>
-                    {version.version}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <Chip
-            icon={<DownloadIcon />}
-            label={`Total downloads: ${module.downloads}
-                        `}
-          />
-          <Chip
-            icon={<InfoIcon />}
-            label={`Latest version: ${
-              module.versions.at(module.versions.length - 1)!.version
-            }`}
-          />
-          <Chip
-            icon={<RocketLaunchIcon />}
-            label={`Last published at: ${formatDate(module.published_at)}`}
-          />
-        </Stack>
-        <Typography sx={{ mb: 2 }}>
-          Security findings by{" "}
-          <Link href="https://aquasecurity.github.io/tfsec" rel="noopener" target="_blank">
-            Tfsec
-          </Link>
-          :
+    <>
+      <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+        <img
+          style={{
+            width: 64,
+            height: 64,
+          }}
+          alt={"Provider logo"}
+          src={getProviderLogo(module.provider)}
+        />
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          href="/"
+          alignItems={"center"}
+          sx={{
+            mr: 2,
+            display: { xs: "none", md: "flex" },
+            fontFamily: "monospace",
+            fontWeight: 700,
+            letterSpacing: ".3rem",
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
+          {module.namespace}/{module.name}/{module.provider}
         </Typography>
-        {
-          // @ts-ignore
-          reports && reports.report ? (
-            // @ts-ignore
-            reports.report.Results.map((report) => {
+      </Stack>
+      <Stack direction="row" spacing={2} sx={{ mb: 5 }} alignItems={"center"}>
+        <FormControl>
+          <InputLabel id="module-version-select-label">Version</InputLabel>
+          <Select
+            labelId="module-versions-select-label"
+            id="module-versions-select"
+            value={version}
+            label="Versions"
+            onChange={handleVersionChange}
+          >
+            {module.versions.map((version: { version: string }) => {
               return (
-                <Accordion key={report.Target}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls={`${report.Target}-content`}
-                    id={`${report.Target}-header`}
-                  >
-                    <Typography>
-                      {report.Target} - Findings:{" "}
-                      {report.MisconfSummary.Failures}
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {report.Misconfigurations.map(
-                      (misconfiguration: Misconfiguration, index: string) => {
-                        return (
-                          <MisconfigurationItem
-                            key={`misconf-item-${index}`}
-                            misconfiguration={misconfiguration}
-                            keyIdentifier={index}
-                          />
-                        );
-                      }
-                    )}
-                  </AccordionDetails>
-                </Accordion>
+                <MenuItem key={version.version} value={version.version}>
+                  {version.version}
+                </MenuItem>
               );
-            })
-          ) : (
-            <Typography>
-              No report available for module version: {version}
-            </Typography>
-          )
-        }
-      </Box>
-    </Container>
+            })}
+          </Select>
+        </FormControl>
+        <Chip
+          icon={<DownloadIcon />}
+          label={`Total downloads: ${module.downloads}
+                        `}
+        />
+        <Chip
+          icon={<InfoIcon />}
+          label={`Latest version: ${
+            module.versions.at(module.versions.length - 1)!.version
+          }`}
+        />
+        <Chip
+          icon={<RocketLaunchIcon />}
+          label={`Last published at: ${formatDate(module.published_at)}`}
+        />
+      </Stack>
+      <Typography sx={{ mb: 2 }}>
+        Security findings by{" "}
+        <Link
+          href="https://aquasecurity.github.io/tfsec"
+          rel="noopener"
+          target="_blank"
+        >
+          Tfsec
+        </Link>
+        :
+      </Typography>
+      {
+        reports ? (
+            Object.entries(reports).map(([target, findings] : [string, any]) => {
+            return (
+              <Accordion key={target}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls={`${target}-content`}
+                  id={`${target}-header`}
+                >
+                  <Typography>
+                    {target} - Findings: {findings.length}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {findings.map(
+                    (misconfiguration: Misconfiguration, index: string) => {
+                      return (
+                        <MisconfigurationItem
+                          key={`misconf-item-${index}`}
+                          misconfiguration={misconfiguration}
+                          keyIdentifier={index}
+                        />
+                      );
+                    }
+                  )}
+                </AccordionDetails>
+              </Accordion>
+            );
+          })
+        ) : (
+          <Typography>
+            No report available for module version: {version}
+          </Typography>
+        )
+      }
+    </>
   ) : (
     loadingRoutine()
   );

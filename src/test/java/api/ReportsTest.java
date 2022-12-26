@@ -1,16 +1,14 @@
 package api;
 
-import backend.ElasticSearchService;
+import backend.DynamodbService;
 import core.terraform.Module;
+import extensions.core.SastReport;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.Test;
 import util.TestDataBuilder;
-
-import java.io.IOException;
-import java.util.Objects;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,21 +21,22 @@ class ReportsTest {
 
   final Module fakeModule = new Module("foo", "bar", "baz", "0.0.0");
   @InjectMock
-  ElasticSearchService searchService;
+  DynamodbService searchService;
 
   @Test
-  void getSecurityReportForModuleVersion() throws IOException {
+  void getSecurityReportForModuleVersion() {
     String fakeUrl = String.format("/%s/%s/%s/security/%s",
             fakeModule.getNamespace(),
             fakeModule.getName(),
             fakeModule.getProvider(),
             fakeModule.getCurrentVersion()
     );
-    when(searchService.getReportByModuleVersion(any())).thenReturn(TestDataBuilder.getTfSecReportStub(fakeModule));
+    SastReport sastReportStub = TestDataBuilder.getSastReportStub(fakeModule);
+    when(searchService.getReportByModuleVersion(any())).thenReturn(sastReportStub);
     given().
             when().get(fakeUrl)
             .then()
             .statusCode(200)
-            .body(is(Objects.requireNonNull(JsonObject.mapFrom(TestDataBuilder.getTfSecReportStub(fakeModule))).encode()));
+            .body(is(JsonObject.mapFrom(sastReportStub).encode()));
   }
 }

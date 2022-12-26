@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Misconfiguration } from "../../types";
+import {Misconfiguration} from "../../types";
 import "./MisconfigurationItem.css";
 
 const MisconfigurationItem = ({
@@ -18,32 +18,32 @@ const MisconfigurationItem = ({
   keyIdentifier: string;
 }) => {
   return (
-    <Accordion key={misconfiguration.Title + keyIdentifier}>
+    <Accordion key={misconfiguration.resource + keyIdentifier}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls={`${misconfiguration.Title + keyIdentifier}-content`}
-        id={`${misconfiguration.Title + keyIdentifier}-header`}
-        className={`severity-${misconfiguration.Severity}`}
+        aria-controls={`${misconfiguration.rule_description + keyIdentifier}-content`}
+        id={`${misconfiguration.rule_description + keyIdentifier}-header`}
+        className={`severity-${misconfiguration.severity}`}
       >
         <Typography>
-          {misconfiguration.CauseMetadata.Resource}, Line:{" "}
-          {misconfiguration.CauseMetadata.StartLine} -{" "}
-          {misconfiguration.CauseMetadata.EndLine}, {misconfiguration.Title}
+          {misconfiguration.resource}, Line:{" "}
+          {misconfiguration.location.start_line} -{" "}
+          {misconfiguration.location.end_line}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Typography>
-          {misconfiguration.Severity} - {misconfiguration.Message}
+          {misconfiguration.severity} - {misconfiguration.impact}
         </Typography>
         <Typography>
-          Resource: {misconfiguration.CauseMetadata.Resource}
+          Resource: {misconfiguration.resource}
         </Typography>
         <Typography>
-          StartLine: {misconfiguration.CauseMetadata.StartLine}
-          EndLine: {misconfiguration.CauseMetadata.EndLine}
+          StartLine: {misconfiguration.location.start_line}
+          EndLine: {misconfiguration.location.end_line}
         </Typography>
-        <Typography>Solution: {misconfiguration.Resolution}</Typography>
-        <Link href={misconfiguration.PrimaryURL} rel="noopener" target="_blank">
+        <Typography>Solution: {misconfiguration.resolution}</Typography>
+        <Link href={misconfiguration.links[0]} rel="noopener" target="_blank">
           Read more
         </Link>
       </AccordionDetails>

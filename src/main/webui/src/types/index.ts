@@ -9,15 +9,17 @@ export interface Module {
 }
 
 export interface Misconfiguration {
-  Title: string;
-  Severity: string;
-  Message: string;
-  Resolution: string;
-  PrimaryURL: string;
-  CauseMetadata: {
-    Resource: string;
-    StartLine: number;
-    EndLine: number;
+  resource: string;
+  severity: string;
+  rule_description: string;
+  description: string;
+  impact: string;
+  resolution: string;
+  links: string;
+  location: {
+    filename: string;
+    start_line: number;
+    end_line: number;
   };
 }
 export enum Provider {

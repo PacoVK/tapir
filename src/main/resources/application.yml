@@ -1,20 +1,23 @@
 registry:
   search:
-    backend: elasticsearch
+    backend: ${BACKEND_CONFIG:dynamodb}
+    elasticsearch:
+      host: ${BACKEND_ELASTICSEARCH_HOST:localhost:9200}
   storage:
-    backend: s3
-
-bucket:
-  name: tf-registry
+    backend: ${STORAGE_CONFIG:s3}
+    s3:
+      bucket:
+        name: ${S3_STORAGE_BUCKET_NAME:tf-registry}
+        region: ${S3_STORAGE_BUCKET_REGION:eu-central-1}
 
 quarkus:
   quinoa:
     enable-spa-routing: true
   s3:
     aws:
-      region: eu-central-1
+      region: ${registry.storage.s3.bucket.region}
   elasticsearch:
-    hosts: localhost:9200
+    hosts: ${registry.search.elasticsearch.host}
   http:
     filter:
       others:

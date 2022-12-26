@@ -16,6 +16,7 @@
     <quarkus.quinoa.version>1.2.3</quarkus.quinoa.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
+    <checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -142,6 +143,21 @@
                 <maven.home>${maven.home}</maven.home>
               </systemPropertyVariables>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${checkstyle-maven-plugin.version}</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>

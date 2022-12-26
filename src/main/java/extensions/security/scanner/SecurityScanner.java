@@ -4,15 +4,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import core.service.upload.FormData;
 import extensions.core.SastReport;
 import extensions.security.report.TfSecReport;
+import extensions.security.util.TfSecReportUtil;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.mutiny.core.eventbus.EventBus;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+@RegisterForReflection
 @ApplicationScoped
 public class SecurityScanner {
 
@@ -41,12 +46,14 @@ public class SecurityScanner {
       int exitCode = process.waitFor();
       assert exitCode == 0;
       future.get(10, TimeUnit.SECONDS);
+      TfSecReport tfSecReport = mapper.readValue(responseStrBuilder.toString(), TfSecReport.class);
+      Map<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil.groupAndSortFindingsBySeverity(tfSecReport);
       SastReport sastReport = new SastReport(
               archive.getModule().getNamespace(),
               archive.getModule().getName(),
               archive.getModule().getProvider(),
               archive.getModule().getCurrentVersion(),
-              mapper.readValue(responseStrBuilder.toString(), TfSecReport.class)
+              securityReport
       );
       eventBus.requestAndForget("module.report.finished", sastReport);
     } catch (IOException | ExecutionException | InterruptedException | TimeoutException e) {

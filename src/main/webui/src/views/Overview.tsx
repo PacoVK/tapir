@@ -5,14 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import {
-  Box,
-  Container,
-  List,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { List, Stack, TextField } from "@mui/material";
 import ModuleElement from "../components/list/ModuleElement";
 import { Module } from "../types";
 import useDebounce from "../hooks/useDebounce";
@@ -67,13 +60,13 @@ const Overview = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchModules(
-      `search?limit=${fetchDataLimit}&q=${searchString}`
-    ).then((data) => {
-      setLastEvaluatedKey(data.modules.at(data.modules.length - 1).id);
-      setModules(data.modules);
-      setLoading(false);
-    });
+    fetchModules(`search?limit=${fetchDataLimit}&q=${searchString}`).then(
+      (data) => {
+        setLastEvaluatedKey(data.modules.at(data.modules.length - 1).id);
+        setModules(data.modules);
+        setLoading(false);
+      }
+    );
   }, [debouncedSearchTerm]);
 
   const fetchModules = async (api: string) => {
@@ -88,52 +81,31 @@ const Overview = () => {
   };
 
   return (
-    <Container maxWidth={"xl"}>
-      <Box margin={"5vh"}>
-        <Typography
-          variant="h6"
-          noWrap
-          component="a"
-          href="/"
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
-          Private Terraform Registry
-        </Typography>
-      </Box>
-      <Stack spacing={2}>
-        <TextField
-          id="module-search"
-          label="Search module"
-          type="search"
-          value={searchString}
-          onChange={handleSearchInputChange}
-        />
-        <List
-          component={Stack}
-          sx={{ maxHeight: "50vh", overflow: "auto" }}
-          // @ts-ignore
-          ref={modulesTable}
-        >
-          {modules
-            ? modules.map((module) => (
-                <ModuleElement
-                  key={`${module.namespace}${module.name}${module.provider}`}
-                  module={module}
-                />
-                //TODO no modules found
-              ))
-            : null}
-        </List>
-      </Stack>
-    </Container>
+    <>
+      <TextField
+        id="module-search"
+        label="Search module"
+        type="search"
+        value={searchString}
+        onChange={handleSearchInputChange}
+      />
+      <List
+        component={Stack}
+        sx={{ maxHeight: "50vh", overflow: "auto", display: "flex-grow" }}
+        // @ts-ignore
+        ref={modulesTable}
+      >
+        {modules
+          ? modules.map((module) => (
+              <ModuleElement
+                key={`${module.namespace}${module.name}${module.provider}`}
+                module={module}
+              />
+              //TODO no modules found
+            ))
+          : null}
+      </List>
+    </>
   );
 };
 

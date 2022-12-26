@@ -2,10 +2,12 @@ package api.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import core.terraform.Module;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import java.util.Collection;
 import java.util.List;
 
+@RegisterForReflection
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ModulePagination {
 
