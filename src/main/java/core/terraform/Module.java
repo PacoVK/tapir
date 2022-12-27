@@ -2,10 +2,9 @@ package core.terraform;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.time.Instant;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Module {
@@ -23,26 +22,27 @@ public class Module {
     this.namespace = namespace;
     this.name = name;
     this.provider = provider;
-    this.versions = new LinkedList<>(List.of(new ModuleVersion(version)));
+    this.versions = new TreeSet<>(Set.of(new ModuleVersion(version)));
     setId(computeId());
   }
 
   private String id;
   private String namespace;
   private String name;
-  private LinkedList<ModuleVersion> versions;
+  private TreeSet<ModuleVersion> versions;
   private String provider;
   private Instant published_at;
   private Integer downloads = 0;
 
   @JsonIgnore
-  public String getCurrentVersion(){
-    return versions.getLast().getVersion();
+  public String getCurrentVersion() {
+    return versions.last().getVersion();
   }
 
-  private String computeId(){
+  private String computeId() {
     return String.format("%s-%s-%s", getNamespace(), getName(), getProvider());
   }
+
   public String getId() {
     return computeId();
   }
@@ -67,11 +67,11 @@ public class Module {
     this.name = name;
   }
 
-  public LinkedList<ModuleVersion> getVersions() {
+  public TreeSet<ModuleVersion> getVersions() {
     return versions;
   }
 
-  public void setVersions(LinkedList<ModuleVersion> versions) {
+  public void setVersions(TreeSet<ModuleVersion> versions) {
     this.versions = versions;
   }
 

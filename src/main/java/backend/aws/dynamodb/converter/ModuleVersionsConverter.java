@@ -1,22 +1,21 @@
 package backend.aws.dynamodb.converter;
 
 import core.terraform.ModuleVersion;
+import java.util.Collection;
+import java.util.TreeSet;
 import software.amazon.awssdk.enhanced.dynamodb.AttributeConverter;
 import software.amazon.awssdk.enhanced.dynamodb.AttributeValueType;
 import software.amazon.awssdk.enhanced.dynamodb.EnhancedType;
 import software.amazon.awssdk.enhanced.dynamodb.internal.converter.attribute.ListAttributeConverter;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.Collection;
-import java.util.LinkedList;
 
 public class ModuleVersionsConverter implements AttributeConverter<Collection<ModuleVersion>> {
 
   private final ListAttributeConverter<Collection<ModuleVersion>> listAttributeConverter = ListAttributeConverter
           .builder(EnhancedType.collectionOf(ModuleVersion.class))
-          .collectionConstructor(LinkedList::new)
+          .collectionConstructor(TreeSet::new)
           .elementConverter(new ModuleVersionsConverter.ModuleVersionConverter()).build();
-  ;
 
   @Override
   public AttributeValue transformFrom(Collection<ModuleVersion> moduleVersions) {

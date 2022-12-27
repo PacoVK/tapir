@@ -1,14 +1,17 @@
 package core.service.upload;
 
 import core.terraform.Module;
-
-import javax.enterprise.context.ApplicationScoped;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class FileService {
@@ -26,8 +29,8 @@ public class FileService {
     );
   }
 
-  public void flushArchiveToFile (File archive, File targetFile){
-    try(FileOutputStream fileOutputStream = new FileOutputStream(targetFile);
+  public void flushArchiveToFile(File archive, File targetFile) {
+    try (FileOutputStream fileOutputStream = new FileOutputStream(targetFile);
         InputStream inputStream = new FileInputStream(archive)
     ) {
       fileOutputStream.write(inputStream.readAllBytes());
@@ -38,10 +41,12 @@ public class FileService {
   }
 
   public void unpackArchive(File archive, Path targetDir) {
-    try(ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(archive))) {
+    try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(archive))) {
       ZipEntry entry = zipInputStream.getNextEntry();
       while (entry != null) {
-        if (!entry.isDirectory() && !entry.getName().startsWith("example") && entry.getName().endsWith(".tf")) {
+        if (!entry.isDirectory()
+                && !entry.getName().startsWith("example")
+                && entry.getName().endsWith(".tf")) {
           File tempFile = createOrGetFile(entry.getName(), targetDir);
           FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
           int len;
@@ -60,17 +65,17 @@ public class FileService {
   }
 
   public void deleteAllFilesInDirectory(File directory) throws IOException {
-    if(directory.isDirectory()) {
+    if (directory.isDirectory()) {
       File[] files = directory.listFiles();
 
-      if(files != null) {
-        for(File file : files) {
+      if (files != null) {
+        for (File file : files) {
           deleteAllFilesInDirectory(file);
         }
       }
     }
 
-    if(directory.delete()) {
+    if (directory.delete()) {
       LOGGER.fine(String.format("Deleted file %s", directory.toPath()));
       Files.deleteIfExists(directory.toPath());
     }
@@ -78,10 +83,9 @@ public class FileService {
 
   private File createOrGetFile(String fileName, Path targetDir) throws IOException {
     File tmpFile;
-    if(!Files.exists(targetDir.resolve(fileName))){
+    if (!Files.exists(targetDir.resolve(fileName))) {
       tmpFile = Files.createFile(targetDir.resolve(fileName)).toFile();
-    }
-    else {
+    } else {
       tmpFile = targetDir.resolve(fileName).toFile();
     }
     if (!tmpFile.getCanonicalPath().startsWith(targetDir.toRealPath() + File.separator)) {

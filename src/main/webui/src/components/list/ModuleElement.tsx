@@ -43,9 +43,7 @@ const ModuleElement = ({ module }: { module: Module }) => {
           />
           <Chip
             icon={<InfoIcon />}
-            label={`Latest version: ${
-              module.versions.at(module.versions.length - 1)!.version
-            }`}
+            label={`Latest version: ${module.versions.at(0)!.version}`}
           />
           <Chip
             icon={<RocketLaunchIcon />}

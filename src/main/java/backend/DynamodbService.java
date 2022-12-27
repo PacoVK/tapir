@@ -1,15 +1,24 @@
 package backend;
 
 import api.dto.ModulePagination;
-
 import backend.aws.dynamodb.converter.ModuleVersionsConverter;
 import backend.aws.dynamodb.converter.SecurityReportConverter;
 import core.service.backend.SearchService;
 import core.terraform.Module;
 import extensions.core.SastReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeSet;
+import javax.enterprise.context.ApplicationScoped;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
-import software.amazon.awssdk.enhanced.dynamodb.*;
+import software.amazon.awssdk.enhanced.dynamodb.AttributeConverter;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Expression;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.Page;
 import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -17,11 +26,6 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
-
-import javax.enterprise.context.ApplicationScoped;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.*;
 
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 
@@ -50,7 +54,7 @@ public class DynamodbService extends SearchService {
                   .addAttribute(Integer.class, a -> a.name("downloads")
                           .getter(Module::getDownloads)
                           .setter(Module::setDownloads))
-                  .addAttribute(LinkedList.class, a -> a.name("versions")
+                  .addAttribute(TreeSet.class, a -> a.name("versions")
                           .getter(Module::getVersions)
                           .setter(Module::setVersions)
                           .attributeConverter((AttributeConverter) new ModuleVersionsConverter()))
@@ -84,17 +88,18 @@ public class DynamodbService extends SearchService {
                   .build();
 
   public DynamodbService(DynamoDbClient dynamoDbClient) {
-    DynamoDbEnhancedClient dbEnhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
+    DynamoDbEnhancedClient dbEnhancedClient = DynamoDbEnhancedClient
+            .builder().dynamoDbClient(dynamoDbClient).build();
     this.modulesTable = dbEnhancedClient.table("Modules", moduleTableSchema);
     this.securityReportsTable = dbEnhancedClient.table("SecurityReports", sastReportTableSchema);
   }
 
   @Override
-  public void ingestModuleData(Module module) throws IOException {
+  public void ingestModuleData(Module module) {
     Module moduleToIngest;
     Module existingModule = modulesTable.getItem(module);
     if (existingModule != null) {
-      existingModule.getVersions().add(module.getVersions().get(0));
+      existingModule.getVersions().add(module.getVersions().first());
       moduleToIngest = existingModule;
     } else {
       moduleToIngest = module;
@@ -119,20 +124,21 @@ public class DynamodbService extends SearchService {
 
   @Override
   public SastReport getReportByModuleVersion(Module module) {
-    String reportId = new StringBuilder(module.getId()).append("-").append(module.getCurrentVersion()).toString();
+    String reportId = new StringBuilder(module.getId())
+            .append("-").append(module.getCurrentVersion()).toString();
     return securityReportsTable.getItem(Key.builder().partitionValue(reportId).build());
   }
 
   public void bootstrap() {
     try {
       modulesTable.createTable();
-    } catch (ResourceInUseException inUseException){
+    } catch (ResourceInUseException inUseException) {
       System.out.println("Table exists");
     }
 
     try {
       securityReportsTable.createTable();
-    } catch (ResourceInUseException inUseException){
+    } catch (ResourceInUseException inUseException) {
       System.out.println("Table exists");
     }
 
@@ -145,21 +151,18 @@ public class DynamodbService extends SearchService {
       DescribeTableResponse tableDescription = response.response().orElseThrow(
               () -> new RuntimeException("Customer table was not created."));
       System.out.println(tableDescription.table().tableName() + " was created.");
-    } catch (Exception e){
+    } catch (Exception e) {
       System.out.println("Foo");
     }
   }
 
-  public void index(Module module) throws IOException {
-    modulesTable.putItem(module);
-  }
-
   public ModulePagination findModules(String identifier, Integer limit, String terms) {
-    ScanEnhancedRequest.Builder scanEnhancedRequestBuilder = ScanEnhancedRequest.builder().limit(limit);
-    if(!identifier.isEmpty()){
+    ScanEnhancedRequest.Builder scanEnhancedRequestBuilder = ScanEnhancedRequest.builder()
+            .limit(limit);
+    if (!identifier.isEmpty()) {
       scanEnhancedRequestBuilder.exclusiveStartKey(Map.of("id", AttributeValue.fromS(identifier)));
     }
-    if(!terms.isEmpty()){
+    if (!terms.isEmpty()) {
       Expression expression = Expression.builder()
               .expressionNames(Map.of(
                       "#namespace", "namespace",
@@ -171,13 +174,15 @@ public class DynamodbService extends SearchService {
               .build();
       scanEnhancedRequestBuilder.filterExpression(expression);
     }
-    ScanEnhancedRequest scanEnhancedRequest =scanEnhancedRequestBuilder.build();
-    Page<Module> modulePage = modulesTable.scan(scanEnhancedRequest).stream().findFirst().orElse(null);
-    if(modulePage == null){
+    ScanEnhancedRequest scanEnhancedRequest = scanEnhancedRequestBuilder.build();
+    Page<Module> modulePage = modulesTable.scan(scanEnhancedRequest)
+            .stream().findFirst().orElse(null);
+    if (modulePage == null) {
       return new ModulePagination(Collections.EMPTY_LIST);
     }
     return new ModulePagination(modulePage.items());
   }
+
   public Module getModuleById(String name) {
     return modulesTable.getItem(Key.builder().partitionValue(name).build());
   }

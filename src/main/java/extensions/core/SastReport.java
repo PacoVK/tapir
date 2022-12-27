@@ -2,7 +2,6 @@ package extensions.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import extensions.security.report.TfSecReport;
-
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,9 @@ public class SastReport {
 
   public SastReport() {}
 
-  public SastReport(String moduleNamespace, String moduleName, String provider, String moduleVersion, Map<String, List<TfSecReport.TfSecResult>> securityReport) {
+  public SastReport(String moduleNamespace, String moduleName,
+                    String provider, String moduleVersion,
+                    Map<String, List<TfSecReport.TfSecResult>> securityReport) {
     this.moduleNamespace = moduleNamespace;
     this.moduleName = moduleName;
     this.provider = provider;
@@ -27,7 +28,12 @@ public class SastReport {
   private Map<String, List<TfSecReport.TfSecResult>> securityReport;
 
   public String getId() {
-    return String.format("%s-%s-%s-%s", getModuleNamespace(), getModuleName(), getProvider(), getModuleVersion());
+    return String.format("%s-%s-%s-%s",
+            getModuleNamespace(),
+            getModuleName(),
+            getProvider(),
+            getModuleVersion()
+    );
   }
 
   public void setId(String id) {

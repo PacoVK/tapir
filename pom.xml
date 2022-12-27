@@ -80,6 +80,11 @@
       <version>${quarkus.quinoa.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
+      <version>3.8.6</version>
+    </dependency>
+    <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>5.3.0</version>
@@ -152,6 +157,9 @@
         <version>${checkstyle-maven-plugin.version}</version>
         <configuration>
           <configLocation>google_checks.xml</configLocation>
+          <suppressionsLocation>
+            checkstyle-suppressions.xml
+          </suppressionsLocation>
         </configuration>
         <executions>
           <execution>

@@ -1,11 +1,10 @@
 package core.service.upload;
 
 import core.terraform.Module;
+import java.io.File;
+import javax.ws.rs.core.MediaType;
 import org.jboss.resteasy.reactive.PartType;
 import org.jboss.resteasy.reactive.RestForm;
-
-import javax.ws.rs.core.MediaType;
-import java.io.File;
 
 public class FormData {
 

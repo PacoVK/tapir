@@ -14,7 +14,7 @@ const fetchDataLimit = 5;
 const Overview = () => {
   const modulesTable = useRef();
   const [modules, setModules] = useState([] as Module[]);
-  const [lastEvaluatedKey, setLastEvaluatedKey] = useState("");
+  const [lastEvaluatedItem, setLastEvaluatedItem] = useState("");
   const [searchString, setSearchString] = useState("");
   const debouncedSearchTerm = useDebounce(searchString, 500);
 
@@ -24,11 +24,13 @@ const Overview = () => {
   const loadMore = useCallback(() => {
     setLoading(true);
     fetchModules(
-      `search?limit=${fetchDataLimit}&lastKey=${lastEvaluatedKey}&q=${searchString}`
+      `search?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItem}&q=${searchString}`
     ).then((data) => {
       // TODO handle no more modules available
       const allModules = [...modules, ...data.modules];
-      setLastEvaluatedKey(allModules.at(allModules.length - 1).id);
+      setLastEvaluatedItem(
+        data.lastEvaluatedItem ? data.lastEvaluatedItem : ""
+      );
       setModules(allModules);
       setLoading(false);
     });
@@ -62,7 +64,9 @@ const Overview = () => {
     setLoading(true);
     fetchModules(`search?limit=${fetchDataLimit}&q=${searchString}`).then(
       (data) => {
-        setLastEvaluatedKey(data.modules.at(data.modules.length - 1).id);
+        setLastEvaluatedItem(
+          data.lastEvaluatedItem ? data.lastEvaluatedItem : ""
+        );
         setModules(data.modules);
         setLoading(false);
       }

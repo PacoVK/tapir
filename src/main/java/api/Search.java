@@ -2,11 +2,14 @@ package api;
 
 import api.dto.ModulePagination;
 import core.service.backend.SearchService;
+import java.util.Optional;
 import javax.enterprise.inject.Instance;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Optional;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/search")

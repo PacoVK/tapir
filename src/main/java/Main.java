@@ -1,9 +1,7 @@
 import core.service.backend.SearchService;
-
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
-
 import javax.enterprise.inject.Instance;
 
 @QuarkusMain

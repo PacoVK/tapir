@@ -13,7 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Misconfiguration, Severity } from "../types";
+import { Misconfiguration } from "../types";
 import { getProviderLogo } from "../util/LogoUtil";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MisconfigurationItem from "../components/securityReportVisualization/MisconfigurationItem";
@@ -44,7 +44,7 @@ const ModuleDetails = () => {
     );
     const module = await response.json();
     setModule(module);
-    setVersion(module.versions.at(module.versions.length - 1)?.version);
+    setVersion(module.versions.at(0)?.version);
   };
 
   const loadingRoutine = () => {
@@ -121,9 +121,7 @@ const ModuleDetails = () => {
         />
         <Chip
           icon={<InfoIcon />}
-          label={`Latest version: ${
-            module.versions.at(module.versions.length - 1)!.version
-          }`}
+          label={`Latest version: ${module.versions.at(0)!.version}`}
         />
         <Chip
           icon={<RocketLaunchIcon />}
@@ -141,42 +139,40 @@ const ModuleDetails = () => {
         </Link>
         :
       </Typography>
-      {
-        reports ? (
-            Object.entries(reports).map(([target, findings] : [string, any]) => {
-            return (
-              <Accordion key={target}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls={`${target}-content`}
-                  id={`${target}-header`}
-                >
-                  <Typography>
-                    {target} - Findings: {findings.length}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  {findings.map(
-                    (misconfiguration: Misconfiguration, index: string) => {
-                      return (
-                        <MisconfigurationItem
-                          key={`misconf-item-${index}`}
-                          misconfiguration={misconfiguration}
-                          keyIdentifier={index}
-                        />
-                      );
-                    }
-                  )}
-                </AccordionDetails>
-              </Accordion>
-            );
-          })
-        ) : (
-          <Typography>
-            No report available for module version: {version}
-          </Typography>
-        )
-      }
+      {reports ? (
+        Object.entries(reports).map(([target, findings]: [string, any]) => {
+          return (
+            <Accordion key={target}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={`${target}-content`}
+                id={`${target}-header`}
+              >
+                <Typography>
+                  {target} - Findings: {findings.length}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {findings.map(
+                  (misconfiguration: Misconfiguration, index: string) => {
+                    return (
+                      <MisconfigurationItem
+                        key={`misconf-item-${index}`}
+                        misconfiguration={misconfiguration}
+                        keyIdentifier={index}
+                      />
+                    );
+                  }
+                )}
+              </AccordionDetails>
+            </Accordion>
+          );
+        })
+      ) : (
+        <Typography>
+          No report available for module version: {version}
+        </Typography>
+      )}
     </>
   ) : (
     loadingRoutine()

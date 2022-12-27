@@ -1,7 +1,6 @@
 package api;
 
 import core.terraform.api.ServiceDiscovery;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -14,7 +13,7 @@ public class Discovery {
 
   @GET
   @Path("/terraform.json")
-  public Response getSupportedServices(){
+  public Response getSupportedServices() {
     return Response.ok(new ServiceDiscovery()).build();
   }
 }

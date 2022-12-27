@@ -4,10 +4,9 @@ import core.service.backend.SearchService;
 import core.service.storage.StorageService;
 import core.terraform.Module;
 import io.vertx.mutiny.core.eventbus.EventBus;
-
+import java.io.File;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
-import java.io.File;
 
 @ApplicationScoped
 public class UploadService {
@@ -17,7 +16,11 @@ public class UploadService {
   SearchService searchService;
   FileService fileService;
 
-  public UploadService(Instance<StorageService> storageServiceInstance, Instance<SearchService> searchServiceInstance, FileService fileService, EventBus eventBus) {
+  public UploadService(
+          Instance<StorageService> storageServiceInstance,
+          Instance<SearchService> searchServiceInstance,
+          FileService fileService,
+          EventBus eventBus) {
     this.storageService = storageServiceInstance.get();
     this.searchService = searchServiceInstance.get();
     this.fileService = fileService;

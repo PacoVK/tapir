@@ -3,10 +3,9 @@ package core.event.consumer;
 import core.service.backend.SearchService;
 import extensions.core.SastReport;
 import io.quarkus.vertx.ConsumeEvent;
-
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
-import java.util.logging.Logger;
 
 @ApplicationScoped
 public class ReportListener {
@@ -21,7 +20,10 @@ public class ReportListener {
 
   @ConsumeEvent("module.report.finished")
   public void handleSecurityReportUpdate(SastReport sastReport) throws Exception {
-    LOGGER.info(String.format("Publishing scan result for module %s, version %s", sastReport.getModuleName(), sastReport.getModuleVersion()));
+    LOGGER.info(String.format("Publishing scan result for module %s, version %s",
+            sastReport.getModuleName(),
+            sastReport.getModuleVersion())
+    );
     searchService.ingestSecurityScanResult(sastReport);
   }
 }

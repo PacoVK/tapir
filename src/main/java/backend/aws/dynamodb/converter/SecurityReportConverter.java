@@ -2,6 +2,11 @@ package backend.aws.dynamodb.converter;
 
 import extensions.security.report.TfSecReport;
 import io.vertx.core.json.JsonObject;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import software.amazon.awssdk.enhanced.dynamodb.AttributeConverter;
 import software.amazon.awssdk.enhanced.dynamodb.AttributeValueType;
 import software.amazon.awssdk.enhanced.dynamodb.EnhancedType;
@@ -9,8 +14,6 @@ import software.amazon.awssdk.enhanced.dynamodb.internal.converter.attribute.Lis
 import software.amazon.awssdk.enhanced.dynamodb.internal.converter.attribute.MapAttributeConverter;
 import software.amazon.awssdk.enhanced.dynamodb.internal.converter.string.StringStringConverter;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
-
-import java.util.*;
 
 public class SecurityReportConverter implements AttributeConverter<Map<String, List>> {
 
@@ -43,11 +46,11 @@ public class SecurityReportConverter implements AttributeConverter<Map<String, L
 
   static class TfSecResultListConverter implements AttributeConverter<List> {
 
-    private final ListAttributeConverter<Collection<TfSecReport.TfSecResult>> listAttributeConverter = ListAttributeConverter
+    private final ListAttributeConverter<Collection<TfSecReport.TfSecResult>>
+            listAttributeConverter = ListAttributeConverter
             .builder(EnhancedType.collectionOf(TfSecReport.TfSecResult.class))
             .collectionConstructor(LinkedList::new)
             .elementConverter(new TfSecResultConverter()).build();
-    ;
 
     @Override
     public AttributeValue transformFrom(List list) {

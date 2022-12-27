@@ -3,7 +3,6 @@ package api.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import core.terraform.Module;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -12,9 +11,8 @@ import java.util.List;
 public class ModulePagination {
 
   public ModulePagination(List<Module> modules) {
-    // TODO decide whether to handle on frontend or backend
     this.modules = modules;
-    if(!modules.isEmpty()){
+    if (!modules.isEmpty()) {
       this.lastEvaluatedItem = modules.get(modules.size() - 1);
     }
   }

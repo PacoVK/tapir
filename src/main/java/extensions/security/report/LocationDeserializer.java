@@ -17,14 +17,15 @@ public class LocationDeserializer extends StdDeserializer<TfSecReport.TfSecResul
   }
 
   @Override
-  public TfSecReport.TfSecResult.Location deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+  public TfSecReport.TfSecResult.Location deserialize(
+          JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
     JsonNode node = jsonParser.getCodec().readTree(jsonParser);
     String filename = node.get("filename").asText();
-    Integer start_line = (Integer) node.get("start_line").numberValue();
-    Integer end_line = (Integer) node.get("end_line").numberValue();
+    Integer startLine = (Integer) node.get("start_line").numberValue();
+    Integer endLine = (Integer) node.get("end_line").numberValue();
 
     String targetFileName = filename.substring(filename.lastIndexOf("/") + 1);
 
-    return new TfSecReport.TfSecResult.Location(targetFileName, start_line, end_line);
+    return new TfSecReport.TfSecResult.Location(targetFileName, startLine, endLine);
   }
 }

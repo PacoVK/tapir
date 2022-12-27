@@ -8,14 +8,20 @@ import extensions.security.util.TfSecReportUtil;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.mutiny.core.eventbus.EventBus;
-
-import javax.enterprise.context.ApplicationScoped;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 
 @RegisterForReflection
 @ApplicationScoped
@@ -32,7 +38,10 @@ public class SecurityScanner {
 
   @ConsumeEvent("module.extract.finished")
   public void scanModule(FormData archive) {
-    LOGGER.info(String.format("Starting scan for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
+    LOGGER.info(String.format("Starting scan for module %s, version %s",
+            archive.getModule().getName(),
+            archive.getModule().getCurrentVersion()
+    ));
 
     ProcessBuilder builder = new ProcessBuilder();
     builder.command("sh", "-c", "tfsec -f json  --ignore-hcl-errors .");
@@ -47,7 +56,8 @@ public class SecurityScanner {
       assert exitCode == 0;
       future.get(10, TimeUnit.SECONDS);
       TfSecReport tfSecReport = mapper.readValue(responseStrBuilder.toString(), TfSecReport.class);
-      Map<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil.groupAndSortFindingsBySeverity(tfSecReport);
+      Map<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil
+              .groupAndSortFindingsBySeverity(tfSecReport);
       SastReport sastReport = new SastReport(
               archive.getModule().getNamespace(),
               archive.getModule().getName(),
@@ -59,16 +69,21 @@ public class SecurityScanner {
     } catch (IOException | ExecutionException | InterruptedException | TimeoutException e) {
       throw new RuntimeException(e);
     }
-    LOGGER.info(String.format("Finished scan for module %s, version %s", archive.getModule().getName(), archive.getModule().getCurrentVersion()));
+    LOGGER.info(String.format("Finished scan for module %s, version %s",
+            archive.getModule().getName(),
+            archive.getModule().getCurrentVersion()
+    ));
     eventBus.requestAndForget("module.processing.finished", archive);
   }
 
-  private record CommandOutputConsumer(InputStream inputStream, Consumer<String> consumer) implements Runnable {
+  private record CommandOutputConsumer(
+          InputStream inputStream, Consumer<String> consumer
+  ) implements Runnable {
 
     @Override
-      public void run() {
-        new BufferedReader(new InputStreamReader(inputStream)).lines()
-                .forEach(consumer);
-      }
+    public void run() {
+      new BufferedReader(new InputStreamReader(inputStream)).lines()
+              .forEach(consumer);
     }
+  }
 }

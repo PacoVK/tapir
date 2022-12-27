@@ -2,22 +2,21 @@ package backend;
 
 import api.dto.ModulePagination;
 import core.service.backend.SearchService;
+import core.terraform.Module;
 import extensions.core.SastReport;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.HttpMethod;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
-import core.terraform.Module;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.HttpMethod;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "elasticsearch")
 @ApplicationScoped
@@ -32,15 +31,20 @@ public class ElasticSearchService extends SearchService {
   public void ingestModuleData(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/modules/_update/%s-%s-%s",module.getNamespace(), module.getName(), module.getProvider())
+            String.format("/modules/_update/%s-%s-%s",
+                    module.getNamespace(),
+                    module.getName(),
+                    module.getProvider()
+            )
     );
+    String upsertScript = new StringBuilder("List versions=ctx._source.versions; ")
+            .append("if(versions!=null && !versions.stream().anyMatch(v-> v.version.equals(params.release.version))){")
+            .append("ctx._source.versions.add(params.release)")
+            .append("}").toString();
     String payload = JsonObject.of("script", JsonObject.of(
-            "source", "List versions=ctx._source.versions; " +
-                    "if(versions!=null && !versions.stream().anyMatch(v-> v.version.equals(params.release.version))){" +
-                      "ctx._source.versions.add(params.release)" +
-                    "}",
+            "source", upsertScript,
             "lang", "painless",
-            "params", JsonObject.of("release", module.getVersions().getLast())
+            "params", JsonObject.of("release", module.getVersions().first())
     ), "upsert", module).toString();
     request.setJsonEntity(payload);
     restClient.performRequest(request);
@@ -48,7 +52,10 @@ public class ElasticSearchService extends SearchService {
 
   @Override
   public void ingestSecurityScanResult(SastReport sastReport) throws Exception {
-    String targetIndexName = String.format("%s-%s-reports",sastReport.getModuleNamespace(), sastReport.getModuleName());
+    String targetIndexName = String.format("%s-%s-reports",
+            sastReport.getModuleNamespace(),
+            sastReport.getModuleName()
+    );
     createIndexIfNotExists(targetIndexName);
     Request request = new Request(
             HttpMethod.POST,
@@ -66,7 +73,11 @@ public class ElasticSearchService extends SearchService {
   public void increaseDownloadCounter(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/modules/_update/%s-%s-%s",module.getNamespace(), module.getName(), module.getProvider())
+            String.format("/modules/_update/%s-%s-%s",
+                    module.getNamespace(),
+                    module.getName(),
+                    module.getProvider()
+            )
     );
     String payload = JsonObject.of("script", JsonObject.of(
             "source", "ctx._source.downloads += 1",
@@ -93,8 +104,10 @@ public class ElasticSearchService extends SearchService {
   }
 
   public void bootstrap() throws IOException {
-    Integer statusCode = restClient.performRequest(new Request(HttpMethod.HEAD, "/modules")).getStatusLine().getStatusCode();
-    if(statusCode.equals(200)){
+    Integer statusCode = restClient.performRequest(
+            new Request(HttpMethod.HEAD, "/modules")
+    ).getStatusLine().getStatusCode();
+    if (statusCode.equals(200)) {
       return;
     }
     Request request = new Request(HttpMethod.PUT, "/modules");
@@ -125,16 +138,18 @@ public class ElasticSearchService extends SearchService {
     return new ModulePagination(results);
   }
 
-  public ModulePagination findModules(String identifier, Integer limit, String term) throws IOException {
+  public ModulePagination findModules(String identifier,
+                                      Integer limit,
+                                      String term) throws IOException {
     StringBuilder queryBuilder = new StringBuilder("{").append(
             String.format("\"sort\": [ {\"_id\": \"asc\"} ], \"size\": %s", limit)
     );
-    if(!identifier.isEmpty()){
+    if (!identifier.isEmpty()) {
       queryBuilder.append(String.format(",\"search_after\": [\"%s\"]", identifier));
     }
-    if(!term.isEmpty()){
+    if (!term.isEmpty()) {
       queryBuilder.append(
-              String.format(", \"query\": {\"query_string\": {\"query\": \"*%s*\", \"fields\": [\"name\", \"namespace\", \"provider\"]}}",term)
+              String.format(", \"query\": {\"query_string\": {\"query\": \"*%s*\", \"fields\": [\"name\", \"namespace\", \"provider\"]}}", term)
       );
     }
     queryBuilder.append("}");
@@ -169,7 +184,7 @@ public class ElasticSearchService extends SearchService {
     Integer statusCode = restClient.performRequest(
             new Request(HttpMethod.HEAD, String.format("/%s", indexName))
     ).getStatusLine().getStatusCode();
-    if(!statusCode.equals(200)){
+    if (!statusCode.equals(200)) {
       Request request = new Request(HttpMethod.PUT, String.format("/%s", indexName));
       restClient.performRequest(request);
     }

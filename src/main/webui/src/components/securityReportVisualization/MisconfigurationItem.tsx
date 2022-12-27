@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {Misconfiguration} from "../../types";
+import { Misconfiguration } from "../../types";
 import "./MisconfigurationItem.css";
 
 const MisconfigurationItem = ({
@@ -21,7 +21,9 @@ const MisconfigurationItem = ({
     <Accordion key={misconfiguration.resource + keyIdentifier}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls={`${misconfiguration.rule_description + keyIdentifier}-content`}
+        aria-controls={`${
+          misconfiguration.rule_description + keyIdentifier
+        }-content`}
         id={`${misconfiguration.rule_description + keyIdentifier}-header`}
         className={`severity-${misconfiguration.severity}`}
       >
@@ -35,9 +37,7 @@ const MisconfigurationItem = ({
         <Typography>
           {misconfiguration.severity} - {misconfiguration.impact}
         </Typography>
-        <Typography>
-          Resource: {misconfiguration.resource}
-        </Typography>
+        <Typography>Resource: {misconfiguration.resource}</Typography>
         <Typography>
           StartLine: {misconfiguration.location.start_line}
           EndLine: {misconfiguration.location.end_line}
