@@ -1,5 +1,7 @@
 package backend;
 
+import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
+
 import api.dto.ModulePagination;
 import backend.aws.dynamodb.converter.ModuleVersionsConverter;
 import backend.aws.dynamodb.converter.SecurityReportConverter;
@@ -26,8 +28,6 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
-
-import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "dynamodb")
 @ApplicationScoped

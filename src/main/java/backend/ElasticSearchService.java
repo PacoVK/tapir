@@ -38,7 +38,9 @@ public class ElasticSearchService extends SearchService {
             )
     );
     String upsertScript = new StringBuilder("List versions=ctx._source.versions; ")
+            //CHECKSTYLE:OFF
             .append("if(versions!=null && !versions.stream().anyMatch(v-> v.version.equals(params.release.version))){")
+            //CHECKSTYLE:ON
             .append("ctx._source.versions.add(params.release)")
             .append("}").toString();
     String payload = JsonObject.of("script", JsonObject.of(
