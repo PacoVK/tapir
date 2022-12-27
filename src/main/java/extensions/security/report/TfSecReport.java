@@ -2,7 +2,6 @@ package extensions.security.report;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -147,7 +146,6 @@ public class TfSecReport {
       this.location = location;
     }
 
-    @JsonDeserialize(using = LocationDeserializer.class)
     public static class Location {
       private String filename;
       private Integer start_line;

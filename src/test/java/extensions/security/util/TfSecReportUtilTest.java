@@ -1,14 +1,14 @@
 package extensions.security.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import extensions.security.report.Severity;
 import extensions.security.report.TfSecReport;
-import org.junit.jupiter.api.Test;
-import util.TestDataBuilder;
-
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import util.TestDataBuilder;
 
 class TfSecReportUtilTest {
 
@@ -17,7 +17,7 @@ class TfSecReportUtilTest {
     TfSecReport tfSecReportStub = TestDataBuilder.getTfSecReportStub();
     assert tfSecReportStub != null;
     HashMap<String, List<TfSecReport.TfSecResult>> findings = TfSecReportUtil
-            .groupAndSortFindingsBySeverity(tfSecReportStub);
+            .sanitizeAndGroupAndSortFindings(tfSecReportStub, Paths.get("/foo/bar"));
     assertEquals(findings.size(), 2);
     assertEquals(findings.get("github.tf").size(), 3);
     assertEquals(findings.get("github.tf").get(0).getSeverity(), Severity.CRITICAL);

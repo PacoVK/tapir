@@ -9,6 +9,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -42,10 +43,10 @@ public class SecurityScanner {
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion()
     ));
-
+    File workingDirectory = archive.getCompressedModule().getParentFile();
     ProcessBuilder builder = new ProcessBuilder();
     builder.command("sh", "-c", "tfsec -f json  --ignore-hcl-errors .");
-    builder.directory(archive.getCompressedModule().getParentFile());
+    builder.directory(workingDirectory);
     try {
       Process process = builder.start();
       StringBuilder responseStrBuilder = new StringBuilder();
@@ -57,7 +58,7 @@ public class SecurityScanner {
       future.get(10, TimeUnit.SECONDS);
       TfSecReport tfSecReport = mapper.readValue(responseStrBuilder.toString(), TfSecReport.class);
       Map<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil
-              .groupAndSortFindingsBySeverity(tfSecReport);
+              .sanitizeAndGroupAndSortFindings(tfSecReport, workingDirectory.toPath());
       SastReport sastReport = new SastReport(
               archive.getModule().getNamespace(),
               archive.getModule().getName(),
