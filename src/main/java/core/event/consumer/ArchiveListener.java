@@ -24,7 +24,7 @@ public class ArchiveListener {
   EventBus eventBus;
 
   @ConsumeEvent("module.upload.finished")
-  public void unpackArchive(FormData archive) {
+  public String unpackArchive(FormData archive) {
     LOGGER.info(String.format("Start to unpack module %s, version %s",
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion())
@@ -33,10 +33,11 @@ public class ArchiveListener {
     Path tmpDirectory = tmpArchiveFile.toPath().getParent();
     fileService.unpackArchive(tmpArchiveFile, tmpDirectory);
     eventBus.requestAndForget("module.extract.finished", archive);
+    return "ok";
   }
 
   @ConsumeEvent("module.processing.finished")
-  public void cleanUp(FormData  archive) throws IOException {
+  public String cleanUp(FormData  archive) throws IOException {
     LOGGER.info(String.format("Clean up temporary module files for module %s, version %s",
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion())
@@ -46,5 +47,6 @@ public class ArchiveListener {
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion())
     );
+    return "ok";
   }
 }

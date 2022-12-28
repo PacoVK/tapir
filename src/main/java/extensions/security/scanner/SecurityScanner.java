@@ -38,7 +38,7 @@ public class SecurityScanner {
   }
 
   @ConsumeEvent("module.extract.finished")
-  public void scanModule(FormData archive) {
+  public String scanModule(FormData archive) {
     LOGGER.info(String.format("Starting scan for module %s, version %s",
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion()
@@ -75,6 +75,7 @@ public class SecurityScanner {
             archive.getModule().getCurrentVersion()
     ));
     eventBus.requestAndForget("module.processing.finished", archive);
+    return "ok";
   }
 
   private record CommandOutputConsumer(

@@ -1,6 +1,5 @@
 package core.terraform;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
 public class ModuleVersion implements Comparable<ModuleVersion> {
@@ -8,13 +7,9 @@ public class ModuleVersion implements Comparable<ModuleVersion> {
 
   public ModuleVersion(String version) {
     this.version = version;
-    this.comparableVersion = new ComparableVersion(version);
   }
 
   String version;
-
-  @JsonIgnore
-  ComparableVersion comparableVersion;
 
   public void setVersion(String version) {
     this.version = version;
@@ -24,12 +19,8 @@ public class ModuleVersion implements Comparable<ModuleVersion> {
     return version;
   }
 
-  public ComparableVersion getComparableVersion() {
-    return comparableVersion;
-  }
-
   @Override
   public int compareTo(ModuleVersion o) {
-    return o.comparableVersion.compareTo(this.comparableVersion);
+    return new ComparableVersion(o.getVersion()).compareTo(new ComparableVersion(this.version));
   }
 }

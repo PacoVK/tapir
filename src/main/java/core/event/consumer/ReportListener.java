@@ -19,11 +19,12 @@ public class ReportListener {
   }
 
   @ConsumeEvent("module.report.finished")
-  public void handleSecurityReportUpdate(SastReport sastReport) throws Exception {
+  public String handleSecurityReportUpdate(SastReport sastReport) throws Exception {
     LOGGER.info(String.format("Publishing scan result for module %s, version %s",
             sastReport.getModuleName(),
             sastReport.getModuleVersion())
     );
     searchService.ingestSecurityScanResult(sastReport);
+    return "ok";
   }
 }

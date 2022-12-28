@@ -27,6 +27,7 @@ public class UploadService {
     this.eventBus = eventBus;
   }
 
+  //TODO handle errors here
   public void uploadModule(FormData archive) throws Exception {
     Module module = archive.getModule();
     storageService.uploadModule(archive);

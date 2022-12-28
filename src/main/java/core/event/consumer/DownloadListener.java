@@ -20,7 +20,7 @@ public class DownloadListener {
   }
 
   @ConsumeEvent("module.download.requested")
-  public void handleDownloadRequestedEvent(Module module) throws IOException {
+  public String handleDownloadRequestedEvent(Module module) throws IOException {
     LOGGER.info(String.format("Download was requested for module %s, version %s",
             module.getName(),
             module.getCurrentVersion())
@@ -30,5 +30,6 @@ public class DownloadListener {
             module.getName(),
             module.getCurrentVersion())
     );
+    return "ok";
   }
 }
