@@ -23,7 +23,7 @@ const Header = () => {
               textDecoration: "none",
             }}
           >
-            Private Terraform Registry
+            Tapir - Private Terraform Registry
           </Typography>
         </Toolbar>
       </Box>
