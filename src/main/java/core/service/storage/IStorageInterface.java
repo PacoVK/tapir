@@ -1,9 +1,11 @@
 package core.service.storage;
 
 import core.service.upload.FormData;
-import javax.ws.rs.core.Response;
+import core.terraform.Module;
 
 public interface IStorageInterface {
 
-  Response.ResponseBuilder uploadModule(FormData archive);
+  void uploadModule(FormData archive);
+
+  String getDownloadUrlForModule(Module module);
 }

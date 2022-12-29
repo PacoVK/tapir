@@ -2,9 +2,13 @@ registry:
   search:
     backend: ${BACKEND_CONFIG:dynamodb}
     elasticsearch:
-      host: ${BACKEND_ELASTICSEARCH_HOST:localhost:9200}
+      host: ${BACKEND_ELASTICSEARCH_HOST:http://localhost:9200}
   storage:
-    backend: ${STORAGE_CONFIG:s3}
+    backend: ${STORAGE_CONFIG:azureBlob}
+    azure:
+      blobEndpoint: ${AZURE_BLOB_ENDPOINT:http://127.0.0.1:10000}
+      accountName: ${AZURE_ACCOUNT_NAME:devstoreaccount1}
+      containerName: ${AZURE_BLOB_CONTAINER_NAME:containername}
     s3:
       bucket:
         name: ${S3_STORAGE_BUCKET_NAME:tf-registry}

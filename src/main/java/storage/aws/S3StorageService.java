@@ -58,13 +58,13 @@ public class S3StorageService extends StorageService {
 
   @Override
   //TODO check return
-  public Response.ResponseBuilder uploadModule(FormData archive) {
+  public void uploadModule(FormData archive) {
     PutObjectResponse putResponse = s3.putObject(buildPutRequest(archive),
             RequestBody.fromFile(archive.getPayload()));
     if (putResponse != null) {
-      return Response.ok().status(Response.Status.CREATED);
+      Response.ok().status(Response.Status.CREATED);
     } else {
-      return Response.serverError();
+      Response.serverError();
     }
   }
 
