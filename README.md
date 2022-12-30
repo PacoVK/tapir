@@ -50,7 +50,7 @@ When you publish a Terraform Module, if it does not exist, it is created.
 
 You can simply upload modules to the registry via its HTTP REST-Api. It will return HTTP status `200` on success.
 ```shell
-curl -XPOST --fail-with-body -F module_archive=@archive.zip "http://localhost:8080/terraform/modules/v1/<namespace>/<name>/<provider>/<version>"
+curl -XPOST --fail-with-body -F module_archive=@archive.zip "https://example.corp.com/terraform/modules/v1/<namespace>/<name>/<provider>/<version>"
 ```
 
 ### Reference a Terraform Module
