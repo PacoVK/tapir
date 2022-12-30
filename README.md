@@ -1,5 +1,5 @@
 # Tapir
-### A Terraform Private Registry
+### A Private Terraform Registry
 
 ![Tapir](./src/main/webui/src/assets/tapir.png)
 
