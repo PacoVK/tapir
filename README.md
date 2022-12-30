@@ -35,7 +35,7 @@ You can easily run an instance on your own with the full flexibility and power a
 * It provides a REST-API for custom integrations and further automation
   Tapir is build on [Quarkus](https://quarkus.io/) and [ReactJS](https://reactjs.org/). You can run Tapir wherever you can run Docker images.
 
-Apart from the above, [this is what Wikipedia knows about Tapirs](https://de.wikipedia.org/wiki/Tapire).
+Apart from the above, [this is what Wikipedia knows about Tapirs](https://en.wikipedia.org/wiki/Tapir).
 
 ## Usage
 
