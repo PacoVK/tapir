@@ -27,7 +27,7 @@ You can easily run an instance on your own with the full flexibility and power a
 * It implements the official Terraform registry protocols
   * currently only modules supported
 * It scans the source code on push, you will have insights about the code quality and security measures
-  * Tapir integrates Tfsec for that purpose
+  * Tapir integrates [Tfsec](https://aquasecurity.github.io/tfsec) for that purpose
 * It provides several storage adapters for modules
   * currently S3 and AzureBlob
 * It provides several database adapters for the data
