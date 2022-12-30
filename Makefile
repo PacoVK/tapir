@@ -1,6 +1,6 @@
 # USAGE
 define USAGE
-Usage: make [help | bootstrap | install | dev | backend | webapp | terraform | down | clean]
+Usage: make [help | bootstrap | install | dev | backend | terraform | down | clean]
 endef
 export USAGE
 
@@ -27,9 +27,6 @@ dev: bootstrap
 backend:
 	@docker compose up -d
 	@mvn quarkus:dev
-
-webapp:
-	@yarn --cwd ${webAppDir} start
 
 terraform:
 	AWS_METADATA_URL=${localstackUrl} terraform -chdir=example init

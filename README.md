@@ -1,78 +1,77 @@
-# private-core.terraform-registry-api Project
+# Tapir
+### A Terraform Private Registry
 
-This project uses [Quarkus](https://quarkus.io/), the Supersonic Subatomic Java Framework.
+![Tapir](./src/main/webui/src/assets/tapir.png)
 
-## Development
+Tapir is the registry you always wanted if you are using Terraform at enterprise scale.
+Core values of Tapi is to provide
+* visibility
+* transparency
+* increases adoption rate
+* security
+* quality for your Terraform modules.
 
-This project requires at least: 
+## Why?
+Terraform modules are reusable parts of infrastructure code. The most crucial part of re-usability is transparency and visibility. Since Terraform supports Git-based modules there are several disadvantages that come along with this capability.
+* Access to Git repos are often designed on team level, no access for others per default
+* Search capabilities are very limited, in terms you are searching for specific Terraform modules
+* You may not get insights in the codes quality and security measures
+* Module versioning is not enforced
+  This is where Tapir jumps in.
 
-* Java 17 + Maven
-* NodeJS 18+
-* Docker 20+
-* [Yarn](https://yarnpkg.com/getting-started/install)
+## About Tapir
+Tapir is an implementation of the [official Terraform registry protocol](https://developer.hashicorp.com/terraform/internals/module-registry-protocol).
+You can easily run an instance on your own with the full flexibility and power a central registry has.
+* It will provide you a simple, but powerful UI to search for modules that are available
+  across your organization.
+* It implements the official Terraform registry protocols
+  * currently only modules supported
+* It scans the source code on push, you will have insights about the code quality and security measures
+  * Tapir integrates Tfsec for that purpose
+* It provides several storage dapters for modules
+  * currently S3 and AzureBlob
+* It provides several database adapters for the data
+  * currently Dynamodb (default), Elasticsearch
+* It provides a REST-API for custom integrations and further automation
+  Tapir is build on [Quarkus](https://quarkus.io/) and [ReactJS](https://reactjs.org/). You can run Tapir wherever you can run Docker images.
 
-### Setup
+Apart from the above, [this is what Wikipedia knows about Tapirs](https://de.wikipedia.org/wiki/Tapire).
 
-#### With Homebrew
+## Usage
 
-Use the [Brewfile](./Brewfile) for all necessary dependencies:
+### Upload a module
+When you publish a Terraform Module, if it does not exist, it is created.
 
-```sh
-brew bundle && make bootstrap
+**Prerequisites**:
+* The package name and version must be unique in the top-level namespace.
+* You need to specify a module namespace, a module name and the modules corresponding provider. For example `myorg/vpc/aws`.
+* Versioning must follow [Semantic Versioning](https://semver.org) specs
+* Currently only `.zip` is supported.
+
+You can simply upload modules to the registry via its HTTP REST-Api. It will return HTTP status `200` on success.
+```shell
+curl -XPOST --fail-with-body -F module_archive=@archive.zip "http://localhost:8080/terraform/modules/v1/<namespace>/<name>/<provider>/<version>"
 ```
 
-#### Linux - without Homebrew
+### Reference a Terraform Module
 
-Ensure you have the following tools installed:
+**Prerequisites**:
+* Terraform registry needs to run with HTTPS, since Terraform does not support HTTP registries
+* If the registry runs on another port that `443` you need to specify the port
 
-* [mkcert](https://github.com/FiloSottile/mkcert)
-  * [nss](https://man7.org/linux/man-pages/man5/nss.5.html) (if you use FireFox)
-* [awscli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-* [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-
-### Starting components
-
-You can run your application in dev mode that enables live coding using:
-```shell script
-make 
+You don't need to specify the protocol explicit.
+```hcl
+module "my-module" {
+  source = "example.corp.com/<namespace>/<name>/<provider>"
+  version = "<version>"
+}
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+## Contribution
 
-## Packaging and running the application
+A detailed How-to guide on local development can be found in the [docs](./docs/RUNBOOK.md).
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./mvnw package -Pnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/private-core.terraform-registry-api-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
-
-## Related Guides
-
-- Elasticsearch REST client ([guide](https://quarkus.io/guides/elasticsearch)): Connect to an Elasticsearch cluster using the REST low level client
+**Actively searching** for contributors.
+**Feedback** is always appreciated :rainbow:
+Feel free to open an Issue (Bug- /Feature-Request)
+or provide a Pull request. :wrench:
