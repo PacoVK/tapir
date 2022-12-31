@@ -35,6 +35,7 @@ const ModuleDetails = () => {
     if (module && version) {
       fetchModuleReports();
     }
+    // eslint-disable-next-line
   }, [version]);
 
   const fetchModule = async () => {

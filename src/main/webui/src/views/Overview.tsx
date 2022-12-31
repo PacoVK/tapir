@@ -38,38 +38,46 @@ const Overview = () => {
     );
   };
 
-  const loadMore = useCallback(() => {
-    setLoading(true);
-    fetchModules(
-      `search?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
-    ).then((data) => {
-      const allModules = [...modules, ...data.modules];
-      setLastEvaluatedItemKey(
-        data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
-      );
-      setModules(allModules);
-      setLoading(false);
-    });
-  }, [modules]);
+  const loadMore = useCallback(
+    () => {
+      setLoading(true);
+      fetchModules(
+        `search?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
+      ).then((data) => {
+        const allModules = [...modules, ...data.modules];
+        setLastEvaluatedItemKey(
+          data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
+        );
+        setModules(allModules);
+        setLoading(false);
+      });
+    },
+    // eslint-disable-next-line
+    [modules]
+  );
 
-  const scrollListener = useCallback(() => {
-    let bottom =
-      // @ts-ignore
-      modulesTable.current.scrollHeight - modulesTable.current.clientHeight;
+  const scrollListener = useCallback(
+    () => {
+      let bottom =
+        // @ts-ignore
+        modulesTable.current.scrollHeight - modulesTable.current.clientHeight;
 
-    if (!distanceBottom) {
-      setDistanceBottom(Math.round(bottom * 0.2));
-    }
+      if (!distanceBottom) {
+        setDistanceBottom(Math.round(bottom * 0.2));
+      }
 
-    if (
-      // @ts-ignore
-      modulesTable.current.scrollTop > bottom - distanceBottom &&
-      !loading &&
-      lastEvaluatedItemKey !== ""
-    ) {
-      loadMore();
-    }
-  }, [loadMore, loading, distanceBottom]);
+      if (
+        // @ts-ignore
+        modulesTable.current.scrollTop > bottom - distanceBottom &&
+        !loading &&
+        lastEvaluatedItemKey !== ""
+      ) {
+        loadMore();
+      }
+    },
+    // eslint-disable-next-line
+    [loadMore, loading, distanceBottom]
+  );
 
   useLayoutEffect(() => {
     const tableRef = modulesTable.current;
@@ -81,18 +89,22 @@ const Overview = () => {
     };
   }, [scrollListener]);
 
-  useEffect(() => {
-    setLoading(true);
-    fetchModules(`search?limit=${fetchDataLimit}&q=${searchString}`).then(
-      (data) => {
-        setLastEvaluatedItemKey(
-          data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
-        );
-        setModules(data.modules);
-        setLoading(false);
-      }
-    );
-  }, [debouncedSearchTerm]);
+  useEffect(
+    () => {
+      setLoading(true);
+      fetchModules(`search?limit=${fetchDataLimit}&q=${searchString}`).then(
+        (data) => {
+          setLastEvaluatedItemKey(
+            data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
+          );
+          setModules(data.modules);
+          setLoading(false);
+        }
+      );
+    },
+    // eslint-disable-next-line
+    [debouncedSearchTerm]
+  );
 
   const fetchModules = async (api: string) => {
     const response = await fetch(api);
