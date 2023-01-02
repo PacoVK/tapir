@@ -43,16 +43,16 @@ Apart from the above, [this is what Wikipedia knows about Tapirs](https://en.wik
 
 You can configure Tapir passing the following environment variables:
 
-| Variable                        | Description                                             | Required                                | Default      |
-|---------------------------------|---------------------------------------------------------|-----------------------------------------|--------------|
-| BACKEND_CONFIG                  | The database to make use of                             |                    X                    | dynamodb     |
-| BACKEND_ELASTICSEARCH_HOST      | Host of the Elasticsearch instance                      | Yes, if BACKEND_CONFIG is elasticsearch |              |
-| STORAGE_CONFIG                  | The blob storage to make use of                         |                    X                    | s3           |
-| STORAGE_ACCESS_SESSION_DURATION | Amount of minutes the signed download url is valid      |                                         | 5            |
-| AZURE_BLOB_CONNECTION_STRING    | Connection string to use for authentication             | Yes, if STORAGE_CONFIG is azureBlob     |              |
-| AZURE_BLOB_CONTAINER_NAME       | Blob container name to be used to store module archives | Yes, if STORAGE_CONFIG is azureBlob     | tf-registry  |
-| S3_STORAGE_BUCKET_NAME          | S3 bucket name to be used to store module archives      | Yes, if STORAGE_CONFIG is s3            | tf-registry  |
-| S3_STORAGE_BUCKET_REGION        | AWS region of the target S3 bucket                      | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
+| Variable                        | Description                                                                                                                               | Required                                | Default      |
+|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|--------------|
+| BACKEND_CONFIG                  | The database to make use of                                                                                                               | X                                       | dynamodb     |
+| BACKEND_ELASTICSEARCH_HOST      | Host of the Elasticsearch instance                                                                                                        | Yes, if BACKEND_CONFIG is elasticsearch |              |
+| STORAGE_CONFIG                  | The blob storage to make use of                                                                                                           | X                                       | s3           |
+| STORAGE_ACCESS_SESSION_DURATION | Amount of minutes the signed download url is valid                                                                                        |                                         | 5            |
+| AZURE_BLOB_CONNECTION_STRING    | [Connection string](https://learn.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string) to use for authentication | Yes, if STORAGE_CONFIG is azureBlob     |              |
+| AZURE_BLOB_CONTAINER_NAME       | Blob container name to be used to store module archives                                                                                   | Yes, if STORAGE_CONFIG is azureBlob     | tf-registry  |
+| S3_STORAGE_BUCKET_NAME          | S3 bucket name to be used to store module archives                                                                                        | Yes, if STORAGE_CONFIG is s3            | tf-registry  |
+| S3_STORAGE_BUCKET_REGION        | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
 
 ### Upload a module
 When you publish a Terraform Module, if it does not exist, it is created.
