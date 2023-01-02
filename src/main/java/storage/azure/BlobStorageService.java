@@ -32,7 +32,6 @@ public class BlobStorageService extends StorageService {
     this.client = new BlobServiceClientBuilder()
             .connectionString(azureBlobConnectionString)
             .buildClient();
-
     this.blobContainerClient = client.getBlobContainerClient(containerName);
   }
 

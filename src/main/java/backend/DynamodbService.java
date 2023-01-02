@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.AttributeConverter;
@@ -32,8 +33,12 @@ import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 @LookupIfProperty(name = "registry.search.backend", stringValue = "dynamodb")
 @ApplicationScoped
 public class DynamodbService extends SearchService {
+
+  static final Logger LOGGER = Logger.getLogger(DynamodbService.class.getName());
   final DynamoDbTable<Module> modulesTable;
   final DynamoDbTable<SastReport> securityReportsTable;
+
+  final DynamoDbClient dynamoDbClient;
 
   TableSchema<Module> moduleTableSchema =
           TableSchema.builder(Module.class)
@@ -80,6 +85,9 @@ public class DynamodbService extends SearchService {
                   .addAttribute(String.class, a -> a.name("provider")
                           .getter(SastReport::getProvider)
                           .setter(SastReport::setProvider))
+                  .addAttribute(String.class, a -> a.name("moduleVersion")
+                          .getter(SastReport::getModuleVersion)
+                          .setter(SastReport::setModuleVersion))
                   .addAttribute(Map.class, a -> a.name("report")
                           .getter(SastReport::getSecurityReport)
                           .setter(SastReport::setSecurityReport)
@@ -88,6 +96,7 @@ public class DynamodbService extends SearchService {
                   .build();
 
   public DynamodbService(DynamoDbClient dynamoDbClient) {
+    this.dynamoDbClient = dynamoDbClient;
     DynamoDbEnhancedClient dbEnhancedClient = DynamoDbEnhancedClient
             .builder().dynamoDbClient(dynamoDbClient).build();
     this.modulesTable = dbEnhancedClient.table("Modules", moduleTableSchema);
@@ -100,6 +109,7 @@ public class DynamodbService extends SearchService {
     Module existingModule = modulesTable.getItem(module);
     if (existingModule != null) {
       existingModule.getVersions().add(module.getVersions().first());
+      existingModule.setPublished_at(module.getPublished_at());
       moduleToIngest = existingModule;
     } else {
       moduleToIngest = module;
@@ -130,29 +140,33 @@ public class DynamodbService extends SearchService {
   }
 
   public void bootstrap() {
+    createTable(modulesTable);
+    createTable(securityReportsTable);
+  }
+
+  private void createTable(DynamoDbTable<?> table) {
     try {
-      modulesTable.createTable();
+      table.createTable();
     } catch (ResourceInUseException inUseException) {
-      System.out.println("Table exists");
+      LOGGER.info(String.format("Table %s is already existing", table.tableName()));
+      return;
     }
-
-    try {
-      securityReportsTable.createTable();
-    } catch (ResourceInUseException inUseException) {
-      System.out.println("Table exists");
-    }
-
-    System.out.println("Waiting for table creation...");
-
-    try (DynamoDbWaiter waiter = DynamoDbWaiter.create()) {
+    try (DynamoDbWaiter waiter = DynamoDbWaiter.builder().client(dynamoDbClient).build()) {
       ResponseOrException<DescribeTableResponse> response = waiter
               .waitUntilTableExists(builder -> builder.tableName("Modules").build())
               .matched();
-      DescribeTableResponse tableDescription = response.response().orElseThrow(
-              () -> new RuntimeException("Customer table was not created."));
-      System.out.println(tableDescription.table().tableName() + " was created.");
+      response.response().orElseThrow(
+              () -> new RuntimeException(
+                      String.format("Table %s was not created", table.tableName()
+                      )));
+      LOGGER.info(String.format("Table %s was created", table.tableName()));
     } catch (Exception e) {
-      System.out.println("Foo");
+      LOGGER.warning(
+              String.format(
+                      "Failed to verify that table %s was actually created",
+                      table.tableName()
+              )
+      );
     }
   }
 

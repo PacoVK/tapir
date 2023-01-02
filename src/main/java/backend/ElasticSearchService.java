@@ -9,6 +9,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.HttpMethod;
@@ -21,6 +22,8 @@ import org.elasticsearch.client.RestClient;
 @LookupIfProperty(name = "registry.search.backend", stringValue = "elasticsearch")
 @ApplicationScoped
 public class ElasticSearchService extends SearchService {
+
+  static final Logger LOGGER = Logger.getLogger(ElasticSearchService.class.getName());
   RestClient restClient;
 
   public ElasticSearchService(RestClient restClient) {
@@ -38,9 +41,7 @@ public class ElasticSearchService extends SearchService {
             )
     );
     String upsertScript = new StringBuilder("List versions=ctx._source.versions; ")
-            //CHECKSTYLE:OFF
             .append("if(versions!=null && !versions.stream().anyMatch(v-> v.version.equals(params.release.version))){")
-            //CHECKSTYLE:ON
             .append("ctx._source.versions.add(params.release)")
             .append("}").toString();
     String payload = JsonObject.of("script", JsonObject.of(
@@ -53,19 +54,18 @@ public class ElasticSearchService extends SearchService {
   }
 
   @Override
-  public void ingestSecurityScanResult(SastReport sastReport) throws Exception {
-    String targetIndexName = String.format("%s-%s-reports",
-            sastReport.getModuleNamespace(),
-            sastReport.getModuleName()
-    );
-    createIndexIfNotExists(targetIndexName);
+  public void ingestSecurityScanResult(SastReport sastReport) throws IOException {
+    String targetRequestPath = new StringBuilder("/reports/_doc/").append("sast-")
+            .append(sastReport.getModuleNamespace())
+            .append("-")
+            .append(sastReport.getModuleName())
+            .append("-")
+            .append(sastReport.getProvider())
+            .append("-")
+            .append(sastReport.getModuleVersion()).toString();
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/%s/_doc/sast-report-%s-%s",
-                    targetIndexName,
-                    sastReport.getProvider(),
-                    sastReport.getModuleVersion()
-            )
+            targetRequestPath
     );
     request.setJsonEntity(JsonObject.mapFrom(sastReport).toString());
     restClient.performRequest(request);
@@ -91,8 +91,11 @@ public class ElasticSearchService extends SearchService {
 
   @Override
   public SastReport getReportByModuleVersion(Module module) throws IOException {
-    String reportIndex = String.format("%s-%s-reports", module.getNamespace(), module.getName());
-    String searchPath = new StringBuilder(reportIndex).append("/_doc/").append("sast-report-")
+    String searchPath = new StringBuilder("/reports/_doc/").append("sast-")
+            .append(module.getNamespace())
+            .append("-")
+            .append(module.getName())
+            .append("-")
             .append(module.getProvider())
             .append("-")
             .append(module.getCurrentVersion()).toString();
@@ -106,22 +109,8 @@ public class ElasticSearchService extends SearchService {
   }
 
   public void bootstrap() throws IOException {
-    Integer statusCode = restClient.performRequest(
-            new Request(HttpMethod.HEAD, "/modules")
-    ).getStatusLine().getStatusCode();
-    if (statusCode.equals(200)) {
-      return;
-    }
-    Request request = new Request(HttpMethod.PUT, "/modules");
-    restClient.performRequest(request);
-  }
-
-  public void index(Module module) throws IOException {
-    Request request = new Request(
-            HttpMethod.PUT,
-            "/modules/_doc/" + module.getName());
-    request.setJsonEntity(JsonObject.mapFrom(module).toString());
-    restClient.performRequest(request);
+    createIndexIfNotExists("modules");
+    createIndexIfNotExists("reports");
   }
 
   ModulePagination getModules(String query) throws IOException {
@@ -170,7 +159,7 @@ public class ElasticSearchService extends SearchService {
   }
 
   @Override
-  public Module getModuleVersions(Module module) throws Exception {
+  public Module getModuleVersions(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.GET,
             String.format("/modules/_doc/%s-%s-%s?_source=versions",
@@ -189,6 +178,7 @@ public class ElasticSearchService extends SearchService {
     if (!statusCode.equals(200)) {
       Request request = new Request(HttpMethod.PUT, String.format("/%s", indexName));
       restClient.performRequest(request);
+      LOGGER.info(String.format("Created index [%s]", indexName));
     }
   }
 }

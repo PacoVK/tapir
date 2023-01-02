@@ -2,7 +2,7 @@ registry:
   search:
     backend: ${BACKEND_CONFIG:dynamodb}
     elasticsearch:
-      host: ${BACKEND_ELASTICSEARCH_HOST:http://localhost:9200}
+      host: ${BACKEND_ELASTICSEARCH_HOST:localhost:9200}
   storage:
     backend: ${STORAGE_CONFIG:azureBlob}
     access:

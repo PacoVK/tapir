@@ -35,14 +35,26 @@ const MisconfigurationItem = ({
       </AccordionSummary>
       <AccordionDetails>
         <Typography>
-          {misconfiguration.severity} - {misconfiguration.impact}
+          <b>Severity:</b> {misconfiguration.severity}
         </Typography>
-        <Typography>Resource: {misconfiguration.resource}</Typography>
         <Typography>
-          StartLine: {misconfiguration.location.start_line}
-          EndLine: {misconfiguration.location.end_line}
+          <b>Violation:</b> {misconfiguration.rule_description}
         </Typography>
-        <Typography>Solution: {misconfiguration.resolution}</Typography>
+        <Typography>
+          <b>Impact:</b> {misconfiguration.impact}
+        </Typography>
+        <Typography>
+          <b>Solution:</b> {misconfiguration.resolution}
+        </Typography>
+        <Typography>
+          <b>Resource:</b> {misconfiguration.resource}
+        </Typography>
+        <Typography>
+          <b>From line:</b> {misconfiguration.location.start_line}
+        </Typography>
+        <Typography>
+          <b>To line:</b> {misconfiguration.location.end_line}
+        </Typography>
         <Link href={misconfiguration.links[0]} rel="noopener" target="_blank">
           Read more
         </Link>

@@ -4,6 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Chip,
+  CircularProgress,
   FormControl,
   InputLabel,
   Link,
@@ -50,7 +51,7 @@ const ModuleDetails = () => {
 
   const loadingRoutine = () => {
     fetchModule();
-    return <Typography>Loading...</Typography>;
+    return <CircularProgress color={"secondary"} sx={{ margin: "auto" }} />;
   };
 
   const handleVersionChange = (event: SelectChangeEvent) => {

@@ -36,7 +36,7 @@ public class Module {
 
   @JsonIgnore
   public String getCurrentVersion() {
-    return versions.last().getVersion();
+    return versions.first().getVersion();
   }
 
   private String computeId() {

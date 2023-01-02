@@ -18,6 +18,7 @@
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
+    <jacoco.version>0.8.7</jacoco.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -111,6 +112,11 @@
       <artifactId>quarkus-junit5-mockito</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jacoco</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -183,6 +189,24 @@
             <goals>
               <goal>check</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+              <exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
+              <destFile>${project.build.directory}/jacoco-quarkus.exec</destFile>
+              <append>true</append>
+            </configuration>
           </execution>
         </executions>
       </plugin>
