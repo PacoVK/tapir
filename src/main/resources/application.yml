@@ -5,10 +5,11 @@ registry:
       host: ${BACKEND_ELASTICSEARCH_HOST:http://localhost:9200}
   storage:
     backend: ${STORAGE_CONFIG:azureBlob}
+    access:
+      session-duration: ${STORAGE_ACCESS_SESSION_DURATION:5}
     azure:
-      blobEndpoint: ${AZURE_BLOB_ENDPOINT:http://127.0.0.1:10000}
-      accountName: ${AZURE_ACCOUNT_NAME:devstoreaccount1}
-      containerName: ${AZURE_BLOB_CONTAINER_NAME:containername}
+      blobConnectionString: ${AZURE_BLOB_CONNECTION_STRING:DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;}
+      containerName: ${AZURE_BLOB_CONTAINER_NAME:tf-registry}
     s3:
       bucket:
         name: ${S3_STORAGE_BUCKET_NAME:tf-registry}

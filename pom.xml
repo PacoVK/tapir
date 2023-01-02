@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.euhus</groupId>
-  <artifactId>private-terraform-registry-api</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>tapir</artifactId>
+  <version>0.0.1</version>
   <properties>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <maven.compiler.release>17</maven.compiler.release>
@@ -14,6 +14,7 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>2.14.1.Final</quarkus.platform.version>
     <quarkus.quinoa.version>1.2.3</quarkus.quinoa.version>
+    <microsoft.azure.bom.version>1.2.8</microsoft.azure.bom.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
@@ -31,6 +32,13 @@
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-amazon-services-bom</artifactId>
         <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.azure</groupId>
+        <artifactId>azure-sdk-bom</artifactId>
+        <version>${microsoft.azure.bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -72,12 +80,10 @@
     <dependency>
       <groupId>com.azure</groupId>
       <artifactId>azure-storage-blob</artifactId>
-      <version>12.20.1</version>
     </dependency>
     <dependency>
       <groupId>com.azure</groupId>
       <artifactId>azure-identity</artifactId>
-      <version>1.7.2</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

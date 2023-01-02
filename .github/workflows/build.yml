@@ -8,7 +8,7 @@ on:
       - "v*.*.*"
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,4 +20,4 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Build artifact
-        run: ./mvnw install -Dnative -DskipTests -Dquarkus.native.container-build=true
+        run: ./mvnw install -DskipTests

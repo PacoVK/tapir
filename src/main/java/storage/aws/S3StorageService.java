@@ -6,16 +6,15 @@ import core.terraform.Module;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import java.time.Duration;
 import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
+import storage.util.StorageUtil;
 
 @LookupIfProperty(name = "registry.storage.backend", stringValue = "s3")
 @ApplicationScoped
@@ -36,20 +35,14 @@ public class S3StorageService extends StorageService {
 
   @Override
   public String getDownloadUrlForModule(Module module) {
+    String s3ObjectKey = StorageUtil.generateModuleStoragePath(module);
     GetObjectRequest getObjectRequest = GetObjectRequest.builder()
             .bucket(bucketName)
-            .key(
-                    String.format("%s/%s/%s/%s.zip",
-                            module.getNamespace(),
-                            module.getName(),
-                            module.getProvider(),
-                            module.getCurrentVersion()
-                    )
-            )
+            .key(s3ObjectKey)
             .build();
     GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
             .getObjectRequest(getObjectRequest)
-            .signatureDuration(Duration.ofMinutes(120))
+            .signatureDuration(Duration.ofMinutes(getAccessSessionDuration()))
             .build();
     PresignedGetObjectRequest presignedGetObjectRequest = presigner
             .presignGetObject(getObjectPresignRequest);
@@ -57,29 +50,17 @@ public class S3StorageService extends StorageService {
   }
 
   @Override
-  //TODO check return
   public void uploadModule(FormData archive) {
-    PutObjectResponse putResponse = s3.putObject(buildPutRequest(archive),
+    s3.putObject(buildPutRequest(archive),
             RequestBody.fromFile(archive.getPayload()));
-    if (putResponse != null) {
-      Response.ok().status(Response.Status.CREATED);
-    } else {
-      Response.serverError();
-    }
   }
 
   protected PutObjectRequest buildPutRequest(FormData archive) {
     Module module = archive.getModule();
+    String s3ObjectKey = StorageUtil.generateModuleStoragePath(module);
     return PutObjectRequest.builder()
             .bucket(bucketName)
-            .key(
-                    String.format("%s/%s/%s/%s.zip",
-                            module.getNamespace(),
-                            module.getName(),
-                            module.getProvider(),
-                            module.getCurrentVersion()
-                    )
-            )
+            .key(s3ObjectKey)
             .contentType(archive.getMimeType())
             .build();
   }

@@ -32,6 +32,8 @@ services:
     environment:
       SERVICES: s3,dynamodb
       EXTRA_CORS_ALLOWED_ORIGINS: "*"
+    volumes:
+      - ./dev/scripts/localstack:/docker-entrypoint-initaws.d
 
   dynamodb-admin:
     image: aaronshaf/dynamodb-admin
@@ -51,10 +53,26 @@ services:
       - "0.0.0.0"
       - "--blobPort"
       - "10000"
-    volumes:
-      - ./dev/certs:/dev/certs
     ports:
       - "10000:10000"
+    healthcheck:
+      test: nc 127.0.0.1 10000 -z
+      interval: 1s
+      retries: 30
+
+  azurite_storage_init:
+    image: mcr.microsoft.com/azure-cli
+    command:
+      - /bin/sh
+      - -c
+      - |
+        az storage container create --name tf-registry
+    depends_on:
+      azurite:
+        condition: service_healthy
+    environment:
+      # https://github.com/Azure/Azurite/blob/main/README.md#usage-with-azure-storage-sdks-or-tools
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
 
 volumes:
   opensearch-data1:

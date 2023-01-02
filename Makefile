@@ -21,8 +21,6 @@ bootstrap:
 
 dev: bootstrap
 	@docker compose up -d
-	@sleep 5
-	@aws s3 mb s3://tf-registry --endpoint-url=${localstackUrl} --region eu-central-1
 
 backend:
 	@docker compose up -d

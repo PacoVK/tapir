@@ -38,7 +38,7 @@ nb-configuration.xml
 
 # Local environment
 .env
-dev/
+dev/certs
 src/main/resources/META-INF/resources/*
 !src/main/resources/META-INF/resources/.gitkeep
 example/.terraform
