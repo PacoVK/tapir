@@ -8,7 +8,7 @@ const SubInfo = () => {
   return (
     <Typography variant="body2" color="text.secondary">
       {"Crafted with "}&#128525;{", Hosted on "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://github.com/PacoVK/tapir">
         GitHub
       </Link>{" "}
       {new Date().getFullYear()}
