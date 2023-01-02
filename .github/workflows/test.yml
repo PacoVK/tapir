@@ -22,7 +22,7 @@ jobs:
     working-directory: src/main/webui
     steps:
       - name: Checkout
-        uses:
+        uses: actions/checkout@v3
       - name: install
         run: yarn install
       - name: test
