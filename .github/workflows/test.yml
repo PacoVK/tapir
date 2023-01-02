@@ -19,7 +19,9 @@ jobs:
         run: ./mvnw verify
   frontend:
     runs-on: ubuntu-latest
-    working-directory: src/main/webui
+    defaults:
+      run:
+        working-directory: src/main/webui
     steps:
       - name: Checkout
         uses: actions/checkout@v3
