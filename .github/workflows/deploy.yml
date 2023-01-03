@@ -1,20 +1,33 @@
 name: Build and Deploy Release
 
 on:
-  schedule:
-    - cron: "0 05 * * *"
-  push:
+  workflow_run:
     branches:
-      - main
-    tags:
-      - "v*.*.*"
+      - "main"
+    types:
+      - completed
+    workflows:
+      - "Test"
 
 jobs:
   docker:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: test.yml
+          workflow_conclusion: success
+          name: tapir.jar
+      - uses: actions/download-artifact@v3
+        id: download
+        with:
+          name: tapir.jar
+          path: path/to/artifacts
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4

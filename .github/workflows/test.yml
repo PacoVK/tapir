@@ -42,8 +42,15 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: maven
-      - name: Run tests
-        run: ./mvnw verify
+      - name: Build and test backend
+        run: ./mvnw install
+      - name: Upload production artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tapir.jar
+          path: |
+            target/quarkus-app/quarkus-run.jar
+          retention-days: 3
   frontend:
     runs-on: ubuntu-latest
     defaults:
