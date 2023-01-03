@@ -23,11 +23,7 @@ jobs:
           workflow: test.yml
           workflow_conclusion: success
           name: tapir.jar
-      - uses: actions/download-artifact@v3
-        id: download
-        with:
-          name: tapir.jar
-          path: path/to/artifacts
+          path: target/quarkus-app
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
