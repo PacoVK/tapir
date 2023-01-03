@@ -14,6 +14,22 @@ jobs:
           EXTRA_CORS_ALLOWED_ORIGINS: "*"
         ports:
           - 4566:4566
+      elasticsearch:
+        image: opensearchproject/opensearch
+        env:
+          discovery.type: single-node
+          plugins.security.disabled: true
+          discovery.seed_hosts: opensearch-node1
+          cluster.initial_cluster_manager_nodes: opensearch-node1
+          bootstrap.memory_lock: true
+          OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+        options: >-
+          --health-cmd "curl http://localhost:9200/_cluster/health"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+        ports:
+          - 9200:9200
     env:
       AWS_ACCESS_KEY_ID: fake
       AWS_SECRET_ACCESS_KEY: fake
