@@ -1,4 +1,4 @@
-name: Test
+name: Build
 
 on:
   push:
@@ -47,9 +47,9 @@ jobs:
       - name: Upload production artifact
         uses: actions/upload-artifact@v3
         with:
-          name: tapir.jar
+          name: tapir
           path: |
-            target/quarkus-app/quarkus-run.jar
+            target/quarkus-app/
           retention-days: 3
   frontend:
     runs-on: ubuntu-latest

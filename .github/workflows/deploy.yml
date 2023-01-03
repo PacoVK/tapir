@@ -7,7 +7,7 @@ on:
     types:
       - completed
     workflows:
-      - "Test"
+      - "Build"
 
 jobs:
   docker:
@@ -20,9 +20,9 @@ jobs:
         id: download-artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: test.yml
+          workflow: build.yml
           workflow_conclusion: success
-          name: tapir.jar
+          name: tapir
           path: target/quarkus-app
       - name: Docker meta
         id: meta
