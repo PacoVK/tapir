@@ -20,16 +20,16 @@ public class DownloadListener {
   }
 
   @ConsumeEvent("module.download.requested")
-  public String handleDownloadRequestedEvent(Module module) throws IOException {
+  public Module handleDownloadRequestedEvent(Module module) throws IOException {
     LOGGER.info(String.format("Download was requested for module %s, version %s",
             module.getName(),
             module.getCurrentVersion())
     );
-    searchService.increaseDownloadCounter(module);
+    Module updatedModule = searchService.increaseDownloadCounter(module);
     LOGGER.fine(String.format("Download counter increased for module %s, version %s",
             module.getName(),
             module.getCurrentVersion())
     );
-    return "ok";
+    return updatedModule;
   }
 }

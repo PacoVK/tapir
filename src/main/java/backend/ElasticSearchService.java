@@ -72,7 +72,7 @@ public class ElasticSearchService extends SearchService {
   }
 
   @Override
-  public void increaseDownloadCounter(Module module) throws IOException {
+  public Module increaseDownloadCounter(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
             String.format("/modules/_update/%s-%s-%s",
@@ -85,8 +85,10 @@ public class ElasticSearchService extends SearchService {
             "source", "ctx._source.downloads += 1",
             "lang", "painless"
     )).toString();
+    module.setDownloads(module.getDownloads() + 1);
     request.setJsonEntity(payload);
     restClient.performRequest(request);
+    return module;
   }
 
   @Override

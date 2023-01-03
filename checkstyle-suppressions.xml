@@ -18,13 +18,13 @@
               files="IStorageInterface.java"/>
     <suppress checks="LineLength"
               files="DynamodbService.java"
-              lines="186"/>
+              lines="188"/>
     <suppress checks="LineLength"
               files="ElasticSearchService.java"
               lines="44"/>
     <suppress checks="LineLength"
               files="ElasticSearchService.java"
-              lines="144"/>
+              lines="145"/>
     <suppress checks="LineLength"
               files="ModuleVersionsConverter.java"
               lines="15"/>

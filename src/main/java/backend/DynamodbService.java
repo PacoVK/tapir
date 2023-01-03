@@ -123,13 +123,14 @@ public class DynamodbService extends SearchService {
   }
 
   @Override
-  public void increaseDownloadCounter(Module module) {
+  public Module increaseDownloadCounter(Module module) {
     Module existingModule = modulesTable.getItem(module);
     if (existingModule != null) {
       Integer downloads = existingModule.getDownloads();
       existingModule.setDownloads(downloads + 1);
     }
     modulesTable.updateItem(existingModule);
+    return existingModule;
   }
 
   @Override

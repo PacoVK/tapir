@@ -18,7 +18,7 @@ public interface ISearchService {
 
   void ingestSecurityScanResult(SastReport sastReport) throws Exception;
 
-  void increaseDownloadCounter(Module module) throws IOException;
+  Module increaseDownloadCounter(Module module) throws IOException;
 
   SastReport getReportByModuleVersion(Module module) throws IOException;
 }

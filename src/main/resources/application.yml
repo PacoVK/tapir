@@ -4,7 +4,7 @@ registry:
     elasticsearch:
       host: ${BACKEND_ELASTICSEARCH_HOST:localhost:9200}
   storage:
-    backend: ${STORAGE_CONFIG:azureBlob}
+    backend: ${STORAGE_CONFIG:s3}
     access:
       session-duration: ${STORAGE_ACCESS_SESSION_DURATION:5}
     azure:

@@ -67,7 +67,7 @@ You can simply upload modules to the registry via its HTTP REST-Api. It will ret
 ```shell
 curl -XPOST --fail-with-body -F module_archive=@archive.zip "https://example.corp.com/terraform/modules/v1/<namespace>/<name>/<provider>/<version>"
 ```
-> Tapir has build-in support for several module providers. This means you should follow the naming convention for specific modules:
+> Tapir has build-in support for several module providers. This means you should follow the naming convention for specific module provider:
 > 
 > **AWS:** aws <br/>
 > **Azure:** azurerm <br/>
