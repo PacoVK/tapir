@@ -1,6 +1,6 @@
 FROM aquasec/tfsec:v1.28 as TFSEC
 
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.14-8
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.14-9
 
 COPY --from=TFSEC /usr/bin/tfsec /usr/bin/
 
