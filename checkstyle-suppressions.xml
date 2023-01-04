@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+<suppressions>
+    <suppress checks="Javadoc" files="."/>
+    <suppress checks="ParameterName"
+              files="TfSecReport.java"/>
+    <suppress checks="MemberName"
+              files="TfSecReport.java"/>
+    <suppress checks="ParameterName"
+              files="Module.java"/>
+    <suppress checks="MemberName"
+              files="Module.java"/>
+    <suppress checks="AbbreviationAsWordInName"
+              files="ISearchService.java"/>
+    <suppress checks="AbbreviationAsWordInName"
+              files="IStorageInterface.java"/>
+    <suppress checks="LineLength"
+              files="DynamodbService.java"
+              lines="188"/>
+    <suppress checks="LineLength"
+              files="ElasticSearchService.java"
+              lines="44"/>
+    <suppress checks="LineLength"
+              files="ElasticSearchService.java"
+              lines="145"/>
+    <suppress checks="LineLength"
+              files="ModuleVersionsConverter.java"
+              lines="15"/>
+</suppressions>
