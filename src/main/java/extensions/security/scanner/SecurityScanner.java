@@ -9,6 +9,7 @@ import extensions.security.report.TfSecReport;
 import extensions.security.util.TfSecReportUtil;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkus.vertx.ConsumeEvent;
+import io.smallrye.common.annotation.Blocking;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import java.io.File;
 import java.util.List;
@@ -31,6 +32,7 @@ public class SecurityScanner {
     this.commandProcessor = commandProcessor;
   }
 
+  @Blocking
   @ConsumeEvent("module.extract.finished")
   public String scanModule(FormData archive) {
     LOGGER.info(String.format("Starting scan for module %s, version %s",
@@ -41,7 +43,7 @@ public class SecurityScanner {
     String output = commandProcessor.runCommand(
             workingDirectory,
             "sh", "-c", "tfsec -f json  --ignore-hcl-errors .");
-    TfSecReport tfSecReport = null;
+    TfSecReport tfSecReport;
     try {
       tfSecReport = mapper.readValue(output, TfSecReport.class);
     } catch (JsonProcessingException e) {

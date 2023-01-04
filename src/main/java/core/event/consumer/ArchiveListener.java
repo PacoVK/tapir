@@ -3,6 +3,7 @@ package core.event.consumer;
 import core.service.upload.FileService;
 import core.service.upload.FormData;
 import io.quarkus.vertx.ConsumeEvent;
+import io.smallrye.common.annotation.Blocking;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class ArchiveListener {
   FileService fileService;
   EventBus eventBus;
 
+  @Blocking
   @ConsumeEvent("module.upload.finished")
   public String unpackArchive(FormData archive) {
     LOGGER.info(String.format("Start to unpack module %s, version %s",
