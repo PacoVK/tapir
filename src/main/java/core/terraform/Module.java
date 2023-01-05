@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.Instant;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Module {
@@ -27,9 +28,12 @@ public class Module {
   }
 
   private String id;
+  @NotEmpty(message = "{Module.namespace.required}")
   private String namespace;
+  @NotEmpty(message = "{Module.name.required}")
   private String name;
   private TreeSet<ModuleVersion> versions;
+  @NotEmpty(message = "{Module.provider.required}")
   private String provider;
   private Instant published_at;
   private Integer downloads = 0;
