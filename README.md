@@ -93,6 +93,17 @@ module "my-module" {
 }
 ```
 
+## Roadmap
+
+* Auto-generate docs and analyse dependencies using [terraform-docs](https://terraform-docs.io/)
+* Support Terraform provider
+* Add more storage adapter
+  * GCP
+  * local storage
+* Add more Database adapter
+  * Postgresql
+* Provide a Github/ Gitlab integration to crawl for additional code metrics and ownership informations
+
 ## Contribution
 
 A detailed How-to guide on local development can be found in the [docs](./docs/RUNBOOK.md).
