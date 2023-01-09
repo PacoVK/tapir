@@ -1,0 +1,15 @@
+.severity-LOW {
+  background-color: #5fbb31 !important;
+}
+.severity-MEDIUM {
+  background-color: #e9c600 !important;
+}
+.severity-HIGH {
+  background-color: #ff8800 !important;
+}
+.severity-CRITICAL {
+  background-color: #e40000 !important;
+}
+.severity-UNKNOWN {
+  background-color: #747474 !important;
+}

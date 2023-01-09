@@ -1,0 +1,121 @@
+{
+  "results": [
+    {
+      "rule_id": "AVD-AWS-0099",
+      "long_id": "aws-ec2-add-description-to-security-group",
+      "rule_description": "Missing description for security group.",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "resolution": "Add descriptions for all security groups",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.0/checks/aws/ec2/add-description-to-security-group/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "description": "Security group explicitly uses the default description.",
+      "severity": "UNKNOWN",
+      "warning": false,
+      "status": 0,
+      "resource": "aws_security_group.se",
+      "location": {
+        "filename": "/foo/bar/github.tf",
+        "start_line": 32,
+        "end_line": 39
+      }
+    },
+    {
+      "rule_id": "AVD-AWS-0124",
+      "long_id": "aws-ec2-add-description-to-security-group-rule",
+      "rule_description": "Missing description for security group rule.",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "resolution": "Add descriptions for all security groups rules",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.0/checks/aws/ec2/add-description-to-security-group-rule/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "description": "Security group rule does not have a description.",
+      "severity": "LOW",
+      "warning": false,
+      "status": 0,
+      "resource": "aws_security_group.se",
+      "location": {
+        "filename": "/foo/bar/github.tf",
+        "start_line": 33,
+        "end_line": 38
+      }
+    },
+    {
+      "rule_id": "AVD-AWS-0107",
+      "long_id": "aws-ec2-no-public-ingress-sgr",
+      "rule_description": "An ingress security group rule allows traffic from /0.",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "impact": "Your port exposed to the internet",
+      "resolution": "Set a more restrictive cidr range",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.0/checks/aws/ec2/no-public-ingress-sgr/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks"
+      ],
+      "description": "Security group rule allows ingress from public internet.",
+      "severity": "CRITICAL",
+      "warning": false,
+      "status": 0,
+      "resource": "aws_security_group.se",
+      "location": {
+        "filename": "/foo/bar/github.tf",
+        "start_line": 37,
+        "end_line": 37
+      }
+    },
+    {
+      "rule_id": "AVD-AWS-0065",
+      "long_id": "aws-kms-auto-rotate-keys",
+      "rule_description": "A KMS key is not configured to auto-rotate.",
+      "rule_provider": "aws",
+      "rule_service": "kms",
+      "impact": "Long life KMS keys increase the attack surface when compromised",
+      "resolution": "Configure KMS key to auto rotate",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.0/checks/aws/kms/auto-rotate-keys/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key#enable_key_rotation"
+      ],
+      "description": "Key does not have rotation enabled.",
+      "severity": "MEDIUM",
+      "warning": false,
+      "status": 0,
+      "resource": "aws_kms_key.encryption_key_private_repo",
+      "location": {
+        "filename": "/foo/bar/kms.tf",
+        "start_line": 56,
+        "end_line": 62
+      }
+    },
+    {
+      "rule_id": "AVD-AWS-0065",
+      "long_id": "aws-kms-auto-rotate-keys",
+      "rule_description": "A KMS key is not configured to auto-rotate.",
+      "rule_provider": "aws",
+      "rule_service": "kms",
+      "impact": "Long life KMS keys increase the attack surface when compromised",
+      "resolution": "Configure KMS key to auto rotate",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.0/checks/aws/kms/auto-rotate-keys/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key#enable_key_rotation"
+      ],
+      "description": "Key does not have rotation enabled.",
+      "severity": "MEDIUM",
+      "warning": false,
+      "status": 0,
+      "resource": "aws_kms_key.encryption_key_public_repo",
+      "location": {
+        "filename": "/foo/bar/kms.tf",
+        "start_line": 31,
+        "end_line": 37
+      }
+    }
+  ]
+}
