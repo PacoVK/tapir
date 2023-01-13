@@ -4,7 +4,7 @@ import { ModuleOutputProps } from "../../types";
 import Container from "@mui/material/Container";
 
 const ModuleOutput = (props: ModuleOutputProps) => {
-  const { outputs, ...other } = props;
+  const { outputs } = props;
   return (
     <Stack justifyContent="center" alignItems="left" spacing={2}>
       {outputs && outputs.length > 0 ? (

@@ -36,8 +36,15 @@ public class ReportListener {
             archive.getModule().getProvider(),
             archive.getModule().getCurrentVersion()
     );
-    Map<String, List<TfSecReport.TfSecResult>> securityReport = eventBus.<Map<String, List<TfSecReport.TfSecResult>>>requestAndAwait("module.security.report", archive).body();
-    TerraformDocumentation documentation = eventBus.<TerraformDocumentation>requestAndAwait("module.documentation.generate", archive).body();
+    Map<String, List<TfSecReport.TfSecResult>> securityReport = eventBus
+            .<Map<String, List<TfSecReport.TfSecResult>>>requestAndAwait(
+                    "module.security.report",
+                    archive
+            )
+            .body();
+    TerraformDocumentation documentation = eventBus
+            .<TerraformDocumentation>requestAndAwait("module.documentation.generate", archive)
+            .body();
     report.setSecurityReport(securityReport);
     report.setDocumentation(documentation);
     eventBus.requestAndForget("module.report.finished", report);

@@ -15,6 +15,7 @@ import javax.ws.rs.ext.Provider;
 public class ConstraintViolationMapper implements ExceptionMapper<ConstraintViolationException> {
 
   static final Logger LOGGER = Logger.getLogger(ConstraintViolationMapper.class.getName());
+
   @Override
   public Response toResponse(ConstraintViolationException e) {
     String errorId = UUID.randomUUID().toString();

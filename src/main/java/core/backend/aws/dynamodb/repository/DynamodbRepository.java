@@ -187,6 +187,10 @@ public class DynamodbRepository extends SearchService {
       scanEnhancedRequestBuilder.exclusiveStartKey(Map.of("id", AttributeValue.fromS(identifier)));
     }
     if (!terms.isEmpty()) {
+      String whereClause = new StringBuilder("contains(#namespace, :term)")
+              .append("or contains(#name, :term)")
+              .append("or contains(#provider, :term)")
+              .toString();
       Expression expression = Expression.builder()
               .expressionNames(Map.of(
                       "#namespace", "namespace",
@@ -194,7 +198,7 @@ public class DynamodbRepository extends SearchService {
                       "#provider", "provider")
               )
               .expressionValues(Map.of(":term", AttributeValue.fromS(terms)))
-              .expression("contains(#namespace, :term) or contains(#name, :term) or contains(#provider, :term)")
+              .expression(whereClause)
               .build();
       scanEnhancedRequestBuilder.filterExpression(expression);
     }

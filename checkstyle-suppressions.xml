@@ -17,12 +17,9 @@
     <suppress checks="AbbreviationAsWordInName"
               files="IStorageInterface.java"/>
     <suppress checks="LineLength"
-              files="DynamodbService.java"
-              lines="190"/>
-    <suppress checks="LineLength"
-              files="ElasticSearchService.java"
+              files="ElasticSearchRepository.java"
               lines="47"/>
     <suppress checks="LineLength"
-              files="ElasticSearchService.java"
-              lines="149"/>
+              files="ElasticSearchRepository.java"
+              lines="150"/>
 </suppressions>

@@ -14,6 +14,7 @@ import javax.ws.rs.ext.Provider;
 public class TapirExceptionMapper implements ExceptionMapper<TapirException> {
 
   static final Logger LOGGER = Logger.getLogger(TapirExceptionMapper.class.getName());
+
   @Override
   public Response toResponse(TapirException e) {
     String errorId = UUID.randomUUID().toString();

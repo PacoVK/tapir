@@ -12,7 +12,8 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 public class ModuleVersionsConverter implements AttributeConverter<Collection<ModuleVersion>> {
 
-  private final ListAttributeConverter<Collection<ModuleVersion>> listAttributeConverter = ListAttributeConverter
+  private final ListAttributeConverter<Collection<ModuleVersion>> listAttributeConverter =
+          ListAttributeConverter
           .builder(EnhancedType.collectionOf(ModuleVersion.class))
           .collectionConstructor(TreeSet::new)
           .elementConverter(new ModuleVersionsConverter.ModuleVersionConverter()).build();

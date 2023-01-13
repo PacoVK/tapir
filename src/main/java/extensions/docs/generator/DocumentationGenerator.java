@@ -22,7 +22,11 @@ public class DocumentationGenerator {
 
   SearchService searchService;
 
-  public DocumentationGenerator(EventBus eventBus, CliCommandProcessor commandProcessor, Instance<SearchService> searchServiceInstance) {
+  public DocumentationGenerator(
+          EventBus eventBus,
+          CliCommandProcessor commandProcessor,
+          Instance<SearchService> searchServiceInstance
+  ) {
     this.eventBus = eventBus;
     this.commandProcessor = commandProcessor;
     this.searchService = searchServiceInstance.get();
@@ -30,7 +34,7 @@ public class DocumentationGenerator {
 
   @Blocking
   @ConsumeEvent("module.documentation.generate")
-  public TerraformDocumentation generateDocs(FormData archive) throws Exception {
+  public TerraformDocumentation generateDocs(FormData archive) {
     LOGGER.info(String.format("Generating docs for module %s, version %s",
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion()

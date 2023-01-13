@@ -4,7 +4,7 @@ import { ModuleDependenciesProps } from "../../types";
 import Container from "@mui/material/Container";
 
 const ModuleDependencies = (props: ModuleDependenciesProps) => {
-  const { modules, providers, ...other } = props;
+  const { modules, providers } = props;
   return (
     <>
       <Typography variant="h4">Module Dependencies</Typography>

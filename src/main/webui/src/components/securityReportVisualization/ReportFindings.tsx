@@ -11,7 +11,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MisconfigurationItem from "./MisconfigurationItem";
 
 const ReportFindings = (props: ReportFindingsProps) => {
-  const { reports, ...other } = props;
+  const { reports } = props;
   return (
     <>
       <Typography variant="h4">Security Report</Typography>

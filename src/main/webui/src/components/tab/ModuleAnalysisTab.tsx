@@ -9,7 +9,7 @@ import ReportFindings from "../securityReportVisualization/ReportFindings";
 import ModuleResources from "../documentation/ModuleResources";
 
 const ModuleAnalysisTab = (props: ModuleAnalysisTabProps) => {
-  const { version, reports, documentation, ...other } = props;
+  const { version, reports, documentation } = props;
   const [tab, setTab] = React.useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {

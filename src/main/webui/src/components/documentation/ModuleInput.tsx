@@ -5,7 +5,7 @@ import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/light";
 import { ghcolors as theme } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const ModuleInput = (props: ModuleInputProps) => {
-  const { inputs, ...other } = props;
+  const { inputs } = props;
   return (
     <Stack justifyContent="center" alignItems="left" spacing={2}>
       {inputs && inputs.length > 0 ? (

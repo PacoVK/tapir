@@ -3,7 +3,7 @@ import { Chip, Stack, Typography } from "@mui/material";
 import { ModuleResourcesProps } from "../../types";
 
 const ModuleResources = (props: ModuleResourcesProps) => {
-  const { resources, ...other } = props;
+  const { resources } = props;
   return (
     <>
       <Typography variant="h4">Resources</Typography>
