@@ -38,7 +38,9 @@
     ]
   },
   "jest": {
-    "transformIgnorePatterns": ["/node_modules/(?!(react-syntax-highlighter)/)"]
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(react-syntax-highlighter)/)"
+    ]
   },
   "browserslist": {
     "production": [

@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { ModuleDependenciesProps } from "../../types";
 import Container from "@mui/material/Container";
 
@@ -16,9 +16,9 @@ const ModuleDependencies = (props: ModuleDependenciesProps) => {
         sx={{ mt: "2em", mb: "2em" }}
       >
         {modules ? (
-          modules.map((module) => {
+          modules.map((module, index) => {
             return (
-              <>
+              <Box key={`module-dependency-module-${index}`}>
                 <Typography>
                   <strong>{module.source}</strong>
                 </Typography>
@@ -28,7 +28,7 @@ const ModuleDependencies = (props: ModuleDependenciesProps) => {
                     <em>{module.version ? module.version : "latest"}</em>
                   </Typography>
                 </Container>
-              </>
+              </Box>
             );
           })
         ) : (
@@ -39,7 +39,6 @@ const ModuleDependencies = (props: ModuleDependenciesProps) => {
       </Stack>
       <Divider sx={{ mb: "2em" }} />
       <Typography variant="h4">Provider Dependencies</Typography>
-
       <Typography sx={{ mt: "1em" }}>Todo hint </Typography>
       <Stack
         justifyContent="center"
@@ -48,9 +47,9 @@ const ModuleDependencies = (props: ModuleDependenciesProps) => {
         sx={{ mt: "15px", mb: "15px" }}
       >
         {providers
-          ? providers.map((provider) => {
+          ? providers.map((provider, index) => {
               return (
-                <>
+                <Box key={`module-dependency-provider-${index}`}>
                   <Typography>
                     <strong>{provider.name}</strong>
                   </Typography>
@@ -65,7 +64,7 @@ const ModuleDependencies = (props: ModuleDependenciesProps) => {
                       <em>{provider.version ? provider.version : "latest"}</em>
                     </Typography>
                   </Container>
-                </>
+                </Box>
               );
             })
           : null}

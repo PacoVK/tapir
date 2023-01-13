@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Container, Stack, Typography } from "@mui/material";
+import { Badge, Box, Container, Stack, Typography } from "@mui/material";
 import { ModuleInputProps } from "../../types";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/light";
 import { ghcolors as theme } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -9,9 +9,9 @@ const ModuleInput = (props: ModuleInputProps) => {
   return (
     <Stack justifyContent="center" alignItems="left" spacing={2}>
       {inputs && inputs.length > 0 ? (
-        inputs.map((input) => {
+        inputs.map((input, index) => {
           return (
-            <>
+            <Box key={`module-input-${index}`}>
               <Typography>
                 <Badge
                   color="secondary"
@@ -29,7 +29,7 @@ const ModuleInput = (props: ModuleInputProps) => {
                   {input.type}
                 </SyntaxHighlighter>
               </Container>
-            </>
+            </Box>
           );
         })
       ) : (

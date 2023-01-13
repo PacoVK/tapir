@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip, Stack, Typography } from "@mui/material";
+import { Box, Chip, Stack, Typography } from "@mui/material";
 import { ModuleResourcesProps } from "../../types";
 
 const ModuleResources = (props: ModuleResourcesProps) => {
@@ -23,9 +23,9 @@ const ModuleResources = (props: ModuleResourcesProps) => {
           This module defines <strong>{resources.length}</strong> resources.
         </Typography>
         <ul>
-          {resources.map((resource) => {
+          {resources.map((resource, index) => {
             return (
-              <>
+              <Box key={`module-resource-${index}`}>
                 <li>
                   <Chip
                     sx={{ m: "0.5em" }}
@@ -33,7 +33,7 @@ const ModuleResources = (props: ModuleResourcesProps) => {
                     variant="outlined"
                   />
                 </li>
-              </>
+              </Box>
             );
           })}
         </ul>
