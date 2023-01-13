@@ -17,6 +17,9 @@ const NavigationDrawer = () => {
       sx={{
         width: 240,
         flexShrink: 0,
+        "& .MuiDivider-root": {
+          display: "none",
+        },
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
