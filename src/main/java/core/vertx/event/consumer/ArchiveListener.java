@@ -34,7 +34,7 @@ public class ArchiveListener {
     File tmpArchiveFile = archive.getCompressedModule();
     Path tmpDirectory = tmpArchiveFile.toPath().getParent();
     fileService.unpackArchive(tmpArchiveFile, tmpDirectory);
-    eventBus.requestAndForget("module.extract.finished", archive);
+    eventBus.publish("module.extract.finished", archive);
     return "ok";
   }
 

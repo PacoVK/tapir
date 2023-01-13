@@ -6,10 +6,12 @@ import api.dto.ModulePagination;
 import core.backend.SearchService;
 import core.backend.aws.dynamodb.converter.ModuleVersionsConverter;
 import core.backend.aws.dynamodb.converter.SecurityReportConverter;
+import core.backend.aws.dynamodb.converter.TerraformDocumentationConverter;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
 import extensions.core.Report;
+import extensions.docs.report.TerraformDocumentation;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import java.time.Instant;
 import java.util.Collections;
@@ -38,7 +40,7 @@ public class DynamodbRepository extends SearchService {
 
   static final Logger LOGGER = Logger.getLogger(DynamodbRepository.class.getName());
   final DynamoDbTable<Module> modulesTable;
-  final DynamoDbTable<Report> securityReportsTable;
+  final DynamoDbTable<Report> reportsTable;
 
   final DynamoDbClient dynamoDbClient;
 
@@ -95,6 +97,11 @@ public class DynamodbRepository extends SearchService {
                           .setter(Report::setSecurityReport)
                           .attributeConverter((AttributeConverter) new SecurityReportConverter())
                   )
+                  .addAttribute(TerraformDocumentation.class, a -> a.name("documentation")
+                          .getter(Report::getDocumentation)
+                          .setter(Report::setDocumentation)
+                          .attributeConverter(new TerraformDocumentationConverter())
+                  )
                   .build();
 
   public DynamodbRepository(DynamoDbClient dynamoDbClient) {
@@ -102,7 +109,7 @@ public class DynamodbRepository extends SearchService {
     DynamoDbEnhancedClient dbEnhancedClient = DynamoDbEnhancedClient
             .builder().dynamoDbClient(dynamoDbClient).build();
     this.modulesTable = dbEnhancedClient.table("Modules", moduleTableSchema);
-    this.securityReportsTable = dbEnhancedClient.table("Reports", reportsTableSchema);
+    this.reportsTable = dbEnhancedClient.table("Reports", reportsTableSchema);
   }
 
   @Override
@@ -121,7 +128,7 @@ public class DynamodbRepository extends SearchService {
 
   @Override
   public void ingestSecurityScanResult(Report report) {
-    securityReportsTable.putItem(report);
+    reportsTable.putItem(report);
   }
 
   @Override
@@ -144,7 +151,7 @@ public class DynamodbRepository extends SearchService {
 
   public void bootstrap() {
     createTable(modulesTable);
-    createTable(securityReportsTable);
+    createTable(reportsTable);
   }
 
   private void createTable(DynamoDbTable<?> table) {
@@ -209,7 +216,7 @@ public class DynamodbRepository extends SearchService {
   }
 
   public Report getReportById(String name) throws ReportNotFoundException {
-    Report report = securityReportsTable.getItem(Key.builder().partitionValue(name).build());
+    Report report = reportsTable.getItem(Key.builder().partitionValue(name).build());
     if (report == null) {
       throw new ReportNotFoundException(name);
     }

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Chip,
   CircularProgress,
   FormControl,
@@ -14,15 +11,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Misconfiguration } from "../types";
 import { getProviderLogo } from "../util/LogoUtil";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MisconfigurationItem from "../components/securityReportVisualization/MisconfigurationItem";
 import DownloadIcon from "@mui/icons-material/Download";
 import InfoIcon from "@mui/icons-material/Info";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { formatDate } from "../util/DateUtil";
 import { useLocation, useParams } from "react-router-dom";
+import ModuleAnalysisTab from "../components/tab/ModuleAnalysisTab";
 
 const ModuleDetails = () => {
   const routeParams = useParams();
@@ -30,6 +25,7 @@ const ModuleDetails = () => {
 
   const [module, setModule] = useState(location.state?.data);
   const [reports, setReports] = useState();
+  const [documentation, setDocumentation] = useState();
   const [version, setVersion] = React.useState();
 
   useEffect(() => {
@@ -65,6 +61,7 @@ const ModuleDetails = () => {
     );
     const reports = await response.json();
     setReports(reports.securityReport);
+    setDocumentation(reports.documentation);
   };
 
   return module && version ? (
@@ -130,51 +127,11 @@ const ModuleDetails = () => {
           label={`Last published at: ${formatDate(module.published_at)}`}
         />
       </Stack>
-      <Typography sx={{ mb: 2 }}>
-        Security findings by{" "}
-        <Link
-          href="https://aquasecurity.github.io/tfsec"
-          rel="noopener"
-          target="_blank"
-        >
-          Tfsec
-        </Link>
-        :
-      </Typography>
-      {reports ? (
-        Object.entries(reports).map(([target, findings]: [string, any]) => {
-          return (
-            <Accordion key={target}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls={`${target}-content`}
-                id={`${target}-header`}
-              >
-                <Typography>
-                  {target} - Findings: {findings.length}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {findings.map(
-                  (misconfiguration: Misconfiguration, index: string) => {
-                    return (
-                      <MisconfigurationItem
-                        key={`misconf-item-${index}`}
-                        misconfiguration={misconfiguration}
-                        keyIdentifier={index}
-                      />
-                    );
-                  }
-                )}
-              </AccordionDetails>
-            </Accordion>
-          );
-        })
-      ) : (
-        <Typography>
-          No report available for module version: {version}
-        </Typography>
-      )}
+      <ModuleAnalysisTab
+        version={version}
+        reports={reports}
+        documentation={documentation}
+      />
     </>
   ) : (
     loadingRoutine()

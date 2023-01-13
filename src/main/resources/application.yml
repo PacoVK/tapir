@@ -69,7 +69,8 @@ quarkus:
              secret-access-key: test
              session-token: test
      s3:
-      endpoint-override: http://localhost:4566
+       endpoint-override: http://localhost:4566
+       path-style-access: true
      quinoa:
        dev-server:
          port: 3000
@@ -93,3 +94,4 @@ quarkus:
             session-token: test
     s3:
       endpoint-override: http://localhost:4566
+      path-style-access: true

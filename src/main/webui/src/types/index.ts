@@ -28,3 +28,55 @@ export enum Provider {
   AZURE = "azurerm",
   KUBERNETES = "kubernetes",
 }
+
+export interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+export interface ModuleInputProps {
+  inputs: {
+    name: string;
+    description: string;
+    type: string;
+    required: boolean;
+  }[];
+}
+
+export interface ModuleOutputProps {
+  outputs: {
+    name: string;
+    description: string;
+  }[];
+}
+
+export interface ModuleResourcesProps {
+  resources: {
+    name: string;
+    type: string;
+  }[];
+}
+
+export interface ReportFindingsProps {
+  reports: { [p: string]: unknown } | ArrayLike<unknown>;
+}
+
+export interface ModuleDependenciesProps {
+  modules: {
+    source: string;
+    version: string;
+  }[];
+
+  providers: {
+    name: string;
+    alias: string;
+    version: string;
+  }[];
+}
+
+export interface ModuleAnalysisTabProps {
+  version: string;
+  reports: any;
+  documentation: any;
+}

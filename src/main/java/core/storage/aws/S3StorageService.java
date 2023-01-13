@@ -64,7 +64,7 @@ public class S3StorageService extends StorageService {
       s3.putObject(buildPutRequest(archive),
               RequestBody.fromFile(archive.getPayload()));
     } catch (Exception ex) {
-      throw new StorageException("Could not upload module", ex);
+      throw new StorageException(archive.getModule().getId(), ex);
     }
   }
 

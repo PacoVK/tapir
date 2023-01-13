@@ -25,12 +25,13 @@ public class TestDataBuilder {
     return null;
   }
   public static Report getReportStub(Module module){
-    return new Report(
+    Report report = new Report(
             module.getNamespace(),
             module.getName(),
             module.getProvider(),
-            module.getCurrentVersion(),
-            Collections.EMPTY_MAP
+            module.getCurrentVersion()
     );
+    report.setSecurityReport(Collections.EMPTY_MAP);
+    return report;
   }
 }

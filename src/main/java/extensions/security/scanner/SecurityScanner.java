@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.upload.FormData;
 import extensions.cli.CliCommandProcessor;
-import extensions.core.Report;
 import extensions.security.report.TfSecReport;
 import extensions.security.util.TfSecReportUtil;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -12,8 +11,8 @@ import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -33,8 +32,8 @@ public class SecurityScanner {
   }
 
   @Blocking
-  @ConsumeEvent("module.extract.finished")
-  public String scanModule(FormData archive) {
+  @ConsumeEvent("module.security.report")
+  public HashMap<String, List<TfSecReport.TfSecResult>> scanModule(FormData archive) {
     LOGGER.info(String.format("Starting scan for module %s, version %s",
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion()
@@ -49,21 +48,12 @@ public class SecurityScanner {
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
-    Map<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil
+    HashMap<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil
             .sanitizeAndGroupAndSortFindings(tfSecReport, workingDirectory.toPath());
-    Report report = new Report(
-            archive.getModule().getNamespace(),
-            archive.getModule().getName(),
-            archive.getModule().getProvider(),
-            archive.getModule().getCurrentVersion(),
-            securityReport
-    );
-    eventBus.requestAndForget("module.report.finished", report);
     LOGGER.info(String.format("Finished scan for module %s, version %s",
             archive.getModule().getName(),
             archive.getModule().getCurrentVersion()
     ));
-    eventBus.requestAndForget("module.processing.finished", archive);
-    return "ok";
+    return securityReport;
   }
 }
