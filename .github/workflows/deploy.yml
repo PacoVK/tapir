@@ -4,6 +4,8 @@ on:
   workflow_run:
     branches:
       - "main"
+    tags:
+      - "*.*.*"
     types:
       - completed
     workflows:
