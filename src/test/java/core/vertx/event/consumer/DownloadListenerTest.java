@@ -1,10 +1,9 @@
-package core.event.consumer;
+package core.vertx.event.consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import core.backend.aws.dynamodb.repository.DynamodbRepository;
 import core.terraform.Module;
-import core.vertx.event.consumer.DownloadListener;
 import io.quarkus.test.junit.QuarkusTest;
 import java.io.IOException;
 import javax.inject.Inject;

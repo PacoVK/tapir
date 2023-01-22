@@ -118,7 +118,7 @@ const Overview = () => {
   };
 
   const renderLastItem = () => {
-    if (modules.length === 0) {
+    if (!modules || modules.length === 0) {
       return null;
     }
     return hasMoreData(lastEvaluatedItemKey) ? null : (
@@ -143,7 +143,7 @@ const Overview = () => {
         // @ts-ignore
         ref={modulesTable}
       >
-        {modules.length > 0 ? (
+        {modules && modules.length > 0 ? (
           modules.map((module) => (
             <ModuleElement
               key={`${module.namespace}${module.name}${module.provider}`}

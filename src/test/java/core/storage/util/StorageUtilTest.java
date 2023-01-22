@@ -1,8 +1,7 @@
-package storage.util;
+package core.storage.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import core.storage.util.StorageUtil;
 import core.terraform.Module;
 import org.junit.jupiter.api.Test;
 

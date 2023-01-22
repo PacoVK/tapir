@@ -22,7 +22,7 @@ const ModuleDependencies = (props: ModuleDependenciesProps) => {
                 <Typography>
                   <strong>{module.source}</strong>
                 </Typography>
-                <Container maxWidth="sm">
+                <Container sx={{ ml: "inherit" }} maxWidth="sm">
                   <Typography>
                     Version:{" "}
                     <em>{module.version ? module.version : "latest"}</em>
@@ -53,7 +53,7 @@ const ModuleDependencies = (props: ModuleDependenciesProps) => {
                   <Typography>
                     <strong>{provider.name}</strong>
                   </Typography>
-                  <Container maxWidth="sm">
+                  <Container sx={{ ml: "inherit" }} maxWidth="sm">
                     {provider.alias ? (
                       <Typography>
                         Alias: <em>{provider.alias}</em>

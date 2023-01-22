@@ -21,7 +21,7 @@ const ModuleInput = (props: ModuleInputProps) => {
                   <strong>{input.name}</strong>
                 </Badge>
               </Typography>
-              <Container maxWidth="sm">
+              <Container sx={{ ml: "inherit" }} maxWidth="sm">
                 <Typography>
                   {input.description ? input.description : null}
                 </Typography>
