@@ -20,7 +20,4 @@
               files="ISearchService.java"/>
     <suppress checks="AbbreviationAsWordInName"
               files="IStorageInterface.java"/>
-    <suppress checks="LineLength"
-              files="ElasticSearchRepository.java"
-              lines="190"/>
 </suppressions>

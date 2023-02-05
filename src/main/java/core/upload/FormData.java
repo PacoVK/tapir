@@ -45,4 +45,8 @@ public class FormData {
   public File getPayload() {
     return payload;
   }
+
+  public void setPayload(File payload) {
+    this.payload = payload;
+  }
 }

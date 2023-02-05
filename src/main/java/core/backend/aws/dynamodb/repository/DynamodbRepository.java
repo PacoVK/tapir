@@ -1,30 +1,19 @@
 package core.backend.aws.dynamodb.repository;
 
-import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
-
 import api.dto.PaginationDto;
 import core.backend.SearchService;
-import core.backend.aws.dynamodb.converter.ArtifactVersionsConverter;
-import core.backend.aws.dynamodb.converter.ProviderPlatformsConverter;
-import core.backend.aws.dynamodb.converter.SecurityReportConverter;
-import core.backend.aws.dynamodb.converter.TerraformDocumentationConverter;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
-import extensions.docs.report.TerraformDocumentation;
 import io.quarkus.arc.lookup.LookupIfProperty;
-import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
-import software.amazon.awssdk.enhanced.dynamodb.AttributeConverter;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Expression;
@@ -43,90 +32,14 @@ import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 public class DynamodbRepository extends SearchService {
 
   static final Logger LOGGER = Logger.getLogger(DynamodbRepository.class.getName());
+
   final DynamoDbTable<Module> modulesTable;
   final DynamoDbTable<Report> reportsTable;
   final DynamoDbTable<Provider> providerTable;
-
   final DynamoDbClient dynamoDbClient;
-
-  TableSchema<Provider> providerTableSchema =
-          TableSchema.builder(Provider.class)
-                  .newItemSupplier(Provider::new)
-                  .addAttribute(String.class, a -> a.name("id")
-                          .getter(Provider::getId)
-                          .setter(Provider::setId)
-                          .tags(primaryPartitionKey()))
-                  .addAttribute(String.class, a -> a.name("namespace")
-                          .getter(Provider::getNamespace)
-                          .setter(Provider::setNamespace))
-                  .addAttribute(String.class, a -> a.name("type")
-                          .getter(Provider::getType)
-                          .setter(Provider::setType))
-                  .addAttribute(TreeMap.class, a -> a.name("versions")
-                          .getter(Provider::getVersions)
-                          .setter(Provider::setVersions)
-                          .attributeConverter((AttributeConverter) new ProviderPlatformsConverter())
-                  )
-                  .build();
-
-  TableSchema<Module> moduleTableSchema =
-          TableSchema.builder(Module.class)
-                  .newItemSupplier(Module::new)
-                  .addAttribute(String.class, a -> a.name("id")
-                          .getter(Module::getId)
-                          .setter(Module::setId)
-                          .tags(primaryPartitionKey()))
-                  .addAttribute(String.class, a -> a.name("name")
-                          .getter(Module::getName)
-                          .setter(Module::setName))
-                  .addAttribute(String.class, a -> a.name("namespace")
-                          .getter(Module::getNamespace)
-                          .setter(Module::setNamespace))
-                  .addAttribute(String.class, a -> a.name("provider")
-                          .getter(Module::getProvider)
-                          .setter(Module::setProvider))
-                  .addAttribute(Integer.class, a -> a.name("downloads")
-                          .getter(Module::getDownloads)
-                          .setter(Module::setDownloads))
-                  .addAttribute(TreeSet.class, a -> a.name("versions")
-                          .getter(Module::getVersions)
-                          .setter(Module::setVersions)
-                          .attributeConverter((AttributeConverter) new ArtifactVersionsConverter()))
-                  .addAttribute(Instant.class, a -> a.name("published_at")
-                          .getter(Module::getPublished_at)
-                          .setter(Module::setPublished_at))
-                  .build();
-
-  TableSchema<Report> reportsTableSchema =
-          TableSchema.builder(Report.class)
-                  .newItemSupplier(Report::new)
-                  .addAttribute(String.class, a -> a.name("id")
-                          .getter(Report::getId)
-                          .setter(Report::setId)
-                          .tags(primaryPartitionKey()))
-                  .addAttribute(String.class, a -> a.name("moduleName")
-                          .getter(Report::getModuleName)
-                          .setter(Report::setModuleName))
-                  .addAttribute(String.class, a -> a.name("moduleNamespace")
-                          .getter(Report::getModuleNamespace)
-                          .setter(Report::setModuleNamespace))
-                  .addAttribute(String.class, a -> a.name("provider")
-                          .getter(Report::getProvider)
-                          .setter(Report::setProvider))
-                  .addAttribute(String.class, a -> a.name("moduleVersion")
-                          .getter(Report::getModuleVersion)
-                          .setter(Report::setModuleVersion))
-                  .addAttribute(Map.class, a -> a.name("securityReport")
-                          .getter(Report::getSecurityReport)
-                          .setter(Report::setSecurityReport)
-                          .attributeConverter((AttributeConverter) new SecurityReportConverter())
-                  )
-                  .addAttribute(TerraformDocumentation.class, a -> a.name("documentation")
-                          .getter(Report::getDocumentation)
-                          .setter(Report::setDocumentation)
-                          .attributeConverter(new TerraformDocumentationConverter())
-                  )
-                  .build();
+  final TableSchema<Provider> providerTableSchema = TableSchemas.providerTableSchema;
+  final TableSchema<Module> moduleTableSchema = TableSchemas.moduleTableSchema;
+  final TableSchema<Report> reportsTableSchema = TableSchemas.reportsTableSchema;
 
   public DynamodbRepository(DynamoDbClient dynamoDbClient) {
     this.dynamoDbClient = dynamoDbClient;
@@ -176,6 +89,32 @@ public class DynamodbRepository extends SearchService {
       providerToIngest = provider;
     }
     providerTable.updateItem(providerToIngest);
+  }
+
+  public PaginationDto findProviders(String identifier, Integer limit, String terms) {
+    String whereClause = new StringBuilder("contains(#namespace, :term)")
+            .append("or contains(#type, :term)")
+            .toString();
+    Expression expression = Expression.builder()
+            .expressionNames(Map.of(
+                    "#namespace", "namespace",
+                    "#type", "type")
+            )
+            .expressionValues(Map.of(":term", AttributeValue.fromS(terms)))
+            .expression(whereClause)
+            .build();
+    ScanEnhancedRequest scanEnhancedRequest = buildScanRequest(
+            identifier,
+            limit,
+            terms,
+            expression
+    );
+    Page<Provider> providerPage = providerTable.scan(scanEnhancedRequest)
+            .stream().findFirst().orElse(null);
+    if (providerPage == null) {
+      return new PaginationDto(Collections.EMPTY_LIST);
+    }
+    return new PaginationDto(providerPage.items());
   }
 
   @Override
@@ -233,29 +172,43 @@ public class DynamodbRepository extends SearchService {
     }
   }
 
-  public PaginationDto findModules(String identifier, Integer limit, String terms) {
+  private ScanEnhancedRequest buildScanRequest(
+          String identifier,
+          Integer limit,
+          String terms,
+          Expression filterExpression
+  ) {
     ScanEnhancedRequest.Builder scanEnhancedRequestBuilder = ScanEnhancedRequest.builder()
             .limit(limit);
     if (!identifier.isEmpty()) {
       scanEnhancedRequestBuilder.exclusiveStartKey(Map.of("id", AttributeValue.fromS(identifier)));
     }
     if (!terms.isEmpty()) {
-      String whereClause = new StringBuilder("contains(#namespace, :term)")
-              .append("or contains(#name, :term)")
-              .append("or contains(#provider, :term)")
-              .toString();
-      Expression expression = Expression.builder()
-              .expressionNames(Map.of(
-                      "#namespace", "namespace",
-                      "#name", "name",
-                      "#provider", "provider")
-              )
-              .expressionValues(Map.of(":term", AttributeValue.fromS(terms)))
-              .expression(whereClause)
-              .build();
-      scanEnhancedRequestBuilder.filterExpression(expression);
+      scanEnhancedRequestBuilder.filterExpression(filterExpression);
     }
-    ScanEnhancedRequest scanEnhancedRequest = scanEnhancedRequestBuilder.build();
+    return scanEnhancedRequestBuilder.build();
+  }
+
+  public PaginationDto findModules(String identifier, Integer limit, String terms) {
+    String whereClause = new StringBuilder("contains(#namespace, :term)")
+            .append("or contains(#name, :term)")
+            .append("or contains(#provider, :term)")
+            .toString();
+    Expression expression = Expression.builder()
+            .expressionNames(Map.of(
+                    "#namespace", "namespace",
+                    "#name", "name",
+                    "#provider", "provider")
+            )
+            .expressionValues(Map.of(":term", AttributeValue.fromS(terms)))
+            .expression(whereClause)
+            .build();
+    ScanEnhancedRequest scanEnhancedRequest = buildScanRequest(
+            identifier,
+            limit,
+            terms,
+            expression
+    );
     Page<Module> modulePage = modulesTable.scan(scanEnhancedRequest)
             .stream().findFirst().orElse(null);
     if (modulePage == null) {

@@ -12,6 +12,8 @@ public interface ISearchService {
 
   PaginationDto findModules(String identifier, Integer limit, String term) throws Exception;
 
+  PaginationDto findProviders(String identifier, Integer limit, String term) throws Exception;
+
   Module getModuleById(String id) throws Exception;
 
   Module getModuleVersions(Module module) throws Exception;

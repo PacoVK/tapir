@@ -41,12 +41,16 @@ public class BlobStorageService extends StorageService {
   }
 
   @Override
-  public void uploadModule(FormData archive) {
+  public void uploadModule(FormData archive) throws StorageException {
     Module module = archive.getEntity();
     String blobName = StorageUtil.generateModuleStoragePath(module);
-    BlobClient blobClient = blobContainerClient
-            .getBlobClient(blobName);
-    blobClient.uploadFromFile(archive.getPayload().getPath(), true);
+    try {
+      BlobClient blobClient = blobContainerClient
+              .getBlobClient(blobName);
+      blobClient.uploadFromFile(archive.getPayload().getPath(), true);
+    } catch (Exception ex) {
+      throw new StorageException(archive.getEntity().getId(), ex);
+    }
   }
 
   @Override
@@ -82,7 +86,7 @@ public class BlobStorageService extends StorageService {
                 uploadFile(blobName, pathToFile.toString());
               });
     } catch (Exception ex) {
-      throw new StorageException(((Provider) archive.getEntity()).getId(), ex);
+      throw new StorageException(archive.getEntity().getId(), ex);
     }
   }
 

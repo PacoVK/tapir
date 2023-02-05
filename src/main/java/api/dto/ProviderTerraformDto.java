@@ -3,8 +3,10 @@ package api.dto;
 import api.dto.serializer.GpgPublicKeySerializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.util.List;
 
+@RegisterForReflection
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProviderTerraformDto {
 

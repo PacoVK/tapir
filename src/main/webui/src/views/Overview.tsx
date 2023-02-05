@@ -33,8 +33,7 @@ const Overview = () => {
   const hasMoreData = (lastEvaluatedItem: any) => {
     return (
       !!lastEvaluatedItem &&
-      lastEvaluatedItem !== "" &&
-      modules.at(0)?.id !== lastEvaluatedItem.id
+      modules.at(0)?.id !== lastEvaluatedItem
     );
   };
 
@@ -42,11 +41,11 @@ const Overview = () => {
     () => {
       setLoading(true);
       fetchModules(
-        `search?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
+        `search/modules?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
       ).then((data) => {
-        const allModules = [...modules, ...data.modules];
+        const allModules = [...modules, ...data.entities];
         setLastEvaluatedItemKey(
-          data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
+          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
         );
         setModules(allModules);
         setLoading(false);
@@ -92,12 +91,12 @@ const Overview = () => {
   useEffect(
     () => {
       setLoading(true);
-      fetchModules(`search?limit=${fetchDataLimit}&q=${searchString}`).then(
+      fetchModules(`search/modules?limit=${fetchDataLimit}&q=${searchString}`).then(
         (data) => {
           setLastEvaluatedItemKey(
-            data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
+            data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
           );
-          setModules(data.modules);
+          setModules(data.entities);
           setLoading(false);
         }
       );

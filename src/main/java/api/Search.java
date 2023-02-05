@@ -22,6 +22,7 @@ public class Search {
   }
 
   @GET
+  @Path("/modules")
   public Response listModules(
           @QueryParam("limit")Optional<Integer> limit,
           @QueryParam("q")Optional<String> query,
@@ -33,5 +34,20 @@ public class Search {
             query.orElse("")
     );
     return Response.ok(modulePagination).build();
+  }
+
+  @GET
+  @Path("/providers")
+  public Response listProviders(
+          @QueryParam("limit")Optional<Integer> limit,
+          @QueryParam("q")Optional<String> query,
+          @QueryParam("lastKey")Optional<String> lastEvaluatedElementKey
+  ) throws Exception {
+    PaginationDto providerPagination = searchService.findProviders(
+            lastEvaluatedElementKey.orElse(""),
+            limit.orElse(10),
+            query.orElse("")
+    );
+    return Response.ok(providerPagination).build();
   }
 }

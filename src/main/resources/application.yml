@@ -24,7 +24,7 @@ mp:
     extensions:
       smallrye:
         info:
-          title: Tapi API
+          title: Tapir API
           version: 0.0.1
           description: API for Tapir
           contact:

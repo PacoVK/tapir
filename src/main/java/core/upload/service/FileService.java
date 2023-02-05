@@ -46,7 +46,6 @@ public class FileService {
   }
 
   public void unpackArchive(File archive, Path targetDir) {
-    //TODO be more restrictive with suffixes
     try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(archive))) {
       ZipEntry entry = zipInputStream.getNextEntry();
       while (entry != null) {

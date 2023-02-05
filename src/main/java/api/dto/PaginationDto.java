@@ -13,12 +13,12 @@ public class PaginationDto {
   public PaginationDto(List<? extends CoreEntity> entities) {
     this.entities = entities;
     if (!entities.isEmpty()) {
-      this.lastEvaluatedItem = entities.get(entities.size() - 1);
+      this.lastEvaluatedItemId = entities.get(entities.size() - 1).getId();
     }
   }
 
   Collection<? extends CoreEntity> entities;
-  CoreEntity lastEvaluatedItem;
+  String lastEvaluatedItemId;
 
   public Collection<? extends CoreEntity> getEntities() {
     return entities;
@@ -28,11 +28,11 @@ public class PaginationDto {
     this.entities = entities;
   }
 
-  public CoreEntity getLastEvaluatedItem() {
-    return lastEvaluatedItem;
+  public String getLastEvaluatedItem() {
+    return lastEvaluatedItemId;
   }
 
-  public void setLastEvaluatedItem(CoreEntity lastEvaluatedItem) {
-    this.lastEvaluatedItem = lastEvaluatedItem;
+  public void setLastEvaluatedItem(String lastEvaluatedItem) {
+    this.lastEvaluatedItemId = lastEvaluatedItemId;
   }
 }

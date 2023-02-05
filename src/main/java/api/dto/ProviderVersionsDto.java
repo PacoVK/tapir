@@ -2,8 +2,10 @@ package api.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import core.terraform.ProviderPlatform;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.util.List;
 
+@RegisterForReflection
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProviderVersionsDto {
 

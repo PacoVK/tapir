@@ -74,7 +74,7 @@ public class S3StorageService extends StorageService {
       s3.putObject(buildModulePutRequest(archive),
               RequestBody.fromFile(archive.getPayload()));
     } catch (Exception ex) {
-      throw new StorageException(((Module) archive.getEntity()).getId(), ex);
+      throw new StorageException(archive.getEntity().getId(), ex);
     }
   }
 
@@ -102,7 +102,7 @@ public class S3StorageService extends StorageService {
                 buildProviderPutRequest(s3PrefixPath, pathToFile);
               });
     } catch (Exception ex) {
-      throw new StorageException(((Provider) archive.getEntity()).getId(), ex);
+      throw new StorageException(archive.getEntity().getId(), ex);
     }
   }
 

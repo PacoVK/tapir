@@ -1,7 +1,9 @@
 package api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
+@RegisterForReflection
 public class GpgPublicKey {
   String source = "Tapir";
   @JsonProperty("key_id")
