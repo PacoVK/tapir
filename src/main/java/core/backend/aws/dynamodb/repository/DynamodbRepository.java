@@ -2,7 +2,7 @@ package core.backend.aws.dynamodb.repository;
 
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.backend.SearchService;
 import core.backend.aws.dynamodb.converter.ArtifactVersionsConverter;
 import core.backend.aws.dynamodb.converter.ProviderPlatformsConverter;
@@ -233,7 +233,7 @@ public class DynamodbRepository extends SearchService {
     }
   }
 
-  public ModulePagination findModules(String identifier, Integer limit, String terms) {
+  public PaginationDto findModules(String identifier, Integer limit, String terms) {
     ScanEnhancedRequest.Builder scanEnhancedRequestBuilder = ScanEnhancedRequest.builder()
             .limit(limit);
     if (!identifier.isEmpty()) {
@@ -259,9 +259,9 @@ public class DynamodbRepository extends SearchService {
     Page<Module> modulePage = modulesTable.scan(scanEnhancedRequest)
             .stream().findFirst().orElse(null);
     if (modulePage == null) {
-      return new ModulePagination(Collections.EMPTY_LIST);
+      return new PaginationDto(Collections.EMPTY_LIST);
     }
-    return new ModulePagination(modulePage.items());
+    return new PaginationDto(modulePage.items());
   }
 
   public Module getModuleById(String name) throws ModuleNotFoundException {

@@ -3,7 +3,7 @@ package core.backend.aws.dynamodb.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
@@ -83,16 +83,16 @@ class DynamodbRepositoryTest {
     repository.ingestModuleData(awsNetworkModule);
     repository.ingestModuleData(azureNetworkModule);
     repository.ingestModuleData(otherModule);
-    ModulePagination searchWithLimit = repository.findModules("", 2, "vpc");
-    ModulePagination searchWithinLimit = repository.findModules("", 5, "vpc");
-    ModulePagination searchWithoutResult = repository.findModules("", 5, "google");
-    ModulePagination searchAll = repository.findModules("", 5, "");
-    ModulePagination searchWithNonExistingIdentifier = repository.findModules("fancy-vsdfsfdspc-aws", 5, "");
-    assertEquals(searchWithLimit.getModules().size(), 1);
-    assertEquals(searchWithinLimit.getModules().size(), 2);
-    assertEquals(searchWithoutResult.getModules().size(), 0);
-    assertEquals(searchAll.getModules().size(), 3);
-    assertEquals(searchWithNonExistingIdentifier.getModules().size(), 0);
+    PaginationDto searchWithLimit = repository.findModules("", 2, "vpc");
+    PaginationDto searchWithinLimit = repository.findModules("", 5, "vpc");
+    PaginationDto searchWithoutResult = repository.findModules("", 5, "google");
+    PaginationDto searchAll = repository.findModules("", 5, "");
+    PaginationDto searchWithNonExistingIdentifier = repository.findModules("fancy-vsdfsfdspc-aws", 5, "");
+    assertEquals(searchWithLimit.getEntities().size(), 1);
+    assertEquals(searchWithinLimit.getEntities().size(), 2);
+    assertEquals(searchWithoutResult.getEntities().size(), 0);
+    assertEquals(searchAll.getEntities().size(), 3);
+    assertEquals(searchWithNonExistingIdentifier.getEntities().size(), 0);
   }
 
   @Test

@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Module extends Uploadable {
+public class Module extends CoreEntity {
 
   public Module() {}
 

@@ -1,6 +1,6 @@
 package core.backend.elasticsearch;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.backend.SearchService;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
@@ -160,7 +160,7 @@ public class ElasticSearchRepository extends SearchService {
     createIndexIfNotExists("reports");
   }
 
-  ModulePagination getModules(String query) throws IOException {
+  PaginationDto getModules(String query) throws IOException {
     Request request = new Request(
             HttpMethod.GET,
             "/modules/_search"
@@ -173,12 +173,12 @@ public class ElasticSearchRepository extends SearchService {
     List<Module> results = hits.stream()
             .map(hit -> ((JsonObject) hit).getJsonObject("_source").mapTo(Module.class))
             .collect(Collectors.toList());
-    return new ModulePagination(results);
+    return new PaginationDto(results);
   }
 
-  public ModulePagination findModules(String identifier,
-                                      Integer limit,
-                                      String term) throws IOException {
+  public PaginationDto findModules(String identifier,
+                                   Integer limit,
+                                   String term) throws IOException {
     StringBuilder queryBuilder = new StringBuilder("{").append(
             String.format("\"sort\": [ {\"_id\": \"asc\"} ], \"size\": %s", limit)
     );

@@ -1,6 +1,6 @@
 package core.backend;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
 import core.terraform.Provider;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public interface ISearchService {
   void bootstrap() throws Exception;
 
-  ModulePagination findModules(String identifier, Integer limit, String term) throws Exception;
+  PaginationDto findModules(String identifier, Integer limit, String term) throws Exception;
 
   Module getModuleById(String id) throws Exception;
 

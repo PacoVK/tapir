@@ -1,5 +1,5 @@
 package core.terraform;
 
-public abstract class Uploadable {
+public abstract class CoreEntity {
   abstract String getId();
 }

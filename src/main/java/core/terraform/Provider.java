@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Provider extends Uploadable {
+public class Provider extends CoreEntity {
 
   private String id;
   private String namespace;

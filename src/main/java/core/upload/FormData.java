@@ -1,6 +1,6 @@
 package core.upload;
 
-import core.terraform.Uploadable;
+import core.terraform.CoreEntity;
 import java.io.File;
 import javax.ws.rs.core.MediaType;
 import org.jboss.resteasy.reactive.PartType;
@@ -16,13 +16,13 @@ public class FormData {
   @RestForm
   @PartType(MediaType.TEXT_PLAIN)
   private String mimeType = "application/zip";
-  private Uploadable entity;
+  private CoreEntity entity;
 
-  public <T extends Uploadable> T getEntity() {
+  public <T extends CoreEntity> T getEntity() {
     return (T) entity;
   }
 
-  public <T extends Uploadable> void setEntity(T entity) {
+  public <T extends CoreEntity> void setEntity(T entity) {
     this.entity = entity;
   }
 

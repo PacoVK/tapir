@@ -1,6 +1,6 @@
 package api;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.backend.SearchService;
 import java.util.Optional;
 import javax.enterprise.inject.Instance;
@@ -27,7 +27,7 @@ public class Search {
           @QueryParam("q")Optional<String> query,
           @QueryParam("lastKey")Optional<String> lastEvaluatedElementKey
   ) throws Exception {
-    ModulePagination modulePagination = searchService.findModules(
+    PaginationDto modulePagination = searchService.findModules(
             lastEvaluatedElementKey.orElse(""),
             limit.orElse(10),
             query.orElse("")

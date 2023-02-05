@@ -3,7 +3,7 @@ package core.backend.elasticsearch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
@@ -79,12 +79,12 @@ class ElasticSearchRepositoryTest {
     repository.ingestModuleData(azureNetworkModule);
     repository.ingestModuleData(otherModule);
     TimeUnit.SECONDS.sleep(5);
-    ModulePagination searchWithLimit = repository.findModules("", 1, "vpc");
-    ModulePagination searchWithinLimit = repository.findModules("", 5, "vpc");
-    ModulePagination searchWithoutResult = repository.findModules("", 5, "google");
-    assertEquals(searchWithLimit.getModules().size(), 1);
-    assertEquals(searchWithinLimit.getModules().size(), 2);
-    assertEquals(searchWithoutResult.getModules().size(), 0);
+    PaginationDto searchWithLimit = repository.findModules("", 1, "vpc");
+    PaginationDto searchWithinLimit = repository.findModules("", 5, "vpc");
+    PaginationDto searchWithoutResult = repository.findModules("", 5, "google");
+    assertEquals(searchWithLimit.getEntities().size(), 1);
+    assertEquals(searchWithinLimit.getEntities().size(), 2);
+    assertEquals(searchWithoutResult.getEntities().size(), 0);
   }
 
   @Test
