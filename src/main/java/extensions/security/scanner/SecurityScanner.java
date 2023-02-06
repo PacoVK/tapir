@@ -2,6 +2,7 @@ package extensions.security.scanner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.terraform.Module;
 import core.upload.FormData;
 import extensions.cli.CliCommandProcessor;
 import extensions.security.report.TfSecReport;
@@ -34,11 +35,12 @@ public class SecurityScanner {
   @Blocking
   @ConsumeEvent("module.security.report")
   public HashMap<String, List<TfSecReport.TfSecResult>> scanModule(FormData archive) {
+    Module module = archive.getEntity();
     LOGGER.info(String.format("Starting scan for module %s, version %s",
-            archive.getModule().getName(),
-            archive.getModule().getCurrentVersion()
+            module.getName(),
+            module.getCurrentVersion()
     ));
-    File workingDirectory = archive.getCompressedModule().getParentFile();
+    File workingDirectory = archive.getCompressedFile().getParentFile();
     String output = commandProcessor.runCommand(
             workingDirectory,
             "sh", "-c", "tfsec -f json  --ignore-hcl-errors .");
@@ -51,8 +53,8 @@ public class SecurityScanner {
     HashMap<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil
             .sanitizeAndGroupAndSortFindings(tfSecReport, workingDirectory.toPath());
     LOGGER.info(String.format("Finished scan for module %s, version %s",
-            archive.getModule().getName(),
-            archive.getModule().getCurrentVersion()
+            module.getName(),
+            module.getCurrentVersion()
     ));
     return securityReport;
   }

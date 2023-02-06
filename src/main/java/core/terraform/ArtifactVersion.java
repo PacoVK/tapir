@@ -2,10 +2,10 @@ package core.terraform;
 
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
-public class ModuleVersion implements Comparable<ModuleVersion> {
-  public ModuleVersion() {}
+public class ArtifactVersion implements Comparable<ArtifactVersion> {
+  public ArtifactVersion() {}
 
-  public ModuleVersion(String version) {
+  public ArtifactVersion(String version) {
     this.version = version;
   }
 
@@ -20,7 +20,12 @@ public class ModuleVersion implements Comparable<ModuleVersion> {
   }
 
   @Override
-  public int compareTo(ModuleVersion o) {
+  public int compareTo(ArtifactVersion o) {
     return new ComparableVersion(o.getVersion()).compareTo(new ComparableVersion(this.version));
+  }
+
+  @Override
+  public String toString() {
+    return getVersion();
   }
 }

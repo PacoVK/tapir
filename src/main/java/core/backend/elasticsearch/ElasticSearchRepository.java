@@ -3,8 +3,10 @@ package core.backend.elasticsearch;
 import api.dto.ModulePagination;
 import core.backend.SearchService;
 import core.exceptions.ModuleNotFoundException;
+import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
+import core.terraform.Provider;
 import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonArray;
@@ -44,7 +46,8 @@ public class ElasticSearchRepository extends SearchService {
             )
     );
     String upsertScript = new StringBuilder("List versions=ctx._source.versions; ")
-            .append("if(versions!=null && !versions.stream().anyMatch(v-> v.version.equals(params.release.version))){")
+            .append("if(versions!=null && !versions.stream()")
+            .append(".anyMatch(v-> v.version.equals(params.release.version))){")
             .append("ctx._source.versions.add(params.release)")
             .append("}").toString();
     String payload = JsonObject.of("script", JsonObject.of(
@@ -52,6 +55,42 @@ public class ElasticSearchRepository extends SearchService {
             "lang", "painless",
             "params", JsonObject.of("release", module.getVersions().first())
     ), "upsert", module).toString();
+    request.setJsonEntity(payload);
+    restClient.performRequest(request);
+  }
+
+  @Override
+  public Provider getProviderById(String id) throws Exception {
+    Request request = new Request(
+            HttpMethod.GET,
+            "/providers/_doc/" + id);
+    try {
+      return doRequestAndReturnEntity(request).mapTo(Provider.class);
+    } catch (ResponseException e) {
+      throw new ProviderNotFoundException(id, e);
+    }
+  }
+
+  @Override
+  public void ingestProviderData(Provider provider) throws IOException {
+    Request request = new Request(
+            HttpMethod.POST,
+            String.format("/providers/_update/%s",
+                    provider.getId()
+            )
+    );
+    String upsertScript = new StringBuilder("Map versions=ctx._source.versions; ")
+            .append("if(versions!=null && !versions.containsKey(params.release)){")
+            .append("ctx._source.versions.put(params.release, params.platform)")
+            .append("}").toString();
+    String payload = JsonObject.of("script", JsonObject.of(
+            "source", upsertScript,
+            "lang", "painless",
+            "params", JsonObject.of(
+                    "release", provider.getVersions().firstKey().getVersion(),
+                    "platform", provider.getVersions().firstEntry().getValue()
+            )
+    ), "upsert", provider).toString();
     request.setJsonEntity(payload);
     restClient.performRequest(request);
   }
@@ -117,6 +156,7 @@ public class ElasticSearchRepository extends SearchService {
 
   public void bootstrap() throws IOException {
     createIndexIfNotExists("modules");
+    createIndexIfNotExists("providers");
     createIndexIfNotExists("reports");
   }
 

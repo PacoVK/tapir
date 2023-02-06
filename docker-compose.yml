@@ -44,6 +44,16 @@ services:
       AWS_SECRET_ACCESS_KEY: local
       DYNAMO_ENDPOINT: localstack:4566
 
+  s3-admin:
+    image: mastertinner/s3manager
+    ports:
+      - "8002:8080"
+    environment:
+      USE_SSL: false
+      ACCESS_KEY_ID: local
+      SECRET_ACCESS_KEY: local
+      ENDPOINT: localstack:4566
+
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
     command:

@@ -3,6 +3,7 @@ package api;
 import core.backend.SearchService;
 import core.exceptions.StorageException;
 import core.storage.StorageService;
+import core.storage.util.StorageUtil;
 import core.terraform.Module;
 import core.upload.FormData;
 import core.upload.service.UploadService;
@@ -55,7 +56,7 @@ public class Modules {
           String version, FormData archive) throws Exception {
     Module module = new Module(namespace, name, provider, version);
     module.setPublished_at(Instant.now());
-    archive.setModule(module);
+    archive.setEntity(module);
     uploadService.uploadModule(archive);
     return Response.ok().build();
   }
@@ -76,7 +77,9 @@ public class Modules {
   public Response getDownloadUrl(String namespace, String name, String provider, String version)
           throws StorageException {
     Module module = new Module(namespace, name, provider, version);
-    String downloadUrl = storageService.getDownloadUrlForModule(module);
+    String path = StorageUtil.generateModuleStoragePath(module);
+    String signedUrl = storageService.getDownloadUrlForArtifact(path);
+    String downloadUrl = String.format("s3::%s", signedUrl);
     eventBus.requestAndForget("module.download.requested", module);
     return Response.noContent().header("X-Terraform-Get", downloadUrl).build();
   }

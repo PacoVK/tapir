@@ -6,4 +6,7 @@ public class ServiceDiscovery {
 
   @JsonProperty("modules.v1")
   private final String moduleV1 = "/terraform/modules/v1/";
+
+  @JsonProperty("providers.v1")
+  private final String providersV1 = "/terraform/providers/v1/";
 }

@@ -3,6 +3,7 @@ package core.backend;
 import api.dto.ModulePagination;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
+import core.terraform.Provider;
 import extensions.core.Report;
 import java.io.IOException;
 
@@ -17,9 +18,13 @@ public interface ISearchService {
 
   void ingestModuleData(Module module) throws Exception;
 
+  void ingestProviderData(Provider provider) throws Exception;
+
   void ingestSecurityScanResult(Report report) throws Exception;
 
   Module increaseDownloadCounter(Module module) throws IOException;
 
   Report getReportByModuleVersion(Module module) throws IOException, ReportNotFoundException;
+
+  Provider getProviderById(String id) throws Exception;
 }

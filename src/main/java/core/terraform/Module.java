@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Module {
+public class Module extends Uploadable {
 
   public Module() {}
 
@@ -23,7 +23,7 @@ public class Module {
     this.namespace = namespace;
     this.name = name;
     this.provider = provider;
-    this.versions = new TreeSet<>(Set.of(new ModuleVersion(version)));
+    this.versions = new TreeSet<>(Set.of(new ArtifactVersion(version)));
     setId(computeId());
   }
 
@@ -32,7 +32,7 @@ public class Module {
   private String namespace;
   @NotEmpty(message = "{Module.name.required}")
   private String name;
-  private TreeSet<ModuleVersion> versions;
+  private TreeSet<ArtifactVersion> versions;
   @NotEmpty(message = "{Module.provider.required}")
   private String provider;
   private Instant published_at;
@@ -71,11 +71,11 @@ public class Module {
     this.name = name;
   }
 
-  public TreeSet<ModuleVersion> getVersions() {
+  public TreeSet<ArtifactVersion> getVersions() {
     return versions;
   }
 
-  public void setVersions(TreeSet<ModuleVersion> versions) {
+  public void setVersions(TreeSet<ArtifactVersion> versions) {
     this.versions = versions;
   }
 

@@ -3,6 +3,7 @@ package extensions.docs.generator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.backend.SearchService;
+import core.terraform.Module;
 import core.upload.FormData;
 import extensions.cli.CliCommandProcessor;
 import extensions.docs.report.TerraformDocumentation;
@@ -35,11 +36,12 @@ public class DocumentationGenerator {
   @Blocking
   @ConsumeEvent("module.documentation.generate")
   public TerraformDocumentation generateDocs(FormData archive) {
+    Module module = archive.getEntity();
     LOGGER.info(String.format("Generating docs for module %s, version %s",
-            archive.getModule().getName(),
-            archive.getModule().getCurrentVersion()
+            module.getName(),
+            module.getCurrentVersion()
     ));
-    File workingDirectory = archive.getCompressedModule().getParentFile();
+    File workingDirectory = archive.getCompressedFile().getParentFile();
     String output = commandProcessor.runCommand(
             workingDirectory,
             "sh", "-c", "terraform-docs json .");

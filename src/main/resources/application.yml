@@ -1,4 +1,8 @@
 registry:
+  gpg:
+    keys:
+      - id: foobar
+        ascii-amor: '-----BEGIN PGP PUBLIC KEY BLOCK-----\nVersion: GnuPG v1\n\nmQENBFMORM0BCADBRyK'
   search:
     backend: ${BACKEND_CONFIG:dynamodb}
     elasticsearch:
@@ -42,6 +46,8 @@ quarkus:
   elasticsearch:
     hosts: ${registry.search.elasticsearch.host}
   http:
+    limits:
+      max-body-size: ${API_MAX_BODY_SIZE:50M}
     filter:
       others:
         header:
@@ -68,6 +74,7 @@ quarkus:
              access-key-id: test
              secret-access-key: test
              session-token: test
+         region: eu-central-1
      s3:
        endpoint-override: http://localhost:4566
        path-style-access: true

@@ -4,18 +4,22 @@ import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTag
 
 import api.dto.ModulePagination;
 import core.backend.SearchService;
-import core.backend.aws.dynamodb.converter.ModuleVersionsConverter;
+import core.backend.aws.dynamodb.converter.ArtifactVersionsConverter;
+import core.backend.aws.dynamodb.converter.ProviderPlatformsConverter;
 import core.backend.aws.dynamodb.converter.SecurityReportConverter;
 import core.backend.aws.dynamodb.converter.TerraformDocumentationConverter;
 import core.exceptions.ModuleNotFoundException;
+import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
+import core.terraform.Provider;
 import extensions.core.Report;
 import extensions.docs.report.TerraformDocumentation;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
@@ -41,8 +45,29 @@ public class DynamodbRepository extends SearchService {
   static final Logger LOGGER = Logger.getLogger(DynamodbRepository.class.getName());
   final DynamoDbTable<Module> modulesTable;
   final DynamoDbTable<Report> reportsTable;
+  final DynamoDbTable<Provider> providerTable;
 
   final DynamoDbClient dynamoDbClient;
+
+  TableSchema<Provider> providerTableSchema =
+          TableSchema.builder(Provider.class)
+                  .newItemSupplier(Provider::new)
+                  .addAttribute(String.class, a -> a.name("id")
+                          .getter(Provider::getId)
+                          .setter(Provider::setId)
+                          .tags(primaryPartitionKey()))
+                  .addAttribute(String.class, a -> a.name("namespace")
+                          .getter(Provider::getNamespace)
+                          .setter(Provider::setNamespace))
+                  .addAttribute(String.class, a -> a.name("type")
+                          .getter(Provider::getType)
+                          .setter(Provider::setType))
+                  .addAttribute(TreeMap.class, a -> a.name("versions")
+                          .getter(Provider::getVersions)
+                          .setter(Provider::setVersions)
+                          .attributeConverter((AttributeConverter) new ProviderPlatformsConverter())
+                  )
+                  .build();
 
   TableSchema<Module> moduleTableSchema =
           TableSchema.builder(Module.class)
@@ -66,12 +91,11 @@ public class DynamodbRepository extends SearchService {
                   .addAttribute(TreeSet.class, a -> a.name("versions")
                           .getter(Module::getVersions)
                           .setter(Module::setVersions)
-                          .attributeConverter((AttributeConverter) new ModuleVersionsConverter()))
+                          .attributeConverter((AttributeConverter) new ArtifactVersionsConverter()))
                   .addAttribute(Instant.class, a -> a.name("published_at")
                           .getter(Module::getPublished_at)
                           .setter(Module::setPublished_at))
                   .build();
-
 
   TableSchema<Report> reportsTableSchema =
           TableSchema.builder(Report.class)
@@ -109,7 +133,17 @@ public class DynamodbRepository extends SearchService {
     DynamoDbEnhancedClient dbEnhancedClient = DynamoDbEnhancedClient
             .builder().dynamoDbClient(dynamoDbClient).build();
     this.modulesTable = dbEnhancedClient.table("Modules", moduleTableSchema);
+    this.providerTable = dbEnhancedClient.table("Providers", providerTableSchema);
     this.reportsTable = dbEnhancedClient.table("Reports", reportsTableSchema);
+  }
+
+  @Override
+  public Provider getProviderById(String id) throws Exception {
+    Provider provider = providerTable.getItem(Key.builder().partitionValue(id).build());
+    if (provider == null) {
+      throw new ProviderNotFoundException(id);
+    }
+    return provider;
   }
 
   @Override
@@ -124,6 +158,24 @@ public class DynamodbRepository extends SearchService {
       moduleToIngest = module;
     }
     modulesTable.updateItem(moduleToIngest);
+  }
+
+  @Override
+  public void ingestProviderData(Provider provider) {
+    Provider providerToIngest;
+    Provider existingProvider = providerTable.getItem(provider);
+    if (existingProvider != null) {
+      existingProvider
+          .getVersions()
+          .put(
+            provider.getVersions().firstEntry().getKey(),
+            provider.getVersions().firstEntry().getValue()
+          );
+      providerToIngest = existingProvider;
+    } else {
+      providerToIngest = provider;
+    }
+    providerTable.updateItem(providerToIngest);
   }
 
   @Override
@@ -151,6 +203,7 @@ public class DynamodbRepository extends SearchService {
 
   public void bootstrap() {
     createTable(modulesTable);
+    createTable(providerTable);
     createTable(reportsTable);
   }
 

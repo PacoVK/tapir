@@ -1,5 +1,6 @@
 package core.vertx.event.consumer;
 
+import core.terraform.Module;
 import core.upload.FormData;
 import core.upload.service.FileService;
 import io.quarkus.vertx.ConsumeEvent;
@@ -12,11 +13,11 @@ import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class ArchiveListener {
+public class ModuleListener {
 
-  static final Logger LOGGER = Logger.getLogger(ArchiveListener.class.getName());
+  static final Logger LOGGER = Logger.getLogger(ModuleListener.class.getName());
 
-  public ArchiveListener(FileService fileService, EventBus eventBus) {
+  public ModuleListener(FileService fileService, EventBus eventBus) {
     this.fileService = fileService;
     this.eventBus = eventBus;
   }
@@ -27,11 +28,12 @@ public class ArchiveListener {
   @Blocking
   @ConsumeEvent("module.upload.finished")
   public String unpackArchive(FormData archive) {
+    Module module = archive.getEntity();
     LOGGER.info(String.format("Start to unpack module %s, version %s",
-            archive.getModule().getName(),
-            archive.getModule().getCurrentVersion())
+            module.getName(),
+            module.getCurrentVersion())
     );
-    File tmpArchiveFile = archive.getCompressedModule();
+    File tmpArchiveFile = archive.getCompressedFile();
     Path tmpDirectory = tmpArchiveFile.toPath().getParent();
     fileService.unpackArchive(tmpArchiveFile, tmpDirectory);
     eventBus.publish("module.extract.finished", archive);
@@ -40,14 +42,15 @@ public class ArchiveListener {
 
   @ConsumeEvent("module.processing.finished")
   public String cleanUp(FormData  archive) throws IOException {
+    Module module = archive.getEntity();
     LOGGER.info(String.format("Clean up temporary module files for module %s, version %s",
-            archive.getModule().getName(),
-            archive.getModule().getCurrentVersion())
+            module.getName(),
+            module.getCurrentVersion())
     );
-    fileService.deleteAllFilesInDirectory(archive.getCompressedModule().getParentFile());
+    fileService.deleteAllFilesInDirectory(archive.getCompressedFile().getParentFile());
     LOGGER.info(String.format("Clean up successful for module %s, version %s",
-            archive.getModule().getName(),
-            archive.getModule().getCurrentVersion())
+            module.getName(),
+            module.getCurrentVersion())
     );
     return "ok";
   }

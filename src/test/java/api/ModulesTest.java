@@ -9,7 +9,7 @@ import core.backend.aws.dynamodb.repository.DynamodbRepository;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.StorageException;
 import core.terraform.Module;
-import core.terraform.ModuleVersion;
+import core.terraform.ArtifactVersion;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
@@ -35,9 +35,9 @@ class ModulesTest {
   void setUp() {
     this.fakeModule.setVersions(new TreeSet<>(
             Set.of(
-                    new ModuleVersion("0.0.1"),
-                    new ModuleVersion("0.0.2"),
-                    new ModuleVersion("0.0.3")
+                    new ArtifactVersion("0.0.1"),
+                    new ArtifactVersion("0.0.2"),
+                    new ArtifactVersion("0.0.3")
             )
     ));
   }
@@ -65,11 +65,11 @@ class ModulesTest {
             fakeModule.getProvider(),
             fakeModule.getCurrentVersion()
     );
-    when(storageService.getDownloadUrlForModule(any())).thenReturn("s3://fakeurl");
+    when(storageService.getDownloadUrlForArtifact(any())).thenReturn("https://fakeurl");
     given().
             when().get(fakeUrl)
             .then()
             .statusCode(204)
-            .header("X-Terraform-Get","s3://fakeurl");
+            .header("X-Terraform-Get","s3::https://fakeurl");
   }
 }

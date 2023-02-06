@@ -1,6 +1,7 @@
 package core.storage.util;
 
 import core.terraform.Module;
+import core.terraform.Provider;
 
 public class StorageUtil {
   public static String generateModuleStoragePath(Module module) {
@@ -15,5 +16,13 @@ public class StorageUtil {
             .append(module.getCurrentVersion())
             .append(".zip")
             .toString();
+  }
+
+  public static String generateProviderStorageDirectory(Provider provider, String version) {
+    return String.format("%s/%s/%s",
+            provider.getNamespace(),
+            provider.getType(),
+            version
+    );
   }
 }

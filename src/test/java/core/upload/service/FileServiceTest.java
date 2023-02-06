@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import core.terraform.Module;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,8 +18,7 @@ class FileServiceTest {
 
   @Test
   void createTempModuleArchiveFile() throws IOException {
-    Module module = new Module("foo", "bar", "baz", "0.0.0");
-    File tempModuleArchiveFile = service.createTempModuleArchiveFile(module);
+    File tempModuleArchiveFile = service.createTempArchiveFile("bar-0.0.0");
     assertTrue(tempModuleArchiveFile.isFile());
     assertTrue(tempModuleArchiveFile.exists());
     assertTrue(tempModuleArchiveFile.getName().startsWith("bar-0.0.0"));
