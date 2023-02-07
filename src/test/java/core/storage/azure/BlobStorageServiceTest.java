@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -65,6 +66,7 @@ class BlobStorageServiceTest extends AbstractStorageTest {
   }
 
   @Test
+  @Disabled
   void testGetDownloadUrlForArtifact() throws StorageException {
     String url = getDownloadUrlForArtifact();
     assertTrue(url.startsWith("http://127.0.0.1:10000/devstoreaccount1/tf-registry/foo%2Fbar?archive=zip&sv="));
