@@ -1,5 +1,6 @@
 package core.storage.azure;
 
+import static io.smallrye.common.constraint.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.azure.core.http.rest.PagedIterable;
@@ -42,7 +43,11 @@ class BlobStorageServiceTest extends AbstractStorageTest {
 
   @AfterEach
   void tearDown() {
-    blobContainerClient.getBlobClient(UPLOADED_MODULE_FILENAME).delete();
+    blobContainerClient.getBlobClient(UPLOADED_MODULE_FILENAME).deleteIfExists();
+    blobContainerClient.getBlobClient("foo/bar/1.0.0/terraform_1.3.7_SHA256SUMS").deleteIfExists();
+    blobContainerClient.getBlobClient("foo/bar/1.0.0/terraform_1.3.7_SHA256SUMS.sig").deleteIfExists();
+    blobContainerClient.getBlobClient("foo/bar/1.0.0/terraform_1.3.7_SHA256SUMS.72D7468F.sig").deleteIfExists();
+    blobContainerClient.getBlobClient("foo/bar/1.0.0/terraform_1.3.7_darwin_arm64.zip").deleteIfExists();
   }
 
   @Test
@@ -50,5 +55,18 @@ class BlobStorageServiceTest extends AbstractStorageTest {
     uploadModule();
     PagedIterable<BlobItem> items = blobContainerClient.listBlobs();
     assertEquals(items.stream().count(), 1);
+  }
+
+  @Test
+  void testUploadProvider() throws URISyntaxException, StorageException {
+    uploadProvider();
+    PagedIterable<BlobItem> items = blobContainerClient.listBlobs();
+    assertEquals(items.stream().count(), 4);
+  }
+
+  @Test
+  void testGetDownloadUrlForArtifact() throws StorageException {
+    String url = getDownloadUrlForArtifact();
+    assertTrue(url.startsWith("http://127.0.0.1:10000/devstoreaccount1/tf-registry/foo%2Fbar?archive=zip&sv="));
   }
 }

@@ -28,7 +28,7 @@ class FileServiceTest {
 
   @Test
   void unpackArchiveAndDeleteAllFiles() throws URISyntaxException, IOException {
-    URL resource = getClass().getClassLoader().getResource("test-archive.zip");
+    URL resource = getClass().getClassLoader().getResource("test-module.zip");
     Path testDirectory = Files.createTempDirectory(null);
     assert resource != null;
     File archive=  new File(resource.toURI());

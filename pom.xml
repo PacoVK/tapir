@@ -224,7 +224,7 @@
                 <exclude>core/terraform/*</exclude>
                 <exclude>core/upload/FormData.class</exclude>
                 <exclude>extensions/core/Report.class</exclude>
-                <exclude>extensions/docs/report/*</exclude>
+                <exclude>extensions/docs/report/**</exclude>
                 <exclude>extensions/security/report/*</exclude>
               </excludes>
             </configuration>

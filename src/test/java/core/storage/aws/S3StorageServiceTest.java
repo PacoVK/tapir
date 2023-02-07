@@ -1,5 +1,6 @@
 package core.storage.aws;
 
+import static io.smallrye.common.constraint.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import core.exceptions.StorageException;
@@ -34,12 +35,30 @@ class S3StorageServiceTest extends AbstractStorageTest {
 
   @AfterEach
   void tearDown() {
-    DeleteObjectsRequest deleteObjectsRequest = DeleteObjectsRequest.builder()
+    DeleteObjectsRequest deleteModulesRequest = DeleteObjectsRequest.builder()
             .bucket(bucketName).delete(
                     Delete.builder().objects(
                             ObjectIdentifier.builder().key(UPLOADED_MODULE_FILENAME).build()).build()
             ).build();
-    s3.deleteObjects(deleteObjectsRequest);
+    s3.deleteObjects(deleteModulesRequest);
+    DeleteObjectsRequest deleteProvidersRequest = DeleteObjectsRequest.builder()
+            .bucket(bucketName).delete(
+                    Delete.builder().objects(
+                            ObjectIdentifier.builder()
+                                    .key("foo/bar/1.0.0/terraform_1.3.7_SHA256SUMS").build(),
+                            ObjectIdentifier.builder()
+                                    .key("foo/bar/1.0.0/terraform_1.3.7_SHA256SUMS.sig")
+                                    .build(),
+                            ObjectIdentifier.builder()
+                                    .key("foo/bar/1.0.0/terraform_1.3.7_SHA256SUMS.72D7468F.sig")
+                                    .build(),
+                            ObjectIdentifier.builder()
+                                    .key("foo/bar/1.0.0/terraform_1.3.7_darwin_arm64.zip")
+                                    .build()
+                            )
+                            .build()
+            ).build();
+    s3.deleteObjects(deleteProvidersRequest);
   }
 
   @Test
@@ -48,5 +67,19 @@ class S3StorageServiceTest extends AbstractStorageTest {
     ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder().bucket(bucketName).build();
     ListObjectsV2Response response = s3.listObjectsV2(listObjectsV2Request);
     assertEquals(response.keyCount(), 1);
+  }
+
+  @Test
+  void testUploadProvider() throws URISyntaxException, StorageException {
+    uploadProvider();
+    ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder().bucket(bucketName).build();
+    ListObjectsV2Response response = s3.listObjectsV2(listObjectsV2Request);
+    assertEquals(response.keyCount(), 4);
+  }
+
+  @Test
+  void testGetDownloadUrlForArtifact() throws StorageException {
+    String url = getDownloadUrlForArtifact();
+    assertTrue(url.startsWith("http://localhost:4566/tf-registry/foo/bar?X-Amz-Security-Token="));
   }
 }

@@ -10,17 +10,14 @@ import io.quarkus.arc.lookup.LookupIfProperty;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
@@ -32,16 +29,14 @@ public class S3StorageService extends StorageService {
   static final Logger LOGGER = Logger.getLogger(S3StorageService.class.getName());
 
   S3Client s3;
-  S3AsyncClient s3AsyncClient;
   S3Presigner presigner;
 
   @ConfigProperty(name = "registry.storage.s3.bucket.name")
   String bucketName;
 
 
-  public S3StorageService(S3Client s3, S3AsyncClient s3AsyncClient, S3Presigner presigner) {
+  public S3StorageService(S3Client s3, S3Presigner presigner) {
     this.s3 = s3;
-    this.s3AsyncClient = s3AsyncClient;
     this.presigner = presigner;
   }
 
@@ -106,7 +101,7 @@ public class S3StorageService extends StorageService {
     }
   }
 
-  protected CompletableFuture<PutObjectResponse> buildProviderPutRequest(
+  protected void buildProviderPutRequest(
           Path s3PrefixPath, Path pathToFile) {
     String s3Key = new StringBuilder(s3PrefixPath.toString())
             .append("/")
@@ -116,6 +111,6 @@ public class S3StorageService extends StorageService {
             .bucket(bucketName)
             .key(s3Key)
             .build();
-    return s3AsyncClient.putObject(putObjectRequest, pathToFile);
+    s3.putObject(putObjectRequest, pathToFile);
   }
 }

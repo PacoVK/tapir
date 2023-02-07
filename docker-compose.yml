@@ -18,8 +18,6 @@ services:
       nofile:
         soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
         hard: 65536
-    volumes:
-      - opensearch-data1:/usr/share/opensearch/data
     ports:
       - "9200:9200" # REST API
       - "9600:9600" # Performance Analyzer
@@ -49,7 +47,7 @@ services:
     ports:
       - "8002:8080"
     environment:
-      USE_SSL: false
+      USE_SSL: "false"
       ACCESS_KEY_ID: local
       SECRET_ACCESS_KEY: local
       ENDPOINT: localstack:4566
@@ -82,6 +80,3 @@ services:
     environment:
       # https://github.com/Azure/Azurite/blob/main/README.md#usage-with-azure-storage-sdks-or-tools
       AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
-
-volumes:
-  opensearch-data1:
