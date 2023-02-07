@@ -219,7 +219,7 @@
               <destFile>${project.build.directory}/jacoco-quarkus.exec</destFile>
               <append>true</append>
               <excludes>
-                <exclude>api/dto/*</exclude>
+                <exclude>**/dto/*</exclude>
                 <exclude>api/mapper/exceptions/response/*</exclude>
                 <exclude>core/terraform/*</exclude>
                 <exclude>core/upload/FormData.class</exclude>
