@@ -43,3 +43,16 @@ jobs:
         run: yarn install
       - name: test
         run: yarn test
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: 'Qodana Scan'
+        uses: JetBrains/qodana-action@v2022.3.2
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+
+
