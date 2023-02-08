@@ -100,7 +100,7 @@ public class FileService {
             .orElseThrow();
     try (BufferedReader reader = new BufferedReader(new FileReader(sha256SumsFile))) {
       return reader.lines().map(line -> {
-        String[] split = line.split("\s+");
+        String[] split = line.split("\\s+");
         String shaSum = split[0];
         String fileName = split[1];
         String[] fileNameSplit = fileName.replace(".zip", "").split("_");

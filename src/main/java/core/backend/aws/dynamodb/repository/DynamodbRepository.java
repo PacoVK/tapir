@@ -92,9 +92,7 @@ public class DynamodbRepository extends SearchService {
   }
 
   public PaginationDto findProviders(String identifier, Integer limit, String terms) {
-    String whereClause = new StringBuilder("contains(#namespace, :term)")
-            .append("or contains(#type, :term)")
-            .toString();
+    String whereClause = "contains(#namespace, :term) or contains(#type, :term)";
     Expression expression = Expression.builder()
             .expressionNames(Map.of(
                     "#namespace", "namespace",
@@ -135,8 +133,9 @@ public class DynamodbRepository extends SearchService {
 
   @Override
   public Report getReportByModuleVersion(Module module) throws ReportNotFoundException {
-    String reportId = new StringBuilder(module.getId())
-            .append("-").append(module.getCurrentVersion()).toString();
+    String reportId = module.getId()
+            + "-"
+            + module.getCurrentVersion();
     return getReportById(reportId);
   }
 
@@ -190,10 +189,9 @@ public class DynamodbRepository extends SearchService {
   }
 
   public PaginationDto findModules(String identifier, Integer limit, String terms) {
-    String whereClause = new StringBuilder("contains(#namespace, :term)")
-            .append("or contains(#name, :term)")
-            .append("or contains(#provider, :term)")
-            .toString();
+    String whereClause = "contains(#namespace, :term)"
+            + "or contains(#name, :term)"
+            + "or contains(#provider, :term)";
     Expression expression = Expression.builder()
             .expressionNames(Map.of(
                     "#namespace", "namespace",

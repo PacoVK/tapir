@@ -65,24 +65,20 @@ public class ProviderMapper {
     if (!fileName.contains(version)) {
       throw new TapirException("Version mismatch. Provider file does not match registry version");
     }
-    String providerPath = new StringBuilder(basePath)
-            .append("/")
-            .append(fileName)
-            .toString();
+    String providerPath = basePath
+            + "/"
+            + fileName;
     String downloadUrl = storageService.getDownloadUrlForArtifact(providerPath);
     String filePrefix = fileName
             .subSequence(0, fileName.lastIndexOf(version) + version.length())
             .toString();
-    String shasumFilePath = new StringBuilder(basePath)
-            .append("/")
-            .append(filePrefix)
-            .append("_")
-            .append("SHA256SUMS")
-            .toString();
+    String shasumFilePath = basePath
+            + "/"
+            + filePrefix
+            + "_"
+            + "SHA256SUMS";
     String shaSumUrl = storageService.getDownloadUrlForArtifact(shasumFilePath);
-    String shasumSigFilePath = new StringBuilder(shasumFilePath)
-            .append(".sig")
-            .toString();
+    String shasumSigFilePath = shasumFilePath + ".sig";
     String shaSumSigUrl = storageService.getDownloadUrlForArtifact(shasumSigFilePath);
     return Map.of(
             DOWNLOAD_URL, downloadUrl,

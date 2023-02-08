@@ -32,7 +32,7 @@ public class PaginationDto {
     return lastEvaluatedItemId;
   }
 
-  public void setLastEvaluatedItem(String lastEvaluatedItem) {
+  public void setLastEvaluatedItem(String lastEvaluatedItemId) {
     this.lastEvaluatedItemId = lastEvaluatedItemId;
   }
 }

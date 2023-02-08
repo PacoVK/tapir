@@ -46,11 +46,11 @@ public class ElasticSearchRepository extends SearchService {
                     module.getProvider()
             )
     );
-    String upsertScript = new StringBuilder("List versions=ctx._source.versions; ")
-            .append("if(versions!=null && !versions.stream()")
-            .append(".anyMatch(v-> v.version.equals(params.release.version))){")
-            .append("ctx._source.versions.add(params.release)")
-            .append("}").toString();
+    String upsertScript = "List versions=ctx._source.versions; "
+            + "if(versions!=null && !versions.stream()"
+            + ".anyMatch(v-> v.version.equals(params.release.version))){"
+            + "ctx._source.versions.add(params.release)"
+            + "}";
     String payload = JsonObject.of("script", JsonObject.of(
             "source", upsertScript,
             "lang", "painless",
@@ -80,10 +80,10 @@ public class ElasticSearchRepository extends SearchService {
                     provider.getId()
             )
     );
-    String upsertScript = new StringBuilder("Map versions=ctx._source.versions; ")
-            .append("if(versions!=null && !versions.containsKey(params.release)){")
-            .append("ctx._source.versions.put(params.release, params.platform)")
-            .append("}").toString();
+    String upsertScript = "Map versions=ctx._source.versions; "
+            + "if(versions!=null && !versions.containsKey(params.release)){"
+            + "ctx._source.versions.put(params.release, params.platform)"
+            + "}";
     String payload = JsonObject.of("script", JsonObject.of(
             "source", upsertScript,
             "lang", "painless",
@@ -98,14 +98,14 @@ public class ElasticSearchRepository extends SearchService {
 
   @Override
   public void ingestSecurityScanResult(Report report) throws IOException {
-    String targetRequestPath = new StringBuilder("/reports/_doc/").append("reports-")
-            .append(report.getModuleNamespace())
-            .append("-")
-            .append(report.getModuleName())
-            .append("-")
-            .append(report.getProvider())
-            .append("-")
-            .append(report.getModuleVersion()).toString();
+    String targetRequestPath = "/reports/_doc/reports-"
+            + report.getModuleNamespace()
+            + "-"
+            + report.getModuleName()
+            + "-"
+            + report.getProvider()
+            + "-"
+            + report.getModuleVersion();
     Request request = new Request(
             HttpMethod.POST,
             targetRequestPath
@@ -137,14 +137,14 @@ public class ElasticSearchRepository extends SearchService {
   @Override
   public Report getReportByModuleVersion(Module module)
           throws IOException, ReportNotFoundException {
-    String searchPath = new StringBuilder("/reports/_doc/").append("reports-")
-            .append(module.getNamespace())
-            .append("-")
-            .append(module.getName())
-            .append("-")
-            .append(module.getProvider())
-            .append("-")
-            .append(module.getCurrentVersion()).toString();
+    String searchPath = "/reports/_doc/reports-"
+            + module.getNamespace()
+            + "-"
+            + module.getName()
+            + "-"
+            + module.getProvider()
+            + "-"
+            + module.getCurrentVersion();
     Request request = new Request(
             HttpMethod.GET,
             searchPath);

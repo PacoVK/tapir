@@ -63,11 +63,9 @@ public class BlobStorageService extends StorageService {
     BlobServiceSasSignatureValues blobServiceSasSignatureValues =
             new BlobServiceSasSignatureValues(keyExpiry, blobContainerSas);
     String generatedSas = blobClient.generateSas(blobServiceSasSignatureValues);
-    return new StringBuilder(blobClient.getBlobUrl())
-            .append("?")
-            .append("archive=zip")
-            .append("&")
-            .append(generatedSas).toString();
+    return blobClient.getBlobUrl()
+            + "?archive=zip&"
+            + generatedSas;
   }
 
   @Override
@@ -79,10 +77,9 @@ public class BlobStorageService extends StorageService {
                       path -> path.toFile().isFile()
                               && !path.toString().endsWith(".tmp"))
               .forEach(pathToFile -> {
-                String blobName = new StringBuilder(blobPrefixPath)
-                        .append("/")
-                        .append(pathToFile.getFileName())
-                        .toString();
+                String blobName = blobPrefixPath
+                        + "/"
+                        + pathToFile.getFileName();
                 uploadFile(blobName, pathToFile.toString());
               });
     } catch (Exception ex) {

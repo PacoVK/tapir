@@ -25,6 +25,16 @@ public class ArtifactVersion implements Comparable<ArtifactVersion> {
   }
 
   @Override
+  public boolean equals(Object o) {
+    return o instanceof ArtifactVersion && compareTo((ArtifactVersion) o) == 0;
+  }
+
+  @Override
+  public int hashCode() {
+    return version.hashCode();
+  }
+
+  @Override
   public String toString() {
     return getVersion();
   }

@@ -93,9 +93,7 @@ public class S3StorageService extends StorageService {
       stream.filter(
               path -> path.toFile().isFile()
                       && !path.toString().endsWith(".tmp"))
-              .forEach(pathToFile -> {
-                buildProviderPutRequest(s3PrefixPath, pathToFile);
-              });
+              .forEach(pathToFile -> buildProviderPutRequest(s3PrefixPath, pathToFile));
     } catch (Exception ex) {
       throw new StorageException(archive.getEntity().getId(), ex);
     }
@@ -103,10 +101,9 @@ public class S3StorageService extends StorageService {
 
   protected void buildProviderPutRequest(
           Path s3PrefixPath, Path pathToFile) {
-    String s3Key = new StringBuilder(s3PrefixPath.toString())
-            .append("/")
-            .append(pathToFile.getFileName())
-            .toString();
+    String s3Key = s3PrefixPath.toString()
+            + "/"
+            + pathToFile.getFileName();
     PutObjectRequest putObjectRequest = PutObjectRequest.builder()
             .bucket(bucketName)
             .key(s3Key)
