@@ -2,7 +2,16 @@ export interface Module {
   id: string;
   namespace: string;
   name: string;
-  provider: Provider;
+  provider: ProviderType;
+  downloads: number;
+  published_at: string;
+  versions: { version: string }[];
+}
+
+export interface Provider {
+  id: string;
+  namespace: string;
+  type: string;
   downloads: number;
   published_at: string;
   versions: { version: string }[];
@@ -22,7 +31,7 @@ export interface Misconfiguration {
     end_line: number;
   };
 }
-export enum Provider {
+export enum ProviderType {
   AWS = "aws",
   GOOGLE = "google",
   AZURE = "azurerm",

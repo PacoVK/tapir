@@ -1,10 +1,10 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Overview from "./Overview";
+import ModuleOverview from "./ModuleOverview";
 
-describe("<Overview /> spec", () => {
+describe("<ModuleOverview /> spec", () => {
   it("renders the overview", () => {
-    const container = render(<Overview />);
+    const container = render(<ModuleOverview />);
     expect(container).toMatchSnapshot();
   });
 });

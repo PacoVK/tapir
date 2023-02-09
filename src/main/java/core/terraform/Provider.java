@@ -2,6 +2,7 @@ package core.terraform;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.Instant;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -13,6 +14,7 @@ public class Provider extends CoreEntity {
   private String type;
   private TreeMap<ArtifactVersion, List<ProviderPlatform>> versions;
   private List<String> protocols;
+  private Instant published_at;
 
   public Provider() {
   }
@@ -73,4 +75,11 @@ public class Provider extends CoreEntity {
     this.protocols = protocols;
   }
 
+  public Instant getPublished_at() {
+    return published_at;
+  }
+
+  public void setPublished_at(Instant published_at) {
+    this.published_at = published_at;
+  }
 }

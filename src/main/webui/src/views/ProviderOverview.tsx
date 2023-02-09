@@ -5,24 +5,16 @@ import React, {
   useRef,
   useState,
 } from "react";
-import {
-  Box,
-  CircularProgress,
-  List,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import ModuleElement from "../components/list/ModuleElement";
-import { Module } from "../types";
+import { CircularProgress, Grid, List, Stack, TextField } from "@mui/material";
+import { Provider } from "../types";
 import useDebounce from "../hooks/useDebounce";
-import tapirLogo from "../assets/tapir.png";
+import ProviderElement from "../components/list/ProviderElement";
+import NotFoundInfo from "../components/layout/NotFoundInfo";
 
 const fetchDataLimit = 5;
-const Overview = () => {
-  const modulesTable = useRef();
-  const [modules, setModules] = useState([] as Module[]);
+const ProviderOverview = () => {
+  const providersTable = useRef();
+  const [providers, setProviders] = useState([] as Provider[]);
   const [lastEvaluatedItemKey, setLastEvaluatedItemKey] = useState("");
   const [searchString, setSearchString] = useState("");
   const debouncedSearchTerm = useDebounce(searchString, 500);
@@ -30,36 +22,31 @@ const Overview = () => {
   const [loading, setLoading] = useState(false);
   const [distanceBottom, setDistanceBottom] = useState(0);
 
-  const hasMoreData = (lastEvaluatedItem: any) => {
-    return (
-      !!lastEvaluatedItem &&
-      modules.at(0)?.id !== lastEvaluatedItem
-    );
-  };
-
   const loadMore = useCallback(
     () => {
       setLoading(true);
-      fetchModules(
-        `search/modules?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
+      fetchProviders(
+        `search/providers?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
       ).then((data) => {
-        const allModules = [...modules, ...data.entities];
+        const allProviders = [...providers, ...data.entities];
         setLastEvaluatedItemKey(
           data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
         );
-        setModules(allModules);
+        setProviders(allProviders);
         setLoading(false);
       });
     },
     // eslint-disable-next-line
-    [modules]
+    [providers]
   );
 
   const scrollListener = useCallback(
     () => {
       let bottom =
         // @ts-ignore
-        modulesTable.current.scrollHeight - modulesTable.current.clientHeight;
+        providersTable.current.scrollHeight -
+        // @ts-ignore
+        providersTable.current.clientHeight;
 
       if (!distanceBottom) {
         setDistanceBottom(Math.round(bottom * 0.2));
@@ -67,7 +54,7 @@ const Overview = () => {
 
       if (
         // @ts-ignore
-        modulesTable.current.scrollTop > bottom - distanceBottom &&
+        providersTable.current.scrollTop > bottom - distanceBottom &&
         !loading &&
         lastEvaluatedItemKey !== ""
       ) {
@@ -79,7 +66,7 @@ const Overview = () => {
   );
 
   useLayoutEffect(() => {
-    const tableRef = modulesTable.current;
+    const tableRef = providersTable.current;
     // @ts-ignore
     tableRef.addEventListener("scroll", scrollListener);
     return () => {
@@ -91,21 +78,21 @@ const Overview = () => {
   useEffect(
     () => {
       setLoading(true);
-      fetchModules(`search/modules?limit=${fetchDataLimit}&q=${searchString}`).then(
-        (data) => {
-          setLastEvaluatedItemKey(
-            data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
-          );
-          setModules(data.entities);
-          setLoading(false);
-        }
-      );
+      fetchProviders(
+        `search/providers?limit=${fetchDataLimit}&q=${searchString}`
+      ).then((data) => {
+        setLastEvaluatedItemKey(
+          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
+        );
+        setProviders(data.entities);
+        setLoading(false);
+      });
     },
     // eslint-disable-next-line
     [debouncedSearchTerm]
   );
 
-  const fetchModules = async (api: string) => {
+  const fetchProviders = async (api: string) => {
     const response = await fetch(api);
     return await response.json();
   };
@@ -116,22 +103,11 @@ const Overview = () => {
     setSearchString(event.target.value);
   };
 
-  const renderLastItem = () => {
-    if (!modules || modules.length === 0) {
-      return null;
-    }
-    return hasMoreData(lastEvaluatedItemKey) ? null : (
-      <Paper>
-        <Typography textAlign={"center"}>No more modules found</Typography>
-      </Paper>
-    );
-  };
-
   return (
     <>
       <TextField
-        id="module-search"
-        label="Search module"
+        id="provider-search"
+        label="Search provider"
         type="search"
         value={searchString}
         onChange={handleSearchInputChange}
@@ -140,24 +116,17 @@ const Overview = () => {
         component={Stack}
         sx={{ maxHeight: "50vh", overflow: "auto", display: "flex-grow" }}
         // @ts-ignore
-        ref={modulesTable}
+        ref={providersTable}
       >
-        {modules && modules.length > 0 ? (
-          modules.map((module) => (
-            <ModuleElement
-              key={`${module.namespace}${module.name}${module.provider}`}
-              module={module}
-            />
-          ))
+        {providers && providers.length > 0 ? (
+          <Grid container spacing={2}>
+            {providers.map((provider) => (
+              <ProviderElement provider={provider} />
+            ))}
+          </Grid>
         ) : !loading ? (
-          <Box sx={{ margin: "auto" }}>
-            <img alt={"Tapir logo"} src={tapirLogo} />
-            <Typography textAlign={"center"}>
-              Found this Tapir, but no modules
-            </Typography>
-          </Box>
+          <NotFoundInfo entity={"providers"} />
         ) : null}
-        {renderLastItem()}
         {loading ? (
           <CircularProgress color={"secondary"} sx={{ margin: "auto" }} />
         ) : null}
@@ -166,4 +135,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default ProviderOverview;

@@ -37,6 +37,9 @@ public class TableSchemas {
                           .setter(Provider::setVersions)
                           .attributeConverter((AttributeConverter) new ProviderPlatformsConverter())
                   )
+                  .addAttribute(Instant.class, a -> a.name("published_at")
+                          .getter(Provider::getPublished_at)
+                          .setter(Provider::setPublished_at))
                   .build();
 
   static final TableSchema<Module> moduleTableSchema =

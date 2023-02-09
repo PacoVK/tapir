@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Overview /> spec renders the overview 1`] = `
+exports[`<ModuleOverview /> spec renders the overview 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>

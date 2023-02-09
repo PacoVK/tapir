@@ -14,6 +14,7 @@ import core.upload.FormData;
 import core.upload.service.UploadService;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mutiny.core.eventbus.EventBus;
+import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.enterprise.inject.Instance;
@@ -98,9 +99,17 @@ public class Providers {
   public Response uploadProvider(String namespace, String type, String version, FormData archive)
           throws Exception {
     Provider provider = new Provider(namespace, type);
+    provider.setPublished_at(Instant.now());
     archive.setEntity(provider);
     uploadService.uploadProvider(archive, version);
     return Response.ok().build();
+  }
+
+  @GET
+  @Path("{namespace}/{type}")
+  public Response getModuleByName(String namespace, String type) throws Exception {
+    Provider provider = new Provider(namespace, type);
+    return Response.ok(searchService.getProviderById(provider.getId())).build();
   }
 
 }
