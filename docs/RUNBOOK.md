@@ -46,8 +46,8 @@ make backend
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 > The actual UI of Tapir is accessible via http://localhost:8080. Source can be found under `src/main/webui` 
 
-3. Test using the example Terraform code in `example`. You need to upload a module with the identifiers that are 
-specified within the code.  
+3. Test using the example Terraform code in `example`. You need to upload a module and a provider 
+with the identifiers that are specified within the code.  
 ```shell
 make terraform
 ```
