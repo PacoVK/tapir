@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ModuleOverview /> spec renders the module overview 1`] = `
+exports[`<AppRouter /> spec renders the AppRouter 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>

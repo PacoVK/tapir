@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModuleInput /> spec renders the ModuleInput 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="css-t5oduv-MuiStack-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            <span
+              class="MuiBadge-root MuiBadge-root css-1c32n2y-MuiBadge-root"
+            >
+              <strong>
+                repositories
+              </strong>
+              <span
+                class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary MuiBadge-badge css-2liczv-MuiBadge-badge"
+              />
+            </span>
+          </p>
+          <div
+            class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              List of repositories to create
+            </p>
+            <pre
+              style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none; padding: 1em; margin: .5em 0px; overflow: auto; border: 1px solid #dddddd; background-color: white;"
+            >
+              <code
+                class="language-hcl"
+                style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+              >
+                <span>
+                  map(object({force_delete : optional(bool, false)
+
+                </span>
+                    tags : optional(map(any))
+
+                  }))
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="css-t5oduv-MuiStack-root"
+    >
+      <div
+        class="MuiBox-root css-0"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+        >
+          <span
+            class="MuiBadge-root MuiBadge-root css-1c32n2y-MuiBadge-root"
+          >
+            <strong>
+              repositories
+            </strong>
+            <span
+              class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary MuiBadge-badge css-2liczv-MuiBadge-badge"
+            />
+          </span>
+        </p>
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            List of repositories to create
+          </p>
+          <pre
+            style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none; padding: 1em; margin: .5em 0px; overflow: auto; border: 1px solid #dddddd; background-color: white;"
+          >
+            <code
+              class="language-hcl"
+              style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+            >
+              <span>
+                map(object({force_delete : optional(bool, false)
+
+              </span>
+                  tags : optional(map(any))
+
+                }))
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

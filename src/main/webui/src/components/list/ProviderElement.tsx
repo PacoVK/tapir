@@ -12,7 +12,7 @@ const ProviderElement = ({ provider }: { provider: Provider }) => {
     <Grid
       item
       xs={6}
-      key={`${provider.namespace}${provider.type}`}
+      key={`${provider.namespace}${provider.type}-Grid`}
       component={Link}
       to={`${provider.namespace}/${provider.type}`}
       state={{ data: provider }}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ModuleOverview /> spec renders the module overview 1`] = `
+exports[`<ProviderOverview /> spec renders the provider overview 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
@@ -11,10 +11,10 @@ Object {
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="module-search"
-          id="module-search-label"
+          for="provider-search"
+          id="provider-search-label"
         >
-          Search module
+          Search provider
         </label>
         <div
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
@@ -22,7 +22,7 @@ Object {
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputTypeSearch css-1g24dm6-MuiInputBase-input-MuiOutlinedInput-input"
-            id="module-search"
+            id="provider-search"
             type="search"
             value=""
           />
@@ -34,7 +34,7 @@ Object {
               class="css-yjsfm1"
             >
               <span>
-                Search module
+                Search provider
               </span>
             </legend>
           </fieldset>
@@ -72,10 +72,10 @@ Object {
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="false"
-        for="module-search"
-        id="module-search-label"
+        for="provider-search"
+        id="provider-search-label"
       >
-        Search module
+        Search provider
       </label>
       <div
         class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
@@ -83,7 +83,7 @@ Object {
         <input
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputTypeSearch css-1g24dm6-MuiInputBase-input-MuiOutlinedInput-input"
-          id="module-search"
+          id="provider-search"
           type="search"
           value=""
         />
@@ -95,7 +95,7 @@ Object {
             class="css-yjsfm1"
           >
             <span>
-              Search module
+              Search provider
             </span>
           </legend>
         </fieldset>

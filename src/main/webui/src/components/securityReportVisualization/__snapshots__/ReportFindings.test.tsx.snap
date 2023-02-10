@@ -1,0 +1,506 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReportFindings /> spec renders the ReportFindings 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <h4
+        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      >
+        Security Report
+      </h4>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-19dapye-MuiTypography-root"
+      >
+        Security findings by
+         
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ps4owl-MuiTypography-root-MuiLink-root"
+          href="https://aquasecurity.github.io/tfsec"
+          rel="noopener"
+          target="_blank"
+        >
+          Tfsec
+        </a>
+        :
+      </p>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+      >
+        <div
+          aria-controls="damaged.tf-content"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+          id="damaged.tf-header"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              damaged.tf
+               - Findings: 
+              1
+            </p>
+          </div>
+          <div
+            class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="ExpandMoreIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                aria-labelledby="damaged.tf-header"
+                class="MuiAccordion-region"
+                id="damaged.tf-content"
+                role="region"
+              >
+                <div
+                  class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                >
+                  <div
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+                  >
+                    <div
+                      aria-controls="An ingress security group rule allows traffic from /0.0-content"
+                      aria-expanded="false"
+                      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+                      id="An ingress security group rule allows traffic from /0.0-header"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <div
+                        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                        >
+                          aws_security_group.no_issue
+                          , Line:
+                           
+                          31
+                           -
+                           
+                          31
+                        </p>
+                      </div>
+                      <div
+                        class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="ExpandMoreIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+                      style="min-height: 0px;"
+                    >
+                      <div
+                        class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                      >
+                        <div
+                          class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                        >
+                          <div
+                            aria-labelledby="An ingress security group rule allows traffic from /0.0-header"
+                            class="MuiAccordion-region"
+                            id="An ingress security group rule allows traffic from /0.0-content"
+                            role="region"
+                          >
+                            <div
+                              class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                            >
+                              <p
+                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              >
+                                <b>
+                                  Severity:
+                                </b>
+                                 
+                                CRITICAL
+                              </p>
+                              <p
+                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              >
+                                <b>
+                                  Violation:
+                                </b>
+                                 
+                                An ingress security group rule allows traffic from /0.
+                              </p>
+                              <p
+                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              >
+                                <b>
+                                  Impact:
+                                </b>
+                                 
+                                Your port exposed to the internet
+                              </p>
+                              <p
+                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              >
+                                <b>
+                                  Solution:
+                                </b>
+                                 
+                                Set a more restrictive cidr range
+                              </p>
+                              <p
+                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              >
+                                <b>
+                                  Resource:
+                                </b>
+                                 
+                                aws_security_group.no_issue
+                              </p>
+                              <p
+                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              >
+                                <b>
+                                  From line:
+                                </b>
+                                 
+                                31
+                              </p>
+                              <p
+                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              >
+                                <b>
+                                  To line:
+                                </b>
+                                 
+                                31
+                              </p>
+                              <a
+                                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ps4owl-MuiTypography-root-MuiLink-root"
+                                href="https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-ingress-sgr/"
+                                rel="noopener"
+                                target="_blank"
+                              >
+                                Read more
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <h4
+      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+    >
+      Security Report
+    </h4>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-19dapye-MuiTypography-root"
+    >
+      Security findings by
+       
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ps4owl-MuiTypography-root-MuiLink-root"
+        href="https://aquasecurity.github.io/tfsec"
+        rel="noopener"
+        target="_blank"
+      >
+        Tfsec
+      </a>
+      :
+    </p>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+    >
+      <div
+        aria-controls="damaged.tf-content"
+        aria-expanded="false"
+        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+        id="damaged.tf-header"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            damaged.tf
+             - Findings: 
+            1
+          </p>
+        </div>
+        <div
+          class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="ExpandMoreIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+        style="min-height: 0px;"
+      >
+        <div
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+        >
+          <div
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+          >
+            <div
+              aria-labelledby="damaged.tf-header"
+              class="MuiAccordion-region"
+              id="damaged.tf-content"
+              role="region"
+            >
+              <div
+                class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+              >
+                <div
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+                >
+                  <div
+                    aria-controls="An ingress security group rule allows traffic from /0.0-content"
+                    aria-expanded="false"
+                    class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+                    id="An ingress security group rule allows traffic from /0.0-header"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <div
+                      class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                      >
+                        aws_security_group.no_issue
+                        , Line:
+                         
+                        31
+                         -
+                         
+                        31
+                      </p>
+                    </div>
+                    <div
+                      class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        data-testid="ExpandMoreIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+                    style="min-height: 0px;"
+                  >
+                    <div
+                      class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                    >
+                      <div
+                        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                      >
+                        <div
+                          aria-labelledby="An ingress security group rule allows traffic from /0.0-header"
+                          class="MuiAccordion-region"
+                          id="An ingress security group rule allows traffic from /0.0-content"
+                          role="region"
+                        >
+                          <div
+                            class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                          >
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                            >
+                              <b>
+                                Severity:
+                              </b>
+                               
+                              CRITICAL
+                            </p>
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                            >
+                              <b>
+                                Violation:
+                              </b>
+                               
+                              An ingress security group rule allows traffic from /0.
+                            </p>
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                            >
+                              <b>
+                                Impact:
+                              </b>
+                               
+                              Your port exposed to the internet
+                            </p>
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                            >
+                              <b>
+                                Solution:
+                              </b>
+                               
+                              Set a more restrictive cidr range
+                            </p>
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                            >
+                              <b>
+                                Resource:
+                              </b>
+                               
+                              aws_security_group.no_issue
+                            </p>
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                            >
+                              <b>
+                                From line:
+                              </b>
+                               
+                              31
+                            </p>
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                            >
+                              <b>
+                                To line:
+                              </b>
+                               
+                              31
+                            </p>
+                            <a
+                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ps4owl-MuiTypography-root-MuiLink-root"
+                              href="https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-public-ingress-sgr/"
+                              rel="noopener"
+                              target="_blank"
+                            >
+                              Read more
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

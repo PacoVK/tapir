@@ -1,0 +1,384 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModuleAnalysisTab /> spec renders the ModuleAnalysisTab 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+      >
+        <div
+          class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+          style="overflow: hidden; margin-bottom: 0px;"
+        >
+          <div
+            aria-label="module detail tabs"
+            class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+            role="tablist"
+          >
+            <button
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              Inputs (1)
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Outputs (2)
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Dependencies (2)
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Resources (1)
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Security Report
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <span
+            class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+            style="left: 0px; width: 0px;"
+          />
+        </div>
+      </div>
+      <div
+        aria-labelledby="module-tab-0"
+        id="module-tabpanel-0"
+        role="tabpanel"
+      >
+        <div
+          class="MuiBox-root css-16f1609"
+        >
+          <div
+            class="css-t5oduv-MuiStack-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                <span
+                  class="MuiBadge-root MuiBadge-root css-1c32n2y-MuiBadge-root"
+                >
+                  <strong>
+                    repositories
+                  </strong>
+                  <span
+                    class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary MuiBadge-badge css-2liczv-MuiBadge-badge"
+                  />
+                </span>
+              </p>
+              <div
+                class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                >
+                  List of repositories to create
+                </p>
+                <pre
+                  style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none; padding: 1em; margin: .5em 0px; overflow: auto; border: 1px solid #dddddd; background-color: white;"
+                >
+                  <code
+                    class="language-hcl"
+                    style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+                  >
+                    <span>
+                      map(object({force_delete : optional(bool, false)
+
+                    </span>
+                        tags : optional(map(any))
+
+                      }))
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="module-tab-1"
+        hidden=""
+        id="module-tabpanel-1"
+        role="tabpanel"
+      />
+      <div
+        aria-labelledby="module-tab-2"
+        hidden=""
+        id="module-tabpanel-2"
+        role="tabpanel"
+      />
+      <div
+        aria-labelledby="module-tab-3"
+        hidden=""
+        id="module-tabpanel-3"
+        role="tabpanel"
+      />
+      <div
+        aria-labelledby="module-tab-4"
+        hidden=""
+        id="module-tabpanel-4"
+        role="tabpanel"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+    >
+      <div
+        class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+        style="overflow: hidden; margin-bottom: 0px;"
+      >
+        <div
+          aria-label="module detail tabs"
+          class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+          role="tablist"
+        >
+          <button
+            aria-selected="true"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="0"
+            type="button"
+          >
+            Inputs (1)
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Outputs (2)
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Dependencies (2)
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Resources (1)
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            Security Report
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+        <span
+          class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+          style="left: 0px; width: 0px;"
+        />
+      </div>
+    </div>
+    <div
+      aria-labelledby="module-tab-0"
+      id="module-tabpanel-0"
+      role="tabpanel"
+    >
+      <div
+        class="MuiBox-root css-16f1609"
+      >
+        <div
+          class="css-t5oduv-MuiStack-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              <span
+                class="MuiBadge-root MuiBadge-root css-1c32n2y-MuiBadge-root"
+              >
+                <strong>
+                  repositories
+                </strong>
+                <span
+                  class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary MuiBadge-badge css-2liczv-MuiBadge-badge"
+                />
+              </span>
+            </p>
+            <div
+              class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                List of repositories to create
+              </p>
+              <pre
+                style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none; padding: 1em; margin: .5em 0px; overflow: auto; border: 1px solid #dddddd; background-color: white;"
+              >
+                <code
+                  class="language-hcl"
+                  style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+                >
+                  <span>
+                    map(object({force_delete : optional(bool, false)
+
+                  </span>
+                      tags : optional(map(any))
+
+                    }))
+                </code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="module-tab-1"
+      hidden=""
+      id="module-tabpanel-1"
+      role="tabpanel"
+    />
+    <div
+      aria-labelledby="module-tab-2"
+      hidden=""
+      id="module-tabpanel-2"
+      role="tabpanel"
+    />
+    <div
+      aria-labelledby="module-tab-3"
+      hidden=""
+      id="module-tabpanel-3"
+      role="tabpanel"
+    />
+    <div
+      aria-labelledby="module-tab-4"
+      hidden=""
+      id="module-tabpanel-4"
+      role="tabpanel"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

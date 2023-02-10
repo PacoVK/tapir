@@ -56,7 +56,7 @@ export interface ModuleInputProps {
 export interface ModuleOutputProps {
   outputs: {
     name: string;
-    description: string;
+    description?: string;
   }[];
 }
 
@@ -79,8 +79,8 @@ export interface ModuleDependenciesProps {
 
   providers: {
     name: string;
-    alias: string;
-    version: string;
+    alias?: string;
+    version?: string;
   }[];
 }
 

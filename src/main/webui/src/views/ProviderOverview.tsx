@@ -121,7 +121,10 @@ const ProviderOverview = () => {
         {providers && providers.length > 0 ? (
           <Grid container spacing={2}>
             {providers.map((provider) => (
-              <ProviderElement provider={provider} />
+              <ProviderElement
+                key={`${provider.namespace}${provider.type}`}
+                provider={provider}
+              />
             ))}
           </Grid>
         ) : !loading ? (
