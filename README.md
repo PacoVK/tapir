@@ -73,7 +73,17 @@ You can configure Tapir passing the following environment variables:
 | AZURE_BLOB_CONTAINER_NAME       | Blob container name to be used to store module archives                                                                                   | Yes, if STORAGE_CONFIG is azureBlob     | tf-registry  |
 | S3_STORAGE_BUCKET_NAME          | S3 bucket name to be used to store module archives                                                                                        | Yes, if STORAGE_CONFIG is s3            | tf-registry  |
 | S3_STORAGE_BUCKET_REGION        | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
-| API_MAX_BODY_SIZE               | The maximum payload size for module/providers to be uploaded                                                                              | X                                       | 50M          |
+| API_MAX_BODY_SIZE               | The maximum payload size for module/providers to be uploaded                                                                              | X                                       | 100M         |
+| REGISTRY_GPG_KEYS_0__ID         | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                           | X                                       |              |
+| REGISTRY_GPG_KEYS_0__ASCII_AMOR | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                   | X                                       |              |
+
+:information_source: A note on the GPG configuration. Quarkus (and therefore Tapir) is based on [Smallrye microprofile](https://smallrye.io/smallrye-config/2.9.1/config/indexed-properties/) and supports indexed properties. Hence, you can add one or more key specifying indexed properties. See example below for passing two GPG keys (**Mind the two subsequent underscores after the index**):
+```
+REGISTRY_GPG_KEYS_0__ID=D17C807B4156558133A1FB843C7461473EB779BD
+REGISTRY_GPG_KEYS_0__ASCII_AMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....tUUlO
+REGISTRY_GPG_KEYS_1__ID=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSDLPFKF
+REGISTRY_GPG_KEYS_1__ASCII_AMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....JDIFH
+```
 
 ### Upload a module
 When you publish a Terraform module, if it does not exist, it is created.
@@ -97,6 +107,8 @@ curl -XPOST --fail-with-body -F archive=@archive.zip "https://example.corp.com/t
 
 ### Upload a provider
 When you publish a Terraform provider, if it does not exist, it is created.
+
+Looking for the [troubleshooting docs](./docs/TROUBLESHOOT.md)?
 
 To create and build the provider it is highly recommended to use the [official HashiCorp provider project template](https://github.com/hashicorp/terraform-provider-scaffolding). It uses [goreleaser](https://goreleaser.com/) to sign the actual provider binaries. For details see [how to prepare release](https://developer.hashicorp.com/terraform/registry/providers/publishing#preparing-your-provider). 
 
@@ -145,6 +157,10 @@ provider "foo" {
   # Configuration options
 }
 ```
+
+## Troubleshoot
+
+See [troubleshooting docs](./docs/TROUBLESHOOT.md)
 
 ## Roadmap
 
