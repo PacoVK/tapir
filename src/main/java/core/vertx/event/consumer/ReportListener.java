@@ -1,6 +1,7 @@
 package core.vertx.event.consumer;
 
 import core.backend.SearchService;
+import core.terraform.Module;
 import core.upload.FormData;
 import extensions.core.Report;
 import extensions.docs.report.TerraformDocumentation;
@@ -30,11 +31,12 @@ public class ReportListener {
   @Blocking
   @ConsumeEvent("module.extract.finished")
   public String handleArchiveExtractionFinished(FormData archive) throws Exception {
+    Module module = archive.getEntity();
     Report report = new Report(
-            archive.getModule().getNamespace(),
-            archive.getModule().getName(),
-            archive.getModule().getProvider(),
-            archive.getModule().getCurrentVersion()
+            module.getNamespace(),
+            module.getName(),
+            module.getProvider(),
+            module.getCurrentVersion()
     );
     Map<String, List<TfSecReport.TfSecResult>> securityReport = eventBus
             .<Map<String, List<TfSecReport.TfSecResult>>>requestAndAwait(

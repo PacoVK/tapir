@@ -16,6 +16,7 @@ const ModuleElement = ({ module }: { module: Module }) => {
       component={Link}
       to={`module/${module.namespace}/${module.name}/${module.provider}`}
       state={{ data: module }}
+      sx={{}}
     >
       <Paper>
         <Stack direction={"row"} spacing={4} alignItems={"center"}>

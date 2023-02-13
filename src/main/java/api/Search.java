@@ -1,9 +1,9 @@
 package api;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.backend.SearchService;
-import java.util.Optional;
 import javax.enterprise.inject.Instance;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -22,16 +22,38 @@ public class Search {
   }
 
   @GET
+  @Path("/modules")
   public Response listModules(
-          @QueryParam("limit")Optional<Integer> limit,
-          @QueryParam("q")Optional<String> query,
-          @QueryParam("lastKey")Optional<String> lastEvaluatedElementKey
+          @DefaultValue("10")
+          @QueryParam("limit") Integer limit,
+          @DefaultValue("")
+          @QueryParam("q") String query,
+          @DefaultValue("")
+          @QueryParam("lastKey") String lastEvaluatedElementKey
   ) throws Exception {
-    ModulePagination modulePagination = searchService.findModules(
-            lastEvaluatedElementKey.orElse(""),
-            limit.orElse(10),
-            query.orElse("")
+    PaginationDto modulePagination = searchService.findModules(
+            lastEvaluatedElementKey,
+            limit,
+            query
     );
     return Response.ok(modulePagination).build();
+  }
+
+  @GET
+  @Path("/providers")
+  public Response listProviders(
+          @DefaultValue("10")
+          @QueryParam("limit") Integer limit,
+          @DefaultValue("")
+          @QueryParam("q") String query,
+          @DefaultValue("")
+          @QueryParam("lastKey") String lastEvaluatedElementKey
+  ) throws Exception {
+    PaginationDto providerPagination = searchService.findProviders(
+            lastEvaluatedElementKey,
+            limit,
+            query
+    );
+    return Response.ok(providerPagination).build();
   }
 }

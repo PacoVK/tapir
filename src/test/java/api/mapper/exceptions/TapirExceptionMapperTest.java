@@ -41,6 +41,6 @@ class TapirExceptionMapperTest {
     List<ErrorResponse.ErrorMessage> errors = ((ErrorResponse) notFoundResponse.getEntity()).getErrors();
     assertEquals(notFoundResponse.getStatus(), 500);
     assertEquals(errors.size(), 1);
-    assertEquals(errors.get(0).getMessage(), "Module with id fake-id-version could not be found");
+    assertEquals(errors.get(0).getMessage(), "Module/ Provider with id fake-id-version could not be found");
   }
 }

@@ -1,13 +1,18 @@
 package core.upload.service;
 
-import core.terraform.Module;
+import core.terraform.ProviderPlatform;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -20,10 +25,10 @@ public class FileService {
 
   byte[] buffer = new byte[1024];
 
-  public File createTempModuleArchiveFile(Module module) throws IOException {
+  public File createTempArchiveFile(String fileName) throws IOException {
     Path tmp = Files.createTempDirectory(null);
     return File.createTempFile(
-            String.format("%s-%s", module.getName(), module.getCurrentVersion()),
+            fileName,
             null,
             tmp.toFile()
     );
@@ -46,7 +51,13 @@ public class FileService {
       while (entry != null) {
         if (!entry.isDirectory()
                 && !entry.getName().startsWith("example")
-                && entry.getName().endsWith(".tf")) {
+                && !entry.getName().startsWith(".")
+                && !entry.getName().contains("MACOS")
+                && (entry.getName().endsWith(".tf")
+                || entry.getName().endsWith(".zip")
+                || entry.getName().endsWith("SHA256SUMS.sig")
+                || entry.getName().endsWith("SHA256SUMS"))
+        ) {
           File tempFile = createOrGetFile(entry.getName(), targetDir);
           FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
           int len;
@@ -78,6 +89,27 @@ public class FileService {
     if (directory.delete()) {
       LOGGER.fine(String.format("Deleted file %s", directory.toPath()));
       Files.deleteIfExists(directory.toPath());
+    }
+  }
+
+  public List<ProviderPlatform> getProviderPlatformsFromShaSumsFile(File directory) {
+    File sha256SumsFile = Arrays.stream(
+            Objects.requireNonNull(directory.listFiles()))
+            .filter(file -> file.getName().endsWith("SHA256SUMS"))
+            .findFirst()
+            .orElseThrow();
+    try (BufferedReader reader = new BufferedReader(new FileReader(sha256SumsFile))) {
+      return reader.lines().map(line -> {
+        String[] split = line.split("\\s+");
+        String shaSum = split[0];
+        String fileName = split[1];
+        String[] fileNameSplit = fileName.replace(".zip", "").split("_");
+        String os = fileNameSplit[fileNameSplit.length - 2];
+        String arch = fileNameSplit[fileNameSplit.length - 1];
+        return new ProviderPlatform(os, arch, shaSum, fileName);
+      }).toList();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 

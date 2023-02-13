@@ -9,6 +9,10 @@
     <suppress checks="MemberName"
               files="TfSecReport.java"/>
     <suppress checks="ParameterName"
+              files="ProviderTerraformDto.java"/>
+    <suppress checks="MemberName"
+              files="ProviderTerraformDto.java"/>
+    <suppress checks="ParameterName"
               files="Module.java"/>
     <suppress checks="MemberName"
               files="Module.java"/>
@@ -16,10 +20,4 @@
               files="ISearchService.java"/>
     <suppress checks="AbbreviationAsWordInName"
               files="IStorageInterface.java"/>
-    <suppress checks="LineLength"
-              files="ElasticSearchRepository.java"
-              lines="47"/>
-    <suppress checks="LineLength"
-              files="ElasticSearchRepository.java"
-              lines="150"/>
 </suppressions>

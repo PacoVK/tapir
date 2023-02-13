@@ -1,19 +1,19 @@
-import { Provider } from "../types";
+import { ProviderType } from "../types";
 import awsLogo from "../assets/aws-icon.png";
 import gcpLogo from "../assets/google-icon.png";
 import azureLogo from "../assets/azurerm-icon.png";
 import k8Logo from "../assets/kubernetes-icon.png";
 import defaultLogo from "../assets/terraform-icon.png";
 
-export const getProviderLogo = (provider: Provider) => {
+export const getProviderLogo = (provider: ProviderType) => {
   switch (provider) {
-    case Provider.AWS:
+    case ProviderType.AWS:
       return awsLogo;
-    case Provider.GOOGLE:
+    case ProviderType.GOOGLE:
       return gcpLogo;
-    case Provider.AZURE:
+    case ProviderType.AZURE:
       return azureLogo;
-    case Provider.KUBERNETES:
+    case ProviderType.KUBERNETES:
       return k8Logo;
     default:
       return defaultLogo;

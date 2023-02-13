@@ -1,6 +1,6 @@
 package core.backend.aws.dynamodb.converter;
 
-import core.terraform.ModuleVersion;
+import core.terraform.ArtifactVersion;
 import java.util.Collection;
 import java.util.TreeSet;
 import software.amazon.awssdk.enhanced.dynamodb.AttributeConverter;
@@ -10,26 +10,26 @@ import software.amazon.awssdk.enhanced.dynamodb.internal.converter.attribute.Lis
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 
-public class ModuleVersionsConverter implements AttributeConverter<Collection<ModuleVersion>> {
+public class ArtifactVersionsConverter implements AttributeConverter<Collection<ArtifactVersion>> {
 
-  private final ListAttributeConverter<Collection<ModuleVersion>> listAttributeConverter =
+  private final ListAttributeConverter<Collection<ArtifactVersion>> listAttributeConverter =
           ListAttributeConverter
-          .builder(EnhancedType.collectionOf(ModuleVersion.class))
+          .builder(EnhancedType.collectionOf(ArtifactVersion.class))
           .collectionConstructor(TreeSet::new)
-          .elementConverter(new ModuleVersionsConverter.ModuleVersionConverter()).build();
+          .elementConverter(new ArtifactVersionConverter()).build();
 
   @Override
-  public AttributeValue transformFrom(Collection<ModuleVersion> moduleVersions) {
+  public AttributeValue transformFrom(Collection<ArtifactVersion> moduleVersions) {
     return listAttributeConverter.transformFrom(moduleVersions);
   }
 
   @Override
-  public Collection<ModuleVersion> transformTo(AttributeValue attributeValue) {
+  public Collection<ArtifactVersion> transformTo(AttributeValue attributeValue) {
     return listAttributeConverter.transformTo(attributeValue);
   }
 
   @Override
-  public EnhancedType<Collection<ModuleVersion>> type() {
+  public EnhancedType<Collection<ArtifactVersion>> type() {
     return listAttributeConverter.type();
   }
 
@@ -38,21 +38,21 @@ public class ModuleVersionsConverter implements AttributeConverter<Collection<Mo
     return listAttributeConverter.attributeValueType();
   }
 
-  static class ModuleVersionConverter implements AttributeConverter<ModuleVersion> {
+  static class ArtifactVersionConverter implements AttributeConverter<ArtifactVersion> {
 
     @Override
-    public AttributeValue transformFrom(ModuleVersion moduleVersion) {
+    public AttributeValue transformFrom(ArtifactVersion moduleVersion) {
       return AttributeValue.fromS(moduleVersion.getVersion());
     }
 
     @Override
-    public ModuleVersion transformTo(AttributeValue attributeValue) {
-      return new ModuleVersion(attributeValue.s());
+    public ArtifactVersion transformTo(AttributeValue attributeValue) {
+      return new ArtifactVersion(attributeValue.s());
     }
 
     @Override
-    public EnhancedType<ModuleVersion> type() {
-      return EnhancedType.of(ModuleVersion.class);
+    public EnhancedType<ArtifactVersion> type() {
+      return EnhancedType.of(ArtifactVersion.class);
     }
 
     @Override

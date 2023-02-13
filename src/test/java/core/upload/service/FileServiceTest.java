@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import core.terraform.Module;
+import core.terraform.ProviderPlatform;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class FileServiceTest {
@@ -19,8 +20,7 @@ class FileServiceTest {
 
   @Test
   void createTempModuleArchiveFile() throws IOException {
-    Module module = new Module("foo", "bar", "baz", "0.0.0");
-    File tempModuleArchiveFile = service.createTempModuleArchiveFile(module);
+    File tempModuleArchiveFile = service.createTempArchiveFile("bar-0.0.0");
     assertTrue(tempModuleArchiveFile.isFile());
     assertTrue(tempModuleArchiveFile.exists());
     assertTrue(tempModuleArchiveFile.getName().startsWith("bar-0.0.0"));
@@ -28,7 +28,7 @@ class FileServiceTest {
 
   @Test
   void unpackArchiveAndDeleteAllFiles() throws URISyntaxException, IOException {
-    URL resource = getClass().getClassLoader().getResource("test-archive.zip");
+    URL resource = getClass().getClassLoader().getResource("test-module.zip");
     Path testDirectory = Files.createTempDirectory(null);
     assert resource != null;
     File archive=  new File(resource.toURI());
@@ -41,5 +41,20 @@ class FileServiceTest {
     assertTrue(testDirectoryFile.isDirectory());
     service.deleteAllFilesInDirectory(testDirectoryFile);
     assertFalse(testDirectoryFile.isDirectory());
+  }
+
+  @Test
+  void getProviderPlatformsFromShaSumsFileTest() throws URISyntaxException {
+    URL resource = getClass().getClassLoader().getResource("unpackedProviderStub");
+    assert resource != null;
+    List<ProviderPlatform> platforms = service.getProviderPlatformsFromShaSumsFile(
+            new File(resource.toURI())
+    );
+    assertEquals(platforms.size(), 14);
+    ProviderPlatform platform = platforms.get(0);
+    assertEquals(platform.getFileName(), "terraform_1.3.7_darwin_amd64.zip");
+    assertEquals(platform.getOs(), "darwin");
+    assertEquals(platform.getArch(), "amd64");
+    assertEquals(platform.getShasum(), "b00465acc7bdef57ba468b84b9162786e472dc97ad036a9e3526dde510563e2d");
   }
 }

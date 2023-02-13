@@ -10,6 +10,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
+import AppsIcon from "@mui/icons-material/Apps";
 
 const NavigationDrawer = () => {
   return (
@@ -44,6 +45,19 @@ const NavigationDrawer = () => {
               <ViewModuleIcon />
             </ListItemIcon>
             <ListItemText primary={"Modules"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem
+          key={"MenuItemProvider"}
+          component={"a"}
+          href={"/providers"}
+          disablePadding
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <AppsIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Providers"} />
           </ListItemButton>
         </ListItem>
       </List>

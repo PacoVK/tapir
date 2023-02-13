@@ -1,51 +1,31 @@
-package core.backend.aws.dynamodb.repository;
+package core.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import api.dto.ModulePagination;
-import core.exceptions.ModuleNotFoundException;
-import core.exceptions.ReportNotFoundException;
+import api.dto.PaginationDto;
 import core.terraform.Module;
 import extensions.core.Report;
-import io.quarkus.test.junit.QuarkusTest;
-import javax.inject.Inject;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import util.TestDataBuilder;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@QuarkusTest
-class DynamodbRepositoryTest {
+public abstract class AbstractModuleBackendTest {
 
-  @Inject
-  DynamodbRepository repository;
+  SearchService repository;
 
-  @Inject
-  DynamoDbClient dynamoDbClient;
+  public AbstractModuleBackendTest(SearchService repository) {
+    this.repository = repository;
+  }
 
-  @BeforeAll
-  void setUp() {
+  @BeforeEach
+  void setUp() throws Exception {
     repository.bootstrap();
   }
 
-  @AfterAll
-  void tearDown() {
-    DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
-    enhancedClient.table("Modules", null).deleteTable();
-    enhancedClient.table("Reports", null).deleteTable();
-  }
-
   @Test
-  @Order(1)
-  void ingestModuleData() throws ModuleNotFoundException {
+  void ingestModuleData() throws Exception {
     Module module = new Module("foo", "bar", "baz", "0.0.1");
     repository.ingestModuleData(module);
     Module ingestedModule = repository.getModuleById(module.getId());
@@ -53,7 +33,7 @@ class DynamodbRepositoryTest {
   }
 
   @Test
-  void ingestSecurityScanResult() throws ReportNotFoundException {
+  void ingestSecurityScanResult() throws Exception {
     Module module = new Module("baz", "bar", "foo", "0.0.2");
     repository.ingestModuleData(module);
     Report report = TestDataBuilder.getReportStub(module);
@@ -63,7 +43,7 @@ class DynamodbRepositoryTest {
   }
 
   @Test
-  void increaseDownloadCounter() throws ModuleNotFoundException {
+  void increaseDownloadCounter() throws Exception {
     Module module = new Module("three", "two", "one", "0.0.3");
     repository.ingestModuleData(module);
     repository.increaseDownloadCounter(module);
@@ -73,30 +53,28 @@ class DynamodbRepositoryTest {
   }
 
 
-  // TODO fix this
   @Test
-  @Disabled
-  void findModules() {
+  void findModules() throws Exception {
     Module awsNetworkModule = new Module("fancy", "vpc", "aws", "0.0.1");
     Module azureNetworkModule = new Module("fancy", "vpc", "azure", "0.0.1");
     Module otherModule = new Module("fancy", "container", "aws", "0.0.1");
     repository.ingestModuleData(awsNetworkModule);
     repository.ingestModuleData(azureNetworkModule);
     repository.ingestModuleData(otherModule);
-    ModulePagination searchWithLimit = repository.findModules("", 2, "vpc");
-    ModulePagination searchWithinLimit = repository.findModules("", 5, "vpc");
-    ModulePagination searchWithoutResult = repository.findModules("", 5, "google");
-    ModulePagination searchAll = repository.findModules("", 5, "");
-    ModulePagination searchWithNonExistingIdentifier = repository.findModules("fancy-vsdfsfdspc-aws", 5, "");
-    assertEquals(searchWithLimit.getModules().size(), 1);
-    assertEquals(searchWithinLimit.getModules().size(), 2);
-    assertEquals(searchWithoutResult.getModules().size(), 0);
-    assertEquals(searchAll.getModules().size(), 3);
-    assertEquals(searchWithNonExistingIdentifier.getModules().size(), 0);
+    PaginationDto searchWithLimit = repository.findModules("", 3, "vpc");
+    PaginationDto searchWithinLimit = repository.findModules("", 5, "vpc");
+    PaginationDto searchWithoutResult = repository.findModules("", 5, "google");
+    PaginationDto searchAll = repository.findModules("", 5, "");
+    PaginationDto searchWithNonExistingIdentifier = repository.findModules("fancy-vsdfsfdspc-aws", 5, "");
+    assertEquals(searchWithLimit.getEntities().size(), 2);
+    assertEquals(searchWithinLimit.getEntities().size(), 2);
+    assertEquals(searchWithoutResult.getEntities().size(), 0);
+    assertEquals(searchAll.getEntities().size(), 3);
+    assertEquals(searchWithNonExistingIdentifier.getEntities().size(), 0);
   }
 
   @Test
-  void getModuleVersions() throws ModuleNotFoundException {
+  void getModuleVersions() throws Exception {
     Module module_1 = new Module("namespace", "name", "provider", "0.0.1");
     Module module_2 = new Module("namespace", "name", "provider", "1.0.2");
     Module module_3 = new Module("namespace", "name", "provider", "0.0.2");

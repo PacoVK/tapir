@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import {
-  Box,
   CircularProgress,
   List,
   Paper,
@@ -17,10 +16,10 @@ import {
 import ModuleElement from "../components/list/ModuleElement";
 import { Module } from "../types";
 import useDebounce from "../hooks/useDebounce";
-import tapirLogo from "../assets/tapir.png";
+import NotFoundInfo from "../components/layout/NotFoundInfo";
 
 const fetchDataLimit = 5;
-const Overview = () => {
+const ModuleOverview = () => {
   const modulesTable = useRef();
   const [modules, setModules] = useState([] as Module[]);
   const [lastEvaluatedItemKey, setLastEvaluatedItemKey] = useState("");
@@ -31,22 +30,18 @@ const Overview = () => {
   const [distanceBottom, setDistanceBottom] = useState(0);
 
   const hasMoreData = (lastEvaluatedItem: any) => {
-    return (
-      !!lastEvaluatedItem &&
-      lastEvaluatedItem !== "" &&
-      modules.at(0)?.id !== lastEvaluatedItem.id
-    );
+    return !!lastEvaluatedItem && modules.at(0)?.id !== lastEvaluatedItem;
   };
 
   const loadMore = useCallback(
     () => {
       setLoading(true);
       fetchModules(
-        `search?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
+        `search/modules?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
       ).then((data) => {
-        const allModules = [...modules, ...data.modules];
+        const allModules = [...modules, ...data.entities];
         setLastEvaluatedItemKey(
-          data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
+          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
         );
         setModules(allModules);
         setLoading(false);
@@ -92,15 +87,15 @@ const Overview = () => {
   useEffect(
     () => {
       setLoading(true);
-      fetchModules(`search?limit=${fetchDataLimit}&q=${searchString}`).then(
-        (data) => {
-          setLastEvaluatedItemKey(
-            data.lastEvaluatedItem ? data.lastEvaluatedItem.id : ""
-          );
-          setModules(data.modules);
-          setLoading(false);
-        }
-      );
+      fetchModules(
+        `search/modules?limit=${fetchDataLimit}&q=${searchString}`
+      ).then((data) => {
+        setLastEvaluatedItemKey(
+          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
+        );
+        setModules(data.entities);
+        setLoading(false);
+      });
     },
     // eslint-disable-next-line
     [debouncedSearchTerm]
@@ -151,12 +146,7 @@ const Overview = () => {
             />
           ))
         ) : !loading ? (
-          <Box sx={{ margin: "auto" }}>
-            <img alt={"Tapir logo"} src={tapirLogo} />
-            <Typography textAlign={"center"}>
-              Found this Tapir, but no modules
-            </Typography>
-          </Box>
+          <NotFoundInfo entity={"modules"} />
         ) : null}
         {renderLastItem()}
         {loading ? (
@@ -167,4 +157,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default ModuleOverview;

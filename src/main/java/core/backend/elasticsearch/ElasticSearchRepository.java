@@ -1,10 +1,13 @@
 package core.backend.elasticsearch;
 
-import api.dto.ModulePagination;
+import api.dto.PaginationDto;
 import core.backend.SearchService;
 import core.exceptions.ModuleNotFoundException;
+import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
+import core.terraform.CoreEntity;
 import core.terraform.Module;
+import core.terraform.Provider;
 import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import io.vertx.core.json.JsonArray;
@@ -37,16 +40,17 @@ public class ElasticSearchRepository extends SearchService {
   public void ingestModuleData(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/modules/_update/%s-%s-%s",
+            String.format("/modules/_update/%s-%s-%s?refresh=wait_for",
                     module.getNamespace(),
                     module.getName(),
                     module.getProvider()
             )
     );
-    String upsertScript = new StringBuilder("List versions=ctx._source.versions; ")
-            .append("if(versions!=null && !versions.stream().anyMatch(v-> v.version.equals(params.release.version))){")
-            .append("ctx._source.versions.add(params.release)")
-            .append("}").toString();
+    String upsertScript = "List versions=ctx._source.versions; "
+            + "if(versions!=null && !versions.stream()"
+            + ".anyMatch(v-> v.version.equals(params.release.version))){"
+            + "ctx._source.versions.add(params.release)"
+            + "}";
     String payload = JsonObject.of("script", JsonObject.of(
             "source", upsertScript,
             "lang", "painless",
@@ -57,15 +61,51 @@ public class ElasticSearchRepository extends SearchService {
   }
 
   @Override
+  public Provider getProviderById(String id) throws Exception {
+    Request request = new Request(
+            HttpMethod.GET,
+            "/providers/_doc/" + id);
+    try {
+      return doRequestAndReturnEntity(request).mapTo(Provider.class);
+    } catch (ResponseException e) {
+      throw new ProviderNotFoundException(id, e);
+    }
+  }
+
+  @Override
+  public void ingestProviderData(Provider provider) throws IOException {
+    Request request = new Request(
+            HttpMethod.POST,
+            String.format("/providers/_update/%s?refresh=wait_for",
+                    provider.getId()
+            )
+    );
+    String upsertScript = "Map versions=ctx._source.versions; "
+            + "if(versions!=null && !versions.containsKey(params.release)){"
+            + "ctx._source.versions.put(params.release, params.platform)"
+            + "}";
+    String payload = JsonObject.of("script", JsonObject.of(
+            "source", upsertScript,
+            "lang", "painless",
+            "params", JsonObject.of(
+                    "release", provider.getVersions().firstKey().getVersion(),
+                    "platform", provider.getVersions().firstEntry().getValue()
+            )
+    ), "upsert", provider).toString();
+    request.setJsonEntity(payload);
+    restClient.performRequest(request);
+  }
+
+  @Override
   public void ingestSecurityScanResult(Report report) throws IOException {
-    String targetRequestPath = new StringBuilder("/reports/_doc/").append("reports-")
-            .append(report.getModuleNamespace())
-            .append("-")
-            .append(report.getModuleName())
-            .append("-")
-            .append(report.getProvider())
-            .append("-")
-            .append(report.getModuleVersion()).toString();
+    String targetRequestPath = "/reports/_doc/reports-"
+            + report.getModuleNamespace()
+            + "-"
+            + report.getModuleName()
+            + "-"
+            + report.getProvider()
+            + "-"
+            + report.getModuleVersion();
     Request request = new Request(
             HttpMethod.POST,
             targetRequestPath
@@ -97,14 +137,14 @@ public class ElasticSearchRepository extends SearchService {
   @Override
   public Report getReportByModuleVersion(Module module)
           throws IOException, ReportNotFoundException {
-    String searchPath = new StringBuilder("/reports/_doc/").append("reports-")
-            .append(module.getNamespace())
-            .append("-")
-            .append(module.getName())
-            .append("-")
-            .append(module.getProvider())
-            .append("-")
-            .append(module.getCurrentVersion()).toString();
+    String searchPath = "/reports/_doc/reports-"
+            + module.getNamespace()
+            + "-"
+            + module.getName()
+            + "-"
+            + module.getProvider()
+            + "-"
+            + module.getCurrentVersion();
     Request request = new Request(
             HttpMethod.GET,
             searchPath);
@@ -117,28 +157,31 @@ public class ElasticSearchRepository extends SearchService {
 
   public void bootstrap() throws IOException {
     createIndexIfNotExists("modules");
+    createIndexIfNotExists("providers");
     createIndexIfNotExists("reports");
   }
 
-  ModulePagination getModules(String query) throws IOException {
+  PaginationDto getEntities(String indexName, String query, Class<? extends CoreEntity> type)
+          throws IOException {
     Request request = new Request(
             HttpMethod.GET,
-            "/modules/_search"
+            String.format("/%s/_search", indexName)
     );
     request.setJsonEntity(query);
     HttpEntity httpEntity = restClient.performRequest(request).getEntity();
     String responseBody = EntityUtils.toString(httpEntity);
     JsonObject queryResult = new JsonObject(responseBody).getJsonObject("hits");
     JsonArray hits = queryResult.getJsonArray("hits");
-    List<Module> results = hits.stream()
-            .map(hit -> ((JsonObject) hit).getJsonObject("_source").mapTo(Module.class))
+    List<? extends CoreEntity> results = hits.stream()
+            .map(hit -> ((JsonObject) hit).getJsonObject("_source").mapTo(type))
             .collect(Collectors.toList());
-    return new ModulePagination(results);
+    return new PaginationDto(results);
   }
 
-  public ModulePagination findModules(String identifier,
-                                      Integer limit,
-                                      String term) throws IOException {
+  private String buildPaginationSearchQuery(String identifier,
+                                            Integer limit,
+                                            String term,
+                                            String fields) {
     StringBuilder queryBuilder = new StringBuilder("{").append(
             String.format("\"sort\": [ {\"_id\": \"asc\"} ], \"size\": %s", limit)
     );
@@ -147,12 +190,30 @@ public class ElasticSearchRepository extends SearchService {
     }
     if (!term.isEmpty()) {
       queryBuilder.append(
-              String.format(", \"query\": {\"query_string\": {\"query\": \"*%s*\", \"fields\": [\"name\", \"namespace\", \"provider\"]}}", term)
+              String.format(
+                      ", \"query\": {\"query_string\": {\"query\": \"*%s*\", \"fields\": [%s]}}",
+                      term, fields
+              )
       );
     }
     queryBuilder.append("}");
-    String query = queryBuilder.toString();
-    return getModules(query);
+    return queryBuilder.toString();
+  }
+
+  public PaginationDto findModules(String identifier,
+                                   Integer limit,
+                                   String term) throws IOException {
+    String fields = "\"name\", \"namespace\", \"provider\"";
+    String query = buildPaginationSearchQuery(identifier, limit, term, fields);
+    return getEntities("modules", query, Module.class);
+  }
+
+  @Override
+  public PaginationDto findProviders(String identifier, Integer limit, String term)
+          throws Exception {
+    String fields = "\"namespace\", \"type\"";
+    String query = buildPaginationSearchQuery(identifier, limit, term, fields);
+    return getEntities("providers", query, Provider.class);
   }
 
   public Module getModuleById(String name) throws IOException, ModuleNotFoundException {
@@ -186,14 +247,15 @@ public class ElasticSearchRepository extends SearchService {
     return new JsonObject(responseBody).getJsonObject("_source");
   }
 
-  private void  createIndexIfNotExists(String indexName) throws IOException {
+  Integer  createIndexIfNotExists(String indexName) throws IOException {
     Integer statusCode = restClient.performRequest(
             new Request(HttpMethod.HEAD, String.format("/%s", indexName))
     ).getStatusLine().getStatusCode();
     if (!statusCode.equals(200)) {
       Request request = new Request(HttpMethod.PUT, String.format("/%s", indexName));
-      restClient.performRequest(request);
+      statusCode = restClient.performRequest(request).getStatusLine().getStatusCode();
       LOGGER.info(String.format("Created index [%s]", indexName));
     }
+    return statusCode;
   }
 }

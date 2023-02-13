@@ -79,6 +79,10 @@
       <artifactId>quarkus-amazon-s3</artifactId>
     </dependency>
     <dependency>
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>netty-nio-client</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.quarkiverse.amazonservices</groupId>
       <artifactId>quarkus-amazon-dynamodb</artifactId>
     </dependency>
@@ -216,11 +220,12 @@
               <append>true</append>
               <excludes>
                 <exclude>**/dto/*</exclude>
+                <exclude>api/mapper/exceptions/response/*</exclude>
                 <exclude>core/terraform/*</exclude>
                 <exclude>core/upload/FormData.class</exclude>
                 <exclude>extensions/core/Report.class</exclude>
-                <exclude>extensions/docs/report/TerraformDocumentation.class</exclude>
-                <exclude>extensions/security/report/TfSecReport.class</exclude>
+                <exclude>extensions/docs/report/**</exclude>
+                <exclude>extensions/security/report/*</exclude>
               </excludes>
             </configuration>
           </execution>
