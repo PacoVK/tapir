@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       localstack:
-        image: localstack/localstack:1.3.1
+        image: localstack/localstack:1.4.0
         env:
           SERVICES: dynamodb,s3
           EXTRA_CORS_ALLOWED_ORIGINS: "*"
