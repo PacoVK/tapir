@@ -13,8 +13,8 @@ resource "aws_apprunner_service" "tapir" {
       image_configuration {
         port = "8080"
         runtime_environment_variables = {
-          S3_STORAGE_BUCKET_NAME   = aws_s3_bucket.storage.bucket
-          S3_STORAGE_BUCKET_REGION = aws_s3_bucket.storage.region
+          S3_STORAGE_BUCKET_NAME          = aws_s3_bucket.storage.bucket
+          S3_STORAGE_BUCKET_REGION        = aws_s3_bucket.storage.region
           STORAGE_ACCESS_SESSION_DURATION = 60
         }
       }
@@ -74,7 +74,8 @@ data "aws_iam_policy_document" "tapir" {
     ]
     resources = [
       "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Modules",
-      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Reports"
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Reports",
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Providers"
     ]
   }
   statement {
