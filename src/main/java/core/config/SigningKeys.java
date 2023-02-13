@@ -10,6 +10,6 @@ public interface SigningKeys {
   interface SigningKey {
     String id();
 
-    String asciiAmor();
+    String asciiArmor();
   }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 public class GpgPublicKeySerializer extends StdSerializer<List<GpgPublicKey>> {
@@ -23,9 +24,14 @@ public class GpgPublicKeySerializer extends StdSerializer<List<GpgPublicKey>> {
           JsonGenerator jsonGenerator,
           SerializerProvider serializerProvider
   ) throws IOException {
+    Base64.Decoder decoder = Base64.getDecoder();
+    List<GpgPublicKey> publicKeyList = gpgPublicKeys.stream().peek(key -> {
+      String asciiArmoredDecoded = new String(decoder.decode(key.getAsciiAmor()));
+      key.setAsciiAmor(asciiArmoredDecoded);
+    }).toList();
     jsonGenerator.writeStartObject();
     jsonGenerator.writeFieldName("gpg_public_keys");
-    jsonGenerator.writeObject(gpgPublicKeys);
+    jsonGenerator.writeObject(publicKeyList);
     jsonGenerator.writeEndObject();
   }
 }

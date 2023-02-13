@@ -49,7 +49,7 @@ public class ProviderMapper {
     List<GpgPublicKey> gpgPublicKeys = signingKeys
             .keys()
             .stream()
-            .map(key -> new GpgPublicKey(key.id(), key.asciiAmor()))
+            .map(key -> new GpgPublicKey(key.id(), key.asciiArmor()))
             .toList();
     dto.setSigning_keys(gpgPublicKeys);
     return dto;

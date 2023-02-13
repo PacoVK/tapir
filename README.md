@@ -75,14 +75,14 @@ You can configure Tapir passing the following environment variables:
 | S3_STORAGE_BUCKET_REGION        | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
 | API_MAX_BODY_SIZE               | The maximum payload size for module/providers to be uploaded                                                                              | X                                       | 100M         |
 | REGISTRY_GPG_KEYS_0__ID         | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                           | X                                       |              |
-| REGISTRY_GPG_KEYS_0__ASCII_AMOR | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                   | X                                       |              |
+| REGISTRY_GPG_KEYS_0__ASCII_ARMOR | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                   | X                                       |              |
 
 :information_source: A note on the GPG configuration. Quarkus (and therefore Tapir) is based on [Smallrye microprofile](https://smallrye.io/smallrye-config/2.9.1/config/indexed-properties/) and supports indexed properties. Hence, you can add one or more key specifying indexed properties. See example below for passing two GPG keys (**Mind the two subsequent underscores after the index**):
 ```
 REGISTRY_GPG_KEYS_0__ID=D17C807B4156558133A1FB843C7461473EB779BD
-REGISTRY_GPG_KEYS_0__ASCII_AMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....tUUlO
+REGISTRY_GPG_KEYS_0__ASCII_ARMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....tUUlO
 REGISTRY_GPG_KEYS_1__ID=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSDLPFKF
-REGISTRY_GPG_KEYS_1__ASCII_AMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....JDIFH
+REGISTRY_GPG_KEYS_1__ASCII_ARMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....JDIFH
 ```
 
 ### Upload a module
