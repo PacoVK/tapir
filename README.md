@@ -11,6 +11,9 @@ Core values of Tapir is to provide
 * security
 * quality for your Terraform modules.
 
+## Feedback 
+You can send feedback and feature requests via GitHub issues. Either vote existing issues or feel free to raise an issue. 
+
 ## Why?
 ### Modules
 Terraform modules are reusable parts of infrastructure code. The most crucial part of re-usability is transparency and visibility. Since Terraform supports Git-based modules there are several disadvantages that come along with this capability.
