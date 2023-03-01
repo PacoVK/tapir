@@ -37,7 +37,7 @@ const Footer = () => {
       >
         <Container maxWidth="sm">
           <Typography variant="body1">
-            Terraform Private Registry v0.0.1
+            Terraform Private Registry v0.2.0
           </Typography>
           <SubInfo />
         </Container>
