@@ -6,18 +6,24 @@ import com.azure.cosmos.CosmosClient;
 import com.azure.cosmos.CosmosClientBuilder;
 import com.azure.cosmos.CosmosContainer;
 import com.azure.cosmos.CosmosDatabase;
-import com.azure.cosmos.CosmosException;
+import com.azure.cosmos.implementation.NotFoundException;
 import com.azure.cosmos.models.CosmosContainerProperties;
 import com.azure.cosmos.models.CosmosItemRequestOptions;
+import com.azure.cosmos.models.CosmosQueryRequestOptions;
+import com.azure.cosmos.models.FeedResponse;
 import com.azure.cosmos.models.PartitionKey;
+import com.azure.cosmos.models.SqlParameter;
+import com.azure.cosmos.models.SqlQuerySpec;
 import core.backend.SearchService;
+import core.exceptions.ModuleNotFoundException;
+import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
-import java.io.IOException;
-import java.util.logging.Logger;
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -25,8 +31,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @LookupIfProperty(name = "registry.search.backend", stringValue = "cosmosdb")
 @ApplicationScoped
 public class CosmosDbRepository extends SearchService {
-
-  static final Logger LOGGER = Logger.getLogger(CosmosDbRepository.class.getName());
 
   CosmosClient client;
   CosmosDatabase database;
@@ -55,36 +59,74 @@ public class CosmosDbRepository extends SearchService {
   @Override
   public void bootstrap() throws Exception {
     client.createDatabaseIfNotExists("tapir");
+    createContainerIfNotExists("Modules");
+    createContainerIfNotExists("Providers");
+    createContainerIfNotExists("Reports");
+  }
 
-    CosmosContainerProperties modulesContainerProperties = new CosmosContainerProperties("Modules", "/id");
-    database.createContainerIfNotExists(modulesContainerProperties);
-
-    CosmosContainerProperties providerContainerProperties = new CosmosContainerProperties("Providers", "/id");
-    database.createContainerIfNotExists(providerContainerProperties);
-
-    CosmosContainerProperties reportContainerProperties = new CosmosContainerProperties("Reports", "/id");
-    database.createContainerIfNotExists(reportContainerProperties);
-
+  private void createContainerIfNotExists(String name) {
+    CosmosContainerProperties containerProperties = new CosmosContainerProperties(name, "/id");
+    database.createContainerIfNotExists(containerProperties);
   }
 
   @Override
-  public PaginationDto findModules(String identifier, Integer limit, String term) throws Exception {
-    return null;
+  public PaginationDto findModules(String identifier, Integer limit, String term) {
+    List<SqlParameter> paramList = List.of(
+            new SqlParameter("@namespace", "%" + term + "%"),
+            new SqlParameter("@name", "%" + term + "%"),
+            new SqlParameter("@provider", "%" + term + "%")
+    );
+    SqlQuerySpec querySpec = new SqlQuerySpec(
+            "SELECT * FROM Modules m WHERE m.namespace "
+                    + "LIKE @namespace OR m.name LIKE @name OR m.provider LIKE @provider",
+            paramList);
+    String continuationToken = identifier.isEmpty() ? null : identifier;
+    FeedResponse<Module> feedResponse = modulesContainer
+            .queryItems(
+                    querySpec,
+                    new CosmosQueryRequestOptions(),
+                    Module.class)
+            .streamByPage(continuationToken, limit).findFirst().orElse(null);
+    if (feedResponse == null) {
+      return new PaginationDto(Collections.EMPTY_LIST);
+    }
+    return new PaginationDto(feedResponse.getResults(), feedResponse.getContinuationToken());
   }
 
   @Override
-  public PaginationDto findProviders(String identifier, Integer limit, String term) throws Exception {
-    return null;
+  public PaginationDto findProviders(String identifier, Integer limit, String term) {
+    List<SqlParameter> paramList = List.of(
+            new SqlParameter("@namespace", "%" + term + "%"),
+            new SqlParameter("@type", "%" + term + "%")
+    );
+    SqlQuerySpec querySpec = new SqlQuerySpec(
+            "SELECT * FROM Providers p WHERE p.namespace LIKE @namespace OR p.type LIKE @type",
+            paramList);
+    String continuationToken = identifier.isEmpty() ? null : identifier;
+    FeedResponse<Provider> feedResponse = providerContainer
+            .queryItems(
+                    querySpec,
+                    new CosmosQueryRequestOptions(),
+                    Provider.class)
+            .streamByPage(continuationToken, limit).findFirst().orElse(null);
+    if (feedResponse == null) {
+      return new PaginationDto(Collections.EMPTY_LIST);
+    }
+    return new PaginationDto(feedResponse.getResults(), feedResponse.getContinuationToken());
   }
 
   @Override
-  public Module getModuleById(String id) throws Exception {
-    return modulesContainer.readItem(id, new PartitionKey(id), Module.class).getItem();
+  public Module getModuleById(String id) throws ModuleNotFoundException {
+    try {
+      return modulesContainer.readItem(id, new PartitionKey(id), Module.class).getItem();
+    } catch (NotFoundException cosmosException) {
+      throw new ModuleNotFoundException(id, cosmosException);
+    }
   }
 
   @Override
-  public Module getModuleVersions(Module module) {
-    return null;
+  public Module getModuleVersions(Module module) throws ModuleNotFoundException {
+    return getModuleById(module.getId());
   }
 
   @Override
@@ -99,7 +141,7 @@ public class CosmosDbRepository extends SearchService {
       existingModule.getVersions().add(module.getVersions().first());
       existingModule.setPublished_at(module.getPublished_at());
       moduleToIngest = existingModule;
-    } catch (CosmosException cosmosException) {
+    } catch (NotFoundException cosmosException) {
       moduleToIngest = module;
     }
     modulesContainer.upsertItem(
@@ -125,7 +167,7 @@ public class CosmosDbRepository extends SearchService {
                   provider.getVersions().firstEntry().getValue()
           );
       providerToIngest = existingProvider;
-    } catch (CosmosException cosmosException) {
+    } catch (NotFoundException cosmosException) {
       providerToIngest = provider;
     }
     providerContainer.createItem(
@@ -145,17 +187,33 @@ public class CosmosDbRepository extends SearchService {
   }
 
   @Override
-  public Module increaseDownloadCounter(Module module) {
-    return null;
+  public Module increaseDownloadCounter(Module module) throws ModuleNotFoundException {
+    Module existingModule = getModuleById(module.getId());
+    Integer downloads = existingModule.getDownloads();
+    existingModule.setDownloads(downloads + 1);
+    modulesContainer.upsertItem(existingModule);
+    return existingModule;
   }
 
   @Override
-  public Report getReportByModuleVersion(Module module) throws IOException, ReportNotFoundException {
-    return null;
+  public Report getReportByModuleVersion(Module module) throws ReportNotFoundException {
+    String reportId = module.getId()
+            + "-"
+            + module.getCurrentVersion();
+    try {
+      return reportsContainer.readItem(reportId, new PartitionKey(reportId), Report.class)
+              .getItem();
+    } catch (NotFoundException cosmosException) {
+      throw new ReportNotFoundException(reportId, cosmosException);
+    }
   }
 
   @Override
-  public Provider getProviderById(String id) {
-    return providerContainer.readItem(id, new PartitionKey(id), Provider.class).getItem();
+  public Provider getProviderById(String id) throws ProviderNotFoundException {
+    try {
+      return providerContainer.readItem(id, new PartitionKey(id), Provider.class).getItem();
+    } catch (NotFoundException cosmosException) {
+      throw new ProviderNotFoundException(id, cosmosException);
+    }
   }
 }

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import core.backend.aws.dynamodb.repository.DynamodbRepository;
 import core.terraform.Module;
 import io.quarkus.test.junit.QuarkusTest;
-import java.io.IOException;
 import javax.inject.Inject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +40,7 @@ class DownloadListenerTest {
   }
 
   @Test
-  void handleDownloadRequestedEvent() throws IOException {
+  void handleDownloadRequestedEvent() throws Exception {
     repository.ingestModuleData(fakeModule);
     assertEquals(fakeModule.getDownloads(), 0);
     fakeModule = dl.handleDownloadRequestedEvent(fakeModule);

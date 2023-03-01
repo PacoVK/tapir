@@ -29,15 +29,15 @@ const ModuleOverview = () => {
   const [loading, setLoading] = useState(false);
   const [distanceBottom, setDistanceBottom] = useState(0);
 
-  const hasMoreData = (lastEvaluatedItem: any) => {
-    return !!lastEvaluatedItem && modules.at(0)?.id !== lastEvaluatedItem;
+  const hasMoreData = (lastEvaluatedItemId: string) => {
+    return !!lastEvaluatedItemId && modules.at(0)?.id !== lastEvaluatedItemId;
   };
 
   const loadMore = useCallback(
     () => {
       setLoading(true);
       fetchModules(
-        `search/modules?limit=${fetchDataLimit}&lastKey=${lastEvaluatedItemKey}&q=${searchString}`
+        `search/modules?limit=${fetchDataLimit}&lastKey=${encodeURIComponent(lastEvaluatedItemKey)}&q=${searchString}`
       ).then((data) => {
         const allModules = [...modules, ...data.entities];
         setLastEvaluatedItemKey(

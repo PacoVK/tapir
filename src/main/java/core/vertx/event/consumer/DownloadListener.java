@@ -3,7 +3,6 @@ package core.vertx.event.consumer;
 import core.backend.SearchService;
 import core.terraform.Module;
 import io.quarkus.vertx.ConsumeEvent;
-import java.io.IOException;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
@@ -20,7 +19,7 @@ public class DownloadListener {
   }
 
   @ConsumeEvent("module.download.requested")
-  public Module handleDownloadRequestedEvent(Module module) throws IOException {
+  public Module handleDownloadRequestedEvent(Module module) throws Exception {
     LOGGER.info(String.format("Download was requested for module %s, version %s",
             module.getName(),
             module.getCurrentVersion())
