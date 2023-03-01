@@ -24,7 +24,7 @@ public interface ISearchService {
 
   void ingestSecurityScanResult(Report report) throws Exception;
 
-  Module increaseDownloadCounter(Module module) throws IOException;
+  Module increaseDownloadCounter(Module module) throws Exception;
 
   Report getReportByModuleVersion(Module module) throws IOException, ReportNotFoundException;
 

@@ -7,6 +7,9 @@ registry:
     backend: ${BACKEND_CONFIG:dynamodb}
     elasticsearch:
       host: ${BACKEND_ELASTICSEARCH_HOST:localhost:9200}
+    azure:
+      master-key: ${BACKEND_AZURE_MASTER_KEY:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==}
+      endpoint: ${BACKEND_AZURE_ENDPOINT:https://localhost:8081}
   storage:
     backend: ${STORAGE_CONFIG:s3}
     access:

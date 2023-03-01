@@ -17,6 +17,11 @@ public class PaginationDto {
     }
   }
 
+  public PaginationDto(List<? extends CoreEntity> entities, String lastEvaluatedItemId) {
+    this.entities = entities;
+    this.lastEvaluatedItemId = lastEvaluatedItemId;
+  }
+
   Collection<? extends CoreEntity> entities;
   String lastEvaluatedItemId;
 
@@ -28,11 +33,11 @@ public class PaginationDto {
     this.entities = entities;
   }
 
-  public String getLastEvaluatedItem() {
+  public String getLastEvaluatedItemId() {
     return lastEvaluatedItemId;
   }
 
-  public void setLastEvaluatedItem(String lastEvaluatedItemId) {
+  public void setLastEvaluatedItemId(String lastEvaluatedItemId) {
     this.lastEvaluatedItemId = lastEvaluatedItemId;
   }
 }

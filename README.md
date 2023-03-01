@@ -49,7 +49,7 @@ You can easily run an instance on your own with the full flexibility and power a
 * It provides several storage adapters
   * currently S3 and AzureBlob
 * It provides several database adapters for the data
-  * currently Dynamodb (default), Elasticsearch
+  * currently Dynamodb (default), Elasticsearch, CosmosDb
 * It provides a REST-API for custom integrations and further automation
   Tapir is build on [Quarkus](https://quarkus.io/) and [ReactJS](https://reactjs.org/). You can run Tapir wherever you can run Docker images.
 
@@ -66,18 +66,20 @@ There are samples with Terraform in `examples/`.
 
 You can configure Tapir passing the following environment variables:
 
-| Variable                        | Description                                                                                                                               | Required                                | Default      |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|--------------|
-| BACKEND_CONFIG                  | The database to make use of                                                                                                               | X                                       | dynamodb     |
-| BACKEND_ELASTICSEARCH_HOST      | Host of the Elasticsearch instance                                                                                                        | Yes, if BACKEND_CONFIG is elasticsearch |              |
-| STORAGE_CONFIG                  | The blob storage to make use of                                                                                                           | X                                       | s3           |
-| STORAGE_ACCESS_SESSION_DURATION | Amount of minutes the signed download url is valid                                                                                        | X                                       | 5            |
-| AZURE_BLOB_CONNECTION_STRING    | [Connection string](https://learn.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string) to use for authentication | Yes, if STORAGE_CONFIG is azureBlob     |              |
-| AZURE_BLOB_CONTAINER_NAME       | Blob container name to be used to store module archives                                                                                   | Yes, if STORAGE_CONFIG is azureBlob     | tf-registry  |
-| S3_STORAGE_BUCKET_NAME          | S3 bucket name to be used to store module archives                                                                                        | Yes, if STORAGE_CONFIG is s3            | tf-registry  |
-| S3_STORAGE_BUCKET_REGION        | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
-| API_MAX_BODY_SIZE               | The maximum payload size for module/providers to be uploaded                                                                              | X                                       | 100M         |
-| REGISTRY_GPG_KEYS_0__ID         | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                           | X                                       |              |
+| Variable                         | Description                                                                                                                               | Required                                | Default      |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|--------------|
+| BACKEND_CONFIG                   | The database to make use of                                                                                                               | X                                       | dynamodb     |
+| BACKEND_ELASTICSEARCH_HOST       | Host of the Elasticsearch instance                                                                                                        | Yes, if BACKEND_CONFIG is elasticsearch |              |
+| BACKEND_AZURE_MASTER_KEY         | Master key of your CosmosDb                                                                                                               | Yes, if BACKEND_CONFIG is cosmosdb      |              |
+| BACKEND_AZURE_ENDPOINT           | Endpoint of your CosmosDb                                                                                                                 | Yes, if BACKEND_CONFIG is cosmosdb      |              |
+| STORAGE_CONFIG                   | The blob storage to make use of                                                                                                           | X                                       | s3           |
+| STORAGE_ACCESS_SESSION_DURATION  | Amount of minutes the signed download url is valid                                                                                        | X                                       | 5            |
+| AZURE_BLOB_CONNECTION_STRING     | [Connection string](https://learn.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string) to use for authentication | Yes, if STORAGE_CONFIG is azureBlob     |              |
+| AZURE_BLOB_CONTAINER_NAME        | Blob container name to be used to store module archives                                                                                   | Yes, if STORAGE_CONFIG is azureBlob     | tf-registry  |
+| S3_STORAGE_BUCKET_NAME           | S3 bucket name to be used to store module archives                                                                                        | Yes, if STORAGE_CONFIG is s3            | tf-registry  |
+| S3_STORAGE_BUCKET_REGION         | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
+| API_MAX_BODY_SIZE                | The maximum payload size for module/providers to be uploaded                                                                              | X                                       | 100M         |
+| REGISTRY_GPG_KEYS_0__ID          | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                           | X                                       |              |
 | REGISTRY_GPG_KEYS_0__ASCII_ARMOR | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                   | X                                       |              |
 
 :information_source: A note on the GPG configuration. Quarkus (and therefore Tapir) is based on [Smallrye microprofile](https://smallrye.io/smallrye-config/2.9.1/config/indexed-properties/) and supports indexed properties. Hence, you can add one or more key specifying indexed properties. See example below for passing two GPG keys (**Mind the two subsequent underscores after the index**):

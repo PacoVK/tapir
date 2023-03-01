@@ -16,6 +16,10 @@
               files="Module.java"/>
     <suppress checks="MemberName"
               files="Module.java"/>
+    <suppress checks="ParameterName"
+              files="Provider.java"/>
+    <suppress checks="MemberName"
+              files="Provider.java"/>
     <suppress checks="AbbreviationAsWordInName"
               files="ISearchService.java"/>
     <suppress checks="AbbreviationAsWordInName"
