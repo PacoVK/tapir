@@ -37,7 +37,9 @@ const ModuleOverview = () => {
     () => {
       setLoading(true);
       fetchModules(
-        `search/modules?limit=${fetchDataLimit}&lastKey=${encodeURIComponent(lastEvaluatedItemKey)}&q=${searchString}`
+        `search/modules?limit=${fetchDataLimit}&lastKey=${encodeURIComponent(
+          lastEvaluatedItemKey
+        )}&q=${searchString}`
       ).then((data) => {
         const allModules = [...modules, ...data.entities];
         setLastEvaluatedItemKey(
