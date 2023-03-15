@@ -16,7 +16,7 @@
     <quarkus.quinoa.version>1.2.5</quarkus.quinoa.version>
     <microsoft.azure.bom.version>1.2.10</microsoft.azure.bom.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.0.0-M9</surefire-plugin.version>
+    <surefire-plugin.version>3.0.0</surefire-plugin.version>
     <checkstyle-maven-plugin.version>3.2.1</checkstyle-maven-plugin.version>
     <jacoco.version>0.8.7</jacoco.version>
   </properties>
