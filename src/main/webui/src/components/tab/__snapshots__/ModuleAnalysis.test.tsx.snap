@@ -93,7 +93,7 @@ Object {
           class="MuiBox-root css-16f1609"
         >
           <div
-            class="css-t5oduv-MuiStack-root"
+            class="MuiStack-root css-t5oduv-MuiStack-root"
           >
             <div
               class="MuiBox-root css-0"
@@ -102,13 +102,13 @@ Object {
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
               >
                 <span
-                  class="MuiBadge-root MuiBadge-root css-1c32n2y-MuiBadge-root"
+                  class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                 >
                   <strong>
                     repositories
                   </strong>
                   <span
-                    class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary MuiBadge-badge css-2liczv-MuiBadge-badge"
+                    class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-2liczv-MuiBadge-badge"
                   />
                 </span>
               </p>
@@ -256,7 +256,7 @@ Object {
         class="MuiBox-root css-16f1609"
       >
         <div
-          class="css-t5oduv-MuiStack-root"
+          class="MuiStack-root css-t5oduv-MuiStack-root"
         >
           <div
             class="MuiBox-root css-0"
@@ -265,13 +265,13 @@ Object {
               class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
               <span
-                class="MuiBadge-root MuiBadge-root css-1c32n2y-MuiBadge-root"
+                class="MuiBadge-root css-1c32n2y-MuiBadge-root"
               >
                 <strong>
                   repositories
                 </strong>
                 <span
-                  class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary MuiBadge-badge css-2liczv-MuiBadge-badge"
+                  class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-2liczv-MuiBadge-badge"
                 />
               </span>
             </p>
