@@ -1,6 +1,10 @@
 # Tapir
 ### A Private Terraform Registry
 
+[![Test](https://github.com/PacoVK/tapir/actions/workflows/build.yml/badge.svg)](https://github.com/PacoVK/tapir/actions/workflows/build.yml)
+[![Release](https://github.com/PacoVK/tapir/actions/workflows/deploy.yml/badge.svg)](https://github.com/PacoVK/tapir/actions/workflows/deploy.yml)
+[![Docs-deployment](https://github.com/PacoVK/tapir/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/PacoVK/tapir/actions/workflows/pages/pages-build-deployment)
+
 ![Tapir overview](./docs/images/tapir.gif)
 
 Tapir is the registry you always wanted if you are using Terraform at enterprise scale.
