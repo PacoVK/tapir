@@ -1,6 +1,16 @@
 registry:
   hostname: ${REGISTRY_HOSTNAME:localhost}
   port: ${REGISTRY_PORT:443}
+  auth:
+    enabled: ${AUTH_ENABLED:false}
+    provider: ${AUTH_PROVIDER}
+    endpoint: ${AUTH_ENDPOINT:http://localhost:8089/realms/tapir}
+    client-id: ${AUTH_CLIENT_ID:tapir}
+    client-secret: ${AUTH_CLIENT_SECRET}
+    token-path: ${AUTH_TOKEN_PATH}
+    auth-path: ${AUTH_PATH}
+  proxy:
+    forwarded-header: ${PROXY_FORWARDED_HEADER:X-ORIGINAL-HOST}
   gpg:
     keys:
       - id: D17C807B4156558133A1FB843C7461473EB779BD
@@ -50,7 +60,30 @@ quarkus:
       region: ${registry.storage.s3.bucket.region}
   elasticsearch:
     hosts: ${registry.search.elasticsearch.host}
+  oidc:
+    enabled: ${registry.auth.enabled}
+    application-type: web-app
+    auth-server-url: ${registry.auth.endpoint}
+    client-id: ${registry.auth.client-id}
+    credentials:
+      secret: ${registry.auth.client-secret}
+    authentication:
+      id-token-required: false
+    token-path: ${registry.auth.token-path}
+    authorization-path: ${registry.auth.auth-path}
+    provider: ${registry.auth.provider}
   http:
+    auth:
+      permission:
+        authenticated:
+          paths:
+            - /*
+          policy: authenticated
+        permit:
+          paths:
+            - /.well-known/*
+            - /login/*
+          policy: permit
     limits:
       max-body-size: ${API_MAX_BODY_SIZE:100M}
     filter:
@@ -66,7 +99,14 @@ quarkus:
         matches: /static/.+
         methods: GET
         order: 1
-
+    proxy:
+      proxy-address-forwarding: true
+      allow-forwarded: false
+      enable-forwarded-host: true
+      forwarded-host-header: ${registry.proxy.forwarded-header}
+  keycloak:
+    devservices:
+      enabled: false
 
 "%dev":
    registry:

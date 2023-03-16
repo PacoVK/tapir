@@ -80,3 +80,16 @@ services:
     environment:
       # https://github.com/Azure/Azurite/blob/main/README.md#usage-with-azure-storage-sdks-or-tools
       AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
+
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./dev/scripts/keycloak:/opt/keycloak/data/import
+    ports:
+      - "8089:8080"
+    command:
+      - start-dev --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin

@@ -44,7 +44,7 @@ You can easily run an instance on your own with the full flexibility and power a
 * It will provide you a simple, but powerful UI to search for modules and providers that are available
   across your organization.
 * It implements the official Terraform registry protocols
-  * modules and providers supported
+  * modules and providers and login supported
 * It scans the module source code on push, you will have insights about the code quality and security measures
   * Tapir integrates [Tfsec](https://aquasecurity.github.io/tfsec) for that purpose
 * It generates documentation and stats for the module 
@@ -79,23 +79,31 @@ Available storage backends are:
 
 You can configure Tapir passing the following environment variables:
 
-| Variable                         | Description                                                                                                                               | Required                                | Default      |
-|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|--------------|
-| BACKEND_CONFIG                   | The database to make use of                                                                                                               | X                                       | dynamodb     |
-| BACKEND_ELASTICSEARCH_HOST       | Host of the Elasticsearch instance                                                                                                        | Yes, if BACKEND_CONFIG is elasticsearch |              |
-| BACKEND_AZURE_MASTER_KEY         | Master key of your CosmosDb                                                                                                               | Yes, if BACKEND_CONFIG is cosmosdb      |              |
-| BACKEND_AZURE_ENDPOINT           | Endpoint of your CosmosDb                                                                                                                 | Yes, if BACKEND_CONFIG is cosmosdb      |              |
-| STORAGE_CONFIG                   | The blob storage to make use of                                                                                                           | X                                       | s3           |
-| STORAGE_ACCESS_SESSION_DURATION  | Amount of minutes the signed download url is valid                                                                                        | X                                       | 5            |
-| AZURE_BLOB_CONNECTION_STRING     | [Connection string](https://learn.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string) to use for authentication | Yes, if STORAGE_CONFIG is azureBlob     |              |
-| AZURE_BLOB_CONTAINER_NAME        | Blob container name to be used to store module archives                                                                                   | Yes, if STORAGE_CONFIG is azureBlob     | tf-registry  |
-| S3_STORAGE_BUCKET_NAME           | S3 bucket name to be used to store module archives                                                                                        | Yes, if STORAGE_CONFIG is s3            | tf-registry  |
-| S3_STORAGE_BUCKET_REGION         | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
-| REGISTRY_HOSTNAME                | The hostname of the registry, must be set to the DNS record of Tapir                                                                      | Yes, if STORAGE_CONFIG is local         | localhost    |
-| REGISTRY_PORT                    | The port of the registry                                                                                                                  | Yes, if STORAGE_CONFIG is local         | 443          |
-| API_MAX_BODY_SIZE                | The maximum payload size for module/providers to be uploaded                                                                              | X                                       | 100M         |
-| REGISTRY_GPG_KEYS_0__ID          | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                           | X                                       |              |
-| REGISTRY_GPG_KEYS_0__ASCII_ARMOR | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                   | X                                       |              |
+| Variable                         | Description                                                                                                                               | Required                                                                                                                             | Default         |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| AUTH_ENABLED                     | Whether to use authentication or not                                                                                                      |                                                                                                                                      | false           |
+| AUTH_CLIENT_ID                   | The id of the client to be used                                                                                                           | Yes                                                                                                                                  |                 |
+| AUTH_CLIENT_SECRET               | The client_secret for the client to be used                                                                                               | Yes, if you use a confidential client                                                                                                |                 |
+| AUTH_PROVIDER                    | If you want to use one of the predefined OAuth provider (valid values are: apple, facebook, github, google, microsoft, spotify, twitter)  | Yes, if  AUTH_ENABLED=true and AUTH_ENDPOINT is not set                                                                              |                 |
+| AUTH_ENDPOINT                    | The Base URL of your OIDC/ OAuth2 IDP                                                                                                     | Yes, if  AUTH_ENABLED=true and AUTH_PROVIDER is not set                                                                              |                 |
+| AUTH_TOKEN_PATH                  | The relative path to get a token                                                                                                          | Yes, if  AUTH_ENDPOINT is set and the IDP does not provide a discovery document under AUTH_ENDPOINT/.well-known/openid-configuration |                 |
+| AUTH_PATH                        | The relative path to authorize                                                                                                            | Yes, if  AUTH_ENDPOINT is set and the IDP does not provide a discovery document under AUTH_ENDPOINT/.well-known/openid-configuration |                 |
+| BACKEND_CONFIG                   | The database to make use of                                                                                                               | X                                                                                                                                    | dynamodb        |
+| BACKEND_ELASTICSEARCH_HOST       | Host of the Elasticsearch instance                                                                                                        | Yes, if BACKEND_CONFIG is elasticsearch                                                                                              |                 |
+| BACKEND_AZURE_MASTER_KEY         | Master key of your CosmosDb                                                                                                               | Yes, if BACKEND_CONFIG is cosmosdb                                                                                                   |                 |
+| BACKEND_AZURE_ENDPOINT           | Endpoint of your CosmosDb                                                                                                                 | Yes, if BACKEND_CONFIG is cosmosdb                                                                                                   |                 |
+| STORAGE_CONFIG                   | The blob storage to make use of                                                                                                           | X                                                                                                                                    | s3              |
+| STORAGE_ACCESS_SESSION_DURATION  | Amount of minutes the signed download url is valid                                                                                        | X                                                                                                                                    | 5               |
+| AZURE_BLOB_CONNECTION_STRING     | [Connection string](https://learn.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string) to use for authentication | Yes, if STORAGE_CONFIG is azureBlob                                                                                                  |                 |
+| AZURE_BLOB_CONTAINER_NAME        | Blob container name to be used to store module archives                                                                                   | Yes, if STORAGE_CONFIG is azureBlob                                                                                                  | tf-registry     |
+| S3_STORAGE_BUCKET_NAME           | S3 bucket name to be used to store module archives                                                                                        | Yes, if STORAGE_CONFIG is s3                                                                                                         | tf-registry     |
+| S3_STORAGE_BUCKET_REGION         | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3                                                                                                         | eu-central-1    |
+| REGISTRY_HOSTNAME                | The hostname of the registry, must be set to the DNS record of Tapir                                                                      | Yes, if STORAGE_CONFIG is local                                                                                                      | localhost       |
+| REGISTRY_PORT                    | The port of the registry                                                                                                                  | Yes, if STORAGE_CONFIG is local                                                                                                      | 443             |
+| API_MAX_BODY_SIZE                | The maximum payload size for module/providers to be uploaded                                                                              | X                                                                                                                                    | 100M            |
+| REGISTRY_GPG_KEYS_0__ID          | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                           | X                                                                                                                                    |                 |
+| REGISTRY_GPG_KEYS_0__ASCII_ARMOR | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                   | X                                                                                                                                    |                 |
+| PROXY_FORWARDED_HEADER           | If you run behind a Loadbalancer (eg. an Ingress deployed in Kubernetes), you should set this if you set AUTH_ENABLED=true                | X                                                                                                                                    | X-ORIGINAL-HOST |
 
 :information_source: A note on the GPG configuration. Quarkus (and therefore Tapir) is based on [Smallrye microprofile](https://smallrye.io/smallrye-config/2.9.1/config/indexed-properties/) and supports indexed properties. Hence, you can add one or more key specifying indexed properties. See example below for passing two GPG keys (**Mind the two subsequent underscores after the index**):
 ```
@@ -104,6 +112,13 @@ REGISTRY_GPG_KEYS_0__ASCII_ARMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0
 REGISTRY_GPG_KEYS_1__ID=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSDLPFKF
 REGISTRY_GPG_KEYS_1__ASCII_ARMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....JDIFH
 ```
+
+### Authentication
+:information_source: This feature is yet considered as experimental :information_source:
+
+Terraform itself only supports [Authorization Code Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.1) with public clients.
+Hence, Tapir currently only implements `Authorization Code Grant` for CLI and OIDC for the frontend. 
+All routes of Tapir, except those for login and service discovery, need a valid token if you choose to enable authentication.
 
 ### Upload a module
 When you publish a Terraform module, if it does not exist, it is created.

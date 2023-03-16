@@ -14,6 +14,6 @@ public class Discovery {
   @GET
   @Path("/terraform.json")
   public Response getSupportedServices() {
-    return Response.ok(new ServiceDiscovery()).build();
+    return Response.ok(ServiceDiscovery.getInstance()).build();
   }
 }
