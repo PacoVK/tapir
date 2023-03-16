@@ -41,7 +41,7 @@ Object {
         </div>
       </div>
       <div
-        class="MuiList-root MuiList-padding css-1475wex-MuiStack-root-MuiList-root"
+        class="MuiStack-root MuiList-root MuiList-padding css-1475wex-MuiStack-root-MuiList-root"
       >
         <span
           class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary css-y6srfl-MuiCircularProgress-root"
@@ -102,7 +102,7 @@ Object {
       </div>
     </div>
     <div
-      class="MuiList-root MuiList-padding css-1475wex-MuiStack-root-MuiList-root"
+      class="MuiStack-root MuiList-root MuiList-padding css-1475wex-MuiStack-root-MuiList-root"
     >
       <span
         class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary css-y6srfl-MuiCircularProgress-root"
