@@ -1,11 +1,9 @@
 package api;
 
-import io.quarkus.oidc.OidcConfigurationMetadata;
+import core.auth.TapirLoginHandler;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import javax.inject.Inject;
+import javax.enterprise.inject.Instance;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -15,14 +13,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.eclipse.microprofile.config.ConfigProvider;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/login")
 public class Login {
 
-  @Inject
-  OidcConfigurationMetadata configMetadata;
+  TapirLoginHandler loginHandler;
+
+  public Login(Instance<TapirLoginHandler> loginHandlerInstance) {
+    this.loginHandler = loginHandlerInstance.get();
+  }
 
   @Path("/auth")
   @GET
@@ -34,15 +34,8 @@ public class Login {
           @QueryParam("response_type") String responseType,
           @QueryParam("state") String state
   ) throws URISyntaxException {
-    String encode = URLEncoder.encode(redirectUri, StandardCharsets.UTF_8);
-    URI redirect = new URI(
-            configMetadata.getAuthorizationUri()
-            + "?redirect_uri=" + encode
-            + "&state=" + state
-            + "&response_type=code"
-            + "&client_id=" + clientId
-    );
-    return Response.status(Response.Status.FOUND).location(redirect).build();
+    URI redirectUrl = loginHandler.buildAuthorizeRedirectUrl(redirectUri, state, clientId);
+    return Response.status(Response.Status.FOUND).location(redirectUrl).build();
   }
 
   @Path("/token")
@@ -52,17 +45,8 @@ public class Login {
       @FormParam("client_id") String clientId,
       @FormParam("redirect_uri") String redirectUri,
       @FormParam("code") String code
-  ) throws URISyntaxException {
-    String clientSecret = ConfigProvider.getConfig()
-            .getOptionalValue("quarkus.oidc.credentials.secret", String.class).orElse(null);
-    String encode = URLEncoder.encode(redirectUri, StandardCharsets.UTF_8);
-    URI redirect = new URI(
-            configMetadata.getTokenUri()
-                    + "?client_id=" + clientId
-            + "&code=" + code
-                    + "&redirect_uri=" + encode
-            + (clientSecret != null ? "&client_secret=" + clientSecret : "")
-    );
-    return Response.status(Response.Status.TEMPORARY_REDIRECT).location(redirect).build();
+  ) throws Exception {
+    URI redirectUrl = loginHandler.buildTokenRedirectUrl(redirectUri, code, clientId);
+    return Response.status(Response.Status.TEMPORARY_REDIRECT).location(redirectUrl).build();
   }
 }

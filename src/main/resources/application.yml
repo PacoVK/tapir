@@ -10,6 +10,7 @@ registry:
     token-path: ${AUTH_TOKEN_PATH}
     auth-path: ${AUTH_PATH}
   proxy:
+    enabled: ${PROXY_FORWARDED:false}
     forwarded-header: ${PROXY_FORWARDED_HEADER:X-ORIGINAL-HOST}
   gpg:
     keys:
@@ -77,12 +78,13 @@ quarkus:
       permission:
         authenticated:
           paths:
-            - /*
+            - /reports/*
+            - /terraform/*
+            - /search/*
           policy: authenticated
         permit:
           paths:
-            - /.well-known/*
-            - /login/*
+            - /*
           policy: permit
     limits:
       max-body-size: ${API_MAX_BODY_SIZE:100M}
@@ -100,10 +102,11 @@ quarkus:
         methods: GET
         order: 1
     proxy:
-      proxy-address-forwarding: true
-      allow-forwarded: false
-      enable-forwarded-host: true
+      proxy-address-forwarding: ${registry.proxy.enabled}
+      allow-forwarded: true
+      enable-forwarded-host: ${registry.proxy.enabled}
       forwarded-host-header: ${registry.proxy.forwarded-header}
+    cors: true
   keycloak:
     devservices:
       enabled: false
@@ -130,7 +133,6 @@ quarkus:
        dev-server:
          port: 3000
      http:
-       cors: true
        ssl:
          certificate:
            files: "./dev/certs/cert.pem"
