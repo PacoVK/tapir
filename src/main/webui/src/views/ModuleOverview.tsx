@@ -104,8 +104,22 @@ const ModuleOverview = () => {
   );
 
   const fetchModules = async (api: string) => {
-    const response = await fetch(api);
-    return await response.json();
+    const response = await fetch(api, {
+      headers: [["X-Requested-With", "JavaScript"]],
+    }).then(async (response) => {
+      if (response.status === 499 && response.headers.has("www-authenticate")) {
+        localStorage.setItem("tapir", "login");
+        window.addEventListener("storage", () => {
+          if (!localStorage.getItem("tapir")) {
+            window.location.reload();
+          }
+        });
+        window.open("/login/ui", "popup", "width=600,height=600");
+        return;
+      }
+      return await response.json();
+    });
+    return await response;
   };
 
   const handleSearchInputChange = (event: {

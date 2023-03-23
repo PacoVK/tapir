@@ -4,11 +4,13 @@ import ModuleOverview from "../views/ModuleOverview";
 import ModuleDetails from "../views/ModuleDetails";
 import ProviderOverview from "../views/ProviderOverview";
 import ProviderDetails from "../views/ProviderDetails";
+import AuthSuccessPage from "../views/AuthSuccessPage";
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/login/ui" element={<AuthSuccessPage />} />
         <Route path="/" element={<ModuleOverview />} />
         <Route path="/providers" element={<ProviderOverview />} />
         <Route

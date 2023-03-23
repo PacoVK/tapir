@@ -63,13 +63,14 @@ quarkus:
     hosts: ${registry.search.elasticsearch.host}
   oidc:
     enabled: ${registry.auth.enabled}
-    application-type: web-app
+    application-type: web_app
     auth-server-url: ${registry.auth.endpoint}
     client-id: ${registry.auth.client-id}
     credentials:
       secret: ${registry.auth.client-secret}
     authentication:
       id-token-required: false
+      java-script-auto-redirect: false
     token-path: ${registry.auth.token-path}
     authorization-path: ${registry.auth.auth-path}
     provider: ${registry.auth.provider}
@@ -81,6 +82,7 @@ quarkus:
             - /reports/*
             - /terraform/*
             - /search/*
+            - /login/ui
           policy: authenticated
         permit:
           paths:
@@ -133,6 +135,8 @@ quarkus:
        dev-server:
          port: 3000
      http:
+       access-log:
+         enabled: true
        ssl:
          certificate:
            files: "./dev/certs/cert.pem"
