@@ -30,7 +30,7 @@ services:
       SERVICES: s3,dynamodb
       EXTRA_CORS_ALLOWED_ORIGINS: "*"
     volumes:
-      - ./dev/scripts/localstack:/docker-entrypoint-initaws.d
+      - ./dev/scripts/localstack:/etc/localstack/init/ready.d
 
   dynamodb-admin:
     image: aaronshaf/dynamodb-admin
