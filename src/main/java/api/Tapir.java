@@ -2,13 +2,13 @@ package api;
 
 import core.exceptions.ModuleNotFoundException;
 import core.storage.local.LocalStorageService;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Response;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 
 @Path("/tapir")
 public class Tapir {

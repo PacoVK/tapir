@@ -5,6 +5,7 @@ import core.storage.StorageService;
 import core.storage.util.StorageUtil;
 import core.upload.FormData;
 import io.quarkus.arc.lookup.LookupIfProperty;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,7 +13,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
-import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @LookupIfProperty(name = "registry.storage.backend", stringValue = "local")
