@@ -51,11 +51,12 @@ You can easily run an instance on your own with the full flexibility and power a
   * See module dependencies, inputs, outputs and resources that will be generated
   * Tapir integrates [terraform-docs](https://terraform-docs.io/) for that purpose
 * It provides several storage adapters
-  * currently S3 and AzureBlob
+  * currently S3, AzureBlob and Local
 * It provides several database adapters for the data
   * currently Dynamodb (default), Elasticsearch, CosmosDb
 * It provides a REST-API for custom integrations and further automation
   Tapir is build on [Quarkus](https://quarkus.io/) and [ReactJS](https://reactjs.org/). You can run Tapir wherever you can run Docker images.
+* If you run Tapir with local storage, it can even be operated in an **air-gaped** environment, with no internet access 
 
 Apart from the above, [this is what Wikipedia knows about Tapirs](https://en.wikipedia.org/wiki/Tapir).
 
@@ -67,6 +68,14 @@ Images are available on [DockerHub](https://hub.docker.com/r/pacovk/tapir) `paco
 There are samples with Terraform in `examples/`.
 
 ### Configure
+
+#### Storage
+
+Available storage backends are:
+* AWS S3
+* Azure Blob
+* Local filestorage (local)
+  * You can mount a volume into the container under ``/tapir`` to persist your data. This is highly recommended. Otherwise, you loose the data if the container gets removed. 
 
 You can configure Tapir passing the following environment variables:
 
@@ -82,6 +91,8 @@ You can configure Tapir passing the following environment variables:
 | AZURE_BLOB_CONTAINER_NAME        | Blob container name to be used to store module archives                                                                                   | Yes, if STORAGE_CONFIG is azureBlob     | tf-registry  |
 | S3_STORAGE_BUCKET_NAME           | S3 bucket name to be used to store module archives                                                                                        | Yes, if STORAGE_CONFIG is s3            | tf-registry  |
 | S3_STORAGE_BUCKET_REGION         | AWS region of the target S3 bucket                                                                                                        | Yes, if STORAGE_CONFIG is s3            | eu-central-1 |
+| REGISTRY_HOSTNAME                | The hostname of the registry, must be set to the DNS record of Tapir                                                                      | Yes, if STORAGE_CONFIG is local         | localhost    |
+| REGISTRY_PORT                    | The port of the registry                                                                                                                  | Yes, if STORAGE_CONFIG is local         | 443          |
 | API_MAX_BODY_SIZE                | The maximum payload size for module/providers to be uploaded                                                                              | X                                       | 100M         |
 | REGISTRY_GPG_KEYS_0__ID          | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                           | X                                       |              |
 | REGISTRY_GPG_KEYS_0__ASCII_ARMOR | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                   | X                                       |              |
