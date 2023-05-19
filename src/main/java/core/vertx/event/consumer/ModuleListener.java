@@ -6,11 +6,11 @@ import core.upload.service.FileService;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
 import io.vertx.mutiny.core.eventbus.EventBus;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ModuleListener {

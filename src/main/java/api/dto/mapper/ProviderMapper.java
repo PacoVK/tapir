@@ -8,10 +8,10 @@ import core.storage.StorageService;
 import core.storage.util.StorageUtil;
 import core.terraform.Provider;
 import core.terraform.ProviderPlatform;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
 import java.util.List;
 import java.util.Map;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
 
 @ApplicationScoped
 public class ProviderMapper {

@@ -1,5 +1,6 @@
 package extensions.cli;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
-import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class CliCommandProcessor {

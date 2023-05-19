@@ -2,10 +2,10 @@ package core.terraform;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotEmpty;
 import java.time.Instant;
 import java.util.Set;
 import java.util.TreeSet;
-import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Module extends CoreEntity {

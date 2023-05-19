@@ -22,10 +22,10 @@ import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Collections;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "cosmosdb")
