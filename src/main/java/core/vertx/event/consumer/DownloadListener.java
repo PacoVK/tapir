@@ -3,9 +3,9 @@ package core.vertx.event.consumer;
 import core.backend.SearchService;
 import core.terraform.Module;
 import io.quarkus.vertx.ConsumeEvent;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
 
 @ApplicationScoped
 public class DownloadListener {

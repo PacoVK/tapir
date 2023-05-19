@@ -8,12 +8,12 @@ import core.terraform.Provider;
 import core.terraform.ProviderPlatform;
 import core.upload.FormData;
 import io.vertx.mutiny.core.eventbus.EventBus;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.TreeMap;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
 
 @ApplicationScoped
 public class UploadService {

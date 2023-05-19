@@ -13,12 +13,12 @@ import core.terraform.Module;
 import core.terraform.Provider;
 import core.upload.FormData;
 import io.quarkus.arc.lookup.LookupIfProperty;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.OffsetDateTime;
 import java.util.stream.Stream;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @LookupIfProperty(name = "registry.storage.backend", stringValue = "azureBlob")

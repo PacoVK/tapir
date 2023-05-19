@@ -2,9 +2,9 @@ package api.dto.mapper;
 
 import api.dto.ProviderVersionsDto;
 import core.terraform.Provider;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.LinkedList;
 import java.util.List;
-import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ProviderVersionMapper {

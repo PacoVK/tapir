@@ -1,4 +1,6 @@
 registry:
+  hostname: ${REGISTRY_HOSTNAME:localhost}
+  port: ${REGISTRY_PORT:443}
   gpg:
     keys:
       - id: D17C807B4156558133A1FB843C7461473EB779BD
@@ -28,7 +30,7 @@ mp:
       smallrye:
         info:
           title: Tapir API
-          version: 0.2.2
+          version: 0.3.0
           description: API for Tapir
           contact:
             name: Tapir @ Github
@@ -67,6 +69,9 @@ quarkus:
 
 
 "%dev":
+   registry:
+    hostname: "127.0.0.1"
+    port: 8443
    quarkus:
      dynamodb:
        endpoint-override: http://localhost:4566
@@ -92,6 +97,9 @@ quarkus:
            key-files: "./dev/certs/key.pem"
 
 "%test":
+  registry:
+    hostname: "127.0.0.1"
+    port: 8443
   quarkus:
     dynamodb:
       endpoint-override: http://localhost:4566

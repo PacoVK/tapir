@@ -1,6 +1,7 @@
 package core.upload.service;
 
 import core.terraform.ProviderPlatform;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,6 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class FileService {

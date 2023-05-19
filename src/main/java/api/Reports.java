@@ -4,13 +4,13 @@ import core.backend.SearchService;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
 import extensions.core.Report;
+import jakarta.enterprise.inject.Instance;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
-import javax.enterprise.inject.Instance;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/reports")

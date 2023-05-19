@@ -10,9 +10,9 @@ import extensions.docs.report.TerraformDocumentation;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
 import io.vertx.mutiny.core.eventbus.EventBus;
+import jakarta.enterprise.inject.Instance;
 import java.io.File;
 import java.util.logging.Logger;
-import javax.enterprise.inject.Instance;
 
 public class DocumentationGenerator {
 
