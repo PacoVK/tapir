@@ -186,7 +186,6 @@ See [troubleshooting docs](./docs/TROUBLESHOOT.md)
 
 * Add more storage adapter
   * GCP
-  * local storage
 * Add more Database adapter
   * Postgresql
 * Provide a Github/ Gitlab integration to crawl for additional code metrics and ownership informations
