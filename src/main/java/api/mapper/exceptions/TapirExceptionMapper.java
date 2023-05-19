@@ -3,12 +3,12 @@ package api.mapper.exceptions;
 import api.mapper.exceptions.response.ErrorResponse;
 import core.exceptions.NotFoundException;
 import core.exceptions.TapirException;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
 @Provider
 public class TapirExceptionMapper implements ExceptionMapper<TapirException> {

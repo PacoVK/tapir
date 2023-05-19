@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import api.mapper.exceptions.response.ErrorResponse;
 import java.util.List;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.Test;
 
 class ThrowableMapperTest {

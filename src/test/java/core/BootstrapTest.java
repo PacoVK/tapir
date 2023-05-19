@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import core.backend.SearchService;
 import core.exceptions.InvalidConfigurationException;
 import java.util.Set;
-import javax.enterprise.inject.Instance;
+import jakarta.enterprise.inject.Instance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

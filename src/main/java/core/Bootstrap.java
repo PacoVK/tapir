@@ -3,10 +3,10 @@ package core;
 import core.backend.SearchService;
 import core.config.SigningKeys;
 import core.exceptions.InvalidConfigurationException;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Singleton;
 import java.util.Base64;
 import java.util.logging.Logger;
-import javax.enterprise.inject.Instance;
-import javax.inject.Singleton;
 import org.eclipse.microprofile.config.ConfigProvider;
 
 @Singleton
