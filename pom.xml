@@ -17,7 +17,7 @@
     <microsoft.azure.bom.version>1.2.12</microsoft.azure.bom.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.1.0</surefire-plugin.version>
-    <checkstyle-maven-plugin.version>3.2.2</checkstyle-maven-plugin.version>
+    <checkstyle-maven-plugin.version>3.3.0</checkstyle-maven-plugin.version>
     <jacoco.version>0.8.10</jacoco.version>
   </properties>
   <dependencyManagement>
