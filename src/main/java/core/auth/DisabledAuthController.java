@@ -1,10 +1,10 @@
 package core.auth;
 
-import io.quarkus.arc.Priority;
 import io.quarkus.security.spi.runtime.AuthorizationController;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
-import javax.interceptor.Interceptor;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.interceptor.Interceptor;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @Alternative

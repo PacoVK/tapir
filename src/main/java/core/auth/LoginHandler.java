@@ -10,4 +10,6 @@ public interface LoginHandler {
 
   URI buildTokenRedirectUrl(String redirectToUri, String code, String clientId)
           throws Exception;
+
+  Boolean verifyToken(String token);
 }

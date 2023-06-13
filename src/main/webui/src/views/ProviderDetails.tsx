@@ -22,6 +22,7 @@ import { useLocation, useParams } from "react-router-dom";
 import BuildCircle from "@mui/icons-material/BuildCircle";
 import { ghcolors as theme } from "react-syntax-highlighter/dist/esm/styles/prism";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/light";
+import {fetchApi} from "../services/ApiService";
 
 const ProviderDetails = () => {
   const routeParams = useParams();
@@ -32,10 +33,7 @@ const ProviderDetails = () => {
 
   const fetchProvider = async () => {
     const baseUrl = window.location.href.replace(location.pathname, "");
-    const response = await fetch(
-      `${baseUrl}/terraform/providers/v1/${routeParams.namespace}/${routeParams.type}`
-    );
-    const provider = await response.json();
+    const provider = await fetchApi(`${baseUrl}/terraform/providers/v1/${routeParams.namespace}/${routeParams.type}`);
     setProvider(provider);
     // @ts-ignore
     setVersion(Object.keys(provider.versions)[0]);

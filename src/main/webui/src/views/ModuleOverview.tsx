@@ -17,6 +17,7 @@ import ModuleElement from "../components/list/ModuleElement";
 import { Module } from "../types";
 import useDebounce from "../hooks/useDebounce";
 import NotFoundInfo from "../components/layout/NotFoundInfo";
+import {fetchApi} from "../services/ApiService";
 
 const fetchDataLimit = 5;
 const ModuleOverview = () => {
@@ -103,23 +104,8 @@ const ModuleOverview = () => {
     [debouncedSearchTerm]
   );
 
-  const fetchModules = async (api: string) => {
-    const response = await fetch(api, {
-      headers: [["X-Requested-With", "JavaScript"]],
-    }).then(async (response) => {
-      if (response.status === 499 && response.headers.has("www-authenticate")) {
-        localStorage.setItem("tapir", "login");
-        window.addEventListener("storage", () => {
-          if (!localStorage.getItem("tapir")) {
-            window.location.reload();
-          }
-        });
-        window.open("/login/ui", "popup", "width=600,height=600");
-        return;
-      }
-      return await response.json();
-    });
-    return await response;
+  const fetchModules = async (path: string) => {
+    return  await fetchApi(path);
   };
 
   const handleSearchInputChange = (event: {

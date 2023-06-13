@@ -10,6 +10,7 @@ import { Provider } from "../types";
 import useDebounce from "../hooks/useDebounce";
 import ProviderElement from "../components/list/ProviderElement";
 import NotFoundInfo from "../components/layout/NotFoundInfo";
+import {fetchApi} from "../services/ApiService";
 
 const fetchDataLimit = 5;
 const ProviderOverview = () => {
@@ -92,10 +93,9 @@ const ProviderOverview = () => {
     [debouncedSearchTerm]
   );
 
-  const fetchProviders = async (api: string) => {
-    const response = await fetch(api);
-    return await response.json();
-  };
+    const fetchProviders = async (path: string) => {
+        return await fetchApi(path);
+    };
 
   const handleSearchInputChange = (event: {
     target: { value: React.SetStateAction<string> };
