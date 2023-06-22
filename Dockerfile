@@ -3,7 +3,7 @@ FROM aquasec/tfsec:v1.28 as TFSEC
 FROM golang:1.20 as TFDOCS
 RUN go install github.com/terraform-docs/terraform-docs@v0.16.0
 
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.16-1
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.16-1.1687182768
 
 COPY --from=TFSEC /usr/bin/tfsec /usr/bin/
 COPY --from=TFDOCS /go/bin/terraform-docs /usr/bin/
