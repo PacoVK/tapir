@@ -33,7 +33,7 @@ const ProviderDetails = () => {
   const fetchProvider = async () => {
     const baseUrl = window.location.href.replace(location.pathname, "");
     const response = await fetch(
-      `${baseUrl}/terraform/providers/v1/${routeParams.namespace}/${routeParams.type}`
+      `${baseUrl}/terraform/providers/v1/${routeParams.namespace}/${routeParams.type}`,
     );
     const provider = await response.json();
     setProvider(provider);
@@ -117,8 +117,8 @@ terraform {
   required_providers {
     ${provider.type} = {
       source = "${window.location.href.replace(location.pathname, "")}/${
-            provider.namespace
-          }/${provider.type}"
+        provider.namespace
+      }/${provider.type}"
     }
   }
 }

@@ -13,7 +13,7 @@ import { Box, Stack } from "@mui/material";
 import NavigationDrawer from "./components/nav/NavigationDrawer";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
@@ -26,5 +26,5 @@ root.render(
       </Stack>
     </Box>
     <Footer />
-  </React.StrictMode>
+  </React.StrictMode>,
 );

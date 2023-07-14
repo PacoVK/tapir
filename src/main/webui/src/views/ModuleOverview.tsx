@@ -38,19 +38,19 @@ const ModuleOverview = () => {
       setLoading(true);
       fetchModules(
         `search/modules?limit=${fetchDataLimit}&lastKey=${encodeURIComponent(
-          lastEvaluatedItemKey
-        )}&q=${searchString}`
+          lastEvaluatedItemKey,
+        )}&q=${searchString}`,
       ).then((data) => {
         const allModules = [...modules, ...data.entities];
         setLastEvaluatedItemKey(
-          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
+          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : "",
         );
         setModules(allModules);
         setLoading(false);
       });
     },
     // eslint-disable-next-line
-    [modules]
+    [modules],
   );
 
   const scrollListener = useCallback(
@@ -73,7 +73,7 @@ const ModuleOverview = () => {
       }
     },
     // eslint-disable-next-line
-    [loadMore, loading, distanceBottom]
+    [loadMore, loading, distanceBottom],
   );
 
   useLayoutEffect(() => {
@@ -90,17 +90,17 @@ const ModuleOverview = () => {
     () => {
       setLoading(true);
       fetchModules(
-        `search/modules?limit=${fetchDataLimit}&q=${searchString}`
+        `search/modules?limit=${fetchDataLimit}&q=${searchString}`,
       ).then((data) => {
         setLastEvaluatedItemKey(
-          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : ""
+          data.lastEvaluatedItemId ? data.lastEvaluatedItemId : "",
         );
         setModules(data.entities);
         setLoading(false);
       });
     },
     // eslint-disable-next-line
-    [debouncedSearchTerm]
+    [debouncedSearchTerm],
   );
 
   const fetchModules = async (api: string) => {

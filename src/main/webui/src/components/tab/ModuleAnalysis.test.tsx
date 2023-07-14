@@ -73,7 +73,7 @@ describe("<ModuleAnalysisTab /> spec", () => {
         version={fakeResponse.moduleVersion}
         reports={fakeResponse.securityReport}
         documentation={fakeResponse.documentation}
-      />
+      />,
     );
     expect(container).toMatchSnapshot();
   });

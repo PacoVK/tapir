@@ -37,7 +37,7 @@ const ModuleDetails = () => {
   const fetchModule = async () => {
     const baseUrl = window.location.href.replace(location.pathname, "");
     const response = await fetch(
-      `${baseUrl}/terraform/modules/v1/${routeParams.namespace}/${routeParams.name}/${routeParams.provider}`
+      `${baseUrl}/terraform/modules/v1/${routeParams.namespace}/${routeParams.name}/${routeParams.provider}`,
     );
     const module = await response.json();
     setModule(module);
@@ -56,7 +56,7 @@ const ModuleDetails = () => {
   const fetchModuleReports = async () => {
     const baseUrl = window.location.href.replace(location.pathname, "");
     const response = await fetch(
-      `${baseUrl}/reports/${module.namespace}/${module.name}/${module.provider}/security/${version}`
+      `${baseUrl}/reports/${module.namespace}/${module.name}/${module.provider}/security/${version}`,
     );
     const reports = await response.json();
     setReports(reports.securityReport);

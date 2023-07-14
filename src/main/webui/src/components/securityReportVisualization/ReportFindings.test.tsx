@@ -36,7 +36,7 @@ const fakeResponse = {
 describe("<ReportFindings /> spec", () => {
   it("renders the ReportFindings", () => {
     const container = render(
-      <ReportFindings reports={fakeResponse.securityReport} />
+      <ReportFindings reports={fakeResponse.securityReport} />,
     );
     expect(container).toMatchSnapshot();
   });

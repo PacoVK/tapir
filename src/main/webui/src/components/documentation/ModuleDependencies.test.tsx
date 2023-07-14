@@ -9,7 +9,7 @@ describe("<ModuleDependencies /> spec", () => {
           { source: "terraform-aws-modules/security-group/aws", version: "" },
         ]}
         providers={[{ name: "aws" }]}
-      />
+      />,
     );
     expect(container).toMatchSnapshot();
   });

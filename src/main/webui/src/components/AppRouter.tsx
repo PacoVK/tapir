@@ -15,7 +15,7 @@ const AppRouter = () => {
           path="/module/:namespace/:name/:provider"
           loader={({ params }) => {
             return fetch(
-              `http://localhost:8080/terraform/modules/v1/${params.namespace}/${params.name}/${params.provider}`
+              `http://localhost:8080/terraform/modules/v1/${params.namespace}/${params.name}/${params.provider}`,
             );
           }}
           element={<ModuleDetails />}
@@ -24,7 +24,7 @@ const AppRouter = () => {
           path="/providers/:namespace/:type"
           loader={({ params }) => {
             return fetch(
-              `http://localhost:8080/terraform/providers/v1/${params.namespace}/${params.type}`
+              `http://localhost:8080/terraform/providers/v1/${params.namespace}/${params.type}`,
             );
           }}
           element={<ProviderDetails />}

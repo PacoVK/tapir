@@ -13,7 +13,7 @@ describe("<ModuleInput /> spec", () => {
             required: true,
           },
         ]}
-      />
+      />,
     );
     expect(container).toMatchSnapshot();
   });

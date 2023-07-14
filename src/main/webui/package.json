@@ -29,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +56,6 @@
     ]
   },
   "devDependencies": {
-    "prettier": "2.8.8"
+    "prettier": "3.0.0"
   }
 }

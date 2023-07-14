@@ -11,7 +11,7 @@ describe("<ModuleResources /> spec", () => {
             type: "ecr_lifecycle_policy",
           },
         ]}
-      />
+      />,
     );
     expect(container).toMatchSnapshot();
   });
