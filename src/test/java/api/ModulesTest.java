@@ -1,23 +1,24 @@
 package api;
 
+import core.backend.aws.dynamodb.repository.DynamodbRepository;
+import core.exceptions.ModuleNotFoundException;
+import core.exceptions.StorageException;
+import core.storage.aws.S3StorageService;
+import core.terraform.ArtifactVersion;
+import core.terraform.Module;
+import io.quarkus.test.InjectMock;
+import io.quarkus.test.common.http.TestHTTPEndpoint;
+import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.Set;
+import java.util.TreeSet;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
-import core.backend.aws.dynamodb.repository.DynamodbRepository;
-import core.exceptions.ModuleNotFoundException;
-import core.exceptions.StorageException;
-import core.terraform.Module;
-import core.terraform.ArtifactVersion;
-import io.quarkus.test.common.http.TestHTTPEndpoint;
-import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
-import java.util.Set;
-import java.util.TreeSet;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import core.storage.aws.S3StorageService;
 
 @QuarkusTest
 @TestHTTPEndpoint(Modules.class)
