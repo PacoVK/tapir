@@ -48,7 +48,7 @@ const ReportFindings = (props: ReportFindingsProps) => {
                       keyIdentifier={index}
                     />
                   );
-                }
+                },
               )}
             </AccordionDetails>
           </Accordion>

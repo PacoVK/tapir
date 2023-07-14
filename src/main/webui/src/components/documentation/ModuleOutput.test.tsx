@@ -6,7 +6,7 @@ describe("<ModuleOutput /> spec", () => {
     const container = render(
       <ModuleOutput
         outputs={[{ name: "github_roles" }, { name: "registries" }]}
-      />
+      />,
     );
     expect(container).toMatchSnapshot();
   });

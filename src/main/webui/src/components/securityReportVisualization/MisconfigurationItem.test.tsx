@@ -20,7 +20,7 @@ describe("<MisconfigurationItem /> spec", () => {
           description: "description",
         }}
         keyIdentifier={"foo-bar-baz"}
-      />
+      />,
     );
     expect(container).toMatchSnapshot();
   });
