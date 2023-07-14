@@ -1,20 +1,20 @@
 package api;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import core.backend.aws.dynamodb.repository.DynamodbRepository;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
 import extensions.core.Report;
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
 import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.Test;
 import util.TestDataBuilder;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @QuarkusTest
 @TestHTTPEndpoint(Reports.class)
