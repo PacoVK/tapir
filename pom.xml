@@ -14,7 +14,7 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>3.2.4.Final</quarkus.platform.version>
     <quarkus.quinoa.version>2.1.0</quarkus.quinoa.version>
-    <microsoft.azure.bom.version>1.2.15</microsoft.azure.bom.version>
+    <microsoft.azure.bom.version>1.2.16</microsoft.azure.bom.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
     <checkstyle-maven-plugin.version>3.3.0</checkstyle-maven-plugin.version>
