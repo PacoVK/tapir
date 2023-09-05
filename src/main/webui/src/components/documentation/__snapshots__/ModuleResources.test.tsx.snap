@@ -11,7 +11,7 @@ Object {
         Resources
       </h4>
       <div
-        class="MuiStack-root css-fcf116-MuiStack-root"
+        class="MuiStack-root css-c08hs3-MuiStack-root"
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-tialbm-MuiTypography-root"
@@ -38,7 +38,7 @@ Object {
           >
             <li>
               <div
-                class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-173g17p-MuiChip-root"
+                class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1s7ulr2-MuiChip-root"
               >
                 <span
                   class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
@@ -59,7 +59,7 @@ Object {
       Resources
     </h4>
     <div
-      class="MuiStack-root css-fcf116-MuiStack-root"
+      class="MuiStack-root css-c08hs3-MuiStack-root"
     >
       <p
         class="MuiTypography-root MuiTypography-body1 css-tialbm-MuiTypography-root"
@@ -86,7 +86,7 @@ Object {
         >
           <li>
             <div
-              class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-173g17p-MuiChip-root"
+              class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1s7ulr2-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
