@@ -6,19 +6,19 @@
   <artifactId>tapir</artifactId>
   <version>0.3.0</version>
   <properties>
+    <checkstyle-maven-plugin.version>3.3.0</checkstyle-maven-plugin.version>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
+    <jacoco.version>0.8.10</jacoco.version>
     <maven.compiler.release>17</maven.compiler.release>
+    <microsoft.azure.bom.version>1.2.16</microsoft.azure.bom.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>3.3.1</quarkus.platform.version>
     <quarkus.quinoa.version>2.1.0</quarkus.quinoa.version>
-    <microsoft.azure.bom.version>1.2.16</microsoft.azure.bom.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
-    <checkstyle-maven-plugin.version>3.3.0</checkstyle-maven-plugin.version>
-    <jacoco.version>0.8.10</jacoco.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -85,6 +85,10 @@
     <dependency>
       <groupId>io.quarkiverse.amazonservices</groupId>
       <artifactId>quarkus-amazon-dynamodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.amazonservices</groupId>
+      <artifactId>quarkus-amazon-sts</artifactId>
     </dependency>
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
@@ -190,16 +194,8 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle-maven-plugin.version}</version>
-        <configuration>
-          <consoleOutput>true</consoleOutput>
-          <configLocation>google_checks.xml</configLocation>
-          <suppressionsLocation>
-            checkstyle-suppressions.xml
-          </suppressionsLocation>
-        </configuration>
         <executions>
           <execution>
             <goals>
@@ -207,6 +203,11 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <consoleOutput>true</consoleOutput>
+          <configLocation>google_checks.xml</configLocation>
+          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
