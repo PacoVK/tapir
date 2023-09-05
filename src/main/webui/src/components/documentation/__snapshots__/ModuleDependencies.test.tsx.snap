@@ -17,7 +17,7 @@ Object {
         Dependencies are external modules that this module references. A module is considered external if it isn't within the same repository.
       </p>
       <div
-        class="MuiStack-root css-15z8hfe-MuiStack-root"
+        class="MuiStack-root css-uurwbu-MuiStack-root"
       >
         <div
           class="MuiBox-root css-0"
@@ -58,7 +58,7 @@ Object {
         Providers are Terraform plugins that will be automatically installed, if available on the Terraform Registry.
       </p>
       <div
-        class="MuiStack-root css-1xaz7k2-MuiStack-root"
+        class="MuiStack-root css-gij6rf-MuiStack-root"
       >
         <div
           class="MuiBox-root css-0"
@@ -100,7 +100,7 @@ Object {
       Dependencies are external modules that this module references. A module is considered external if it isn't within the same repository.
     </p>
     <div
-      class="MuiStack-root css-15z8hfe-MuiStack-root"
+      class="MuiStack-root css-uurwbu-MuiStack-root"
     >
       <div
         class="MuiBox-root css-0"
@@ -141,7 +141,7 @@ Object {
       Providers are Terraform plugins that will be automatically installed, if available on the Terraform Registry.
     </p>
     <div
-      class="MuiStack-root css-1xaz7k2-MuiStack-root"
+      class="MuiStack-root css-gij6rf-MuiStack-root"
     >
       <div
         class="MuiBox-root css-0"
