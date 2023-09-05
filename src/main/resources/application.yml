@@ -45,6 +45,9 @@ quarkus:
     path: banner.txt
   quinoa:
     enable-spa-routing: true
+  sts:
+    devservices:
+      enabled: false
   s3:
     aws:
       region: ${registry.storage.s3.bucket.region}
