@@ -1,20 +1,20 @@
 = EKS deployment
 
-This example shows how to deploy Tapir to EKS using IRSA ([IAM roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)), that allows cluster operators to map AWS IAM Roles to Kubernetes Service Accounts.
+This example shows how to deploy Tapir to EKS using IRSA (https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html[IAM roles for Service Accounts]), that allows cluster operators to map AWS IAM Roles to Kubernetes Service Accounts.
 
 == Prerequisites
 
 You need to have the following tools installed:
-* [Terraform](https://www.terraform.io/downloads.html)
+* https://www.terraform.io/downloads.html[Terraform]
 
 This example assumes that you have a working AWS account and that you have:
 
 * set up an EKS cluster with RBAC enabled
-  * [EKS getting started](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
+  * https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html[EKS getting started]
 * configured `~/.kube/config` to access the cluster
-  * [EKS create kubeconfig](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
-* EKS with [ALB Ingress Controller](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html) installed
-* EKS with [external-dns](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md) installed
+  * https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html[EKS create kubeconfig]
+* EKS with https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html[ALB Ingress Controller] installed
+* EKS with https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md[external-dns] installed
 
 == Deploying
 
