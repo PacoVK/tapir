@@ -5,6 +5,7 @@ This example shows how to deploy Tapir to EKS using IRSA (https://docs.aws.amazo
 == Prerequisites
 
 You need to have the following tools installed:
+
 * https://www.terraform.io/downloads.html[Terraform]
 
 This example assumes that you have a working AWS account and that you have:
