@@ -1,5 +1,10 @@
 provider "aws" {
   region = "eu-west-1"
+  default_tags {
+    tags = {
+      "Name" = "tapir-apprunner-example"
+    }
+  }
 }
 
 data "aws_caller_identity" "current" {}
