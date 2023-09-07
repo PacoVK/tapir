@@ -30,7 +30,7 @@ mp:
       smallrye:
         info:
           title: Tapir API
-          version: 0.3.0
+          version: 0.4.0
           description: API for Tapir
           contact:
             name: Tapir @ Github
@@ -45,6 +45,9 @@ quarkus:
     path: banner.txt
   quinoa:
     enable-spa-routing: true
+  sts:
+    devservices:
+      enabled: false
   s3:
     aws:
       region: ${registry.storage.s3.bucket.region}

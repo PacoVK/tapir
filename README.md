@@ -66,6 +66,8 @@ Apart from the above, [this is what Wikipedia knows about Tapirs](https://en.wik
 You can run Tapir wherever you can run Docker images.
 Images are available on [DockerHub](https://hub.docker.com/r/pacovk/tapir) `pacovk/tapir` and [AWS Elastic Container Registry](https://gallery.ecr.aws/pacovk/tapir) `public.ecr.aws/pacovk/tapir`.
 There are samples with Terraform in `examples/`.
+* [AWS AppRunner](./examples/aws/apprunner)
+* [AWS EKS](./examples/aws/eks)
 
 ### Configure
 

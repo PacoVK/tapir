@@ -1,0 +1,43 @@
+= EKS deployment
+
+This example shows how to deploy Tapir to EKS using IRSA (https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html[IAM roles for Service Accounts]), that allows cluster operators to map AWS IAM Roles to Kubernetes Service Accounts.
+
+== Prerequisites
+
+You need to have the following tools installed:
+
+* https://www.terraform.io/downloads.html[Terraform]
+
+This example assumes that you have a working AWS account and that you have:
+
+* set up an EKS cluster with RBAC enabled
+  * https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html[EKS getting started]
+* configured `~/.kube/config` to access the cluster
+  * https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html[EKS create kubeconfig]
+* EKS with https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html[ALB Ingress Controller] installed
+* EKS with https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md[external-dns] installed
+
+== Deploying
+
+You can deploy the example by running the following commands:
+
+[source,bash]
+----
+terraform init
+terraform apply -var="hosted_zone_name=<top_level_domain>" -var="eks_oidc_issuer_url=<eks_oidc_issuer_url>"
+----
+
+[INFO]
+====
+The `hosted_zone_name` variable should be set to the top level domain of your hosted zone in Route53 E.g. if `hosted_zone_name=example.org`, Tapir will be exposed on `https://tapir.example.org`. The `eks_oidc_issuer_url` variable should be set to the OIDC issuer URL of your EKS cluster.
+====
+
+== Cleaning up
+
+You can clean up the example by running the following commands:
+
+[source,bash]
+----
+terraform destroy -var="hosted_zone_name=<top_level_domain>" -var="eks_oidc_issuer_url=<eks_oidc_issuer_url>"
+----
+
