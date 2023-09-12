@@ -194,6 +194,7 @@ See [troubleshooting docs](./docs/TROUBLESHOOT.md)
 
 ## Contribution
 
+If you want to contribute to this project, please read the [contribution guidelines](./CONTRIBUTING.md).
 A detailed How-to guide on local development can be found in the [docs](./docs/RUNBOOK.md).
 
 **Actively searching** for contributors. <br/>
