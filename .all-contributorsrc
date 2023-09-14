@@ -17,7 +17,8 @@
         "projectManagement",
         "maintenance",
         "example",
-        "code"
+        "code",
+        "doc"
       ]
     }
   ],
