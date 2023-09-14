@@ -20,6 +20,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "andrea-defraia",
+      "name": "Andrea Defraia",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56583671?v=4",
+      "profile": "https://github.com/andrea-defraia",
+      "contributions": [
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
