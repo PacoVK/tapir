@@ -1,0 +1,30 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "PacoVK",
+      "name": "PacoVK",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27785614?v=4",
+      "profile": "https://pascal.euhus.dev/",
+      "contributions": [
+        "review",
+        "projectManagement",
+        "maintenance",
+        "example",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "tapir",
+  "projectOwner": "PacoVK"
+}
