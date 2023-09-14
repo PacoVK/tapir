@@ -201,3 +201,7 @@ A detailed How-to guide on local development can be found in the [docs](./docs/R
 **Feedback** is always appreciated :rainbow: <br/>
 Feel free to open an Issue (Bug- /Feature-Request)
 or provide a Pull request. :wrench:
+
+## Contributors ✨
+
+Thanks go to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
