@@ -2333,9 +2333,9 @@
   integrity sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==
 
 "@types/node@*", "@types/node@^20.5.9":
-  version "20.6.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.3.tgz#5b763b321cd3b80f6b8dde7a37e1a77ff9358dd9"
-  integrity sha512-HksnYH4Ljr4VQgEy2lTStbCKv/P590tmPe5HqOnv9Gprffgv5WXAY+Y5Gqniu0GGqeTCUdBnzC3QSrzPkBkAMA==
+  version "20.7.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.7.0.tgz#c03de4572f114a940bc2ca909a33ddb2b925e470"
+  integrity sha512-zI22/pJW2wUZOVyguFaUL1HABdmSVxpXrzIqkjsHmyUjNhPoWM1CKfvVuXfetHhIok4RY573cqS0mZ1SJEnoTg==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -2348,9 +2348,9 @@
   integrity sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==
 
 "@types/prop-types@*":
-  version "15.7.6"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.6.tgz#bbf819813d6be21011b8f5801058498bec555572"
-  integrity sha512-RK/kBbYOQQHLYj9Z95eh7S6t7gq4Ojt/NT8HTk8bWVhA5DaF+5SMnxHKkP4gPNN3wAZkKP+VjAf0ebtYzf+fxg==
+  version "15.7.7"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.7.tgz#f9361f7b87fd5d8188b2c998db0a1f47e9fb391a"
+  integrity sha512-FbtmBWCcSa2J4zL781Zf1p5YUBXQomPEcep9QZCfRfQgTxz3pJWiDFLebohZ9fFntX5ibzOkSsrJ0TEew8cAog==
 
 "@types/q@^1.5.1":
   version "1.5.6"
