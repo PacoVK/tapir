@@ -55,7 +55,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
           aws-region: eu-central-1
       - name: Login to Amazon ECR Public
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr-public
         env:
           AWS_REGION: us-east-1
