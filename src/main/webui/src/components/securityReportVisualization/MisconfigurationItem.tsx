@@ -55,7 +55,7 @@ const MisconfigurationItem = ({
         <Typography>
           <b>To line:</b> {misconfiguration.location.endLine}
         </Typography>
-        <Link href={misconfiguration.links[0]} rel="noopener" target="_blank">
+        <Link href={misconfiguration.links[misconfiguration.links.length - 1]} rel="noopener" target="_blank">
           Read more
         </Link>
       </AccordionDetails>
