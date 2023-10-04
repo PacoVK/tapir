@@ -1,12 +1,12 @@
 FROM aquasec/trivy:0.45.1 as SECURITY_SCANNER
 
-FROM golang:1.21 as TFDOCS
-RUN go install github.com/terraform-docs/terraform-docs@v0.16.0
-
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.17-1.1693366272
 
 COPY --from=SECURITY_SCANNER /usr/local/bin/trivy /usr/bin/
-COPY --from=TFDOCS /go/bin/terraform-docs /usr/bin/
+
+RUN microdnf install golang && go install github.com/terraform-docs/terraform-docs@v0.16.0  \
+    && mv /home/jboss/go/bin/terraform-docs /usr/bin/  \
+    && microdnf clean all
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /tf/registry/lib/
