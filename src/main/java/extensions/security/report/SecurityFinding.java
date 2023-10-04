@@ -2,6 +2,7 @@ package extensions.security.report;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -10,6 +11,7 @@ public class SecurityFinding {
 
   private String id;
   private String qualifiedId;
+  @JsonProperty("rule_description")
   private String ruleDescription;
   private String provider;
   private String service;
@@ -158,7 +160,9 @@ public class SecurityFinding {
 
   public static class Location {
     private String fileName;
+    @JsonProperty("start_line")
     private Integer startLine;
+    @JsonProperty("end_line")
     private Integer endLine;
 
     public Location(String fileName, Integer startLine, Integer endLine) {

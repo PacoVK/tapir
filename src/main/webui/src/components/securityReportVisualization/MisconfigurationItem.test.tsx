@@ -7,14 +7,14 @@ describe("<MisconfigurationItem /> spec", () => {
       <MisconfigurationItem
         misconfiguration={{
           severity: "CRITICAL",
-          ruleDescription: "foo",
+          rule_description: "foo",
           links: "https://fake.com",
           resolution: "bar",
           resource: "aws.securitygroup",
           impact: "baz",
           location: {
-            startLine: 38,
-            endLine: 40,
+            start_line: 38,
+            end_line: 40,
             filename: "any.tf",
           },
           description: "description",

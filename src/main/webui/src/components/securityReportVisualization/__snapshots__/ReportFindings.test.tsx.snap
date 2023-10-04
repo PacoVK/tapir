@@ -86,10 +86,10 @@ Object {
                     class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
                   >
                     <div
-                      aria-controls="NaN-content"
+                      aria-controls="An ingress security group rule allows traffic from /0.0-content"
                       aria-expanded="false"
                       class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
-                      id="NaN-header"
+                      id="An ingress security group rule allows traffic from /0.0-header"
                       role="button"
                       tabindex="0"
                     >
@@ -102,8 +102,10 @@ Object {
                           aws_security_group.no_issue
                           , Line:
                            
+                          31
                            -
                            
+                          31
                         </p>
                       </div>
                       <div
@@ -133,9 +135,9 @@ Object {
                           class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                         >
                           <div
-                            aria-labelledby="NaN-header"
+                            aria-labelledby="An ingress security group rule allows traffic from /0.0-header"
                             class="MuiAccordion-region"
-                            id="NaN-content"
+                            id="An ingress security group rule allows traffic from /0.0-content"
                             role="region"
                           >
                             <div
@@ -157,6 +159,7 @@ Object {
                                   Violation:
                                 </b>
                                  
+                                An ingress security group rule allows traffic from /0.
                               </p>
                               <p
                                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -192,6 +195,7 @@ Object {
                                   From line:
                                 </b>
                                  
+                                31
                               </p>
                               <p
                                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -200,6 +204,7 @@ Object {
                                   To line:
                                 </b>
                                  
+                                31
                               </p>
                               <a
                                 class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
@@ -305,10 +310,10 @@ Object {
                   class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
                 >
                   <div
-                    aria-controls="NaN-content"
+                    aria-controls="An ingress security group rule allows traffic from /0.0-content"
                     aria-expanded="false"
                     class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
-                    id="NaN-header"
+                    id="An ingress security group rule allows traffic from /0.0-header"
                     role="button"
                     tabindex="0"
                   >
@@ -321,8 +326,10 @@ Object {
                         aws_security_group.no_issue
                         , Line:
                          
+                        31
                          -
                          
+                        31
                       </p>
                     </div>
                     <div
@@ -352,9 +359,9 @@ Object {
                         class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                       >
                         <div
-                          aria-labelledby="NaN-header"
+                          aria-labelledby="An ingress security group rule allows traffic from /0.0-header"
                           class="MuiAccordion-region"
-                          id="NaN-content"
+                          id="An ingress security group rule allows traffic from /0.0-content"
                           role="region"
                         >
                           <div
@@ -376,6 +383,7 @@ Object {
                                 Violation:
                               </b>
                                
+                              An ingress security group rule allows traffic from /0.
                             </p>
                             <p
                               class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -411,6 +419,7 @@ Object {
                                 From line:
                               </b>
                                
+                              31
                             </p>
                             <p
                               class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -419,6 +428,7 @@ Object {
                                 To line:
                               </b>
                                
+                              31
                             </p>
                             <a
                               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
