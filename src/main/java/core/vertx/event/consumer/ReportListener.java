@@ -8,6 +8,7 @@ import extensions.docs.report.TerraformDocumentation;
 import extensions.security.report.SecurityFinding;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
@@ -41,7 +42,8 @@ public class ReportListener {
     Map<String, List<SecurityFinding>> securityReport = eventBus
             .<Map<String, List<SecurityFinding>>>requestAndAwait(
                     "module.security.report",
-                    archive
+                    archive,
+                    new DeliveryOptions().setSendTimeout(60000L)
             )
             .body();
     TerraformDocumentation documentation = eventBus
