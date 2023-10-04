@@ -23,7 +23,11 @@ public class SecurityFinding {
   private String resource;
   private Location location;
 
-  public SecurityFinding(String id, String qualifiedId, String ruleDescription, String provider, String service, String impact, String resolution, List<String> links, String description, Severity severity, Boolean warning, Integer status, String resource, Location location) {
+  public SecurityFinding(
+      String id, String qualifiedId, String ruleDescription, String provider,
+      String service, String impact, String resolution, List<String> links,
+      String description, Severity severity, Boolean warning, Integer status,
+      String resource, Location location) {
     this.id = id;
     this.qualifiedId = qualifiedId;
     this.ruleDescription = ruleDescription;

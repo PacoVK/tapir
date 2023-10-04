@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 @RegisterForReflection
 public class SecurityReportUtil {
 
-  public static HashMap<String, List<SecurityFinding>> transformTrivyReportAndGroupAndSortFindings(TrivyReport report) {
+  public static HashMap<String, List<SecurityFinding>> transformTrivyReportAndGroupAndSortFindings(
+      TrivyReport report) {
     return report
         .getResults()
         .stream().map(result -> {

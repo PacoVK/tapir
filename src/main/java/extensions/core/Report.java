@@ -3,7 +3,6 @@ package extensions.core;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import extensions.docs.report.TerraformDocumentation;
 import extensions.security.report.SecurityFinding;
-
 import java.util.List;
 import java.util.Map;
 
