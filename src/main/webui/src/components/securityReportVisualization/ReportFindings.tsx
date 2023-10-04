@@ -18,11 +18,11 @@ const ReportFindings = (props: ReportFindingsProps) => {
       <Typography sx={{ mb: 2, mt: "1em" }}>
         Security findings by{" "}
         <Link
-          href="https://aquasecurity.github.io/tfsec"
+          href="https://trivy.dev/"
           rel="noopener"
           target="_blank"
         >
-          Tfsec
+          Trivy
         </Link>
         :
       </Typography>

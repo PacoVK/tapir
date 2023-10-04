@@ -1,6 +1,6 @@
 package core.backend.aws.dynamodb.converter;
 
-import extensions.security.report.TfSecReport;
+import extensions.security.report.SecurityFinding;
 import io.vertx.core.json.JsonObject;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,12 +21,12 @@ public class SecurityReportConverter implements AttributeConverter<Map<String, L
           MapAttributeConverter.builder(EnhancedType.mapOf(String.class, List.class))
                   .mapConstructor(HashMap::new)
                   .keyConverter(StringStringConverter.create())
-                  .valueConverter(new TfSecResultListConverter())
+                  .valueConverter(new SecurityFindingsConverter())
                   .build();
 
   @Override
-  public AttributeValue transformFrom(Map<String, List> stringTfSecReportMap) {
-    return mapAttributeConverter.transformFrom(stringTfSecReportMap);
+  public AttributeValue transformFrom(Map<String, List> stringSecurityReportMap) {
+    return mapAttributeConverter.transformFrom(stringSecurityReportMap);
   }
 
   @Override
@@ -44,13 +44,13 @@ public class SecurityReportConverter implements AttributeConverter<Map<String, L
     return mapAttributeConverter.attributeValueType();
   }
 
-  static class TfSecResultListConverter implements AttributeConverter<List> {
+  static class SecurityFindingsConverter implements AttributeConverter<List> {
 
-    private final ListAttributeConverter<Collection<TfSecReport.TfSecResult>>
+    private final ListAttributeConverter<Collection<SecurityFinding>>
             listAttributeConverter = ListAttributeConverter
-            .builder(EnhancedType.collectionOf(TfSecReport.TfSecResult.class))
+            .builder(EnhancedType.collectionOf(SecurityFinding.class))
             .collectionConstructor(LinkedList::new)
-            .elementConverter(new TfSecResultConverter()).build();
+            .elementConverter(new SecurityFindingConverter()).build();
 
     @Override
     public AttributeValue transformFrom(List list) {
@@ -73,20 +73,20 @@ public class SecurityReportConverter implements AttributeConverter<Map<String, L
     }
   }
 
-  static class TfSecResultConverter implements AttributeConverter<TfSecReport.TfSecResult> {
+  static class SecurityFindingConverter implements AttributeConverter<SecurityFinding> {
     @Override
-    public AttributeValue transformFrom(TfSecReport.TfSecResult securityReportResults) {
+    public AttributeValue transformFrom(SecurityFinding securityReportResults) {
       return AttributeValue.fromS(JsonObject.mapFrom(securityReportResults).encode());
     }
 
     @Override
-    public TfSecReport.TfSecResult transformTo(AttributeValue attributeValue) {
-      return new JsonObject(attributeValue.s()).mapTo(TfSecReport.TfSecResult.class);
+    public SecurityFinding transformTo(AttributeValue attributeValue) {
+      return new JsonObject(attributeValue.s()).mapTo(SecurityFinding.class);
     }
 
     @Override
-    public EnhancedType<TfSecReport.TfSecResult> type() {
-      return EnhancedType.of(TfSecReport.TfSecResult.class);
+    public EnhancedType<SecurityFinding> type() {
+      return EnhancedType.of(SecurityFinding.class);
     }
 
     @Override

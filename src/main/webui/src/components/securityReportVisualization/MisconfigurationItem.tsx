@@ -22,15 +22,15 @@ const MisconfigurationItem = ({
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${
-          misconfiguration.rule_description + keyIdentifier
+          misconfiguration.ruleDescription + keyIdentifier
         }-content`}
-        id={`${misconfiguration.rule_description + keyIdentifier}-header`}
+        id={`${misconfiguration.ruleDescription + keyIdentifier}-header`}
         className={`severity-${misconfiguration.severity}`}
       >
         <Typography>
           {misconfiguration.resource}, Line:{" "}
-          {misconfiguration.location.start_line} -{" "}
-          {misconfiguration.location.end_line}
+          {misconfiguration.location.startLine} -{" "}
+          {misconfiguration.location.endLine}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -38,7 +38,7 @@ const MisconfigurationItem = ({
           <b>Severity:</b> {misconfiguration.severity}
         </Typography>
         <Typography>
-          <b>Violation:</b> {misconfiguration.rule_description}
+          <b>Violation:</b> {misconfiguration.ruleDescription}
         </Typography>
         <Typography>
           <b>Impact:</b> {misconfiguration.impact}
@@ -50,10 +50,10 @@ const MisconfigurationItem = ({
           <b>Resource:</b> {misconfiguration.resource}
         </Typography>
         <Typography>
-          <b>From line:</b> {misconfiguration.location.start_line}
+          <b>From line:</b> {misconfiguration.location.startLine}
         </Typography>
         <Typography>
-          <b>To line:</b> {misconfiguration.location.end_line}
+          <b>To line:</b> {misconfiguration.location.endLine}
         </Typography>
         <Link href={misconfiguration.links[0]} rel="noopener" target="_blank">
           Read more

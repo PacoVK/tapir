@@ -5,7 +5,7 @@ import core.terraform.Module;
 import core.upload.FormData;
 import extensions.core.Report;
 import extensions.docs.report.TerraformDocumentation;
-import extensions.security.report.TfSecReport;
+import extensions.security.report.SecurityFinding;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
 import io.vertx.mutiny.core.eventbus.EventBus;
@@ -38,8 +38,8 @@ public class ReportListener {
             module.getProvider(),
             module.getCurrentVersion()
     );
-    Map<String, List<TfSecReport.TfSecResult>> securityReport = eventBus
-            .<Map<String, List<TfSecReport.TfSecResult>>>requestAndAwait(
+    Map<String, List<SecurityFinding>> securityReport = eventBus
+            .<Map<String, List<SecurityFinding>>>requestAndAwait(
                     "module.security.report",
                     archive
             )

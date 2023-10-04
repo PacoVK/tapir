@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import core.terraform.Module;
 import core.upload.FormData;
 import extensions.cli.CliCommandProcessor;
-import extensions.security.report.TfSecReport;
-import extensions.security.util.TfSecReportUtil;
+import extensions.security.report.SecurityFinding;
+import extensions.security.report.TrivyReport;
+import extensions.security.util.SecurityReportUtil;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
@@ -34,7 +35,7 @@ public class SecurityScanner {
 
   @Blocking
   @ConsumeEvent("module.security.report")
-  public HashMap<String, List<TfSecReport.TfSecResult>> scanModule(FormData archive) {
+  public HashMap<String, List<SecurityFinding>> scanModule(FormData archive) {
     Module module = archive.getEntity();
     LOGGER.info(String.format("Starting scan for module %s, version %s",
             module.getName(),
@@ -43,15 +44,15 @@ public class SecurityScanner {
     File workingDirectory = archive.getCompressedFile().getParentFile();
     String output = commandProcessor.runCommand(
             workingDirectory,
-            "sh", "-c", "tfsec -f json  --ignore-hcl-errors .");
-    TfSecReport tfSecReport;
+            "sh", "-c", "trivy config --format json --skip-policy-update .");
+    TrivyReport rawSecurityReport;
     try {
-      tfSecReport = mapper.readValue(output, TfSecReport.class);
+      rawSecurityReport = mapper.readValue(output, TrivyReport.class);
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
-    HashMap<String, List<TfSecReport.TfSecResult>> securityReport = TfSecReportUtil
-            .sanitizeAndGroupAndSortFindings(tfSecReport, workingDirectory.toPath());
+    HashMap<String, List<SecurityFinding>> securityReport =
+         SecurityReportUtil.transformTrivyReportAndGroupAndSortFindings(rawSecurityReport);
     LOGGER.info(String.format("Finished scan for module %s, version %s",
             module.getName(),
             module.getCurrentVersion()
