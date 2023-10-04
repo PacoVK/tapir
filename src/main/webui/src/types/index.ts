@@ -20,15 +20,15 @@ export interface Provider {
 export interface Misconfiguration {
   resource: string;
   severity: string;
-  rule_description: string;
+  ruleDescription: string;
   description: string;
   impact: string;
   resolution: string;
   links: string;
   location: {
     filename: string;
-    start_line: number;
-    end_line: number;
+    startLine: number;
+    endLine: number;
   };
 }
 export enum ProviderType {

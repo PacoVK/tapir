@@ -2,8 +2,9 @@ package util;
 
 import core.terraform.Module;
 import extensions.core.Report;
-import extensions.security.report.TfSecReport;
+import extensions.security.report.TrivyReport;
 import io.vertx.core.json.JsonObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,16 +15,17 @@ import java.util.stream.Collectors;
 
 public class TestDataBuilder {
 
-  public static TfSecReport getTfSecReportStub(){
+  public static TrivyReport getSecurityReportStub(){
     try (Reader reader = new InputStreamReader(Objects.requireNonNull(TestDataBuilder.class
-            .getResourceAsStream("/tfsecReport.json")))) {
+            .getResourceAsStream("/trivyReport.json")))) {
       String report = new BufferedReader(reader).lines().collect(Collectors.joining());
-      return new JsonObject(report).mapTo(TfSecReport.class);
+      return new JsonObject(report).mapTo(TrivyReport.class);
     }catch (IOException e) {
       e.printStackTrace();
     }
     return null;
   }
+
   public static Report getReportStub(Module module){
     Report report = new Report(
             module.getNamespace(),

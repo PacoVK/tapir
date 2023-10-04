@@ -2,7 +2,7 @@ package extensions.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import extensions.docs.report.TerraformDocumentation;
-import extensions.security.report.TfSecReport;
+import extensions.security.report.SecurityFinding;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +25,7 @@ public class Report {
   private String moduleVersion;
   private String moduleNamespace;
   private String provider;
-  private Map<String, List<TfSecReport.TfSecResult>> securityReport;
+  private Map<String, List<SecurityFinding>> securityReport;
   private TerraformDocumentation documentation;
 
   public String getId() {
@@ -65,11 +65,11 @@ public class Report {
     this.moduleNamespace = moduleNamespace;
   }
 
-  public Map<String, List<TfSecReport.TfSecResult>> getSecurityReport() {
+  public Map<String, List<SecurityFinding>> getSecurityReport() {
     return securityReport;
   }
 
-  public void setSecurityReport(Map<String, List<TfSecReport.TfSecResult>> securityReport) {
+  public void setSecurityReport(Map<String, List<SecurityFinding>> securityReport) {
     this.securityReport = securityReport;
   }
 
