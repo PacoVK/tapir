@@ -4,6 +4,8 @@ FROM registry.access.redhat.com/ubi8/openjdk-17:1.17-1.1693366272
 
 COPY --from=SECURITY_SCANNER /usr/local/bin/trivy /usr/bin/
 
+USER root
+
 RUN microdnf install golang && go install github.com/terraform-docs/terraform-docs@v0.16.0  \
     && mv /home/jboss/go/bin/terraform-docs /usr/bin/  \
     && microdnf clean all
