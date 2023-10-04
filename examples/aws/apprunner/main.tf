@@ -31,6 +31,8 @@ resource "aws_apprunner_service" "tapir" {
 
   instance_configuration {
     instance_role_arn = aws_iam_role.tapir.arn
+    cpu = "2048"
+    memory = "4096"
   }
 
   tags = {
