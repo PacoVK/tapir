@@ -43,7 +43,7 @@ public class ReportListener {
             .<Map<String, List<SecurityFinding>>>requestAndAwait(
                     "module.security.report",
                     archive,
-                    new DeliveryOptions().setSendTimeout(60000L)
+                    new DeliveryOptions().setSendTimeout(150000L)
             )
             .body();
     TerraformDocumentation documentation = eventBus
