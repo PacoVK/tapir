@@ -49,7 +49,7 @@ You can easily run an instance on your own with the full flexibility and power a
 * It implements the official Terraform registry protocols
   * modules and providers supported
 * It scans the module source code on push, you will have insights about the code quality and security measures
-  * Tapir integrates [Tfsec](https://aquasecurity.github.io/tfsec) for that purpose
+  * Tapir integrates [Trivy](https://trivy.dev/) for that purpose
 * It generates documentation and stats for the module 
   * See module dependencies, inputs, outputs and resources that will be generated
   * Tapir integrates [terraform-docs](https://terraform-docs.io/) for that purpose
