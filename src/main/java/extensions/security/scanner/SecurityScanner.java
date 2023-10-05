@@ -44,7 +44,7 @@ public class SecurityScanner {
     File workingDirectory = archive.getCompressedFile().getParentFile();
     String output = commandProcessor.runCommand(
             workingDirectory,
-            "sh", "-c", "trivy config --format json --skip-policy-update .");
+            "sh", "-c", "trivy config --format json --skip-policy-update --quiet .");
     TrivyReport rawSecurityReport;
     try {
       rawSecurityReport = mapper.readValue(output, TrivyReport.class);
