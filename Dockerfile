@@ -8,7 +8,9 @@ USER root
 
 RUN microdnf install golang && go install github.com/terraform-docs/terraform-docs@v0.16.0  \
     && mv /home/jboss/go/bin/terraform-docs /usr/bin/  \
-    && microdnf clean all
+    && microdnf clean all \
+    && mkdir -p /home/jboss/.cache/trivy \
+    && chmod a+wr /home/jboss/.cache/trivy
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /tf/registry/lib/
