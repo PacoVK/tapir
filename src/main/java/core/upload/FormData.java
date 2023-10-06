@@ -1,6 +1,6 @@
 package core.upload;
 
-import core.terraform.CoreEntity;
+import core.tapir.CoreEntity;
 import jakarta.ws.rs.core.MediaType;
 import java.io.File;
 import org.jboss.resteasy.reactive.PartType;

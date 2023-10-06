@@ -1,11 +1,13 @@
 package core.backend.elasticsearch;
 
 import api.dto.PaginationDto;
-import core.backend.SearchService;
+import core.backend.TapirRepository;
+import core.exceptions.DeployKeyNotFoundException;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
-import core.terraform.CoreEntity;
+import core.tapir.CoreEntity;
+import core.tapir.DeployKey;
 import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
@@ -27,7 +29,7 @@ import org.elasticsearch.client.RestClient;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "elasticsearch")
 @ApplicationScoped
-public class ElasticSearchRepository extends SearchService {
+public class ElasticSearchRepository extends TapirRepository {
 
   static final Logger LOGGER = Logger.getLogger(ElasticSearchRepository.class.getName());
   RestClient restClient;
@@ -61,7 +63,7 @@ public class ElasticSearchRepository extends SearchService {
   }
 
   @Override
-  public Provider getProviderById(String id) throws Exception {
+  public Provider getProvider(String id) throws Exception {
     Request request = new Request(
             HttpMethod.GET,
             "/providers/_doc/" + id);
@@ -70,6 +72,53 @@ public class ElasticSearchRepository extends SearchService {
     } catch (ResponseException e) {
       throw new ProviderNotFoundException(id, e);
     }
+  }
+
+  @Override
+  public DeployKey getDeployKeyById(String id) throws DeployKeyNotFoundException {
+    Request request = new Request(
+        HttpMethod.GET,
+        "/deploykeys/_doc/deploykey-" + id);
+    try {
+      return doRequestAndReturnEntity(request).mapTo(DeployKey.class);
+    } catch (IOException e) {
+      throw new DeployKeyNotFoundException(id, e);
+    }
+  }
+
+  @Override
+  public void saveDeployKey(DeployKey deployKey) throws Exception {
+    String targetRequestPath = "/deploykeys/_doc/deploykey-"
+        + deployKey.getId();
+    Request request = new Request(
+        HttpMethod.POST,
+        targetRequestPath
+    );
+    request.setJsonEntity(JsonObject.mapFrom(deployKey).toString());
+    restClient.performRequest(request);
+  }
+
+  @Override
+  public void updateDeployKey(DeployKey deployKey) throws Exception {
+    String targetRequestPath = "/deploykeys/_doc/deploykey-"
+        + deployKey.getId();
+    Request request = new Request(
+        HttpMethod.PUT,
+        targetRequestPath
+    );
+    request.setJsonEntity(JsonObject.mapFrom(deployKey).toString());
+    restClient.performRequest(request);
+  }
+
+  @Override
+  public void deleteDeployKey(String id) throws Exception {
+    String targetRequestPath = "/deploykeys/_doc/deploykey-"
+        + id;
+    Request request = new Request(
+        HttpMethod.DELETE,
+        targetRequestPath
+    );
+    restClient.performRequest(request);
   }
 
   @Override
@@ -159,6 +208,7 @@ public class ElasticSearchRepository extends SearchService {
     createIndexIfNotExists("modules");
     createIndexIfNotExists("providers");
     createIndexIfNotExists("reports");
+    createIndexIfNotExists("deploykeys");
   }
 
   PaginationDto getEntities(String indexName, String query, Class<? extends CoreEntity> type)
@@ -216,28 +266,21 @@ public class ElasticSearchRepository extends SearchService {
     return getEntities("providers", query, Provider.class);
   }
 
-  public Module getModuleById(String name) throws IOException, ModuleNotFoundException {
-    Request request = new Request(
-            HttpMethod.GET,
-            "/modules/_doc/" + name);
-    try {
-      return doRequestAndReturnEntity(request).mapTo(Module.class);
-    } catch (ResponseException e) {
-      throw new ModuleNotFoundException(name, e);
-    }
+  @Override
+  public PaginationDto findDeployKeys(String identifier, Integer limit, String term) throws Exception {
+    String fields = "\"id\", \"key\"";
+    String query = buildPaginationSearchQuery(identifier, limit, term, fields);
+    return getEntities("deploykeys", query, DeployKey.class);
   }
 
-  @Override
-  public Module getModuleVersions(Module module) throws IOException, ModuleNotFoundException {
+  public Module getModule(String id) throws IOException, ModuleNotFoundException {
     Request request = new Request(
             HttpMethod.GET,
-            String.format("/modules/_doc/%s-%s-%s?_source=versions",
-                    module.getNamespace(), module.getName(), module.getProvider())
-    );
+            String.format("/modules/_doc/%s", id));
     try {
       return doRequestAndReturnEntity(request).mapTo(Module.class);
     } catch (ResponseException e) {
-      throw new ModuleNotFoundException(module.getId(), e);
+      throw new ModuleNotFoundException(id, e);
     }
   }
 

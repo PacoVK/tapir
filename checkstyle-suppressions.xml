@@ -5,10 +5,6 @@
 <suppressions>
     <suppress checks="Javadoc" files="."/>
     <suppress checks="ParameterName"
-              files="TfSecReport.java"/>
-    <suppress checks="MemberName"
-              files="TfSecReport.java"/>
-    <suppress checks="ParameterName"
               files="ProviderTerraformDto.java"/>
     <suppress checks="MemberName"
               files="ProviderTerraformDto.java"/>
@@ -21,7 +17,5 @@
     <suppress checks="MemberName"
               files="Provider.java"/>
     <suppress checks="AbbreviationAsWordInName"
-              files="ISearchService.java"/>
-    <suppress checks="AbbreviationAsWordInName"
-              files="IStorageInterface.java"/>
+              files="IRepository.java"/>
 </suppressions>

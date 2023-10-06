@@ -1,7 +1,7 @@
 package api.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import core.terraform.CoreEntity;
+import core.tapir.CoreEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import java.util.Collection;
 import java.util.List;

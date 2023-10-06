@@ -1,15 +1,15 @@
 package api;
 
-import core.backend.SearchService;
 import core.exceptions.StorageException;
-import core.storage.StorageService;
+import core.service.ModuleService;
+import core.service.StorageService;
 import core.storage.util.StorageUtil;
+import core.terraform.ArtifactVersion;
 import core.terraform.Module;
 import core.upload.FormData;
 import core.upload.service.UploadService;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mutiny.core.eventbus.EventBus;
-import jakarta.enterprise.inject.Instance;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -19,24 +19,25 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.time.Instant;
 import java.util.List;
+import java.util.TreeSet;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/terraform/modules/v1")
 public class Modules {
 
   StorageService storageService;
-  SearchService searchService;
+  ModuleService moduleService;
   UploadService uploadService;
   EventBus eventBus;
 
   public Modules(
-          Instance<StorageService> storageServiceInstance,
-          Instance<SearchService> searchServiceInstance,
+          StorageService storageService,
+          ModuleService moduleService,
           UploadService uploadService,
           EventBus eventBus
   ) {
-    this.storageService = storageServiceInstance.get();
-    this.searchService = searchServiceInstance.get();
+    this.storageService = storageService;
+    this.moduleService = moduleService;
     this.uploadService = uploadService;
     this.eventBus = eventBus;
   }
@@ -45,7 +46,7 @@ public class Modules {
   @Path("{namespace}/{name}/{provider}")
   public Response getModuleByName(String namespace, String name, String provider) throws Exception {
     Module module = new Module(namespace, name, provider);
-    return Response.ok(searchService.getModuleById(module.getId())).build();
+    return Response.ok(moduleService.getModule(module.getId())).build();
   }
 
   @POST
@@ -65,9 +66,10 @@ public class Modules {
   @Path("{namespace}/{name}/{provider}/versions")
   public Response getAvailableVersionsForModule(
           String namespace, String name, String provider) throws Exception {
-    Module module = searchService.getModuleVersions(new Module(namespace, name, provider));
+    TreeSet<ArtifactVersion> moduleVersions = moduleService
+        .getModuleVersions(new Module(namespace, name, provider));
     JsonObject jsonObject = new JsonObject()
-            .put("modules", List.of(JsonObject.of("versions", module.getVersions())));
+            .put("modules", List.of(JsonObject.of("versions", moduleVersions)));
     return Response.ok(jsonObject).build();
   }
 

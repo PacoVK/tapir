@@ -1,7 +1,8 @@
 package core.upload.service;
 
-import core.backend.SearchService;
-import core.storage.StorageService;
+import core.service.ModuleService;
+import core.service.ProviderService;
+import core.service.StorageService;
 import core.terraform.ArtifactVersion;
 import core.terraform.Module;
 import core.terraform.Provider;
@@ -9,7 +10,6 @@ import core.terraform.ProviderPlatform;
 import core.upload.FormData;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
@@ -20,16 +20,19 @@ public class UploadService {
 
   EventBus eventBus;
   StorageService storageService;
-  SearchService searchService;
+  ModuleService moduleService;
+  ProviderService providerService;
   FileService fileService;
 
   public UploadService(
-          Instance<StorageService> storageServiceInstance,
-          Instance<SearchService> searchServiceInstance,
+      StorageService storageService,
+          ModuleService moduleService,
+          ProviderService providerService,
           FileService fileService,
           EventBus eventBus) {
-    this.storageService = storageServiceInstance.get();
-    this.searchService = searchServiceInstance.get();
+    this.storageService = storageService;
+    this.moduleService = moduleService;
+    this.providerService = providerService;
     this.fileService = fileService;
     this.eventBus = eventBus;
   }
@@ -37,7 +40,7 @@ public class UploadService {
   public void uploadModule(FormData archive) throws Exception {
     Module module = archive.getEntity();
     storageService.uploadModule(archive);
-    searchService.ingestModuleData(module);
+    moduleService.ingestModuleData(module);
     File tmpArchiveFile = fileService.createTempArchiveFile(
             String.format("%s-%s", module.getName(), module.getCurrentVersion())
     );
@@ -61,7 +64,7 @@ public class UploadService {
     versionListTreeMap.put(new ArtifactVersion(version), platforms);
     provider.setVersions(versionListTreeMap);
     storageService.uploadProvider(archive, version);
-    searchService.ingestProviderData(provider);
+    providerService.ingestProviderData(provider);
     eventBus.requestAndForget("provider.upload.finished", archive);
   }
 }

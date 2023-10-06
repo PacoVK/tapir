@@ -2,6 +2,7 @@ package core.terraform;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import core.tapir.CoreEntity;
 import jakarta.validation.constraints.NotEmpty;
 import java.time.Instant;
 import java.util.Set;

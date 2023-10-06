@@ -12,10 +12,10 @@ public abstract class AbstractStorageTest {
 
   public static final String UPLOADED_MODULE_FILENAME = "foo/bar/baz/1.0.0.zip";
 
-  StorageService storageService;
+  StorageRepository storageRepository;
 
-  public AbstractStorageTest(StorageService storageService) {
-    this.storageService = storageService;
+  public AbstractStorageTest(StorageRepository storageRepository) {
+    this.storageRepository = storageRepository;
   }
 
   protected void uploadModule() throws URISyntaxException, StorageException {
@@ -26,7 +26,7 @@ public abstract class AbstractStorageTest {
     FormData data = new FormData();
     data.setPayload(archive);
     data.setEntity(fakeModule);
-    storageService.uploadModule(data);
+    storageRepository.uploadModule(data);
   }
 
   protected void uploadProvider() throws URISyntaxException, StorageException {
@@ -37,10 +37,10 @@ public abstract class AbstractStorageTest {
     FormData data = new FormData();
     data.setCompressedFile(archive);
     data.setEntity(fakeProvider);
-    storageService.uploadProvider(data, "1.0.0");
+    storageRepository.uploadProvider(data, "1.0.0");
   }
 
   protected String getDownloadUrlForArtifact() throws StorageException {
-    return storageService.getDownloadUrlForArtifact("foo/bar");
+    return storageRepository.getDownloadUrlForArtifact("foo/bar");
   }
 }

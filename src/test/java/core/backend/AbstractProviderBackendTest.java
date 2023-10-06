@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 public abstract class AbstractProviderBackendTest {
 
-  SearchService repository;
+  TapirRepository repository;
 
-  public AbstractProviderBackendTest(SearchService repository) {
+  public AbstractProviderBackendTest(TapirRepository repository) {
     this.repository = repository;
   }
 
@@ -36,7 +36,7 @@ public abstract class AbstractProviderBackendTest {
     );
     provider.setVersions(platform);
     repository.ingestProviderData(provider);
-    Provider ingestedProvider = repository.getProviderById(provider.getId());
+    Provider ingestedProvider = repository.getProvider(provider.getId());
     assertEquals(provider.getId(), ingestedProvider.getId());
     assertEquals(provider.getVersions().firstKey().getVersion(),
             ingestedProvider.getVersions().firstKey().getVersion());

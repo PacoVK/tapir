@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import core.backend.SearchService;
+import core.backend.TapirRepository;
 import core.exceptions.InvalidConfigurationException;
 import java.util.Set;
 import jakarta.enterprise.inject.Instance;
@@ -15,7 +15,7 @@ import util.SigningKeysMockImpl;
 
 class BootstrapTest {
 
-  Instance<SearchService> searchService = Mockito.mock(Instance.class);
+  Instance<TapirRepository> searchService = Mockito.mock(Instance.class);
 
   @BeforeEach
   void setUp() {

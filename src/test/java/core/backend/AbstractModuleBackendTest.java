@@ -13,9 +13,9 @@ import util.TestDataBuilder;
 
 public abstract class AbstractModuleBackendTest {
 
-  SearchService repository;
+  TapirRepository repository;
 
-  public AbstractModuleBackendTest(SearchService repository) {
+  public AbstractModuleBackendTest(TapirRepository repository) {
     this.repository = repository;
   }
 
@@ -28,7 +28,7 @@ public abstract class AbstractModuleBackendTest {
   void ingestModuleData() throws Exception {
     Module module = new Module("foo", "bar", "baz", "0.0.1");
     repository.ingestModuleData(module);
-    Module ingestedModule = repository.getModuleById(module.getId());
+    Module ingestedModule = repository.getModule(module.getId());
     assertTrue(new ReflectionEquals(module).matches(ingestedModule));
   }
 
@@ -48,7 +48,7 @@ public abstract class AbstractModuleBackendTest {
     repository.ingestModuleData(module);
     repository.increaseDownloadCounter(module);
     repository.increaseDownloadCounter(module);
-    Module ingestedModule = repository.getModuleById(module.getId());
+    Module ingestedModule = repository.getModule(module.getId());
     assertEquals(ingestedModule.getDownloads(), 2);
   }
 
@@ -81,7 +81,7 @@ public abstract class AbstractModuleBackendTest {
     repository.ingestModuleData(module_1);
     repository.ingestModuleData(module_2);
     repository.ingestModuleData(module_3);
-    Module moduleVersions = repository.getModuleVersions(module_1);
+    Module moduleVersions = repository.getModule(module_1.getId());
     assertEquals(moduleVersions.getCurrentVersion(),"1.0.2");
     assertEquals(moduleVersions.getVersions().size(), 3);
   }

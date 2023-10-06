@@ -11,8 +11,11 @@ import {
 } from "@mui/material";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import AppsIcon from "@mui/icons-material/Apps";
+import KeyIcon from "@mui/icons-material/Key";
+import {useUserContext} from "../context/UserContext";
 
 const NavigationDrawer = () => {
+  const { isAdmin } = useUserContext();
   return (
     <Drawer
       sx={{
@@ -60,6 +63,21 @@ const NavigationDrawer = () => {
             <ListItemText primary={"Providers"} />
           </ListItemButton>
         </ListItem>
+        { isAdmin ?
+            <ListItem
+                key={"MenuItemManagement"}
+                component={"a"}
+                href={"/management"}
+                disablePadding
+            >
+              <ListItemButton>
+                <ListItemIcon>
+                  <KeyIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Management"} />
+              </ListItemButton>
+            </ListItem> : null
+        }
       </List>
     </Drawer>
   );

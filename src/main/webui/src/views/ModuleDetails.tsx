@@ -15,12 +15,13 @@ import DownloadIcon from "@mui/icons-material/Download";
 import InfoIcon from "@mui/icons-material/Info";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { formatDate } from "../util/DateUtil";
-import { useLocation, useParams } from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import ModuleAnalysisTab from "../components/tab/ModuleAnalysisTab";
 
 const ModuleDetails = () => {
   const routeParams = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [module, setModule] = useState(location.state?.data);
   const [reports, setReports] = useState();
@@ -39,9 +40,13 @@ const ModuleDetails = () => {
     const response = await fetch(
       `${baseUrl}/terraform/modules/v1/${routeParams.namespace}/${routeParams.name}/${routeParams.provider}`,
     );
-    const module = await response.json();
-    setModule(module);
-    setVersion(module.versions.at(0)?.version);
+    if(response.status === 404) {
+      navigate("/404")
+    } else {
+      const module = await response.json();
+      setModule(module);
+      setVersion(module.versions.at(0)?.version);
+    }
   };
 
   const loadingRoutine = () => {

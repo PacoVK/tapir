@@ -3,9 +3,13 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import {useUserContext} from "../context/UserContext";
+import {Avatar} from "@mui/material";
+import {deepOrange} from "@mui/material/colors";
 
 const Header = () => {
-  return (
+    const { user} = useUserContext();
+    return (
     <AppBar position="static" sx={{ backgroundColor: "#474747" }}>
       <Box alignSelf={"center"}>
         <Toolbar disableGutters>
@@ -32,3 +36,9 @@ const Header = () => {
 };
 
 export default Header;
+
+/*
+<Avatar
+              sx={{ bgcolor: deepOrange[500] }}
+          >{user.name ? user.name.charAt(0).toUpperCase() : undefined}</Avatar>
+ */

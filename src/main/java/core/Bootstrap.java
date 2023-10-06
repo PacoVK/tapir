@@ -1,6 +1,6 @@
 package core;
 
-import core.backend.SearchService;
+import core.backend.TapirRepository;
 import core.config.SigningKeys;
 import core.exceptions.InvalidConfigurationException;
 import jakarta.enterprise.inject.Instance;
@@ -14,23 +14,23 @@ public class Bootstrap {
 
   static final Logger LOGGER = Logger.getLogger(Bootstrap.class.getName());
 
-  SearchService searchService;
+  TapirRepository tapirRepository;
   SigningKeys signingKeys;
 
-  public Bootstrap(Instance<SearchService> searchServiceInstance, SigningKeys signingKeys) {
-    this.searchService = searchServiceInstance.get();
+  public Bootstrap(Instance<TapirRepository> searchServiceInstance, SigningKeys signingKeys) {
+    this.tapirRepository = searchServiceInstance.get();
     this.signingKeys = signingKeys;
   }
 
   public void bootstrap() throws Exception {
     validateGpgKeys();
     LOGGER.info(
-            String.format("Start to bootstrap registry database [%s]",
-                    ConfigProvider.getConfig()
-                            .getConfigValue("registry.search.backend").getValue()
-            )
+        String.format("Start to bootstrap registry database [%s]",
+            ConfigProvider.getConfig()
+                .getConfigValue("registry.search.backend").getValue()
+        )
     );
-    searchService.bootstrap();
+    tapirRepository.bootstrap();
   }
 
   void validateGpgKeys() throws InvalidConfigurationException {
