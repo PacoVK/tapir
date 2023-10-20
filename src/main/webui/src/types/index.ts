@@ -103,4 +103,4 @@ export type User = {
   familyName?: string;
   email?: string;
   preferredUsername?: string;
-}
+};

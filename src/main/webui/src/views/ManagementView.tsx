@@ -69,8 +69,8 @@ const ManagementView = () => {
       let bottom =
         // @ts-ignore
         deployKeysTable.current.scrollHeight -
-          // @ts-ignore
-          deployKeysTable.current.clientHeight;
+        // @ts-ignore
+        deployKeysTable.current.clientHeight;
 
       if (!distanceBottom) {
         setDistanceBottom(Math.round(bottom * 0.2));
@@ -273,17 +273,19 @@ const ManagementView = () => {
                 // @ts-ignore
                 ref={deployKeysTable}
               >
-                {deployKeys && deployKeys.length > 0
-                  ? deployKeys.map((deployKey) => (
-                      <DeployKeyElement
-                        key={deployKey.id}
-                        deployKey={deployKey}
-                        onCopy={copyToClipBoard}
-                        onDelete={deleteDeployKey}
-                        onRegenerate={regenerateDeployKey}
-                      />
-                    ))
-                  : <NotFoundInfo entity={"keys"} />}
+                {deployKeys && deployKeys.length > 0 ? (
+                  deployKeys.map((deployKey) => (
+                    <DeployKeyElement
+                      key={deployKey.id}
+                      deployKey={deployKey}
+                      onCopy={copyToClipBoard}
+                      onDelete={deleteDeployKey}
+                      onRegenerate={regenerateDeployKey}
+                    />
+                  ))
+                ) : (
+                  <NotFoundInfo entity={"keys"} />
+                )}
                 {renderLastItem()}
               </List>
             </TabPanel>

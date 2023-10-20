@@ -11,11 +11,11 @@ import AppRouter from "./components/AppRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Box, Stack } from "@mui/material";
 import NavigationDrawer from "./components/nav/NavigationDrawer";
-import {UserProvider} from "./components/context/UserContext";
+import { UserProvider } from "./components/context/UserContext";
 
 const fetchUser = async () => {
-    const response = await fetch('/tapir/user');
-    return await response.json();
+  const response = await fetch("/tapir/user");
+  return await response.json();
 };
 
 const user = await fetchUser();
@@ -26,15 +26,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CssBaseline />
-      <UserProvider fetchedUser={user}>
-    <Header />
-    <Box sx={{ display: "flex" }}>
-      <NavigationDrawer />
-      <Stack spacing={2} m={"auto"} mt={"5vh"} sx={{ width: "75%" }}>
-        <AppRouter />
-      </Stack>
-    </Box>
-    <Footer />
-        </UserProvider>
+    <UserProvider fetchedUser={user}>
+      <Header />
+      <Box sx={{ display: "flex" }}>
+        <NavigationDrawer />
+        <Stack spacing={2} m={"auto"} mt={"5vh"} sx={{ width: "75%" }}>
+          <AppRouter />
+        </Stack>
+      </Box>
+      <Footer />
+    </UserProvider>
   </React.StrictMode>,
 );
