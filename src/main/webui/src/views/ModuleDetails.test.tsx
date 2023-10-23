@@ -4,6 +4,7 @@ import ModuleDetails from "./ModuleDetails";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
+  useNavigate: () => jest.fn(),
   useLocation: () => ({
     pathname: "localhost:3000/module/foo/bar/aws",
   }),

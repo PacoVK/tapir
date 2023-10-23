@@ -4,6 +4,7 @@ import ProviderDetails from "./ProviderDetails";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
+  useNavigate: () => jest.fn(),
   useLocation: () => ({
     pathname: "localhost:3000/providers/foo/bar",
   }),
