@@ -4,7 +4,6 @@ registry:
   hostname: ${REGISTRY_HOSTNAME:localhost}
   port: ${REGISTRY_PORT:443}
   auth:
-    enabled: ${AUTH_ENABLED:true}
     provider: ${AUTH_PROVIDER}
     endpoint: ${AUTH_ENDPOINT:http://localhost:8089/realms/tapir}
     client-id: ${AUTH_CLIENT_ID:tapir}
@@ -63,7 +62,7 @@ quarkus:
     devservices:
       enabled: false
   oidc:
-    enabled: ${registry.auth.enabled}
+    enabled: true
     roles:
       source: ${registry.auth.role-source}
     token-state-manager:
@@ -83,15 +82,6 @@ quarkus:
       region: ${registry.storage.s3.bucket.region}
   elasticsearch:
     hosts: ${registry.search.elasticsearch.host}
-  security:
-    users:
-      embedded:
-        enabled: true
-        plain-text: true
-        users:
-          admin: ${registry.user.password}
-        roles:
-          admin: admin
   http:
     auth:
       permission:

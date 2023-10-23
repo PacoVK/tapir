@@ -6,6 +6,7 @@ import core.tapir.DeployKey;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
 import java.time.Instant;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.when;
 
 @QuarkusTest
 @TestHTTPEndpoint(Management.class)
+@TestSecurity(authorizationEnabled = false)
 public class ManagementTest {
 
   @InjectMock

@@ -7,17 +7,18 @@ import extensions.core.Report;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-import io.vertx.core.json.JsonObject;
-import org.junit.jupiter.api.Test;
-import util.TestDataBuilder;
-
+import io.quarkus.test.security.TestSecurity;
 import static io.restassured.RestAssured.given;
+import io.vertx.core.json.JsonObject;
 import static org.hamcrest.CoreMatchers.is;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import util.TestDataBuilder;
 
 @QuarkusTest
 @TestHTTPEndpoint(Reports.class)
+@TestSecurity(authorizationEnabled = false)
 class ReportsTest {
 
   final Module fakeModule = new Module("foo", "bar", "baz", "0.0.0");
