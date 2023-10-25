@@ -76,7 +76,7 @@ There are samples with Terraform in `examples/`.
 
 #### Authentication
 
-**NOTE** Authentication is currently implemented and active in all version >= 0.6.x
+**NOTE** Authentication is currently implemented and active in all versions >= 0.6.x
 
 ##### Prerequisites
 
