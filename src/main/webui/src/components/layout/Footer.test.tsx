@@ -3,7 +3,7 @@ import Footer from "./Footer";
 
 describe("<Footer /> spec", () => {
   it("renders the Footer", () => {
-    const container = render(<Footer />);
-    expect(container).toMatchSnapshot();
+    const view = render(<Footer />);
+    expect(view).toMatchSnapshot();
   });
 });

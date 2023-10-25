@@ -3,7 +3,7 @@ import ManagementView from "./ManagementView";
 
 describe("<ManagementView /> spec", () => {
   it("renders the ManagementView", () => {
-    const container = render(<ManagementView />);
-    expect(container).toMatchSnapshot();
+    const view = render(<ManagementView />);
+    expect(view).toMatchSnapshot();
   });
 });

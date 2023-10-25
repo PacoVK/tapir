@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => ({
 }));
 describe("<ProviderDetails /> spec", () => {
   it("renders the ProviderDetails", () => {
-    const container = render(<ProviderDetails />);
-    expect(container).toMatchSnapshot();
+    const view = render(<ProviderDetails />);
+    expect(view).toMatchSnapshot();
   });
 });

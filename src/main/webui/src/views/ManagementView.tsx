@@ -99,12 +99,8 @@ const ManagementView = () => {
         tableRef.removeEventListener("scroll", scrollListener);
       };
     }
+    // eslint-disable-next-line
   }, [scrollListener]);
-
-  const fetchDeployKeyss = async (api: string) => {
-    const response = await fetch(api);
-    return await response.json();
-  };
 
   const handleSearchInputChange = (event: {
     target: { value: React.SetStateAction<string> };

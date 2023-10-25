@@ -3,7 +3,7 @@ import { renderWithRouter } from "../../test/RouterUtils";
 
 describe("<ProviderElement /> spec", () => {
   it("renders the ProviderElement", () => {
-    const container = renderWithRouter(
+    const view = renderWithRouter(
       <ProviderElement
         provider={{
           id: "foo/bar/baz",
@@ -15,6 +15,6 @@ describe("<ProviderElement /> spec", () => {
         }}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

@@ -4,7 +4,7 @@ import { renderWithRouter } from "../../test/RouterUtils";
 
 describe("<ModuleElement /> spec", () => {
   it("renders the ModuleElement", () => {
-    const container = renderWithRouter(
+    const view = renderWithRouter(
       <ModuleElement
         module={{
           id: "foo/bar/baz",
@@ -17,6 +17,6 @@ describe("<ModuleElement /> spec", () => {
         }}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

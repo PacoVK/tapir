@@ -3,7 +3,7 @@ import ModuleDependencies from "./ModuleDependencies";
 
 describe("<ModuleDependencies /> spec", () => {
   it("renders the ModuleDependencies", () => {
-    const container = render(
+    const view = render(
       <ModuleDependencies
         modules={[
           { source: "terraform-aws-modules/security-group/aws", version: "" },
@@ -11,6 +11,6 @@ describe("<ModuleDependencies /> spec", () => {
         providers={[{ name: "aws" }]}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

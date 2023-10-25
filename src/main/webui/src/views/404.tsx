@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import tapirLogo from "../assets/tapir.png";
 import { Box, Typography } from "@mui/material";
 import React from "react";

@@ -3,7 +3,7 @@ import ModuleResources from "./ModuleResources";
 
 describe("<ModuleResources /> spec", () => {
   it("renders the ModuleResources", () => {
-    const container = render(
+    const view = render(
       <ModuleResources
         resources={[
           {
@@ -13,6 +13,6 @@ describe("<ModuleResources /> spec", () => {
         ]}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

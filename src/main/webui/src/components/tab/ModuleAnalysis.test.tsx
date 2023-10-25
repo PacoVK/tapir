@@ -68,13 +68,13 @@ const fakeResponse = {
 
 describe("<ModuleAnalysisTab /> spec", () => {
   it("renders the ModuleAnalysisTab", () => {
-    const container = render(
+    const view = render(
       <ModuleAnalysisTab
         version={fakeResponse.moduleVersion}
         reports={fakeResponse.securityReport}
         documentation={fakeResponse.documentation}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

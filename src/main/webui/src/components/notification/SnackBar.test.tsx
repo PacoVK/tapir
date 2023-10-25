@@ -3,7 +3,7 @@ import SnackBar from "./SnackBar";
 
 describe("<SnackBar /> spec", () => {
   it("renders the SnackBar", () => {
-    const container = render(
+    const view = render(
       <SnackBar
         open={true}
         severity={"info"}
@@ -11,6 +11,6 @@ describe("<SnackBar /> spec", () => {
         handleClose={() => {}}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

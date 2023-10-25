@@ -6,7 +6,7 @@ jest.mock("../../util/DateUtil", () => ({
 
 describe("<DeployKeyElement /> spec", () => {
   it("renders the DeployKeyElement", () => {
-    const container = render(
+    const view = render(
       <DeployKeyElement
         deployKey={{
           id: "foo/bar/baz",
@@ -18,6 +18,6 @@ describe("<DeployKeyElement /> spec", () => {
         onRegenerate={() => {}}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

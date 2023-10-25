@@ -3,7 +3,7 @@ import DeployKeyForm from "./DeployKeyForm";
 
 describe("<DeployKeyForm /> spec", () => {
   it("renders the DeployKeyForm", () => {
-    const container = render(<DeployKeyForm notifyUser={() => {}} />);
-    expect(container).toMatchSnapshot();
+    const view = render(<DeployKeyForm notifyUser={() => {}} />);
+    expect(view).toMatchSnapshot();
   });
 });

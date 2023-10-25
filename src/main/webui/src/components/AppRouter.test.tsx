@@ -4,7 +4,7 @@ import AppRouter from "./AppRouter";
 
 describe("<AppRouter /> spec", () => {
   it("renders the AppRouter", () => {
-    const container = render(<AppRouter />);
-    expect(container).toMatchSnapshot();
+    const view = render(<AppRouter />);
+    expect(view).toMatchSnapshot();
   });
 });

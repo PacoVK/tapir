@@ -23,8 +23,8 @@ export const UserProvider = ({
   fetchedUser: User;
   children: any;
 }) => {
-  const [user, setUser] = useState(fetchedUser);
-  const [isAdmin, setIsAdmin] = useState(fetchedUser.roles.includes("admin"));
+  const [user] = useState(fetchedUser);
+  const [isAdmin] = useState(fetchedUser.roles.includes("admin"));
 
   useInterval(async () => {
     await fetch("tapir/user");

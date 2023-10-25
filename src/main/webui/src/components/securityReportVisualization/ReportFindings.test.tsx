@@ -35,9 +35,9 @@ const fakeResponse = {
 
 describe("<ReportFindings /> spec", () => {
   it("renders the ReportFindings", () => {
-    const container = render(
+    const view = render(
       <ReportFindings reports={fakeResponse.securityReport} />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

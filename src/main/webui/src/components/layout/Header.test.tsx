@@ -3,7 +3,7 @@ import Header from "./Header";
 
 describe("<Header /> spec", () => {
   it("renders the Header", () => {
-    const container = render(<Header />);
-    expect(container).toMatchSnapshot();
+    const view = render(<Header />);
+    expect(view).toMatchSnapshot();
   });
 });
