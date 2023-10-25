@@ -1,5 +1,8 @@
 import DeployKeyElement from "./DeployKeyElement";
 import { render } from "@testing-library/react";
+jest.mock("../../util/DateUtil", () => ({
+  formatDateTime: () => "10-10-2021 10:10",
+}));
 
 describe("<DeployKeyElement /> spec", () => {
   it("renders the DeployKeyElement", () => {
