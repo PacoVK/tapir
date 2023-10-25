@@ -1,4 +1,5 @@
 registry:
+  version: 0.5.0
   user:
     password: ${TAPIR_ADMIN_PASSWORD:default}
   hostname: ${REGISTRY_HOSTNAME:localhost}
@@ -11,6 +12,12 @@ registry:
     token-path: ${AUTH_TOKEN_PATH}
     auth-path: ${AUTH_PATH}
     role-source: ${AUTH_ROLE_SOURCE:accesstoken}
+    logout-session-path: ${AUTH_LOGOUT_SESSION_PATH}
+    token-attributes:
+      email: ${AUTH_TOKEN_ATTRIBUTE_EMAIL:email}
+      givenName: ${AUTH_TOKEN_ATTRIBUTE_GIVEN_NAME:given_name}
+      familyName: ${AUTH_TOKEN_ATTRIBUTE_FAMILY_NAME:family_name}
+      preferredUsername: ${AUTH_TOKEN_ATTRIBUTE_PREFERRED_USERNAME:preferred_username}
   proxy:
     enabled: ${PROXY_FORWARDED:false}
     forwarded-header: ${PROXY_FORWARDED_HEADER:X-ORIGINAL-HOST}
@@ -43,7 +50,7 @@ mp:
       smallrye:
         info:
           title: Tapir API
-          version: 0.5.0
+          version: ${registry.version}
           description: API for Tapir
           contact:
             name: Tapir @ Github
@@ -62,12 +69,17 @@ quarkus:
     devservices:
       enabled: false
   oidc:
+    logout:
+      path: "/logout"
+    token:
+      refresh-token-time-skew: 5M
+      refresh-expired: true
     enabled: true
     roles:
       source: ${registry.auth.role-source}
     token-state-manager:
       split-tokens: true
-    application-type: hybrid
+    application-type: web_app
     auth-server-url: ${registry.auth.endpoint}
     client-id: ${registry.auth.client-id}
     credentials:
@@ -75,6 +87,7 @@ quarkus:
     authentication:
       id-token-required: false
     token-path: ${registry.auth.token-path}
+    end-session-path: ${registry.auth.logout-session-path}
     authorization-path: ${registry.auth.auth-path}
     provider: ${registry.auth.provider}
   s3:

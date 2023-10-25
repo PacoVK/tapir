@@ -24,7 +24,6 @@ import java.util.TreeSet;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/terraform/modules/v1")
 public class Modules {
-
   StorageService storageService;
   ModuleService moduleService;
   UploadService uploadService;

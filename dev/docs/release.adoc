@@ -7,7 +7,6 @@ Tapir releases use [semantic versioning](https://semver.org/).
 - set the version in `pom.xml`
 - set the version in `src/main/resources/application.yml`
 - set the version in `src/main/webui/package.json`
-- set the version in `src/main/webui/src/components/Footer.tsx`
 - update test snapshots
 
 == Publish
