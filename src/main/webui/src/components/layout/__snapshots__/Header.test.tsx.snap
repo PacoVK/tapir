@@ -9,17 +9,50 @@ Object {
         class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-1i39xt3-MuiPaper-root-MuiAppBar-root"
       >
         <div
-          class="MuiBox-root css-hoe9xz"
+          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-3 css-3ijkck-MuiGrid2-root"
         >
           <div
-            class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 css-1r8wmwf-MuiGrid2-root"
+          />
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 css-109lejs-MuiGrid2-root"
           >
-            <a
-              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-1wqqrar-MuiTypography-root"
-              href="/"
+            <div
+              class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
             >
-              Tapir - Private Terraform Registry
-            </a>
+              <a
+                class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-1hurzvz-MuiTypography-root"
+                href="/"
+              >
+                Tapir - Private Terraform Registry
+              </a>
+            </div>
+          </div>
+          <div
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 css-ktgzga-MuiGrid2-root"
+          >
+            <button
+              aria-haspopup="true"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1vjfg5e-MuiButtonBase-root-MuiButton-root-MuiAvatar-root"
+              id="menu-button"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+                data-testid="PersonIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
         </div>
       </header>
@@ -30,17 +63,50 @@ Object {
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-1i39xt3-MuiPaper-root-MuiAppBar-root"
     >
       <div
-        class="MuiBox-root css-hoe9xz"
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-3 css-3ijkck-MuiGrid2-root"
       >
         <div
-          class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 css-1r8wmwf-MuiGrid2-root"
+        />
+        <div
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 css-109lejs-MuiGrid2-root"
         >
-          <a
-            class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-1wqqrar-MuiTypography-root"
-            href="/"
+          <div
+            class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
           >
-            Tapir - Private Terraform Registry
-          </a>
+            <a
+              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-1hurzvz-MuiTypography-root"
+              href="/"
+            >
+              Tapir - Private Terraform Registry
+            </a>
+          </div>
+        </div>
+        <div
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-4 css-ktgzga-MuiGrid2-root"
+        >
+          <button
+            aria-haspopup="true"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1vjfg5e-MuiButtonBase-root-MuiButton-root-MuiAvatar-root"
+            id="menu-button"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+              data-testid="PersonIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
         </div>
       </div>
     </header>
