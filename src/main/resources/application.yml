@@ -1,5 +1,5 @@
 registry:
-  version: 0.5.0
+  version: 0.5.1-rc1
   user:
     password: ${TAPIR_ADMIN_PASSWORD:default}
   hostname: ${REGISTRY_HOSTNAME:localhost}
