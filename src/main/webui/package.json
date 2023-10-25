@@ -1,6 +1,6 @@
 {
   "name": "webapp",
-  "version": "0.5.1-rc1",
+  "version": "0.6.0-rc1",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",

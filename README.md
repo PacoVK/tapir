@@ -76,6 +76,8 @@ There are samples with Terraform in `examples/`.
 
 #### Authentication
 
+**NOTE** Authentication is currently implemented and active in all version >= 0.6.x
+
 ##### Prerequisites
 
 Tapir management needs the IDP client to put the role `admin` into the token.  
