@@ -40,6 +40,5 @@ public class Bootstrap {
     } catch (IllegalArgumentException ex) {
       throw new InvalidConfigurationException("registry.gpg.keys", ex);
     }
-
   }
 }
