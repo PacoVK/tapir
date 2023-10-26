@@ -1,6 +1,6 @@
 FROM aquasec/trivy:0.46.0 as SECURITY_SCANNER
 
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.17-1.1696520325
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.17-4
 
 COPY --from=SECURITY_SCANNER /usr/local/bin/trivy /usr/bin/
 
