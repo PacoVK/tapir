@@ -17,6 +17,7 @@ import io.vertx.core.json.JsonObject;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.HttpMethod;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -211,8 +212,22 @@ public class ElasticSearchRepository extends TapirRepository {
     createIndexIfNotExists("deploykeys");
   }
 
+  Boolean indexHasDocuments(String indexName) throws IOException {
+    Request countRequest = new Request(
+        HttpMethod.GET,
+        String.format("/%s/_count", indexName)
+    );
+    HttpEntity countEntity = restClient.performRequest(countRequest).getEntity();
+    String countResponseBody = EntityUtils.toString(countEntity);
+    Integer count = (Integer) new JsonObject(countResponseBody).getValue("count");
+    return count > 0;
+  }
+
   PaginationDto getEntities(String indexName, String query, Class<? extends CoreEntity> type)
           throws IOException {
+    if (!indexHasDocuments(indexName)) {
+      return new PaginationDto(Collections.EMPTY_LIST);
+    }
     Request request = new Request(
             HttpMethod.GET,
             String.format("/%s/_search", indexName)
@@ -267,7 +282,8 @@ public class ElasticSearchRepository extends TapirRepository {
   }
 
   @Override
-  public PaginationDto findDeployKeys(String identifier, Integer limit, String term) throws Exception {
+  public PaginationDto findDeployKeys(String identifier, Integer limit, String term)
+      throws Exception {
     String fields = "\"id\", \"key\"";
     String query = buildPaginationSearchQuery(identifier, limit, term, fields);
     return getEntities("deploykeys", query, DeployKey.class);

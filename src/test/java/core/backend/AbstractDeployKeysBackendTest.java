@@ -47,4 +47,10 @@ public abstract class AbstractDeployKeysBackendTest {
     assertEquals(withIdentifier.getEntities().size(), 1);
     assertEquals(all.getEntities().size(), 2);
   }
+
+  @Test
+  void findDeployKeysIfNoDeployKeysAreStored() throws Exception {
+    PaginationDto result = repository.findDeployKeys("", 5, "fred");
+    assertEquals(result.getEntities().size(), 0);
+  }
 }
