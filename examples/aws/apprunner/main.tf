@@ -7,6 +7,16 @@ provider "aws" {
   }
 }
 
+variable "auth_endpoint" {
+  type = string
+  description = "The endpoint of the IDP to authenticate against"
+}
+
+variable "auth_client_id" {
+  type = string
+  description = "The client ID to use when authenticating against the IDP"
+}
+
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
@@ -21,6 +31,8 @@ resource "aws_apprunner_service" "tapir" {
           S3_STORAGE_BUCKET_NAME          = aws_s3_bucket.storage.bucket
           S3_STORAGE_BUCKET_REGION        = aws_s3_bucket.storage.region
           STORAGE_ACCESS_SESSION_DURATION = 60
+          AUTH_ENDPOINT                   = var.auth_endpoint
+          AUTH_CLIENT_ID                  = var.auth_client_id
         }
       }
       image_identifier      = "public.ecr.aws/pacovk/tapir:latest"
@@ -82,7 +94,8 @@ data "aws_iam_policy_document" "tapir" {
     resources = [
       "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Modules",
       "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Reports",
-      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Providers"
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Providers",
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/DeployKeys"
     ]
   }
   statement {

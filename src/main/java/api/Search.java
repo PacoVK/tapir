@@ -1,8 +1,9 @@
 package api;
 
 import api.dto.PaginationDto;
-import core.backend.SearchService;
-import jakarta.enterprise.inject.Instance;
+import core.service.DeployKeyService;
+import core.service.ModuleService;
+import core.service.ProviderService;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -15,10 +16,14 @@ import jakarta.ws.rs.core.Response;
 @Path("/search")
 public class Search {
 
-  SearchService searchService;
+  ProviderService providerService;
+  ModuleService moduleService;
+  DeployKeyService deployKeyService;
 
-  public Search(Instance<SearchService> searchServiceInstance) {
-    this.searchService = searchServiceInstance.get();
+  public Search(ProviderService providerService, ModuleService moduleService, DeployKeyService deployKeyService) {
+    this.providerService = providerService;
+    this.moduleService = moduleService;
+    this.deployKeyService = deployKeyService;
   }
 
   @GET
@@ -31,7 +36,7 @@ public class Search {
           @DefaultValue("")
           @QueryParam("lastKey") String lastEvaluatedElementKey
   ) throws Exception {
-    PaginationDto modulePagination = searchService.findModules(
+    PaginationDto modulePagination = moduleService.getModules(
             lastEvaluatedElementKey,
             limit,
             query
@@ -49,10 +54,28 @@ public class Search {
           @DefaultValue("")
           @QueryParam("lastKey") String lastEvaluatedElementKey
   ) throws Exception {
-    PaginationDto providerPagination = searchService.findProviders(
+    PaginationDto providerPagination = providerService.getProviders(
             lastEvaluatedElementKey,
             limit,
             query
+    );
+    return Response.ok(providerPagination).build();
+  }
+
+  @GET
+  @Path("/deploykeys")
+  public Response listDeployKeys(
+      @DefaultValue("10")
+      @QueryParam("limit") Integer limit,
+      @DefaultValue("")
+      @QueryParam("q") String query,
+      @DefaultValue("")
+      @QueryParam("lastKey") String lastEvaluatedElementKey
+  ) throws Exception {
+    PaginationDto providerPagination = deployKeyService.listDeployKeys(
+        lastEvaluatedElementKey,
+        limit,
+        query
     );
     return Response.ok(providerPagination).build();
   }

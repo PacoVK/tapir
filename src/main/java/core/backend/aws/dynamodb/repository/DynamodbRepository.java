@@ -1,16 +1,19 @@
 package core.backend.aws.dynamodb.repository;
 
 import api.dto.PaginationDto;
-import core.backend.SearchService;
+import core.backend.TapirRepository;
+import core.exceptions.DeployKeyNotFoundException;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
+import core.tapir.DeployKey;
 import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
@@ -29,17 +32,19 @@ import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "dynamodb")
 @ApplicationScoped
-public class DynamodbRepository extends SearchService {
+public class DynamodbRepository extends TapirRepository {
 
   static final Logger LOGGER = Logger.getLogger(DynamodbRepository.class.getName());
 
   final DynamoDbTable<Module> modulesTable;
   final DynamoDbTable<Report> reportsTable;
   final DynamoDbTable<Provider> providerTable;
+  final DynamoDbTable<DeployKey> deployKeysTable;
   final DynamoDbClient dynamoDbClient;
   final TableSchema<Provider> providerTableSchema = TableSchemas.providerTableSchema;
   final TableSchema<Module> moduleTableSchema = TableSchemas.moduleTableSchema;
   final TableSchema<Report> reportsTableSchema = TableSchemas.reportsTableSchema;
+  final TableSchema<DeployKey> deployKeyTableSchema = TableSchemas.deployKeysTableSchema;
 
   public DynamodbRepository(DynamoDbClient dynamoDbClient) {
     this.dynamoDbClient = dynamoDbClient;
@@ -48,10 +53,11 @@ public class DynamodbRepository extends SearchService {
     this.modulesTable = dbEnhancedClient.table("Modules", moduleTableSchema);
     this.providerTable = dbEnhancedClient.table("Providers", providerTableSchema);
     this.reportsTable = dbEnhancedClient.table("Reports", reportsTableSchema);
+    this.deployKeysTable = dbEnhancedClient.table("DeployKeys", deployKeyTableSchema);
   }
 
   @Override
-  public Provider getProviderById(String id) throws Exception {
+  public Provider getProvider(String id) throws Exception {
     Provider provider = providerTable.getItem(Key.builder().partitionValue(id).build());
     if (provider == null) {
       throw new ProviderNotFoundException(id);
@@ -143,6 +149,7 @@ public class DynamodbRepository extends SearchService {
     createTable(modulesTable);
     createTable(providerTable);
     createTable(reportsTable);
+    createTable(deployKeysTable);
   }
 
   private void createTable(DynamoDbTable<?> table) {
@@ -208,14 +215,11 @@ public class DynamodbRepository extends SearchService {
             expression
     );
     Page<Module> modulePage = modulesTable.scan(scanEnhancedRequest)
-            .stream().findFirst().orElse(null);
-    if (modulePage == null) {
-      return new PaginationDto(Collections.EMPTY_LIST);
-    }
+            .stream().findFirst().orElse(Page.create(List.of()));
     return new PaginationDto(modulePage.items());
   }
 
-  public Module getModuleById(String name) throws ModuleNotFoundException {
+  public Module getModule(String name) throws ModuleNotFoundException {
     Module module = modulesTable.getItem(Key.builder().partitionValue(name).build());
     if (module == null) {
       throw new ModuleNotFoundException(name);
@@ -231,8 +235,52 @@ public class DynamodbRepository extends SearchService {
     return report;
   }
 
-  @Override
-  public Module getModuleVersions(Module module) throws ModuleNotFoundException {
-    return getModuleById(module.getId());
+  public void saveDeployKey(DeployKey deployKey) {
+    deployKeysTable.putItem(r -> r.item(deployKey).conditionExpression(
+        Expression.builder()
+            .expression("attribute_not_exists(id)")
+            .build()));
+  }
+
+  public void updateDeployKey(DeployKey deployKey) {
+    deployKeysTable.putItem(deployKey);
+  }
+
+  public DeployKey getDeployKeyById(String id) throws DeployKeyNotFoundException {
+    DeployKey deployKey = deployKeysTable.getItem(Key.builder().partitionValue(id).build());
+    if (deployKey == null) {
+      throw new DeployKeyNotFoundException(id);
+    }
+    return deployKey;
+  }
+
+  public void deleteDeployKey(String id) {
+    deployKeysTable.deleteItem(Key.builder().partitionValue(id).build());
+  }
+
+  public PaginationDto findDeployKeys(String identifier, Integer limit, String terms) {
+    String whereClause = "contains(#id, :term)"
+        + "or contains(#key, :term)";
+    Expression expression = Expression.builder()
+        .expressionNames(Map.of(
+            "#id", "id",
+            "#key", "key"
+            )
+        )
+        .expressionValues(Map.of(":term", AttributeValue.fromS(terms)))
+        .expression(whereClause)
+        .build();
+    ScanEnhancedRequest scanEnhancedRequest = buildScanRequest(
+        identifier,
+        limit,
+        terms,
+        expression
+    );
+    Page<DeployKey> deployKeyPage = deployKeysTable.scan(scanEnhancedRequest)
+        .stream().findFirst().orElse(null);
+    if (deployKeyPage == null) {
+      return new PaginationDto(Collections.EMPTY_LIST);
+    }
+    return new PaginationDto(deployKeyPage.items());
   }
 }

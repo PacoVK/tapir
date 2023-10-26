@@ -1,6 +1,6 @@
 package api;
 
-import core.backend.SearchService;
+import core.backend.TapirRepository;
 import core.exceptions.ReportNotFoundException;
 import core.terraform.Module;
 import extensions.core.Report;
@@ -16,10 +16,10 @@ import java.io.IOException;
 @Path("/reports")
 public class Reports {
 
-  SearchService searchService;
+  TapirRepository tapirRepository;
 
-  public Reports(Instance<SearchService> searchServiceInstance) {
-    this.searchService = searchServiceInstance.get();
+  public Reports(Instance<TapirRepository> searchServiceInstance) {
+    this.tapirRepository = searchServiceInstance.get();
   }
 
   @GET
@@ -31,7 +31,7 @@ public class Reports {
           String moduleVersion
   ) throws IOException, ReportNotFoundException {
     Module module = new Module(namespace, name, provider, moduleVersion);
-    Report report = searchService.getReportByModuleVersion(module);
+    Report report = tapirRepository.getReportByModuleVersion(module);
     return Response.ok(report).build();
   }
 }

@@ -19,16 +19,16 @@ import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
 
 @QuarkusTest
-class S3StorageServiceTest extends AbstractStorageTest {
+class S3StorageRepositoryTest extends AbstractStorageTest {
 
-  S3StorageService s3StorageService;
+  S3StorageRepository s3StorageService;
 
   S3Client s3;
 
   @ConfigProperty(name = "registry.storage.s3.bucket.name")
   String bucketName;
 
-  public S3StorageServiceTest(S3StorageService s3StorageService, S3Client s3) {
+  public S3StorageRepositoryTest(S3StorageRepository s3StorageService, S3Client s3) {
     super(s3StorageService);
     this.s3StorageService = s3StorageService;
     this.s3 = s3;

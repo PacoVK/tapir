@@ -1,7 +1,7 @@
 package core.storage.local;
 
 import core.exceptions.StorageException;
-import core.storage.StorageService;
+import core.storage.StorageRepository;
 import core.storage.util.StorageUtil;
 import core.upload.FormData;
 import io.quarkus.arc.lookup.LookupIfProperty;
@@ -17,9 +17,9 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @LookupIfProperty(name = "registry.storage.backend", stringValue = "local")
 @ApplicationScoped
-public class LocalStorageService extends StorageService {
+public class LocalStorageRepository extends StorageRepository {
 
-  static final Logger LOGGER = Logger.getLogger(LocalStorageService.class.getName());
+  static final Logger LOGGER = Logger.getLogger(LocalStorageRepository.class.getName());
 
   static final String BASE_RESOURCE_DIR = System.getProperty("user.home") + "/tapir/";
 

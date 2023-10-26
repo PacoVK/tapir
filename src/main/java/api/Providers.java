@@ -2,19 +2,12 @@ package api;
 
 import api.dto.ProviderTerraformDto;
 import api.dto.ProviderVersionsDto;
-import api.dto.mapper.ProviderMapper;
-import api.dto.mapper.ProviderVersionMapper;
-import core.backend.SearchService;
-import core.exceptions.PlatformNotFoundException;
-import core.storage.StorageService;
-import core.terraform.ArtifactVersion;
+import core.service.ProviderService;
 import core.terraform.Provider;
-import core.terraform.ProviderPlatform;
 import core.upload.FormData;
 import core.upload.service.UploadService;
 import io.vertx.core.json.JsonObject;
 import io.vertx.mutiny.core.eventbus.EventBus;
-import jakarta.enterprise.inject.Instance;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -24,32 +17,22 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.time.Instant;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/terraform/providers/v1/")
 public class Providers {
 
-  StorageService storageService;
-  SearchService searchService;
+  ProviderService providerService;
   UploadService uploadService;
   EventBus eventBus;
-  ProviderMapper providerMapper;
-  ProviderVersionMapper providerVersionMapper;
 
   public Providers(
-          Instance<StorageService> storageServiceInstance,
-          Instance<SearchService> searchServiceInstance,
+          ProviderService providerService,
           UploadService uploadService,
-          ProviderMapper providerMapper,
-          ProviderVersionMapper providerVersionMapper,
           EventBus eventBus
   ) {
-    this.storageService = storageServiceInstance.get();
-    this.searchService = searchServiceInstance.get();
+    this.providerService = providerService;
     this.uploadService = uploadService;
-    this.providerMapper = providerMapper;
-    this.providerVersionMapper = providerVersionMapper;
     this.eventBus = eventBus;
   }
 
@@ -57,9 +40,8 @@ public class Providers {
   @Path("/{namespace}/{type}/versions")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getAvailableVersionsForProvider(String namespace, String type) throws Exception {
-    Provider provider = new Provider(namespace, type);
-    Provider providerById = searchService.getProviderById(provider.getId());
-    List<ProviderVersionsDto> versionsDtos = providerVersionMapper.toDto(providerById);
+    List<ProviderVersionsDto> versionsDtos = providerService
+        .getAvailableVersionsForProvider(namespace, type);
     JsonObject jsonObject = new JsonObject()
             .put("versions", versionsDtos);
     return Response.ok(jsonObject).build();
@@ -75,22 +57,9 @@ public class Providers {
           String os,
           String arch
   ) throws Exception {
-    Provider provider = new Provider(namespace, type);
-    Provider providerById = searchService.getProviderById(provider.getId());
-    try {
-      List<ProviderPlatform> platforms = providerById
-              .getVersions()
-              .get(new ArtifactVersion(version));
-      ProviderPlatform providerPlatform = platforms.stream()
-              .filter(platform -> platform.getOs().equals(os) && platform.getArch().equals(arch))
-              .findFirst()
-              .orElseThrow();
-      ProviderTerraformDto dto = providerMapper
-              .toDtoByVersionAndPlatform(providerById, version, providerPlatform);
-      return Response.ok(dto).build();
-    } catch (NoSuchElementException | NullPointerException exception) {
-      throw new PlatformNotFoundException(version, exception);
-    }
+    ProviderTerraformDto dto = providerService
+        .getProviderByVersionAndPlatform(namespace, type, version, os, arch);
+    return Response.ok(dto).build();
   }
 
   @POST
@@ -107,9 +76,9 @@ public class Providers {
 
   @GET
   @Path("{namespace}/{type}")
-  public Response getModuleByName(String namespace, String type) throws Exception {
+  public Response getProviderByName(String namespace, String type) throws Exception {
     Provider provider = new Provider(namespace, type);
-    return Response.ok(searchService.getProviderById(provider.getId())).build();
+    return Response.ok(providerService.getProvider(provider.getId())).build();
   }
 
 }

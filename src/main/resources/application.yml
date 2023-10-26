@@ -1,6 +1,26 @@
 registry:
+  version: 0.6.0-rc1
+  user:
+    password: ${TAPIR_ADMIN_PASSWORD:default}
   hostname: ${REGISTRY_HOSTNAME:localhost}
   port: ${REGISTRY_PORT:443}
+  auth:
+    provider: ${AUTH_PROVIDER}
+    endpoint: ${AUTH_ENDPOINT:http://localhost:8089/realms/tapir}
+    client-id: ${AUTH_CLIENT_ID:tapir}
+    client-secret: ${AUTH_CLIENT_SECRET}
+    token-path: ${AUTH_TOKEN_PATH}
+    auth-path: ${AUTH_PATH}
+    role-source: ${AUTH_ROLE_SOURCE:accesstoken}
+    end-session-path: ${END_SESSION_PATH:/protocol/openid-connect/logout}
+    token-attributes:
+      email: ${AUTH_TOKEN_ATTRIBUTE_EMAIL:email}
+      givenName: ${AUTH_TOKEN_ATTRIBUTE_GIVEN_NAME:given_name}
+      familyName: ${AUTH_TOKEN_ATTRIBUTE_FAMILY_NAME:family_name}
+      preferredUsername: ${AUTH_TOKEN_ATTRIBUTE_PREFERRED_USERNAME:preferred_username}
+  proxy:
+    enabled: ${PROXY_FORWARDED:false}
+    forwarded-header: ${PROXY_FORWARDED_HEADER:X-ORIGINAL-HOST}
   gpg:
     keys:
       - id: D17C807B4156558133A1FB843C7461473EB779BD
@@ -30,7 +50,7 @@ mp:
       smallrye:
         info:
           title: Tapir API
-          version: 0.5.0
+          version: ${registry.version}
           description: API for Tapir
           contact:
             name: Tapir @ Github
@@ -48,12 +68,52 @@ quarkus:
   sts:
     devservices:
       enabled: false
+  oidc:
+    logout:
+      path: "/logout"
+    token:
+      refresh-token-time-skew: 5M
+      refresh-expired: true
+    enabled: true
+    roles:
+      source: ${registry.auth.role-source}
+    token-state-manager:
+      split-tokens: true
+    application-type: web_app
+    auth-server-url: ${registry.auth.endpoint}
+    client-id: ${registry.auth.client-id}
+    credentials:
+      secret: ${registry.auth.client-secret}
+    authentication:
+      id-token-required: false
+    token-path: ${registry.auth.token-path}
+    end-session-path: ${registry.auth.end-session-path}
+    authorization-path: ${registry.auth.auth-path}
+    provider: ${registry.auth.provider}
   s3:
     aws:
       region: ${registry.storage.s3.bucket.region}
   elasticsearch:
     hosts: ${registry.search.elasticsearch.host}
   http:
+    auth:
+      permission:
+        default:
+          policy: authenticated
+          paths: /*
+        default-api:
+          policy: permit
+          paths:
+            - /terraform/*
+            - /.well-known/*
+        publish:
+          policy: publish
+          paths: /terraform/*
+          methods: POST
+      basic: false
+      policy:
+        publish:
+          roles-allowed: publisher
     limits:
       max-body-size: ${API_MAX_BODY_SIZE:100M}
     filter:
@@ -69,7 +129,12 @@ quarkus:
         matches: /static/.+
         methods: GET
         order: 1
-
+    proxy:
+      proxy-address-forwarding: ${registry.proxy.enabled}
+      allow-forwarded: true
+      enable-forwarded-host: ${registry.proxy.enabled}
+      forwarded-host-header: ${registry.proxy.forwarded-header}
+    cors: true
 
 "%dev":
    registry:
@@ -93,7 +158,11 @@ quarkus:
        dev-server:
          port: 3000
      http:
-       cors: true
+       cors:
+         origins: "*"
+         methods: "*"
+         headers: "*"
+         access-control-allow-credentials: true
        ssl:
          certificate:
            files: "./dev/certs/cert.pem"
@@ -113,6 +182,7 @@ quarkus:
             access-key-id: test
             secret-access-key: test
             session-token: test
+        region: eu-central-1
     s3:
       endpoint-override: http://localhost:4566
       path-style-access: true

@@ -3,7 +3,7 @@ import ModuleInput from "./ModuleInput";
 
 describe("<ModuleInput /> spec", () => {
   it("renders the ModuleInput", () => {
-    const container = render(
+    const view = render(
       <ModuleInput
         inputs={[
           {
@@ -15,6 +15,6 @@ describe("<ModuleInput /> spec", () => {
         ]}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

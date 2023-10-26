@@ -7,7 +7,7 @@ import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.sas.BlobContainerSasPermission;
 import com.azure.storage.blob.sas.BlobServiceSasSignatureValues;
 import core.exceptions.StorageException;
-import core.storage.StorageService;
+import core.storage.StorageRepository;
 import core.storage.util.StorageUtil;
 import core.terraform.Module;
 import core.terraform.Provider;
@@ -23,7 +23,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @LookupIfProperty(name = "registry.storage.backend", stringValue = "azureBlob")
 @ApplicationScoped
-public class BlobStorageService extends StorageService {
+public class BlobStorageRepository extends StorageRepository {
 
   BlobServiceClient client;
   BlobContainerClient blobContainerClient;

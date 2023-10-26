@@ -41,7 +41,7 @@ Object {
                 class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-16m7pga-MuiChip-root"
               >
                 <span
-                  class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                  class="MuiChip-label MuiChip-labelMedium css-1jzq0dw-MuiChip-label"
                 >
                   ecr_lifecycle_policy.this
                 </span>
@@ -89,7 +89,7 @@ Object {
               class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-16m7pga-MuiChip-root"
             >
               <span
-                class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                class="MuiChip-label MuiChip-labelMedium css-1jzq0dw-MuiChip-label"
               >
                 ecr_lifecycle_policy.this
               </span>

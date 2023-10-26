@@ -3,7 +3,7 @@ import MisconfigurationItem from "./MisconfigurationItem";
 
 describe("<MisconfigurationItem /> spec", () => {
   it("renders the MisconfigurationItem", () => {
-    const container = render(
+    const view = render(
       <MisconfigurationItem
         misconfiguration={{
           severity: "CRITICAL",
@@ -22,6 +22,6 @@ describe("<MisconfigurationItem /> spec", () => {
         keyIdentifier={"foo-bar-baz"}
       />,
     );
-    expect(container).toMatchSnapshot();
+    expect(view).toMatchSnapshot();
   });
 });

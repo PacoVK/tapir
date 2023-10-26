@@ -2,7 +2,7 @@ package extensions.docs.generator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.backend.SearchService;
+import core.backend.TapirRepository;
 import core.terraform.Module;
 import core.upload.FormData;
 import extensions.cli.CliCommandProcessor;
@@ -21,16 +21,16 @@ public class DocumentationGenerator {
   CliCommandProcessor commandProcessor;
   ObjectMapper mapper = new ObjectMapper();
 
-  SearchService searchService;
+  TapirRepository tapirRepository;
 
   public DocumentationGenerator(
           EventBus eventBus,
           CliCommandProcessor commandProcessor,
-          Instance<SearchService> searchServiceInstance
+          Instance<TapirRepository> searchServiceInstance
   ) {
     this.eventBus = eventBus;
     this.commandProcessor = commandProcessor;
-    this.searchService = searchServiceInstance.get();
+    this.tapirRepository = searchServiceInstance.get();
   }
 
   @Blocking

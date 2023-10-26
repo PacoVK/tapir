@@ -3,7 +3,7 @@ import NotFoundInfo from "./NotFoundInfo";
 
 describe("<NotFoundInfo /> spec", () => {
   it("renders the NotFoundInfo", () => {
-    const container = render(<NotFoundInfo entity={"foo"} />);
-    expect(container).toMatchSnapshot();
+    const view = render(<NotFoundInfo entity={"foo"} />);
+    expect(view).toMatchSnapshot();
   });
 });

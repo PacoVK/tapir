@@ -18,7 +18,7 @@ import {
 import InfoIcon from "@mui/icons-material/Info";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { formatDate } from "../util/DateUtil";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BuildCircle from "@mui/icons-material/BuildCircle";
 import { ghcolors as theme } from "react-syntax-highlighter/dist/esm/styles/prism";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/light";
@@ -26,6 +26,7 @@ import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/light";
 const ProviderDetails = () => {
   const routeParams = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [provider, setProvider] = useState(location.state?.data);
   const [version, setVersion] = React.useState();
@@ -35,10 +36,14 @@ const ProviderDetails = () => {
     const response = await fetch(
       `${baseUrl}/terraform/providers/v1/${routeParams.namespace}/${routeParams.type}`,
     );
-    const provider = await response.json();
-    setProvider(provider);
-    // @ts-ignore
-    setVersion(Object.keys(provider.versions)[0]);
+    if (response.status === 404) {
+      navigate("/404");
+    } else {
+      const provider = await response.json();
+      setProvider(provider);
+      // @ts-ignore
+      setVersion(Object.keys(provider.versions)[0]);
+    }
   };
 
   const loadingRoutine = () => {

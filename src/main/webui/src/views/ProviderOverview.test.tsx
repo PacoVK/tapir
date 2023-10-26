@@ -4,7 +4,7 @@ import ProviderOverview from "./ProviderOverview";
 
 describe("<ProviderOverview /> spec", () => {
   it("renders the provider overview", () => {
-    const container = render(<ProviderOverview />);
-    expect(container).toMatchSnapshot();
+    const view = render(<ProviderOverview />);
+    expect(view).toMatchSnapshot();
   });
 });

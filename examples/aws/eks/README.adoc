@@ -24,7 +24,7 @@ You can deploy the example by running the following commands:
 [source,bash]
 ----
 terraform init
-terraform apply -var="hosted_zone_name=<top_level_domain>" -var="eks_oidc_issuer_url=<eks_oidc_issuer_url>"
+terraform apply -var="hosted_zone_name=<top_level_domain>" -var="eks_oidc_issuer_url=<eks_oidc_issuer_url>" -var="auth_endpoint=<your-idp-endpoint>" -var="auth_client_id=<your-client-id>"
 ----
 
 [INFO]
@@ -38,6 +38,6 @@ You can clean up the example by running the following commands:
 
 [source,bash]
 ----
-terraform destroy -var="hosted_zone_name=<top_level_domain>" -var="eks_oidc_issuer_url=<eks_oidc_issuer_url>"
+terraform destroy -var="hosted_zone_name=<top_level_domain>" -var="eks_oidc_issuer_url=<eks_oidc_issuer_url>" -var="auth_endpoint=<your-idp-endpoint>" -var="auth_client_id=<your-client-id>"
 ----
 

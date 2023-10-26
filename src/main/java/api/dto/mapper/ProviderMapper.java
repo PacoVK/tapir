@@ -2,30 +2,40 @@ package api.dto.mapper;
 
 import api.dto.GpgPublicKey;
 import api.dto.ProviderTerraformDto;
+import api.dto.ProviderVersionsDto;
 import core.config.SigningKeys;
 import core.exceptions.TapirException;
-import core.storage.StorageService;
+import core.storage.StorageRepository;
 import core.storage.util.StorageUtil;
 import core.terraform.Provider;
 import core.terraform.ProviderPlatform;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-@ApplicationScoped
 public class ProviderMapper {
 
   private static final String DOWNLOAD_URL = "DOWNLOAD_URL";
   private static final String SHASUM_FILE_URL = "SHASUM_FILE_URL";
   private static final String SHASUM_FILE_SIG_URL = "SHASUM_FILE_SIG_URL";
 
-  StorageService storageService;
+  StorageRepository storageRepository;
   SigningKeys signingKeys;
 
-  public ProviderMapper(Instance<StorageService> storageServiceInstance, SigningKeys signingKeys) {
-    this.storageService = storageServiceInstance.get();
+  public ProviderMapper(StorageRepository storageRepository, SigningKeys signingKeys) {
+    this.storageRepository = storageRepository;
     this.signingKeys = signingKeys;
+  }
+
+  public List<ProviderVersionsDto> buildProviderVersionsDto(Provider provider) {
+    List<ProviderVersionsDto> versionsDtos = new LinkedList<>();
+    provider.getVersions().forEach(
+        (artifactVersion, platforms) ->
+            versionsDtos.add(
+                new ProviderVersionsDto(artifactVersion.getVersion(), platforms)
+            )
+    );
+    return versionsDtos;
   }
 
   public ProviderTerraformDto toDtoByVersionAndPlatform(
@@ -68,7 +78,7 @@ public class ProviderMapper {
     String providerPath = basePath
             + "/"
             + fileName;
-    String downloadUrl = storageService.getDownloadUrlForArtifact(providerPath);
+    String downloadUrl = storageRepository.getDownloadUrlForArtifact(providerPath);
     String filePrefix = fileName
             .subSequence(0, fileName.lastIndexOf(version) + version.length())
             .toString();
@@ -77,9 +87,9 @@ public class ProviderMapper {
             + filePrefix
             + "_"
             + "SHA256SUMS";
-    String shaSumUrl = storageService.getDownloadUrlForArtifact(shasumFilePath);
+    String shaSumUrl = storageRepository.getDownloadUrlForArtifact(shasumFilePath);
     String shasumSigFilePath = shasumFilePath + ".sig";
-    String shaSumSigUrl = storageService.getDownloadUrlForArtifact(shasumSigFilePath);
+    String shaSumSigUrl = storageRepository.getDownloadUrlForArtifact(shasumSigFilePath);
     return Map.of(
             DOWNLOAD_URL, downloadUrl,
             SHASUM_FILE_URL, shaSumUrl,

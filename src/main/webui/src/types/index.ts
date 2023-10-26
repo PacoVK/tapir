@@ -17,6 +17,12 @@ export interface Provider {
   versions: { version: string }[];
 }
 
+export type DeployKey = {
+  id: string;
+  key: string;
+  lastModifiedAt: string;
+};
+
 export interface Misconfiguration {
   resource: string;
   severity: string;
@@ -89,3 +95,12 @@ export interface ModuleAnalysisTabProps {
   reports: any;
   documentation: any;
 }
+
+export type User = {
+  name: string;
+  roles: string[];
+  givenName?: string;
+  familyName?: string;
+  email?: string;
+  preferredUsername?: string;
+};

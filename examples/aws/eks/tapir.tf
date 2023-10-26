@@ -61,6 +61,14 @@ resource "kubernetes_deployment_v1" "tapir" {
             name  = "REGISTRY_PORT"
             value = 443
           }
+          env {
+            name  = "AUTH_ENDPOINT"
+            value = var.auth_endpoint
+          }
+          env {
+            name  = "AUTH_CLIENT_ID"
+            value = var.auth_client_id
+          }
         }
       }
     }
@@ -236,7 +244,8 @@ data "aws_iam_policy_document" "tapir" {
     resources = [
       "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Modules",
       "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Providers",
-      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Reports"
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/Reports",
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/DeployKeys"
     ]
     actions = [
       "dynamodb:PutItem",

@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-class BlobStorageServiceTest extends AbstractStorageTest {
+class BlobStorageRepositoryTest extends AbstractStorageTest {
 
   BlobServiceClient client;
   BlobContainerClient blobContainerClient;
@@ -27,9 +27,9 @@ class BlobStorageServiceTest extends AbstractStorageTest {
   String azureBlobConnectionString;
   @ConfigProperty(name = "registry.storage.azure.containerName")
   String containerName;
-  BlobStorageService blobStorageService;
+  BlobStorageRepository blobStorageService;
 
-  public BlobStorageServiceTest(BlobStorageService blobStorageService) {
+  public BlobStorageRepositoryTest(BlobStorageRepository blobStorageService) {
     super(blobStorageService);
     this.blobStorageService = blobStorageService;
   }

@@ -1,6 +1,6 @@
 package core.vertx.event.consumer;
 
-import core.backend.SearchService;
+import core.backend.TapirRepository;
 import core.terraform.Module;
 import core.upload.FormData;
 import extensions.core.Report;
@@ -21,11 +21,11 @@ public class ReportListener {
 
   static final Logger LOGGER = Logger.getLogger(ReportListener.class.getName());
 
-  SearchService searchService;
+  TapirRepository tapirRepository;
   EventBus eventBus;
 
-  public ReportListener(Instance<SearchService> searchServiceInstance, EventBus eventBus) {
-    this.searchService = searchServiceInstance.get();
+  public ReportListener(Instance<TapirRepository> searchServiceInstance, EventBus eventBus) {
+    this.tapirRepository = searchServiceInstance.get();
     this.eventBus = eventBus;
   }
 
@@ -52,7 +52,7 @@ public class ReportListener {
     report.setSecurityReport(securityReport);
     report.setDocumentation(documentation);
     eventBus.requestAndForget("module.report.finished", report);
-    searchService.ingestSecurityScanResult(report);
+    tapirRepository.ingestSecurityScanResult(report);
     return "ok";
   }
 
@@ -62,7 +62,7 @@ public class ReportListener {
             report.getModuleName(),
             report.getModuleVersion())
     );
-    searchService.ingestSecurityScanResult(report);
+    tapirRepository.ingestSecurityScanResult(report);
     return "ok";
   }
 }

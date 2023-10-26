@@ -14,10 +14,12 @@ import com.azure.cosmos.models.FeedResponse;
 import com.azure.cosmos.models.PartitionKey;
 import com.azure.cosmos.models.SqlParameter;
 import com.azure.cosmos.models.SqlQuerySpec;
-import core.backend.SearchService;
+import core.backend.TapirRepository;
+import core.exceptions.DeployKeyNotFoundException;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
+import core.tapir.DeployKey;
 import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
@@ -30,13 +32,14 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @LookupIfProperty(name = "registry.search.backend", stringValue = "cosmosdb")
 @ApplicationScoped
-public class CosmosDbRepository extends SearchService {
+public class CosmosDbRepository extends TapirRepository {
 
   CosmosClient client;
   CosmosDatabase database;
   CosmosContainer modulesContainer;
   CosmosContainer providerContainer;
   CosmosContainer reportsContainer;
+  CosmosContainer deployKeysContainer;
   @ConfigProperty(name = "registry.search.azure.endpoint")
   String endpoint;
   @ConfigProperty(name = "registry.search.azure.master-key")
@@ -54,6 +57,7 @@ public class CosmosDbRepository extends SearchService {
     this.modulesContainer = database.getContainer("Modules");
     this.providerContainer = database.getContainer("Providers");
     this.reportsContainer = database.getContainer("Reports");
+    this.deployKeysContainer = database.getContainer("DeployKeys");
   }
 
   @Override
@@ -62,6 +66,7 @@ public class CosmosDbRepository extends SearchService {
     createContainerIfNotExists("Modules");
     createContainerIfNotExists("Providers");
     createContainerIfNotExists("Reports");
+    createContainerIfNotExists("DeployKeys");
   }
 
   private void createContainerIfNotExists(String name) {
@@ -116,17 +121,34 @@ public class CosmosDbRepository extends SearchService {
   }
 
   @Override
-  public Module getModuleById(String id) throws ModuleNotFoundException {
+  public PaginationDto findDeployKeys(String identifier, Integer limit, String term) throws Exception {
+    List<SqlParameter> paramList = List.of(
+        new SqlParameter("@id", "%" + term + "%"),
+        new SqlParameter("@key", "%" + term + "%")
+    );
+    SqlQuerySpec querySpec = new SqlQuerySpec(
+        "SELECT * FROM DeployKeys p WHERE p.id LIKE @id OR p.key LIKE @key",
+        paramList);
+    String continuationToken = identifier.isEmpty() ? null : identifier;
+    FeedResponse<DeployKey> feedResponse = providerContainer
+        .queryItems(
+            querySpec,
+            new CosmosQueryRequestOptions(),
+            DeployKey.class)
+        .streamByPage(continuationToken, limit).findFirst().orElse(null);
+    if (feedResponse == null) {
+      return new PaginationDto(Collections.EMPTY_LIST);
+    }
+    return new PaginationDto(feedResponse.getResults(), feedResponse.getContinuationToken());
+  }
+
+  @Override
+  public Module getModule(String id) throws ModuleNotFoundException {
     try {
       return modulesContainer.readItem(id, new PartitionKey(id), Module.class).getItem();
     } catch (NotFoundException cosmosException) {
       throw new ModuleNotFoundException(id, cosmosException);
     }
-  }
-
-  @Override
-  public Module getModuleVersions(Module module) throws ModuleNotFoundException {
-    return getModuleById(module.getId());
   }
 
   @Override
@@ -188,7 +210,7 @@ public class CosmosDbRepository extends SearchService {
 
   @Override
   public Module increaseDownloadCounter(Module module) throws ModuleNotFoundException {
-    Module existingModule = getModuleById(module.getId());
+    Module existingModule = getModule(module.getId());
     Integer downloads = existingModule.getDownloads();
     existingModule.setDownloads(downloads + 1);
     modulesContainer.upsertItem(existingModule);
@@ -209,11 +231,47 @@ public class CosmosDbRepository extends SearchService {
   }
 
   @Override
-  public Provider getProviderById(String id) throws ProviderNotFoundException {
+  public Provider getProvider(String id) throws ProviderNotFoundException {
     try {
       return providerContainer.readItem(id, new PartitionKey(id), Provider.class).getItem();
     } catch (NotFoundException cosmosException) {
       throw new ProviderNotFoundException(id, cosmosException);
     }
+  }
+
+  @Override
+  public DeployKey getDeployKeyById(String id) throws DeployKeyNotFoundException {
+    try {
+      return deployKeysContainer.readItem(id, new PartitionKey(id), DeployKey.class).getItem();
+    } catch (NotFoundException cosmosException) {
+      throw new DeployKeyNotFoundException(id, cosmosException);
+    }
+  }
+
+  @Override
+  public void saveDeployKey(DeployKey deployKey) throws Exception {
+    deployKeysContainer.createItem(
+            deployKey,
+            new PartitionKey(deployKey.getId()),
+            new CosmosItemRequestOptions()
+    );
+  }
+
+  @Override
+  public void updateDeployKey(DeployKey deployKey) throws Exception {
+    deployKeysContainer.upsertItem(
+        deployKey,
+        new PartitionKey(deployKey.getId()),
+        new CosmosItemRequestOptions()
+    );
+  }
+
+  @Override
+  public void deleteDeployKey(String id) throws Exception {
+    deployKeysContainer.deleteItem(
+            id,
+            new PartitionKey(id),
+            new CosmosItemRequestOptions()
+    );
   }
 }

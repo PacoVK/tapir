@@ -37,7 +37,6 @@ nb-configuration.xml
 *.rej
 
 # Local environment
-.env
 dev/certs
 src/main/resources/META-INF/resources/*
 !src/main/resources/META-INF/resources/.gitkeep

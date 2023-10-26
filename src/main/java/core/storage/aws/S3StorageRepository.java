@@ -1,7 +1,7 @@
 package core.storage.aws;
 
 import core.exceptions.StorageException;
-import core.storage.StorageService;
+import core.storage.StorageRepository;
 import core.storage.util.StorageUtil;
 import core.terraform.Module;
 import core.terraform.Provider;
@@ -24,9 +24,9 @@ import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequ
 
 @LookupIfProperty(name = "registry.storage.backend", stringValue = "s3")
 @ApplicationScoped
-public class S3StorageService extends StorageService {
+public class S3StorageRepository extends StorageRepository {
 
-  static final Logger LOGGER = Logger.getLogger(S3StorageService.class.getName());
+  static final Logger LOGGER = Logger.getLogger(S3StorageRepository.class.getName());
 
   S3Client s3;
   S3Presigner presigner;
@@ -35,7 +35,7 @@ public class S3StorageService extends StorageService {
   String bucketName;
 
 
-  public S3StorageService(S3Client s3, S3Presigner presigner) {
+  public S3StorageRepository(S3Client s3, S3Presigner presigner) {
     this.s3 = s3;
     this.presigner = presigner;
   }

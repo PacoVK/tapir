@@ -1,5 +1,6 @@
 package core.backend.aws.dynamodb.repository;
 
+import core.tapir.DeployKey;
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 
 import core.backend.aws.dynamodb.converter.ArtifactVersionsConverter;
@@ -99,5 +100,20 @@ public class TableSchemas {
                           .setter(Report::setDocumentation)
                           .attributeConverter(new TerraformDocumentationConverter())
                   )
+                  .build();
+
+  static final TableSchema<DeployKey> deployKeysTableSchema =
+          TableSchema.builder(DeployKey.class)
+                  .newItemSupplier(DeployKey::new)
+                  .addAttribute(String.class, a -> a.name("id")
+                          .getter(DeployKey::getId)
+                          .setter(DeployKey::setId)
+                          .tags(primaryPartitionKey()))
+                  .addAttribute(String.class, a -> a.name("key")
+                          .getter(DeployKey::getKey)
+                          .setter(DeployKey::setKey))
+                  .addAttribute(Instant.class, a -> a.name("createdAt")
+                          .getter(DeployKey::getLastModifiedAt)
+                          .setter(DeployKey::setLastModifiedAt))
                   .build();
 }

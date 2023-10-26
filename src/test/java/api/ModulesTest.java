@@ -1,22 +1,19 @@
 package api;
 
-import core.backend.aws.dynamodb.repository.DynamodbRepository;
-import core.exceptions.ModuleNotFoundException;
 import core.exceptions.StorageException;
-import core.storage.aws.S3StorageService;
+import core.service.ModuleService;
+import core.storage.aws.S3StorageRepository;
 import core.terraform.ArtifactVersion;
 import core.terraform.Module;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import static io.restassured.RestAssured.given;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -27,10 +24,10 @@ class ModulesTest {
   final Module fakeModule = new Module("foo", "bar", "baz", "0.0.0");
 
   @InjectMock
-  DynamodbRepository repository;
+  ModuleService moduleService;
 
   @InjectMock
-  S3StorageService storageService;
+  S3StorageRepository storageService;
 
   @BeforeEach
   void setUp() {
@@ -44,13 +41,13 @@ class ModulesTest {
   }
 
   @Test
-  void getAvailableVersionsForModule() throws ModuleNotFoundException {
+  void getAvailableVersionsForModule() throws Exception {
     String fakeUrl = String.format("/%s/%s/%s/versions",
             fakeModule.getNamespace(),
             fakeModule.getName(),
             fakeModule.getProvider()
     );
-    when(repository.getModuleVersions(any())).thenReturn(fakeModule);
+    when(moduleService.getModuleVersions(any())).thenReturn(fakeModule.getVersions());
     given().
             when().get(fakeUrl)
             .then()

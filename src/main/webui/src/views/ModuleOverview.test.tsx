@@ -4,7 +4,7 @@ import ModuleOverview from "./ModuleOverview";
 
 describe("<ModuleOverview /> spec", () => {
   it("renders the module overview", () => {
-    const container = render(<ModuleOverview />);
-    expect(container).toMatchSnapshot();
+    const view = render(<ModuleOverview />);
+    expect(view).toMatchSnapshot();
   });
 });

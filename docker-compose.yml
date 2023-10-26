@@ -1,6 +1,19 @@
 version: '3'
 services:
 
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./dev/scripts/keycloak:/opt/keycloak/data/import
+    ports:
+      - "8089:8080"
+    command:
+      - start-dev --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+
   opensearch-node1:
     image: opensearchproject/opensearch
     container_name: opensearch-node1
