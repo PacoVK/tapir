@@ -61,6 +61,14 @@ resource "kubernetes_deployment_v1" "tapir" {
             name  = "REGISTRY_PORT"
             value = 443
           }
+          env {
+            name  = "AUTH_ENDPOINT"
+            value = var.auth_endpoint
+          }
+          env {
+            name  = "AUTH_CLIENT_ID"
+            value = var.auth_client_id
+          }
         }
       }
     }

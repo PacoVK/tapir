@@ -78,7 +78,7 @@ public class ElasticSearchRepository extends TapirRepository {
   public DeployKey getDeployKeyById(String id) throws DeployKeyNotFoundException {
     Request request = new Request(
         HttpMethod.GET,
-        "/deploykeys/_doc/deploykey-" + id);
+        "/deploykeys/_doc/" + id);
     try {
       return doRequestAndReturnEntity(request).mapTo(DeployKey.class);
     } catch (IOException e) {
@@ -88,11 +88,11 @@ public class ElasticSearchRepository extends TapirRepository {
 
   @Override
   public void saveDeployKey(DeployKey deployKey) throws Exception {
-    String targetRequestPath = "/deploykeys/_doc/deploykey-"
-        + deployKey.getId();
     Request request = new Request(
         HttpMethod.POST,
-        targetRequestPath
+        String.format("/deploykeys/_doc/%s?refresh=wait_for",
+            deployKey.getId()
+        )
     );
     request.setJsonEntity(JsonObject.mapFrom(deployKey).toString());
     restClient.performRequest(request);
@@ -100,7 +100,7 @@ public class ElasticSearchRepository extends TapirRepository {
 
   @Override
   public void updateDeployKey(DeployKey deployKey) throws Exception {
-    String targetRequestPath = "/deploykeys/_doc/deploykey-"
+    String targetRequestPath = "/deploykeys/_doc/"
         + deployKey.getId();
     Request request = new Request(
         HttpMethod.PUT,
@@ -112,7 +112,7 @@ public class ElasticSearchRepository extends TapirRepository {
 
   @Override
   public void deleteDeployKey(String id) throws Exception {
-    String targetRequestPath = "/deploykeys/_doc/deploykey-"
+    String targetRequestPath = "/deploykeys/_doc/"
         + id;
     Request request = new Request(
         HttpMethod.DELETE,

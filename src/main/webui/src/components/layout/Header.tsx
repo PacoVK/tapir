@@ -10,7 +10,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { deepOrange } from "@mui/material/colors";
+import { deepOrange, orange } from "@mui/material/colors";
 import LaunchIcon from "@mui/icons-material/Launch";
 
 const Header = () => {
@@ -72,7 +72,11 @@ const Header = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             sx={{
-              bgcolor: deepOrange[500],
+              ":hover": {
+                cursor: "pointer",
+                bgcolor: deepOrange[500],
+              },
+              bgcolor: orange[500],
               float: "right",
               marginRight: "2vw",
               minWidth: "unset",
