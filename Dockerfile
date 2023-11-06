@@ -1,4 +1,4 @@
-FROM aquasec/trivy:0.46.1 as SECURITY_SCANNER
+FROM aquasec/trivy:0.47.0 as SECURITY_SCANNER
 
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.17-4
 
