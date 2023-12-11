@@ -13,6 +13,26 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === changed
 
+== 0.6.1
+
+=== fixes
+
+=== added
+
+=== changed
+
+* https://github.com/PacoVK/tapir/releases/tag/0.6.1[Dependency updates]
+
+== 0.6.0
+
+=== fixes
+
+=== added
+
+=== changed
+
+* https://github.com/PacoVK/tapir/releases/tag/0.6.0[Dependency updates]
+
 == 0.6.0-rc1 - 2023-10-26
 
 === fixes
