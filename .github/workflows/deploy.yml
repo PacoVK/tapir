@@ -38,7 +38,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Download artifact
         id: download-artifact
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v3
         with:
           workflow: build.yml
           workflow_conclusion: success
