@@ -105,6 +105,8 @@ quarkus:
           policy: permit
           paths:
             - /terraform/*
+            # this is the path used for the local storage backend
+            - /tapir/storage/*
             - /.well-known/*
         publish:
           policy: publish

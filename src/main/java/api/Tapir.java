@@ -25,7 +25,6 @@ public class Tapir {
   }
 
   @GET
-  @PermitAll
   @Path("/storage/{namespace}/{name}/{identifier}/{filename}")
   @Produces("application/zip")
   public Response download(String namespace, String name, String identifier, String filename)
