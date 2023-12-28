@@ -2,7 +2,7 @@ version: '3'
 services:
 
   keycloak:
-    image: quay.io/keycloak/keycloak
+    image: quay.io/keycloak/keycloak:22.0
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./dev/scripts/keycloak:/opt/keycloak/data/import
