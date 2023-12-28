@@ -13,6 +13,18 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === changed
 
+== 0.6.2
+
+=== fixes
+
+https://github.com/PacoVK/tapir/issues/360[#360 - Fix read access to registry for local storage]
+
+=== added
+
+=== changed
+
+* With local storage did not throw the right exceptions when artefact was not found on download. Now throws a 404 and returns JSON-formatted error message.
+
 == 0.6.1
 
 === fixes
