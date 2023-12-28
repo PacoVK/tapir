@@ -1,10 +1,10 @@
 package api;
 
 import core.exceptions.ModuleNotFoundException;
+import core.exceptions.ProviderNotFoundException;
 import core.service.AuthService;
 import core.storage.local.LocalStorageRepository;
 import core.tapir.User;
-import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -28,24 +28,28 @@ public class Tapir {
   @Path("/storage/{namespace}/{name}/{identifier}/{filename}")
   @Produces("application/zip")
   public Response download(String namespace, String name, String identifier, String filename)
-          throws ModuleNotFoundException {
+      throws ModuleNotFoundException, ProviderNotFoundException {
     String path = Paths.get(namespace, name, identifier, filename).toString();
+    File artefact;
     if (identifier.matches(".*\\d.*")) {
       LOGGER.fine("Identifier is a version string, assume user requested a provider " + identifier);
       LOGGER.info("Requested the download of provider " + path);
       path = LocalStorageRepository.PROVIDER_RESOURCE_DIR + path;
+      artefact = new File(path);
+      if (!artefact.exists()) {
+        throw new ProviderNotFoundException(path);
+      }
     } else {
       LOGGER.info("Requested the download of module " + path);
       path = LocalStorageRepository.MODULE_RESOURCE_DIR + path;
-    }
-    File moduleArchive = new File(path);
-
-    if (!moduleArchive.exists()) {
-      throw new ModuleNotFoundException(path);
+      artefact = new File(path);
+      if (!artefact.exists()) {
+        throw new ModuleNotFoundException(path);
+      }
     }
 
     return Response
-            .ok(moduleArchive)
+            .ok(artefact)
             .build();
   }
 
