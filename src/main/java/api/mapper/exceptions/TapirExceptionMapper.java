@@ -3,6 +3,7 @@ package api.mapper.exceptions;
 import api.mapper.exceptions.response.ErrorResponse;
 import core.exceptions.NotFoundException;
 import core.exceptions.TapirException;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
@@ -26,6 +27,7 @@ public class TapirExceptionMapper implements ExceptionMapper<TapirException> {
       status = Response.Status.NOT_FOUND;
     }
     return Response.status(status)
-            .entity(new ErrorResponse(errorId, errorMessage)).build();
+            .entity(new ErrorResponse(errorId, errorMessage))
+            .header("Content-Type", MediaType.APPLICATION_JSON).build();
   }
 }
