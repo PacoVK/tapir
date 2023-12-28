@@ -26,7 +26,7 @@ Object {
         :
       </p>
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
       >
         <div
           aria-controls="damaged.tf-content"
@@ -83,7 +83,7 @@ Object {
                   class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
                 >
                   <div
-                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
                   >
                     <div
                       aria-controls="An ingress security group rule allows traffic from /0.0-content"
@@ -250,7 +250,7 @@ Object {
       :
     </p>
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
     >
       <div
         aria-controls="damaged.tf-content"
@@ -307,7 +307,7 @@ Object {
                 class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
               >
                 <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
                 >
                   <div
                     aria-controls="An ingress security group rule allows traffic from /0.0-content"
