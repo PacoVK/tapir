@@ -158,6 +158,18 @@ When you publish a Terraform module, a corresponding DeployKey must be created f
 * Versioning must follow [Semantic Versioning](https://semver.org) specs
 * Currently only `.zip` is supported.
 
+**NOTE**: The zipped module directory layout should follow the [Terraform module structure](https://www.terraform.io/docs/language/modules/develop/structure.html). 
+
+Example:
+```
+module.zip
+├── main.tf
+├── outputs.tf
+├── README.md
+├── variables.tf
+└── <any-other-file-or-directory>
+```
+
 You can simply upload modules to the registry via its HTTP REST-Api. It will return HTTP status `200` on success.
 ```shell
 curl -XPOST  -H 'x-api-key: <API_KEY>' --fail-with-body -F archive=@archive.zip "https://example.corp.com/terraform/modules/v1/<namespace>/<name>/<provider>/<version>"
