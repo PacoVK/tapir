@@ -6,6 +6,15 @@ import { ghcolors as theme } from "react-syntax-highlighter/dist/esm/styles/pris
 
 const ModuleInput = (props: ModuleInputProps) => {
   const { inputs } = props;
+
+  const renderDefaultValue = (defaultValue: any) => {
+    if (typeof defaultValue === 'object') {
+      return JSON.stringify(defaultValue)
+    } else {
+        return defaultValue
+    }
+  }
+
   return (
     <Stack justifyContent="center" alignItems="left" spacing={2}>
       {inputs && inputs.length > 0 ? (
@@ -26,7 +35,7 @@ const ModuleInput = (props: ModuleInputProps) => {
                   {input.description ? input.description : null}
                 </Typography>
                 <SyntaxHighlighter language="hcl" style={theme}>
-                  {input.type}
+                  {`${input.type} ${input.default ? `= ${renderDefaultValue(input.default)}` : ""}`}
                 </SyntaxHighlighter>
               </Container>
             </Box>

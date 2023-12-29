@@ -21,7 +21,7 @@ Object {
                 repositories
               </strong>
               <span
-                class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-rt4zii-MuiBadge-badge"
+                class="MuiBadge-badge MuiBadge-dot MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-63w44p-MuiBadge-badge"
               />
             </span>
           </p>
@@ -46,7 +46,46 @@ Object {
                 </span>
                     tags : optional(map(any))
 
-                  }))
+                  })) 
+              </code>
+            </pre>
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            <span
+              class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+            >
+              <strong>
+                cidr_blocks
+              </strong>
+              <span
+                class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-rt4zii-MuiBadge-badge"
+              />
+            </span>
+          </p>
+          <div
+            class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              CIDR block for the VPC
+            </p>
+            <pre
+              style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none; padding: 1em; margin: .5em 0px; overflow: auto; border: 1px solid #dddddd; background-color: white;"
+            >
+              <code
+                class="language-hcl"
+                style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+              >
+                <span>
+                  string = 10.0.0.0/8
+                </span>
               </code>
             </pre>
           </div>
@@ -71,7 +110,7 @@ Object {
               repositories
             </strong>
             <span
-              class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-rt4zii-MuiBadge-badge"
+              class="MuiBadge-badge MuiBadge-dot MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-63w44p-MuiBadge-badge"
             />
           </span>
         </p>
@@ -96,7 +135,46 @@ Object {
               </span>
                   tags : optional(map(any))
 
-                }))
+                })) 
+            </code>
+          </pre>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+        >
+          <span
+            class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+          >
+            <strong>
+              cidr_blocks
+            </strong>
+            <span
+              class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-rt4zii-MuiBadge-badge"
+            />
+          </span>
+        </p>
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            CIDR block for the VPC
+          </p>
+          <pre
+            style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none; padding: 1em; margin: .5em 0px; overflow: auto; border: 1px solid #dddddd; background-color: white;"
+          >
+            <code
+              class="language-hcl"
+              style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+            >
+              <span>
+                string = 10.0.0.0/8
+              </span>
             </code>
           </pre>
         </div>

@@ -133,7 +133,7 @@ Object {
                     </span>
                         tags : optional(map(any))
 
-                      }))
+                      })) 
                   </code>
                 </pre>
               </div>
@@ -296,7 +296,7 @@ Object {
                   </span>
                       tags : optional(map(any))
 
-                    }))
+                    })) 
                 </code>
               </pre>
             </div>

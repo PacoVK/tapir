@@ -10,8 +10,15 @@ describe("<ModuleInput /> spec", () => {
             name: "repositories",
             type: "map(object({force_delete : optional(bool, false)\n    tags : optional(map(any))\n  }))",
             description: "List of repositories to create",
-            required: true,
+            required: false,
           },
+            {
+                name: "cidr_blocks",
+                type: "string",
+                description: "CIDR block for the VPC",
+                required: true,
+                default: "10.0.0.0/8",
+            },
         ]}
       />,
     );
