@@ -8,12 +8,12 @@ const ModuleInput = (props: ModuleInputProps) => {
   const { inputs } = props;
 
   const renderDefaultValue = (defaultValue: any) => {
-    if (typeof defaultValue === 'object') {
-      return JSON.stringify(defaultValue)
+    if (typeof defaultValue === "object") {
+      return JSON.stringify(defaultValue);
     } else {
-        return defaultValue
+      return defaultValue;
     }
-  }
+  };
 
   return (
     <Stack justifyContent="center" alignItems="left" spacing={2}>
@@ -35,7 +35,11 @@ const ModuleInput = (props: ModuleInputProps) => {
                   {input.description ? input.description : null}
                 </Typography>
                 <SyntaxHighlighter language="hcl" style={theme}>
-                  {`${input.type} ${input.default ? `= ${renderDefaultValue(input.default)}` : ""}`}
+                  {`${input.type} ${
+                    input.default
+                      ? `= ${renderDefaultValue(input.default)}`
+                      : ""
+                  }`}
                 </SyntaxHighlighter>
               </Container>
             </Box>

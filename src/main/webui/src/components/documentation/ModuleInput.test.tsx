@@ -12,13 +12,13 @@ describe("<ModuleInput /> spec", () => {
             description: "List of repositories to create",
             required: false,
           },
-            {
-                name: "cidr_blocks",
-                type: "string",
-                description: "CIDR block for the VPC",
-                required: true,
-                default: "10.0.0.0/8",
-            },
+          {
+            name: "cidr_blocks",
+            type: "string",
+            description: "CIDR block for the VPC",
+            required: true,
+            default: "10.0.0.0/8",
+          },
         ]}
       />,
     );
