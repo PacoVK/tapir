@@ -56,6 +56,7 @@ export interface ModuleInputProps {
     description: string;
     type: string;
     required: boolean;
+    default?: string;
   }[];
 }
 
