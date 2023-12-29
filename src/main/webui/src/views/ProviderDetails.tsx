@@ -121,7 +121,9 @@ const ProviderDetails = () => {
 terraform {
   required_providers {
     ${provider.type} = {
-      source = "${window.location.href.replace(location.pathname, "")}/${
+      source = "${window.location.href
+              .replace(location.pathname, "")
+              .split("://")[1]}/${
         provider.namespace
       }/${provider.type}"
     }
