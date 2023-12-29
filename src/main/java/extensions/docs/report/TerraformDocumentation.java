@@ -3,6 +3,7 @@ package extensions.docs.report;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -62,7 +63,7 @@ public class TerraformDocumentation {
     String type;
     String description;
     @JsonProperty(value = "default")
-    String defaultValue;
+    JsonNode defaultValue;
     Boolean required;
 
     public String getName() {
@@ -89,11 +90,11 @@ public class TerraformDocumentation {
       this.description = description;
     }
 
-    public String getDefaultValue() {
+    public JsonNode getDefaultValue() {
       return defaultValue;
     }
 
-    public void setDefaultValue(String defaultValue) {
+    public void setDefaultValue(JsonNode defaultValue) {
       this.defaultValue = defaultValue;
     }
 
