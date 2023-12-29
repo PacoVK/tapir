@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -50,7 +51,7 @@ public class FileService {
       ZipEntry entry = zipInputStream.getNextEntry();
       while (entry != null) {
         if (!entry.isDirectory()
-                && !entry.getName().startsWith("example")
+                && !entry.getName().contains("example")
                 && !entry.getName().startsWith(".")
                 && !entry.getName().contains("MACOS")
                 && (entry.getName().endsWith(".tf")
@@ -116,6 +117,10 @@ public class FileService {
   private File createOrGetFile(String fileName, Path targetDir) throws IOException {
     File tmpFile;
     if (!Files.exists(targetDir.resolve(fileName))) {
+      Path path = Paths.get(fileName);
+      if(path.getParent() != null) {
+        Files.createDirectories(targetDir.resolve(path.getParent()));
+      }
       tmpFile = Files.createFile(targetDir.resolve(fileName)).toFile();
     } else {
       tmpFile = targetDir.resolve(fileName).toFile();
