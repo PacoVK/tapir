@@ -1,3 +1,5 @@
 brew "awscli"
 brew "mkcert"
 brew "nss"
+brew "terraform-docs"
+brew "trivy"
