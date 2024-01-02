@@ -52,7 +52,6 @@ public class ReportListener {
     report.setSecurityReport(securityReport);
     report.setDocumentation(documentation);
     eventBus.requestAndForget("module.report.finished", report);
-    tapirRepository.ingestSecurityScanResult(report);
     return "ok";
   }
 
