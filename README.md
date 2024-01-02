@@ -1,6 +1,6 @@
 # Tapir
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ### A Private Terraform Registry
 
@@ -283,6 +283,7 @@ Thanks go to these wonderful people ([emoji key](https://allcontributors.org/doc
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://pascal.euhus.dev/"><img src="https://avatars.githubusercontent.com/u/27785614?v=4?s=100" width="100px;" alt="PacoVK"/><br /><sub><b>PacoVK</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/pulls?q=is%3Apr+reviewed-by%3APacoVK" title="Reviewed Pull Requests">👀</a> <a href="#projectManagement-PacoVK" title="Project Management">📆</a> <a href="#maintenance-PacoVK" title="Maintenance">🚧</a> <a href="#example-PacoVK" title="Examples">💡</a> <a href="https://github.com/PacoVK/tapir/commits?author=PacoVK" title="Code">💻</a> <a href="https://github.com/PacoVK/tapir/commits?author=PacoVK" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/andrea-defraia"><img src="https://avatars.githubusercontent.com/u/56583671?v=4?s=100" width="100px;" alt="Andrea Defraia"/><br /><sub><b>Andrea Defraia</b></sub></a><br /><a href="#example-andrea-defraia" title="Examples">💡</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/WeiMengXS"><img src="https://avatars.githubusercontent.com/u/54929266?v=4?s=100" width="100px;" alt="Wmxs"/><br /><sub><b>Wmxs</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/issues?q=author%3AWeiMengXS" title="Bug reports">🐛</a> <a href="#ideas-WeiMengXS" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
