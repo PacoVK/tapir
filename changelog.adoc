@@ -13,6 +13,21 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === changed
 
+== 0.6.3
+
+=== fixes
+
+* https://github.com/PacoVK/tapir/issues/360[#360 - Fix read access to registry for local storage]
+* https://github.com/PacoVK/tapir/issues/364[#364 - Fix mapping of documentation reports for Elasticsearch backend]
+
+=== added
+
+* https://github.com/PacoVK/tapir/issues/365[#365 - support modules with nested modules]
+
+=== changed
+
+* https://github.com/PacoVK/tapir/issues/360[#360 - Improve UI for module and provider details page - add default values, remove protocol from source URL]
+
 == 0.6.2
 
 === fixes
