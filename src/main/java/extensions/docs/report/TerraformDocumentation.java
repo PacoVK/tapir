@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -95,7 +96,11 @@ public class TerraformDocumentation {
     }
 
     public void setDefaultValue(JsonNode defaultValue) {
-      this.defaultValue = defaultValue;
+      if(defaultValue.isTextual()){
+        this.defaultValue = defaultValue;
+      } else {
+        this.defaultValue = new TextNode(defaultValue.toString());
+      }
     }
 
     public Boolean getRequired() {
