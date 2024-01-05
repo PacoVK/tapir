@@ -68,6 +68,6 @@ class ModulesTest {
             when().get(fakeUrl)
             .then()
             .statusCode(204)
-            .header("X-Terraform-Get","s3::https://fakeurl");
+            .header("X-Terraform-Get","https://fakeurl");
   }
 }
