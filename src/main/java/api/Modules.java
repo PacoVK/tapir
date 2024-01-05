@@ -79,8 +79,7 @@ public class Modules {
           throws StorageException {
     Module module = new Module(namespace, name, provider, version);
     String path = StorageUtil.generateModuleStoragePath(module);
-    String signedUrl = storageService.getDownloadUrlForArtifact(path);
-    String downloadUrl = String.format("s3::%s", signedUrl);
+    String downloadUrl = storageService.getDownloadUrlForArtifact(path);
     eventBus.requestAndForget("module.download.requested", module);
     return Response.noContent().header("X-Terraform-Get", downloadUrl).build();
   }
