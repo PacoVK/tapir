@@ -1,5 +1,5 @@
 # ignore files in src
-src/*x
+src/*
 
 # ignore mvn files
 mvnw*
