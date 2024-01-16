@@ -1,8 +1,8 @@
 # ignore files in src
-src/*
+/src/*
 
 # ignore mvn files
-mvnw*
+/mvnw*
 
 # ignore template files
-docs/pull_request_template.md
+/docs/pull_request_template.md
