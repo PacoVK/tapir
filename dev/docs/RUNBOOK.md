@@ -16,7 +16,7 @@ This project requires at least:
 
 #### With Homebrew
 
-Use the [Brewfile](./Brewfile) for all necessary dependencies:
+Use the [Brewfile](../../Brewfile) for all necessary dependencies:
 
 ```sh
 brew bundle && make bootstrap
@@ -33,7 +33,7 @@ Ensure you have the following tools installed:
 
 ### Start local dev environment
 
-There is a [Makefile](../Makefile) to ease the initial setup.
+There is a [Makefile](../../Makefile) to ease the initial setup.
 
 1. Make sure you have the very base setup if you run this the first time.
 ```shell

@@ -63,12 +63,12 @@ You can easily run an instance on your own with the full flexibility and power a
 
 Apart from the above, [this is what Wikipedia knows about Tapirs](https://en.wikipedia.org/wiki/Tapir).
 
-## Usage
+## Overview
 
 ### Deployment
 
 **NOTE** starting with version `0.6.0` authentication is required. Hence, you need an OIDC IDP to run Tapir. 
-Read more about the [authentication](#authentication) below.
+Read more about the [authentication](./docs/configuration.md#authentication) below.
 
 You can run Tapir wherever you can run Docker images.
 Images are available on [DockerHub](https://hub.docker.com/r/pacovk/tapir) `pacovk/tapir` and [AWS Elastic Container Registry](https://gallery.ecr.aws/pacovk/tapir) `public.ecr.aws/pacovk/tapir`.
@@ -78,177 +78,11 @@ There are samples with Terraform in `examples/`.
 
 ### Configure
 
-#### Authentication
+Tapir is configured via environment variables. You can learn how to set up Tapir [here](./docs/configuration.md).
 
-**NOTE** Authentication is currently implemented and active in all versions >= 0.6.x. 
-The OIDC IDP must expose an End-Session-Endpoint, otherwise the logout will not work.
-Tapir integrates well with [Keycloak](https://www.keycloak.org/).
+### How-to
 
-##### Prerequisites
-
-Tapir management needs the IDP client to put the role `admin` into the token.  
-
-Tapir supports authentication via [OIDC](https://openid.net/connect/) and Deploy-Keys.
-While OIDC secures the app and Tapir management, Deploy-Keys are used for the REST-API in a CI/CD context.
-
-**NOTE**: To use Tapir UI you need to be authenticated. However, you can read the registry without authentication. In particular the Terraform CLI will work without authentication, since Tapir does not yet support the [Login API](https://developer.hashicorp.com/terraform/internals/login-protocol).
-
-##### OIDC vs. DeployKey
-
-The OIDC mechanism is used for the UI and Tapir management, while DeployKeys are used for the REST-API to publish modules and providers only.
-
-#### Storage
-
-Available storage backends are:
-* AWS S3
-* Azure Blob
-* Local filestorage (local)
-  * You can mount a volume into the container under ``/tapir`` to persist your data. This is highly recommended. Otherwise, you loose the data if the container gets removed. 
-
-You can configure Tapir passing the following environment variables:
-
-| Variable                                | Description                                                                                                                                                                                                                                                                                                                                                                                                      | Required                                                       | Default                         |
-|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|---------------------------------|
-| BACKEND_CONFIG                          | The database to make use of                                                                                                                                                                                                                                                                                                                                                                                      | X                                                              | dynamodb                        |
-| BACKEND_ELASTICSEARCH_HOST              | Host of the Elasticsearch instance                                                                                                                                                                                                                                                                                                                                                                               | Yes, if BACKEND_CONFIG is elasticsearch                        |                                 |
-| BACKEND_AZURE_MASTER_KEY                | Master key of your CosmosDb                                                                                                                                                                                                                                                                                                                                                                                      | Yes, if BACKEND_CONFIG is cosmosdb                             |                                 |
-| BACKEND_AZURE_ENDPOINT                  | Endpoint of your CosmosDb                                                                                                                                                                                                                                                                                                                                                                                        | Yes, if BACKEND_CONFIG is cosmosdb                             |                                 |
-| STORAGE_CONFIG                          | The blob storage to make use of                                                                                                                                                                                                                                                                                                                                                                                  | X                                                              | s3                              |
-| STORAGE_ACCESS_SESSION_DURATION         | Amount of minutes the signed download url is valid                                                                                                                                                                                                                                                                                                                                                               | X                                                              | 5                               |
-| AZURE_BLOB_CONNECTION_STRING            | [Connection string](https://learn.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string) to use for authentication                                                                                                                                                                                                                                                                        | Yes, if STORAGE_CONFIG is azureBlob                            |                                 |
-| AZURE_BLOB_CONTAINER_NAME               | Blob container name to be used to store module archives                                                                                                                                                                                                                                                                                                                                                          | Yes, if STORAGE_CONFIG is azureBlob                            | tf-registry                     |
-| S3_STORAGE_BUCKET_NAME                  | S3 bucket name to be used to store module archives                                                                                                                                                                                                                                                                                                                                                               | Yes, if STORAGE_CONFIG is s3                                   | tf-registry                     |
-| S3_STORAGE_BUCKET_REGION                | AWS region of the target S3 bucket                                                                                                                                                                                                                                                                                                                                                                               | Yes, if STORAGE_CONFIG is s3                                   | eu-central-1                    |
-| REGISTRY_HOSTNAME                       | The hostname of the registry, must be set to the DNS record of Tapir                                                                                                                                                                                                                                                                                                                                             | Yes, if STORAGE_CONFIG is local                                | localhost                       |
-| REGISTRY_PORT                           | The port of the registry                                                                                                                                                                                                                                                                                                                                                                                         | Yes, if STORAGE_CONFIG is local                                | 443                             |
-| API_MAX_BODY_SIZE                       | The maximum payload size for module/providers to be uploaded                                                                                                                                                                                                                                                                                                                                                     | X                                                              | 100M                            |
-| REGISTRY_GPG_KEYS_0__ID                 | GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)                                                                                                                                                                                                                                                                                                                                  | X                                                              |                                 |
-| REGISTRY_GPG_KEYS_0__ASCII_ARMOR        | Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)                                                                                                                                                                                                                                                                                                                                          | X                                                              |                                 |
-| AUTH_ENDPOINT                           | The base URL of the OpenID Connect (OIDC) server, for example, https://host:port/auth. OIDC discovery endpoint will be called by default by appending a '.well-known/openid-configuration' path to this URL. Note if you work with Keycloak OIDC server, make sure the base URL is in the following format: https://host:port/realms/{realm} where {realm} has to be replaced by the name of the Keycloak realm. |                                                                |                                 |
-| AUTH_CLIENT_ID                          | The client id                                                                                                                                                                                                                                                                                                                                                                                                    |                                                                |                                 |
-| AUTH_CLIENT_SECRET                      | Client secret if the client requires one                                                                                                                                                                                                                                                                                                                                                                         |                                                                |                                 |
-| AUTH_TOKEN_PATH                         | Relative path or absolute URL of the OIDC token endpoint which issues access and refresh tokens. This property must be set for the application if OIDC discovery is not available.                                                                                                                                                                                                                               | X                                                              |                                 |
-| AUTH_PATH                               | Relative path or absolute URL of the OIDC authorization endpoint which authenticates the users. This property must be set for the application if OIDC discovery is not available.                                                                                                                                                                                                                                | Yes, if the Identity provider does not expose a discovery path |                                 |
-| AUTH_ROLE_SOURCE                        | The source of the role claim in the access token. The default value is 'accesstoken' which means the role claim is expected to be in the access token. If the role claim is in the ID token, set this property to 'idtoken'. If the role claim is in the userinfo endpoint, set this property to 'userinfo'.                                                                                                     | X                                                              | accesstoken                     | |
-| AUTH_TOKEN_ATTRIBUTE_EMAIL              | The attribute name in the token where the email is placed in                                                                                                                                                                                                                                                                                                                                                     | X                                                              | email                           |
-| AUTH_TOKEN_ATTRIBUTE_GIVEN_NAME         | The attribute name in the token where the given name is placed in                                                                                                                                                                                                                                                                                                                                                | X                                                              | given_name                      |
-| AUTH_TOKEN_ATTRIBUTE_FAMILY_NAME        | The attribute name in the token where the family name is placed in                                                                                                                                                                                                                                                                                                                                               | X                                                              | family_name                     |
-| AUTH_TOKEN_ATTRIBUTE_PREFERRED_USERNAME | The attribute name in the token where the preferred username is placed in                                                                                                                                                                                                                                                                                                                                        | X                                                              | preferred_username              |
-| END_SESSION_PATH                        | IDP end session path, will be used to logout                                                                                                                                                                                                                                                                                                                                                                     | X                                                              | /protocol/openid-connect/logout |
-
-:information_source: A note on the GPG configuration. Quarkus (and therefore Tapir) is based on [Smallrye microprofile](https://smallrye.io/smallrye-config/2.9.1/config/indexed-properties/) and supports indexed properties. Hence, you can add one or more key specifying indexed properties. See example below for passing two GPG keys (**Mind the two subsequent underscores after the index**):
-```
-REGISTRY_GPG_KEYS_0__ID=D17C807B4156558133A1FB843C7461473EB779BD
-REGISTRY_GPG_KEYS_0__ASCII_ARMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....tUUlO
-REGISTRY_GPG_KEYS_1__ID=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSDLPFKF
-REGISTRY_GPG_KEYS_1__ASCII_ARMOR=LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp.....JDIFH
-```
-
-### Upload a module or provider
-
-To upload a module or provider you need to be authenticated via DeployKey. A DeployKey can be created and managed by Tapir administrators (see [authentication prerequisites](#Prerequisites)). After creating deploy keys, you can use them to authenticate against the REST-API. There is one DeployKey per namespace.
-
-#### Upload a module
-
-When you publish a Terraform module, a corresponding DeployKey must be created first.
-
-##### Prerequisites:
-* The package name and version must be unique in the top-level namespace.
-* You need to specify a module namespace, a module name and the modules corresponding provider. For example `myorg/vpc/aws`.
-* Versioning must follow [Semantic Versioning](https://semver.org) specs
-* Currently only `.zip` is supported.
-
-**NOTE**: The zipped module directory layout should follow the [Terraform module structure](https://www.terraform.io/docs/language/modules/develop/structure.html). 
-
-Example:
-```
-module.zip
-├── main.tf
-├── outputs.tf
-├── README.md
-├── variables.tf
-└── <any-other-file-or-directory>
-```
-
-##### What Tapir does on upload
-
-* It will optimize the module
-  * Folder that names contain `example` will be removed
-  * Hidden files and folders will be removed
-  * System files and folders will be removed (eg. files that names  contain `MACOS`)
-* It will scan the module source code for security vulnerabilities and code quality issues
-  * Tapir integrates [Trivy](https://trivy.dev/) for that purpose
-* It will generate documentation and stats for the module 
-  * See module dependencies, inputs, outputs and resources that will be generated
-  * Tapir integrates [terraform-docs](https://terraform-docs.io/) for that purpose
-
-##### Upload via API
-
-You can upload modules to the registry via its HTTP REST-Api. It will return HTTP status `200` on success.
-```shell
-curl -XPOST  -H 'x-api-key: <API_KEY>' --fail-with-body -F archive=@archive.zip "https://example.corp.com/terraform/modules/v1/<namespace>/<name>/<provider>/<version>"
-```
-> Tapir has build-in support for several module providers. This means you should follow the naming convention for specific module provider:
-> 
-> **AWS:** aws <br/>
-> **Azure:** azurerm <br/>
-> **Google:** google <br/>
-> **Kubernetes:** kubernetes <br/>
-
-#### Upload a provider
-When you publish a Terraform provider, a corresponding DeployKey must be created first.
-
-Looking for the [troubleshooting docs](./docs/TROUBLESHOOT.md)?
-
-To create and build the provider it is highly recommended to use the [official HashiCorp provider project template](https://github.com/hashicorp/terraform-provider-scaffolding). It uses [goreleaser](https://goreleaser.com/) to sign the actual provider binaries. For details see [how to prepare release](https://developer.hashicorp.com/terraform/registry/providers/publishing#preparing-your-provider). 
-
-##### Prerequisites:
-* The provider name (aka. type) must be unique in the top-level namespace.
-* You need to specify a provider namespace, a provider type. For example `myorg/my-provider`.
-* Versioning must follow [Semantic Versioning](https://semver.org) specs
-* Currently only `.zip` is supported. 
-* The `.zip` must contain all files that are described in [how to prepare release](https://developer.hashicorp.com/terraform/registry/providers/publishing#preparing-your-provider).
-
-##### Upload via API
-
-You can upload provider to the registry via its HTTP REST-Api. It will return HTTP status `200` on success.
-```shell
-curl -XPOST -H 'x-api-key: <API_KEY>' --fail-with-body -F archive=@archive.zip "https://example.corp.com/terraform/providers/v1/<namespace>/<type>/<version>"
-```
-
-### Reference a Terraform Module or provider
-
-**Prerequisites**:
-* Terraform registry needs to run with HTTPS, since Terraform does not support HTTP registries
-* If the registry runs on another port that `443` you need to specify the port
-
-You don't need to specify the protocol explicit.
-
-####  Reference a module
-
-```hcl
-module "my-module" {
-  source = "example.corp.com/<namespace>/<name>/<provider>"
-  version = "<version>"
-}
-```
-
-#### Reference a provider
-
-```hcl
-terraform {
-  required_providers {
-    foo = {
-      source = "example.corp.com/<namespace>/<type>"
-    }
-  }
-}
-
-
-provider "foo" {
-  # Configuration options
-}
-```
+To see how to use Tapir, please read the [usage docs](./docs/usage.md).
 
 ## Troubleshoot
 
@@ -265,7 +99,7 @@ See [troubleshooting docs](./docs/TROUBLESHOOT.md)
 ## Contribution
 
 If you want to contribute to this project, please read the [contribution guidelines](./CONTRIBUTING.md).
-A detailed How-to guide on local development can be found in the [docs](./docs/RUNBOOK.md).
+A detailed How-to guide on local development can be found in the [docs](dev/docs/RUNBOOK.md).
 
 **Actively searching** for contributors. <br/>
 **Feedback** is always appreciated :rainbow: <br/>

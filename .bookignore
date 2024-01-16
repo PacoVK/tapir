@@ -1,0 +1,8 @@
+# ignore files in src
+src/*x
+
+# ignore mvn files
+mvnw*
+
+# ignore template files
+docs/pull_request_template.md
