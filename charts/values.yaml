@@ -1,0 +1,156 @@
+nameOverride: ""
+fullnameOverride: ""
+createClusterRoles: true
+
+certificate:
+  enabled: false
+  annotations: {}
+  secretName: ""
+  domain: ""
+  additionalHosts: []
+  duration: ""
+  renewBefore: ""
+  issuer:
+    group: ""
+    kind: ""
+    name: ""
+  privateKey:
+    # -- Rotation policy of private key when certificate is re-issued. Either: `Never` or `Always`
+    rotationPolicy: Never
+    # -- The private key cryptography standards (PKCS) encoding for private key. Either: `PCKS1` or `PKCS8`
+    encoding: PKCS1
+    # -- Algorithm used to generate certificate private key. One of: `RSA`, `Ed25519` or `ECDSA`
+    algorithm: RSA
+    # -- Key bit size of the private key. If algorithm is set to `Ed25519`, size is ignored.
+    size: 2048
+  usages: []
+
+deployment:
+  annotations: {}
+  labels: {}
+  # -- Deployment strategy for the all deployed Deployments
+  strategy: {}
+    # type: RollingUpdate
+    # rollingUpdate:
+    #   maxSurge: 25%
+    #   maxUnavailable: 25%
+  replicas: 1
+  revisionHistoryLimit: 3
+  podAnnotations: {}
+  podLabels: {}
+  imagePullSecrets: []
+  hostAliases: []
+  securityContext: {}
+  priorityClassName: ""
+  terminationGracePeriodSeconds: 30
+  image:
+    repository:
+    tag: ""
+    imagePullPolicy: Always
+  # -- deployment's env can be populated using configuration object
+  configuration:
+    backend:
+      # -- One of: elasticsearch,dynamodb,cosmosdb
+      type: "dynamodb"
+      # -- if type == "elasticsearch"
+      elasticsearch:
+        host: ""
+      # -- if type == "cosmosdb"
+      cosmosDB:
+        endpoint: ""
+        masterKey: ""
+    storage:
+      # -- One of: "s3,azureBlob,local"
+      type: "s3"
+      # -- Amount of minutes the signed download url is valid
+      storageAccessDuration: 5
+      # -- if type == "s3"
+      s3:
+        bucketName: "tf-registry"
+        bucketRegion: "eu-central-1"
+      # -- if type == "azureBlob"
+      azureBlob:
+        bucketName: "tf-registry"
+        connectionString: ""
+      # -- if type == "local"
+      localRegistry:
+        hostname: localhost
+        port: 443
+    apiMaxBodySize: 100M
+    gpg:
+      keyID: ""
+      keyArmor: ""
+    auth:
+      endpoint: ""
+      clientID: ""
+      clientSecret: ""
+      tokenPath: ""
+      path: ""
+      roleSource: "accesstoken"
+      attribute:
+        email: "email"
+        givenName: "given_name"
+        familyName: "family_name"
+        prefUsername: "preferred_username"
+      endSessionPath: "/protocol/openid-connect/logout"
+  extraEnv: {}
+  envFrom: {}
+  containerPort: 8080
+  livenessProbe: {}
+  readinessProbe: {}
+  resources: {}
+  containerSecurityContext: {}
+  lifecycle: {}
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  topologySpreadConstraints: []
+  hostNetwork: false
+  dnsConfig: {}
+  dnsPolicy: "ClusterFirst"
+
+serviceAccount:
+  annotations: {}
+  automountServiceAccountToken: false
+  labels: {}
+  create: true
+  name: "tapir"
+
+service:
+  annotations: {}
+  labels: {}
+  type: ClusterIP
+  loadBalancerIP: ""
+  externalIPs: []
+  loadBalancerSourceRanges: []
+  externalTrafficPolicy: ""
+  sessionAffinity: ""
+  nodePortHttps: ""
+  port: 443
+
+ingress:
+  enabled: false
+  labels: {}
+  annotations: {}
+  ingressClassName: ""
+  hosts: []
+  paths:
+  extraPaths: []
+  pathType: ImplementationSpecific
+  tls: {}
+
+pdb:
+  enabled: false
+  labels: {}
+  annotations: {}
+  maxUnavailable: ""
+  minAvailable: ""
+
+autoscaling:
+  enabled: false
+  behavior: {}
+  minReplicas: 1
+  maxReplicas: 1
+  metrics: {}
+  targetMemoryUtilizationPercentage: ""
+  targetCPUUtilizationPercentage: ""

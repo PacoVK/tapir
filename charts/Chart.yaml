@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: "0.6.3"
+kubeVersion: "" #TODO: discuss
+description: A Helm chart for Tapir, a private Terraform registry.
+name: tapir
+version: 1.0.0
+home: https://github.com/PacoVK/tapir
+sources:
+  - https://github.com/PacoVK/tapir

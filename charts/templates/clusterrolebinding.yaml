@@ -1,0 +1,16 @@
+{{- if .Values.createClusterRoles -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "tapir.fullname" . }}
+  labels:
+    {{- include "tapir.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "tapir.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "tapir.serviceAccountName" . }}
+  namespace: {{ .Release.namespace }}
+{{- end -}}
