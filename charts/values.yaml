@@ -14,7 +14,7 @@ deployment:
   # -- Default image used by `tapir` deployment
   image:
     # -- Repository to use for tapir
-    repository:
+    repository: "pacovk/tapir"
     # -- Tag to use for tapir
     tag: ""
     # -- Image pull policy for tapi
