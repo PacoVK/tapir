@@ -1,19 +1,347 @@
+## Tapir configuration
+## Ref: https://github.com/PacoVK/tapir
+##
+
+# -- Provide a name in place of `tapir`
 nameOverride: ""
+# -- String to fully override `"tapir.fullname`
 fullnameOverride: ""
+# -- Create roles for cluster-wide installation
 createClusterRoles: true
 
-certificate:
-  enabled: false
+## Deployment
+deployment:
+  # -- Default image used by `tapir` deployment
+  image:
+    # -- Repository to use for tapir
+    repository:
+    # -- Tag to use for tapir
+    tag: ""
+    # -- Image pull policy for tapi
+    imagePullPolicy: Always
+
+  # -- Annotations to be added to `tapir` deployment
   annotations: {}
-  secretName: ""
-  domain: ""
+
+  # -- Labels to be added to `tapir` deployment
+  labels: {}
+
+  # -- Deployment strategy for the deployment
+  strategy: {}
+    # type: RollingUpdate
+    # rollingUpdate:
+    #   maxSurge: 25%
+    #   maxUnavailable: 25%
+
+  # -- The number of application pods to run
+  ## Doesn't apply if autoscaling.enabled is set to true
+  replicas: 1
+
+  # -- Number of old deployment ReplicaSets to retain. The rest will be garbage collected.
+  revisionHistoryLimit: 3
+
+  # -- Secrets with credentials to pull images from a private registry
+  imagePullSecrets: []
+
+  # -- Annotations to be added to all deployed pods
+  podAnnotations: {}
+
+  # -- Labels  to be added to all deployed pods
+  podLabels: {}
+
+  # -- Additional entries that will be injected in the pod's /etc/hosts file
+  hostAliases: []
+
+  # -- Pod level security context
+  securityContext: {}
+    # runAsNonRoot: true
+    # runAsUser: 185
+
+  # -- Priority class for the tapir pods
+  priorityClassName: ""
+
+  # -- terminationGracePeriodSeconds for container lifecycle hook
+  terminationGracePeriodSeconds: 30
+
+  # -- Environment variables to pass to the `tapir` pods, other than ones defined in deployment.configuration object
+  extraEnv: {}
+
+  # -- envFrom to pass to the `tapir` pods
+  envFrom: {}
+
+  # -- Tapir container port
+  containerPort: 8080
+
+  # -- Readiness and liveness probes for `tapir`
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+  livenessProbe: {}
+  readinessProbe: {}
+
+  # -- Resource limits and requests for the `tapir`` pods
+  resources: {}
+  #  limits:
+  #    cpu: 500m
+  #    memory: 1Gi
+  #  requests:
+  #    cpu: 500m
+  #    memory: 1Gi
+
+  # -- Container level security context
+  containerSecurityContext: {}
+    # runAsNonRoot: true
+    # readOnlyRootFilesystem: true
+    # allowPrivilegeEscalation: false
+    # capabilities:
+    #   drop:
+    #   - ALL
+
+  # -- Specify postStart and preStop lifecycle hooks for your `tapir` container
+  lifecycle: {}
+
+  # -- Assign custom affinity rules to the deployment
+  ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  affinity: {}
+
+  # -- [Node selector]
+  nodeSelector: {}
+
+  # -- [Tolerations]
+  tolerations: []
+
+  # -- Assign custom topologySpreadConstraints rules to the `tapir` pods
+  ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+  topologySpreadConstraints: []
+
+  # -- Host network for `tapir` pods
+  hostNetwork: false
+
+  # -- [DNS configuration]
+  dnsConfig: {}
+  # -- Alternative DNS policy
+  dnsPolicy: "ClusterFirst"
+
+  # -- Deployment's configuration, populates all the required environmental variables
+  ## Ref: https://github.com/PacoVK/tapir/blob/main/docs/configuration.md
+  configuration:
+    # -- Database backend configuration
+    backend:
+      # -- One of: elasticsearch,dynamodb,cosmosdb
+      type: "dynamodb"
+
+      # -- Elasticsearch backend configuration
+      ## Applies if backend.type is equal to "elasticsearch"
+      elasticsearch:
+        # -- Elasticsearch host
+        host: ""
+
+      # -- CosmosDB backend configuration
+      ## Applies if backend.type is equal to "cosmosdb"
+      cosmosDB:
+        # -- CosmosDB endpoint
+        endpoint: ""
+        # -- CosmosDB master key
+        masterKey: ""
+
+    # -- Storage configuration
+    storage:
+      # -- One of: "s3,azureBlob,local"
+      type: "s3"
+      # -- Amount of minutes the signed download url is valid
+      storageAccessDuration: 5
+
+      # -- S3 storage configuration
+      ## Applies if storage.type is equal to "s3"
+      s3:
+        # -- S3 bucket name
+        bucketName: "tf-registry"
+        # -- S3 bucket region
+        bucketRegion: "eu-central-1"
+
+      # -- Azure Blob storage configuration
+      ## Applies if storage.type is equal to "azureBlob"
+      azureBlob:
+        # -- Azure Blob bucket name
+        bucketName: "tf-registry"
+        # -- Azure Blob connection string
+        connectionString: ""
+
+      # -- Tapir's local storage configuration
+      ## Applies if storage.type is equal to "local"
+      localRegistry:
+        # -- Tapir's DNS record
+        hostname: localhost
+        # -- Tapir's external port
+        port: 443
+
+    # -- The maximum payload size for module/providers to be uploaded
+    apiMaxBodySize: 100M
+
+    # -- GPG configuration
+    gpg:
+      # -- GPG key ID of the key to be used (eg. D17C807B4156558133A1FB843C7461473EB779BD)
+      keyID: ""
+      # -- Ascii armored and bas64 encoded GPG public key (only RSA/DSA supported)
+      keyArmor: ""
+
+    # -- OpenID Connect (OIDC) configuration
+    auth:
+      # -- The base URL of the OIDC server
+      endpoint: ""
+      # -- Client ID
+      clientID: ""
+      # -- Client secret if required by client
+      clientSecret: ""
+      # -- Relative path or absolute URL of the OIDC token endpoint which issues access and refresh tokens
+      tokenPath: ""
+      # -- Relative path or absolute URL of the OIDC authorization endpoint
+      path: ""
+      # -- The source of the role claim in the access token
+      roleSource: "accesstoken"
+      # -- OIDC attribute names
+      attribute:
+        # -- The attribute name in the token where the email is placed in
+        email: "email"
+        # -- The attribute name in the token where the given name is placed in
+        givenName: "given_name"
+        # -- The attribute name in the token where the family name is placed in
+        familyName: "family_name"
+        # -- The attribute name in the token where the preferred username is placed in
+        prefUsername: "preferred_username"
+      # -- IDP end session path, which will be used to logout
+      endSessionPath: "/protocol/openid-connect/logout"
+
+## Service Account
+serviceAccount:
+  # -- Create a service account for `tapir` deployment
+  create: true
+  # -- Service account name
+  name: "tapir"
+  # -- Annotations applied to created service account
+  annotations: {}
+  # -- Labels applied to created service account
+  labels: {}
+  # -- Automount API credentials for the service account
+  automountServiceAccountToken: false
+
+## Horizontal Pod Autoscaler
+autoscaling:
+  # -- Enable Horizontal Pod Autoscaler ([HPA]) for the `tapir` deployment
+  enabled: false
+  # -- Minimum number of replicas for the `tapir` deployment [HPA]
+  minReplicas: 1
+  # -- Maximum number of replicas for the `tapir` deployment [HPA]
+  maxReplicas: 1
+  # -- Average CPU utilization percentage for the `tapir` deployment [HPA]
+  targetCPUUtilizationPercentage: ""
+  # -- Average memory utilization percentage for the `tapir` deployment [HPA]
+  targetMemoryUtilizationPercentage: ""
+  # -- Configures scaling behavior of the target in both Up and Down directions
+  behavior: {}
+    # scaleDown:
+    #  stabilizationWindowSeconds: 300
+    #  policies:
+    #   - type: Pods
+    #     value: 1
+    #     periodSeconds: 180
+    # scaleUp:
+    #   stabilizationWindowSeconds: 300
+    #   policies:
+    #   - type: Pods
+    #     value: 2
+    #     periodSeconds: 60
+  # -- Configures custom HPA metrics for the `tapir` deployment
+  # Ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  metrics: {}
+
+## Service configuration
+service:
+  # -- Service annotations
+  annotations: {}
+  # -- Service labels
+  labels: {}
+  # -- Service type
+  type: ClusterIP
+  # -- Service https port
+  portHttps: 443
+  # -- Service https port for NodePort service type (only if `service.type` is set to "NodePort")
+  nodePortHttps: 30443
+  # -- LoadBalancer will be created with the IP specified in this field
+  loadBalancerIP: ""
+  # -- Source IP ranges to allow access to service from
+  loadBalancerSourceRanges: []
+  # -- Service external IPs
+  externalIPs: []
+  # -- Denotes if the service desires to route external traffic to node-local or cluster-wide endpoints
+  externalTrafficPolicy: ""
+  # -- Used to maintain session affinity. Supports `ClientIP` and `None`
+  sessionAffinity: ""
+
+## Ingress configuration
+ingress:
+  # -- Enable an ingress resource for the `tapir` registry
+  enabled: false
+  # -- Additional ingress annotations
+  annotations: {}
+  # -- Additional ingress labels
+  labels: {}
+  # -- Defines which ingress controller will implement the resource
+  ingressClassName: ""
+
+  # -- List of ingress hosts
+  ## Hostnames must be enabled if Ingress is enabled
+  ## TLS secrets must be manually created in the namespace or created using Certificate resource
+  hosts: []
+    # -- tapir.example.com
+
+  # -- List of ingress paths
+  paths:
+    - /*
+  # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
+  pathType: ImplementationSpecific
+  # -- Additional ingress paths
+  extraPaths: []
+    # - path: /additional-endpoint
+    #   pathType: Prefix
+    #   backend:
+    #     service:
+    #       name: additional-service
+    #       port:
+    #         name: use-annotation
+
+  # -- Ingress TLS configuration
+  tls: []
+    # - secretName: tapir-tls
+    #   hosts:
+    #     - tapir.example.com
+
+## TLS certificate configuration via cert-manager
+## Ref: https://cert-manager.io/docs/usage/certificate/
+certificate:
+  # -- Deploy a Certificate resource (requires cert-manager)
+  enabled: false
+  # -- The name of the Secret that will be created and managed by this Certificate resource
+  secretName: "tapir-tls"
+  # -- Certificate primary domain (CommonName)
+  domain: "tapir.example.com"
+  # -- Certificate Subject Alternate Names (SANs)
   additionalHosts: []
+  # -- The requested 'duration' (i.e. lifetime) of the certificate.
+  # @default -- `""` (defaults to 2160h = 90d if not specified)
+  ## Ref: https://cert-manager.io/docs/usage/certificate/#renewal
   duration: ""
+  # -- How long before the expiry a certificate should be renewed.
+  # @default -- `""` (defaults to 360h = 15d if not specified)
+  ## Ref: https://cert-manager.io/docs/usage/certificate/#renewal
   renewBefore: ""
+  ## Ref: https://cert-manager.io/docs/concepts/issuer
   issuer:
+    # -- Certificate issuer group. Set if using an external issuer.
     group: ""
+    # -- Certificate issuer kind. Either `Issuer` or `ClusterIssuer`
     kind: ""
+    # -- Certificate issuer name. Eg. `letsencrypt`
     name: ""
+  # -- Private key of the certificate
   privateKey:
     # -- Rotation policy of private key when certificate is re-issued. Either: `Never` or `Always`
     rotationPolicy: Never
@@ -23,134 +351,24 @@ certificate:
     algorithm: RSA
     # -- Key bit size of the private key. If algorithm is set to `Ed25519`, size is ignored.
     size: 2048
+  # -- Annotations to be applied to the `tapir` Certificate
+  annotations: {}
+  # -- Usages for the certificate
+  ### Ref: https://cert-manager.io/docs/reference/api-docs/#cert-manager.io/v1.KeyUsage
   usages: []
 
-deployment:
-  annotations: {}
-  labels: {}
-  # -- Deployment strategy for the all deployed Deployments
-  strategy: {}
-    # type: RollingUpdate
-    # rollingUpdate:
-    #   maxSurge: 25%
-    #   maxUnavailable: 25%
-  replicas: 1
-  revisionHistoryLimit: 3
-  podAnnotations: {}
-  podLabels: {}
-  imagePullSecrets: []
-  hostAliases: []
-  securityContext: {}
-  priorityClassName: ""
-  terminationGracePeriodSeconds: 30
-  image:
-    repository:
-    tag: ""
-    imagePullPolicy: Always
-  # -- deployment's env can be populated using configuration object
-  configuration:
-    backend:
-      # -- One of: elasticsearch,dynamodb,cosmosdb
-      type: "dynamodb"
-      # -- if type == "elasticsearch"
-      elasticsearch:
-        host: ""
-      # -- if type == "cosmosdb"
-      cosmosDB:
-        endpoint: ""
-        masterKey: ""
-    storage:
-      # -- One of: "s3,azureBlob,local"
-      type: "s3"
-      # -- Amount of minutes the signed download url is valid
-      storageAccessDuration: 5
-      # -- if type == "s3"
-      s3:
-        bucketName: "tf-registry"
-        bucketRegion: "eu-central-1"
-      # -- if type == "azureBlob"
-      azureBlob:
-        bucketName: "tf-registry"
-        connectionString: ""
-      # -- if type == "local"
-      localRegistry:
-        hostname: localhost
-        port: 443
-    apiMaxBodySize: 100M
-    gpg:
-      keyID: ""
-      keyArmor: ""
-    auth:
-      endpoint: ""
-      clientID: ""
-      clientSecret: ""
-      tokenPath: ""
-      path: ""
-      roleSource: "accesstoken"
-      attribute:
-        email: "email"
-        givenName: "given_name"
-        familyName: "family_name"
-        prefUsername: "preferred_username"
-      endSessionPath: "/protocol/openid-connect/logout"
-  extraEnv: {}
-  envFrom: {}
-  containerPort: 8080
-  livenessProbe: {}
-  readinessProbe: {}
-  resources: {}
-  containerSecurityContext: {}
-  lifecycle: {}
-  affinity: {}
-  nodeSelector: {}
-  tolerations: []
-  topologySpreadConstraints: []
-  hostNetwork: false
-  dnsConfig: {}
-  dnsPolicy: "ClusterFirst"
-
-serviceAccount:
-  annotations: {}
-  automountServiceAccountToken: false
-  labels: {}
-  create: true
-  name: "tapir"
-
-service:
-  annotations: {}
-  labels: {}
-  type: ClusterIP
-  loadBalancerIP: ""
-  externalIPs: []
-  loadBalancerSourceRanges: []
-  externalTrafficPolicy: ""
-  sessionAffinity: ""
-  nodePortHttps: ""
-  port: 443
-
-ingress:
-  enabled: false
-  labels: {}
-  annotations: {}
-  ingressClassName: ""
-  hosts: []
-  paths:
-  extraPaths: []
-  pathType: ImplementationSpecific
-  tls: {}
-
+## Pod Distruption Budget
+## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 pdb:
+  # -- Deploy a [PodDistruptionBudget] for the `tapir` deployment
   enabled: false
+  # - Labels to be added to `tapir` pdb
   labels: {}
+  # -- Annotations to be added to `tapir` pdb
   annotations: {}
-  maxUnavailable: ""
+  # -- Number of pods that are available after eviction as number or percentage (eg.: 50%)
+  # @default -- `""` (defaults to 0 if not specified)
   minAvailable: ""
-
-autoscaling:
-  enabled: false
-  behavior: {}
-  minReplicas: 1
-  maxReplicas: 1
-  metrics: {}
-  targetMemoryUtilizationPercentage: ""
-  targetCPUUtilizationPercentage: ""
+  # -- Number of pods that are unavailable after eviction as number or percentage (eg.: 50%).
+  ## Has higher precedence over `repoServer.pdb.minAvailable`
+  maxUnavailable: ""
