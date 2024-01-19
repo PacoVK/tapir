@@ -100,9 +100,9 @@ NAME: my-release
 | deployment.extraEnv | object | `{}` | Environment variables to pass to the `tapir` pods, other than ones defined in deployment.configuration object |
 | deployment.hostAliases | list | `[]` | Additional entries that will be injected in the pod's /etc/hosts file |
 | deployment.hostNetwork | bool | `false` | Host network for `tapir` pods |
-| deployment.image | object | `{"imagePullPolicy":"Always","repository":null,"tag":""}` | Default image used by `tapir` deployment |
+| deployment.image | object | `{"imagePullPolicy":"Always","repository":"pacovk/tapir","tag":""}` | Default image used by `tapir` deployment |
 | deployment.image.imagePullPolicy | string | `"Always"` | Image pull policy for tapi |
-| deployment.image.repository | string | `nil` | Repository to use for tapir |
+| deployment.image.repository | string | `"pacovk/tapir"` | Repository to use for tapir |
 | deployment.image.tag | string | `""` | Tag to use for tapir |
 | deployment.imagePullSecrets | list | `[]` | Secrets with credentials to pull images from a private registry |
 | deployment.labels | object | `{}` | Labels to be added to `tapir` deployment |
