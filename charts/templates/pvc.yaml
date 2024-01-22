@@ -1,0 +1,33 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) (eq .Values.deployment.configuration.storage.type "local") }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "tapir.name" . }}
+  {{- with .Values.persistence.annotations }}
+  annotations:
+    {{- range $key, $value := . }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if eq .Values.persistence.resourcePolicy "keep" }}
+    helm.sh/resource-policy: keep
+  {{- end }}
+  labels:
+    {{- include "tapir.labels" . | nindent 4 }}
+    {{- range $key, $value := .Values.persistence.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  accessModes: 
+    - {{ .Values.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}
+  {{- if .Values.persistence.storageClass }}
+    {{- if eq "-" .Values.persistence.storageClass }}
+  storageClassName: ""
+    {{- else }}
+  storageClassName: {{ .Values.persistence.storageClass }}
+    {{- end }}
+  {{- end }}
+{{- end }}

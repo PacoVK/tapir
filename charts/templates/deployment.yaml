@@ -87,6 +87,11 @@ spec:
         securityContext:
           {{- toYaml . | nindent 10 }}
         {{- end }}
+        {{- if (eq .Values.deployment.configuration.storage.type "local") }}
+        volumeMounts:
+        - mountPath: /tapir
+          name: tapir-data
+        {{- end }}
         {{- with .Values.deployment.lifecycle }}
         lifecycle:
           {{- toYaml . | nindent 10 }}
@@ -122,3 +127,19 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       dnsPolicy: {{ .Values.deployment.dnsPolicy }}
+      {{- if (eq .Values.deployment.configuration.storage.type "local") }}
+      volumes:
+      {{- if .Values.persistence.existingClaim }}
+      - name: tapir-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim }}
+      {{- else if .Values.persistence.enabled }}
+      - name: tapir-data
+        persistentVolumeClaim:
+          claimName: {{ template "tapir.name" . }}
+      {{- else }}
+      - name: tapir-data
+        emptyDir:
+          sizeLimit: {{ .Values.persistence.size }}
+      {{- end }}
+      {{- end }}

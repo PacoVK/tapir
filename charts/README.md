@@ -137,6 +137,14 @@ NAME: my-release
 | pdb.labels | object | `{}` |  |
 | pdb.maxUnavailable | string | `""` | Number of pods that are unavailable after eviction as number or percentage (eg.: 50%). |
 | pdb.minAvailable | string | `""` (defaults to 0 if not specified) | Number of pods that are available after eviction as number or percentage (eg.: 50%) |
+| persistence.accessMode | string | `"ReadWriteOnce"` | Set access mode for the persistent volume claim |
+| persistence.annotations | object | `{}` | Annotations applied to created persistent volume claim |
+| persistence.enabled | bool | `false` | Create a persistent volume claim for `tapir` deployment |
+| persistence.existingClaim | string | `""` | Use existing persistent volume claim instead of creating a new one |
+| persistence.labels | object | `{}` | Labels applied to created persistent volume claim |
+| persistence.resourcePolicy | string | `""` | Resource policy annotation, if set to keep it adds annotation `helm.sh/resource-policy: keep` |
+| persistence.size | string | `"5Gi"` | Set requests.storage value |
+| persistence.storageClass | string | `""` |  |
 | service.annotations | object | `{}` | Service annotations |
 | service.externalIPs | list | `[]` | Service external IPs |
 | service.externalTrafficPolicy | string | `""` | Denotes if the service desires to route external traffic to node-local or cluster-wide endpoints |
