@@ -210,6 +210,30 @@ deployment:
       # -- IDP end session path, which will be used to logout
       endSessionPath: "/protocol/openid-connect/logout"
 
+## Persistence configuration for `local` storage
+## If `local` storage is configured and persistence is not enabled
+## then emptyDir is used as a volume to enable readOnlyFilesystem security context
+persistence:
+  # -- Create a persistent volume claim for `tapir` deployment
+  enabled: false
+  # -- Use existing persistent volume claim instead of creating a new one
+  existingClaim: ""
+  # -- Resource policy annotation, if set to keep it adds annotation `helm.sh/resource-policy: keep`
+  resourcePolicy: ""
+  # -- Set access mode for the persistent volume claim
+  ## Ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
+  accessMode: "ReadWriteOnce"
+  # -- Set requests.storage value
+  size: "5Gi"
+  # Specify the `storageClass` used to provision the volume.
+  # If not specified the default StorageClass will be used.
+  # Set to "-" to disable dynamic provisioning
+  storageClass: ""
+  # -- Annotations applied to created persistent volume claim
+  annotations: {}
+  # -- Labels applied to created persistent volume claim
+  labels: {}
+
 ## Service Account
 serviceAccount:
   # -- Create a service account for `tapir` deployment
