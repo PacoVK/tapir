@@ -27,9 +27,9 @@ Generate Tapir configuration with environment variables.
 - name: STORAGE_CONFIG
   value: {{ default "s3" . }}
 {{- end }}
-{{- with $config.storageAccessDuration }}
+{{- with $config.storage.storageAccessDuration }}
 - name: STORAGE_ACCESS_SESSION_DURATION
-  value: {{ default 5 . }}
+  value: "{{ default 5 . }}"
 {{- end }}
 {{- if (eq $config.storage.type "s3") }}
 {{- with $config.storage.s3.bucketName }}
@@ -58,7 +58,7 @@ Generate Tapir configuration with environment variables.
 {{- end }}
 {{- with $config.storage.localRegistry.port }}
 - name: REGISTRY_PORT
-  value: {{ default 443 . }}
+  value: "{{ default 443 . }}"
 {{- end }}
 {{- end }}
 {{- with $config.apiMaxBodySize }}
