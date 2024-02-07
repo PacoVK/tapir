@@ -39,6 +39,16 @@
         "bug",
         "ideas"
       ]
+    },
+    {
+      "login": "jonasz-lasut",
+      "name": "Jonasz Łasut-Balcerzak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/93281932?v=4",
+      "profile": "https://github.com/jonasz-lasut",
+      "contributions": [
+        "example",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
