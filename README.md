@@ -1,6 +1,6 @@
 # Tapir
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ### A Private Terraform Registry
 
@@ -119,6 +119,7 @@ Thanks go to these wonderful people ([emoji key](https://allcontributors.org/doc
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/andrea-defraia"><img src="https://avatars.githubusercontent.com/u/56583671?v=4?s=100" width="100px;" alt="Andrea Defraia"/><br /><sub><b>Andrea Defraia</b></sub></a><br /><a href="#example-andrea-defraia" title="Examples">💡</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/WeiMengXS"><img src="https://avatars.githubusercontent.com/u/54929266?v=4?s=100" width="100px;" alt="Wmxs"/><br /><sub><b>Wmxs</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/issues?q=author%3AWeiMengXS" title="Bug reports">🐛</a> <a href="#ideas-WeiMengXS" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jonasz-lasut"><img src="https://avatars.githubusercontent.com/u/93281932?v=4?s=100" width="100px;" alt="Jonasz Łasut-Balcerzak"/><br /><sub><b>Jonasz Łasut-Balcerzak</b></sub></a><br /><a href="#example-jonasz-lasut" title="Examples">💡</a> <a href="https://github.com/PacoVK/tapir/commits?author=jonasz-lasut" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tlchaffi"><img src="https://avatars.githubusercontent.com/u/128724533?v=4?s=100" width="100px;" alt="Tim Chaffin"/><br /><sub><b>Tim Chaffin</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/pulls?q=is%3Apr+reviewed-by%3Atlchaffi" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
