@@ -69,6 +69,10 @@ Be aware that it’s not an _über-jar_ as the dependencies are copied into the 
 
 The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
+## Adding new configuration parameters
+
+Apart from the `application.yml` file, you should add the new configuration parameters to the [official Helm chart](https://github.com/PacoVK/tapir-helm) of Tapir. The configuration documentation should be updated in the [respective README template](https://github.com/PacoVK/tapir-helm/blob/main/charts/README.md.gotmpl) and in the [values.yaml](https://github.com/PacoVK/tapir-helm/blob/main/charts/values.yaml). 
+
 ## Related Guides
 
 - Elasticsearch REST client ([guide](https://quarkus.io/guides/elasticsearch)): Connect to an Elasticsearch cluster using the REST low level client

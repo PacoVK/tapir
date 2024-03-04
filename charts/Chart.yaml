@@ -1,9 +1,0 @@
-apiVersion: v2
-appVersion: "0.6.3"
-kubeVersion: ">=1.23.0-0"
-description: A Helm chart for Tapir, a private Terraform registry.
-name: tapir
-version: 1.0.0
-home: https://github.com/PacoVK/tapir
-sources:
-  - https://github.com/PacoVK/tapir

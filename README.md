@@ -76,6 +76,9 @@ There are samples with Terraform in `examples/`.
 * [AWS AppRunner](./examples/aws/apprunner)
 * [AWS EKS](./examples/aws/eks)
 
+Other deployment options available are:
+* [Helm Chart](https://github.com/PacoVK/tapir-helm)
+
 ### Configure
 
 Tapir is configured via environment variables. You can learn how to set up Tapir [here](./docs/configuration.md).
