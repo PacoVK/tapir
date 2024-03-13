@@ -13,6 +13,8 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === changed
 
+*  https://github.com/PacoVK/tapir/pull/387[#387 - Use amazon corretto alpine as Docker base image]
+
 == 0.6.3
 
 === fixes
