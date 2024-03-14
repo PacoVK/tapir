@@ -1,7 +1,13 @@
 # Tapir
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p>  
+  <a href="https://github.com/PacoVK/tapir?tab=readme-ov-file#contributors-">
+    <img alt="Contributors" src="https://img.shields.io/github/all-contributors/pacovk/tapir">
+  </a>
+  <a href="https://hub.docker.com/r/pacovk/tapir">
+    <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/pacovk/tapir">
+  </a>
+<p>
+  
 ### A Private Terraform Registry
 
 [![Test](https://github.com/PacoVK/tapir/actions/workflows/build.yml/badge.svg)](https://github.com/PacoVK/tapir/actions/workflows/build.yml)
