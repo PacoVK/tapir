@@ -33,7 +33,7 @@ Object {
           >
             <button
               aria-haspopup="true"
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-cadykg-MuiButtonBase-root-MuiButton-root-MuiAvatar-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1m3lyvx-MuiButtonBase-root-MuiButton-root-MuiAvatar-root"
               id="menu-button"
               tabindex="0"
               type="button"
@@ -87,7 +87,7 @@ Object {
         >
           <button
             aria-haspopup="true"
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-cadykg-MuiButtonBase-root-MuiButton-root-MuiAvatar-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1m3lyvx-MuiButtonBase-root-MuiButton-root-MuiAvatar-root"
             id="menu-button"
             tabindex="0"
             type="button"
