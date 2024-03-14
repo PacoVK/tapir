@@ -13,6 +13,15 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === changed
 
+== 0.7.0
+
+=== fixes
+
+=== added
+
+=== changed
+
+* https://github.com/PacoVK/tapir/pull/386[#386 - Outsource helm Chart to separate repository] - The helm chart is now maintained in a https://github.com/PacoVK/tapir-helm[separate repository]
 *  https://github.com/PacoVK/tapir/pull/387[#387 - Use amazon corretto alpine as Docker base image]
 
 == 0.6.3
