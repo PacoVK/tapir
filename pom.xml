@@ -8,7 +8,7 @@
   <properties>
     <checkstyle-maven-plugin.version>3.3.1</checkstyle-maven-plugin.version>
     <compiler-plugin.version>3.13.0</compiler-plugin.version>
-    <jacoco.version>0.8.11</jacoco.version>
+    <jacoco.version>0.8.12</jacoco.version>
     <maven.compiler.release>17</maven.compiler.release>
     <microsoft.azure.bom.version>1.2.22</microsoft.azure.bom.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
