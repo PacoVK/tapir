@@ -1,0 +1,37 @@
+# Contributing to Tapir
+
+Thank you for your interest in contributing to Tapir! We appreciate your help in making this project better.
+
+To contribute, please follow these steps:
+
+1. Fork the repository by clicking on the "Fork" button at the top right corner of this page.
+
+2. Clone your forked repository to your local machine:
+    ```
+    git clone https://github.com/your-username/tapir.git
+    ```
+
+3. Create a new branch for your changes:
+    ```
+    git checkout -b feature/your-feature-name
+    ```
+
+4. Make your desired changes to the codebase.
+
+5. Commit your changes with a descriptive commit message:
+    ```
+    git commit -m "Add feature/fix: description of your changes"
+    ```
+
+6. Push your changes to your forked repository:
+    ```
+    git push origin feature/your-feature-name
+    ```
+
+7. Open a pull request by visiting the original repository and clicking on the "New pull request" button.
+
+8. Fill out the pull request template with relevant information about your changes.
+
+9. Submit the pull request for review.
+
+Once your pull request is submitted, the project maintainers will review your changes and provide feedback if necessary. Thank you for your contribution!
