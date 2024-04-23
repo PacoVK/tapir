@@ -17,12 +17,21 @@ While OIDC secures the app and Tapir management, Deploy-Keys are used for the RE
 
 The OIDC mechanism is used for the UI and Tapir management, while DeployKeys are used for the REST-API to publish modules and providers only.
 
+#### Backend
+
+Tapir rquires setting up and utilizing a backend to enable functionalities like search, metadata, data persistence, and more. It's important to distinguish between the backend and storage configurations as they serve different roles. Supported backends include:
+
+* Elasticsearch `elasticsearch`
+* DynamoDB `dynamodb`
+* CosmosDB `cosmosdb`
+    * Note: Azure's CosmosDB supports many database API's, such as MongoDB, Cassandra, Gremlin, and more. **Tapir uses the SQL API.**
+
 #### Storage
 
 Available storage backends are:
-* AWS S3 (s3)
-* Azure Blob (azureBlob)
-* Local filestorage (local)
+* AWS S3 `s3`
+* Azure Blob `azureBlob`
+* Local filestorage `local`
     * You can mount a volume into the container under ``/tapir`` to persist your data. This is highly recommended. Otherwise, you loose the data if the container gets removed.
 
 You can configure Tapir passing the following environment variables:
