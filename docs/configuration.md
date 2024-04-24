@@ -19,7 +19,7 @@ The OIDC mechanism is used for the UI and Tapir management, while DeployKeys are
 
 #### Backend
 
-Tapir rquires setting up and utilizing a backend to enable functionalities like search, metadata, data persistence, and more. It's important to distinguish between the backend and storage configurations as they serve different roles. Supported backends include:
+Tapir requires setting up and utilizing a backend to enable functionalities like search, metadata, data persistence, and more. It's important to distinguish between the backend and storage configurations as they serve different roles. Supported backends include:
 
 * Elasticsearch `elasticsearch`
 * DynamoDB `dynamodb`
