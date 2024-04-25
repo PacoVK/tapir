@@ -34,6 +34,11 @@ Available storage backends are:
 * Local filestorage `local`
     * You can mount a volume into the container under ``/tapir`` to persist your data. This is highly recommended. Otherwise, you loose the data if the container gets removed.
 
+#### Note Regarding Sensitive Data
+Configuring secrets for Tapir is largely at the users discretion. It is recommended to use a secret manager like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) or [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) to store sensitive data like keys, passwords, connection strings, etc. Tapir needs the secret values set as environment variables, and depending on the actual runtime there are different approaches.
+
+For example, if you're using Kubernetes, you can use [Opaque Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) to store and manage sensitive information manually. Each secret store solution like AWS Secrets Manager, Azure Key Vault, Hashicorp Vault, etc. has its own way of injecting said secrets into Kubernetes as well. Or furthermore, you could use a [Kubernetes external secrets operator](https://external-secrets.io/latest/). It's important to follow the best practices and guidelines provided by the respective service.
+
 You can configure Tapir passing the following environment variables:
 
 | Variable                                | Description                                                                                                                                                                                                                                                                                                                                                                                                      | Required                                                       | Default                         |
