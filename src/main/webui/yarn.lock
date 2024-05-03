@@ -2468,9 +2468,9 @@
     "@types/react" "*"
 
 "@types/react-syntax-highlighter@^15.5.9":
-  version "15.5.11"
-  resolved "https://registry.yarnpkg.com/@types/react-syntax-highlighter/-/react-syntax-highlighter-15.5.11.tgz#e050745b22eff81fc13cb0c763dd0d063413bbf1"
-  integrity sha512-ZqIJl+Pg8kD+47kxUjvrlElrraSUrYa4h0dauY/U/FTUuprSCqvUj+9PNQNQzVc6AJgIWUUxn87/gqsMHNbRjw==
+  version "15.5.12"
+  resolved "https://registry.yarnpkg.com/@types/react-syntax-highlighter/-/react-syntax-highlighter-15.5.12.tgz#57791742ac8932c70d9258b2024efacae7ba41be"
+  integrity sha512-wCuk2HWXqEkHFzNMYmdMgyVRoxJEndutEBz3rKqmcrnkwGDtwT8gMtRaTPzXWPVasJ9NydQ54dbosg2sW65PCg==
   dependencies:
     "@types/react" "*"
 
