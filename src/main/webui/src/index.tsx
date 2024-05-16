@@ -12,6 +12,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Box, Stack } from "@mui/material";
 import NavigationDrawer from "./components/nav/NavigationDrawer";
 import { UserProvider } from "./components/context/UserContext";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const fetchUser = async () => {
   const response = await fetch("/tapir/user");
@@ -21,7 +22,7 @@ const fetchUser = async () => {
 const user = await fetchUser();
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
@@ -29,12 +30,14 @@ root.render(
     <UserProvider fetchedUser={user}>
       <Header />
       <Box sx={{ display: "flex" }}>
-        <NavigationDrawer />
-        <Stack spacing={2} m={"auto"} mt={"5vh"} sx={{ width: "75%" }}>
-          <AppRouter />
-        </Stack>
+        <Router>
+          <NavigationDrawer />
+          <Stack spacing={2} m={"auto"} mt={"5vh"} sx={{ width: "75%" }}>
+            <AppRouter />
+          </Stack>
+        </Router>
       </Box>
       <Footer />
     </UserProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
