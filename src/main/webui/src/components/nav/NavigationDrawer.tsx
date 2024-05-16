@@ -7,12 +7,13 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar,
+  Toolbar
 } from "@mui/material";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import AppsIcon from "@mui/icons-material/Apps";
 import KeyIcon from "@mui/icons-material/Key";
 import { useUserContext } from "../context/UserContext";
+import { Link } from "react-router-dom";
 
 const NavigationDrawer = () => {
   const { isAdmin } = useUserContext();
@@ -22,14 +23,14 @@ const NavigationDrawer = () => {
         width: 240,
         flexShrink: 0,
         "& .MuiDivider-root": {
-          display: "none",
+          display: "none"
         },
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
           backgroundColor: "transparent",
-          border: "none",
-        },
+          border: "none"
+        }
       }}
       variant="permanent"
       anchor="left"
@@ -39,8 +40,8 @@ const NavigationDrawer = () => {
       <List>
         <ListItem
           key={"MenuItemModule"}
-          component={"a"}
-          href={"/"}
+          component={Link}
+          to={"/"}
           disablePadding
         >
           <ListItemButton>
@@ -52,8 +53,8 @@ const NavigationDrawer = () => {
         </ListItem>
         <ListItem
           key={"MenuItemProvider"}
-          component={"a"}
-          href={"/providers"}
+          component={Link}
+          to={"/providers"}
           disablePadding
         >
           <ListItemButton>
@@ -66,8 +67,8 @@ const NavigationDrawer = () => {
         {isAdmin ? (
           <ListItem
             key={"MenuItemManagement"}
-            component={"a"}
-            href={"/management"}
+            component={Link}
+            to={"/management"}
             disablePadding
           >
             <ListItemButton>

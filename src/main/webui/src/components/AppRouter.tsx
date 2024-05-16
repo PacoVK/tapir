@@ -11,7 +11,6 @@ import NotFoundPage from "../views/404";
 const AppRouter = () => {
   const { isAdmin } = useUserContext();
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<ModuleOverview />} />
         <Route path="/providers" element={<ProviderOverview />} />
@@ -38,7 +37,6 @@ const AppRouter = () => {
         />
         <Route path={"*"} element={<NotFoundPage />} />
       </Routes>
-    </Router>
   );
 };
 
