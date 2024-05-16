@@ -23,8 +23,7 @@ class ReportTest {
         try (Reader reader = new InputStreamReader(Objects.requireNonNull(TestDataBuilder.class
                 .getResourceAsStream("/securityReport.json")))) {
             json = new BufferedReader(reader).lines().collect(Collectors.joining());
-
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return;
         }
