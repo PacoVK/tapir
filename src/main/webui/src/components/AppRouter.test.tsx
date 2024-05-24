@@ -8,7 +8,7 @@ describe("<AppRouter /> spec", () => {
     const view = render(
       <BrowserRouter>
         <AppRouter />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
     expect(view).toMatchSnapshot();
   });

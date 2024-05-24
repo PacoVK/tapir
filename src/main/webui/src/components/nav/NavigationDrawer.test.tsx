@@ -7,7 +7,7 @@ describe("<NavigationDrawer /> spec", () => {
     const view = render(
       <BrowserRouter>
         <NavigationDrawer />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
     expect(view).toMatchSnapshot();
   });

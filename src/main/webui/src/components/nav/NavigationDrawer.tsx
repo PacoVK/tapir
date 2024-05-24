@@ -7,7 +7,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar
+  Toolbar,
 } from "@mui/material";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import AppsIcon from "@mui/icons-material/Apps";
@@ -23,14 +23,14 @@ const NavigationDrawer = () => {
         width: 240,
         flexShrink: 0,
         "& .MuiDivider-root": {
-          display: "none"
+          display: "none",
         },
         "& .MuiDrawer-paper": {
           width: 240,
           boxSizing: "border-box",
           backgroundColor: "transparent",
-          border: "none"
-        }
+          border: "none",
+        },
       }}
       variant="permanent"
       anchor="left"
