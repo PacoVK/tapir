@@ -9,9 +9,21 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === fixes
 
+* https://github.com/PacoVK/tapir/issues/401[#401 - Fix SPA routing issue]
+
 === added
 
 === changed
+
+== 0.7.1
+
+=== fixes
+
+=== added
+
+=== changed
+
+* Dependency updates
 
 == 0.7.0
 
