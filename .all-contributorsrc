@@ -67,6 +67,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "TomBeckett",
+      "name": "Tom Beckett",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10406453?v=4",
+      "profile": "https://github.com/TomBeckett",
+      "contributions": [
+        "example",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
