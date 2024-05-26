@@ -73,6 +73,10 @@ The application is now runnable using `java -jar target/quarkus-app/quarkus-run.
 
 Apart from the `application.yml` file, you should add the new configuration parameters to the [official Helm chart](https://github.com/PacoVK/tapir-helm) of Tapir. The configuration documentation should be updated in the [respective README template](https://github.com/PacoVK/tapir-helm/blob/main/charts/README.md.gotmpl) and in the [values.yaml](https://github.com/PacoVK/tapir-helm/blob/main/charts/values.yaml). 
 
+## Adding new API routes
+
+Tapir needs to make use of a workaround to overcome routing issues with Quarkus since 3.9 and Quinoa. The workaround is to add the new route to `PATH_PREFIXES` list in the [Router](../../src/main/java/api/router/SpaRouter.java) class. For more details see comments in the class.
+
 ## Related Guides
 
 - Elasticsearch REST client ([guide](https://quarkus.io/guides/elasticsearch)): Connect to an Elasticsearch cluster using the REST low level client
