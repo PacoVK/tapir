@@ -81,6 +81,7 @@ Images are available on [DockerHub](https://hub.docker.com/r/pacovk/tapir) `paco
 There are samples with Terraform in `examples/`.
 * [AWS AppRunner](./examples/aws/apprunner)
 * [AWS EKS](./examples/aws/eks)
+* [Azure Containers](./examples/azure/containerapps)
 
 Other deployment options available are:
 * [Helm Chart](https://github.com/PacoVK/tapir-helm)
