@@ -13,6 +13,8 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === added
 
+* https://github.com/PacoVK/tapir/issues/408[#408 - Add Azure containerapps example]
+
 === changed
 
 == 0.7.1
