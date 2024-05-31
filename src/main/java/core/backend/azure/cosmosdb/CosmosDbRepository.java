@@ -192,7 +192,7 @@ public class CosmosDbRepository extends TapirRepository {
     } catch (NotFoundException cosmosException) {
       providerToIngest = provider;
     }
-    providerContainer.createItem(
+    providerContainer.upsertItem(
             providerToIngest,
             new PartitionKey(provider.getId()),
             new CosmosItemRequestOptions()
