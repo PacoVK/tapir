@@ -77,6 +77,15 @@
         "example",
         "code"
       ]
+    },
+    {
+      "login": "akuzminsky",
+      "name": "Oleksandr Kuzminskyi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1763754?v=4",
+      "profile": "https://github.com/akuzminsky",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
