@@ -9,6 +9,14 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === fixes
 
+=== added
+
+=== changed
+
+== 0.8.0
+
+=== fixes
+
 * https://github.com/PacoVK/tapir/issues/401[#401 - Fix SPA routing issue]
 * https://github.com/PacoVK/tapir/issues/411[#411 - Fix provider upload with CosmosDB backend]
 
