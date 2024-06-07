@@ -136,6 +136,7 @@ Thanks go to these wonderful people ([emoji key](https://allcontributors.org/doc
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/akuzminsky"><img src="https://avatars.githubusercontent.com/u/1763754?v=4?s=100" width="100px;" alt="Oleksandr Kuzminskyi"/><br /><sub><b>Oleksandr Kuzminskyi</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/issues?q=author%3Aakuzminsky" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/GrzegorzHejman"><img src="https://avatars.githubusercontent.com/u/55591451?v=4?s=100" width="100px;" alt="GrzegorzHejman"/><br /><sub><b>GrzegorzHejman</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/issues?q=author%3AGrzegorzHejman" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://hybridbrothers.com"><img src="https://avatars.githubusercontent.com/u/26713978?v=4?s=100" width="100px;" alt="Cédric Braekevelt"/><br /><sub><b>Cédric Braekevelt</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/issues?q=author%3Acedricbraekevelt" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
