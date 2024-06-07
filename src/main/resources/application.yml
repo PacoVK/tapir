@@ -4,6 +4,8 @@ registry:
     password: ${TAPIR_ADMIN_PASSWORD:default}
   hostname: ${REGISTRY_HOSTNAME:localhost}
   port: ${REGISTRY_PORT:443}
+  cors:
+    origins: ${CORS_ORIGINS:*}
   auth:
     provider: ${AUTH_PROVIDER}
     endpoint: ${AUTH_ENDPOINT:http://localhost:8089/realms/tapir}
@@ -140,7 +142,10 @@ quarkus:
       allow-forwarded: true
       enable-forwarded-host: ${registry.proxy.enabled}
       forwarded-host-header: ${registry.proxy.forwarded-header}
-    cors: true
+    cors:
+      origins: ${registry.cors.origins}
+      methods: "*"
+      headers: "*"
 
 "%dev":
    registry:

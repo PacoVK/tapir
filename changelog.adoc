@@ -17,8 +17,9 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 * https://github.com/PacoVK/tapir/issues/408[#408 - Add Azure containerapps example]
 * https://github.com/PacoVK/tapir/issues/414[#414 - Introduce Elasticsearch authentication configuration]
 
-
 === changed
+
+* https://github.com/PacoVK/tapir/issues/406[#406 - Make CORS configurable]
 
 == 0.7.1
 
