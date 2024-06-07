@@ -95,6 +95,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "cedricbraekevelt",
+      "name": "Cédric Braekevelt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26713978?v=4",
+      "profile": "https://hybridbrothers.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
