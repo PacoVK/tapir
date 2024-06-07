@@ -26,18 +26,18 @@ Object {
         :
       </p>
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
       >
         <div
           aria-controls="damaged.tf-content"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+          class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
           id="damaged.tf-header"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+            class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -83,18 +83,18 @@ Object {
                   class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
                 >
                   <div
-                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
                   >
                     <div
                       aria-controls="An ingress security group rule allows traffic from /0.0-content"
                       aria-expanded="false"
-                      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+                      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
                       id="An ingress security group rule allows traffic from /0.0-header"
                       role="button"
                       tabindex="0"
                     >
                       <div
-                        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+                        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
                       >
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -250,18 +250,18 @@ Object {
       :
     </p>
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
     >
       <div
         aria-controls="damaged.tf-content"
         aria-expanded="false"
-        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
         id="damaged.tf-header"
         role="button"
         tabindex="0"
       >
         <div
-          class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+          class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
         >
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -307,18 +307,18 @@ Object {
                 class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
               >
                 <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1c35hjw-MuiPaper-root-MuiAccordion-root"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
                 >
                   <div
                     aria-controls="An ingress security group rule allows traffic from /0.0-content"
                     aria-expanded="false"
-                    class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+                    class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
                     id="An ingress security group rule allows traffic from /0.0-header"
                     role="button"
                     tabindex="0"
                   >
                     <div
-                      class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+                      class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
