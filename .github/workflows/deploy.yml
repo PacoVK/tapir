@@ -77,7 +77,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         env:
           AWS_REGION: us-east-1
           AWS_DEFAULT_REGION: us-east-1
