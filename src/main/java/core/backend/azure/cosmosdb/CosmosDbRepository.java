@@ -130,7 +130,7 @@ public class CosmosDbRepository extends TapirRepository {
         "SELECT * FROM DeployKeys p WHERE p.id LIKE @id OR p.key LIKE @key",
         paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
-    FeedResponse<DeployKey> feedResponse = providerContainer
+    FeedResponse<DeployKey> feedResponse = deployKeysContainer
         .queryItems(
             querySpec,
             new CosmosQueryRequestOptions(),
