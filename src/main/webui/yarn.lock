@@ -1430,31 +1430,31 @@
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
 "@floating-ui/core@^1.0.0":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.6.2.tgz#d37f3e0ac1f1c756c7de45db13303a266226851a"
-  integrity sha512-+2XpQV9LLZeanU4ZevzRnGFg2neDeKHgFLjP6YLW+tly0IvrhqT4u8enLGjLH3qeh85g19xY5rsAusfwTdn5lg==
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.6.3.tgz#5e7bb92843f47fd1d8dcb9b3cc3c243aaed54f95"
+  integrity sha512-1ZpCvYf788/ZXOhRQGFxnYQOVgeU+pi0i+d0Ow34La7qjIXETi6RNswGVKkA6KcDO8/+Ysu2E/CeUmmeEBDvTg==
   dependencies:
-    "@floating-ui/utils" "^0.2.0"
+    "@floating-ui/utils" "^0.2.3"
 
 "@floating-ui/dom@^1.0.0":
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.6.5.tgz#323f065c003f1d3ecf0ff16d2c2c4d38979f4cb9"
-  integrity sha512-Nsdud2X65Dz+1RHjAIP0t8z5e2ff/IRbei6BqFrl1urT8sDVzM1HMQ+R0XcU5ceRfyO3I6ayeqIfh+6Wb8LGTw==
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.6.6.tgz#be54c1ab2d19112ad323e63dbeb08185fed0ffd3"
+  integrity sha512-qiTYajAnh3P+38kECeffMSQgbvXty2VB6rS+42iWR4FPIlZjLK84E9qtLnMTLIpPz2znD/TaFqaiavMUrS+Hcw==
   dependencies:
     "@floating-ui/core" "^1.0.0"
-    "@floating-ui/utils" "^0.2.0"
+    "@floating-ui/utils" "^0.2.3"
 
 "@floating-ui/react-dom@^2.0.8":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-2.1.0.tgz#4f0e5e9920137874b2405f7d6c862873baf4beff"
-  integrity sha512-lNzj5EQmEKn5FFKc04+zasr09h/uX8RtJRNj5gUXsSQIXHVWTVh+hVAg1vOMCexkX8EgvemMvIFpQfkosnVNyA==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-2.1.1.tgz#cca58b6b04fc92b4c39288252e285e0422291fb0"
+  integrity sha512-4h84MJt3CHrtG18mGsXuLCHMrug49d7DFkU0RMIyshRveBeyV2hmV/pDaF2Uxtu8kgq5r46llp5E5FQiR0K2Yg==
   dependencies:
     "@floating-ui/dom" "^1.0.0"
 
-"@floating-ui/utils@^0.2.0":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.2.tgz#d8bae93ac8b815b2bd7a98078cf91e2724ef11e5"
-  integrity sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==
+"@floating-ui/utils@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.3.tgz#506fcc73f730affd093044cb2956c31ba6431545"
+  integrity sha512-XGndio0l5/Gvd6CLIABvsav9HHezgDFFhDfHk1bvLfr9ni8dojqLSvBbotJEjmIwNHL7vK4QzBJTdBRoB+c1ww==
 
 "@fontsource/roboto@^5.0.0":
   version "5.0.13"
@@ -1802,26 +1802,26 @@
     clsx "^2.1.0"
     prop-types "^15.8.1"
 
-"@mui/core-downloads-tracker@^5.15.20":
-  version "5.15.20"
-  resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.15.20.tgz#6ede705770797c32f5a4fc0d3002ad0b758d23e8"
-  integrity sha512-DoL2ppgldL16utL8nNyj/P12f8mCNdx/Hb/AJnX9rLY4b52hCMIx1kH83pbXQ6uMy6n54M3StmEbvSGoj2OFuA==
+"@mui/core-downloads-tracker@^5.15.21":
+  version "5.15.21"
+  resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.15.21.tgz#15ffc56cef7009479229b55126176f988afba96b"
+  integrity sha512-dp9lXBaJZzJYeJfQY3Ow4Rb49QaCEdkl2KKYscdQHQm6bMJ+l4XPY3Cd9PCeeJTsHPIDJ60lzXbeRgs6sx/rpw==
 
 "@mui/icons-material@^5.15.19":
-  version "5.15.20"
-  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.15.20.tgz#dbd45d635d82b034fb10dadb5c258c26e3311618"
-  integrity sha512-oGcKmCuHaYbAAoLN67WKSXtHmEgyWcJToT1uRtmPyxMj9N5uqwc/mRtEnst4Wj/eGr+zYH2FiZQ79v9k7kSk1Q==
+  version "5.15.21"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.15.21.tgz#1e29e1bdb90916be5b66c95c45951f441821f34a"
+  integrity sha512-yqkq1MbdkmX5ZHyvZTBuAaA6RkvoqkoAgwBSx9Oh0L0jAfj9T/Ih/NhMNjkl8PWVSonjfDUkKroBnjRyo/1M9Q==
   dependencies:
     "@babel/runtime" "^7.23.9"
 
 "@mui/material@^5.15.19":
-  version "5.15.20"
-  resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.15.20.tgz#87737404603ca2802a8e074b059f8329e013e615"
-  integrity sha512-tVq3l4qoXx/NxUgIx/x3lZiPn/5xDbdTE8VrLczNpfblLYZzlrbxA7kb9mI8NoBF6+w9WE9IrxWnKK5KlPI2bg==
+  version "5.15.21"
+  resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.15.21.tgz#b2c8d756af570a61cb4975acf0e71dafb110b001"
+  integrity sha512-nTyCcgduKwHqiuQ/B03EQUa+utSMzn2sQp0QAibsnYe4tvc3zkMbO0amKpl48vhABIY3IvT6w9615BFIgMt0YA==
   dependencies:
     "@babel/runtime" "^7.23.9"
     "@mui/base" "5.0.0-beta.40"
-    "@mui/core-downloads-tracker" "^5.15.20"
+    "@mui/core-downloads-tracker" "^5.15.21"
     "@mui/system" "^5.15.20"
     "@mui/types" "^7.2.14"
     "@mui/utils" "^5.15.20"
