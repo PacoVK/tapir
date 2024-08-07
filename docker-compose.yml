@@ -15,7 +15,7 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=admin
 
   opensearch-node1:
-    image: opensearchproject/opensearch:2.15.0
+    image: opensearchproject/opensearch:2.16.0
     container_name: opensearch-node1
     environment:
       - cluster.name=opensearch-cluster # Name the cluster
