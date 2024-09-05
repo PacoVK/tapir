@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d localstack opensearch-node1 azurite azurite_storage_init
+        run: docker compose -f "docker-compose.yml" up -d localstack opensearch-node1 azurite azurite_storage_init
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
