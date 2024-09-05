@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.euhus</groupId>
   <artifactId>tapir</artifactId>
-  <version>0.8.1</version>
+  <version>0.8.2</version>
   <properties>
     <checkstyle-maven-plugin.version>3.4.0</checkstyle-maven-plugin.version>
     <compiler-plugin.version>3.13.0</compiler-plugin.version>
