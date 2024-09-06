@@ -6,7 +6,7 @@
   <artifactId>tapir</artifactId>
   <version>0.8.2</version>
   <properties>
-    <checkstyle-maven-plugin.version>3.4.0</checkstyle-maven-plugin.version>
+    <checkstyle-maven-plugin.version>3.5.0</checkstyle-maven-plugin.version>
     <compiler-plugin.version>3.13.0</compiler-plugin.version>
     <jacoco.version>0.8.12</jacoco.version>
     <maven.compiler.release>17</maven.compiler.release>
