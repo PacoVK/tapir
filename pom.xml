@@ -18,7 +18,7 @@
     <quarkus.platform.version>3.14.2</quarkus.platform.version>
     <quarkus.quinoa.version>2.4.7</quarkus.quinoa.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.3.1</surefire-plugin.version>
+    <surefire-plugin.version>3.5.0</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
