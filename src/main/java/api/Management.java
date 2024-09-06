@@ -1,24 +1,25 @@
 package api;
 
 
+import core.exceptions.TapirException;
 import core.service.DeployKeyService;
 import core.tapir.DeployKey;
+import core.terraform.Module;
+import core.upload.FormData;
+import extensions.core.Report;
 import io.vertx.core.json.JsonObject;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.jboss.resteasy.reactive.RestForm;
+
+import java.util.Objects;
 
 @RolesAllowed("admin")
 @Path("/management")
 @Produces(MediaType.APPLICATION_JSON)
 public class Management {
-
   DeployKeyService deployKeyService;
 
   public Management(DeployKeyService deployKeyService) {
@@ -35,9 +36,23 @@ public class Management {
   }
 
   @POST
-  @Path("/deploykey/{id}")
-  public Response createDeployKey(String id) throws Exception {
-    DeployKey deployKey = deployKeyService.createDeployKey(id);
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  @Path("/deploykey")
+  public Response createDeployKey(  @RestForm String resourceType,
+  @RestForm String scope,
+  @RestForm String namespace,
+  @RestForm String source,
+  @RestForm String provider,
+  @RestForm String name,
+  @RestForm String type) throws Exception {
+    DeployKey deployKey;
+    if (Objects.equals(resourceType, "module")) {
+      deployKey = deployKeyService.createModuleDeployKey(scope, source, namespace, name, provider);
+    } else if (Objects.equals(resourceType, "provider")) {
+      deployKey = deployKeyService.createProviderDeployKey(scope, source, namespace, type);
+    } else {
+      throw new TapirException("Unknown resource type");
+    }
     return Response
         .ok(deployKey)
         .build();

@@ -6,7 +6,7 @@ import {
   Select,
   FormControl,
   InputLabel,
-  SelectChangeEvent,
+  SelectChangeEvent, capitalize,
 } from "@mui/material";
 import { SnackBarSeverity } from "../notification/SnackBar";
 
@@ -14,37 +14,67 @@ type DeployKeyFormProps = {
   notifyUser: (severity: SnackBarSeverity, message: string) => void;
 };
 
+const ModuleScopes = ["namespace", "name", "provider"];
+const ProviderScopes = ["namespace", "type"];
+
 const DeployKeyForm = (props: DeployKeyFormProps) => {
   const [name, setName] = useState("");
   const [srcUrl, setSrcUrl] = useState("");
   const [moduleProvider, setModuleProvider] = useState("");
   const [namespace, setNamespace] = useState("");
   const [srcType, setSrcType] = React.useState("module");
+  const [scope, setScope] = useState("provider");
 
   const { notifyUser } = props;
 
   const handleSrcTypeChange = (event: SelectChangeEvent) => {
-    setSrcType(event.target.value as string);
+    const value = event.target.value as string;
+    setSrcType(value);
+    if (value === "module") {
+      setScope("provider");
+    } else {
+      setScope("type");
+    }
   };
+
+  const handleScopeChange = (event: SelectChangeEvent) => {
+    setScope(event.target.value as string);
+  }
 
   const createResource = async (event: any) => {
     event.preventDefault();
-    const id =
-      `${namespace}-${name}` +
-      (srcType === "module" ? `-${moduleProvider}` : "");
-    const response = await fetch(`management/deploykey/${id}`, {
+    const body = new FormData();
+    body.append("resourceType", srcType);
+    body.append("scope", scope);
+    body.append("namespace", namespace);
+    body.append("source", srcUrl);
+    if (srcType === "module") {
+      if (scope === "name" || scope === "provider") {
+        body.append("name", name);
+      }
+      if (scope === "provider") {
+        body.append("provider", moduleProvider);
+      }
+    } else if (srcType === "provider") {
+      if (scope == "type") {
+        body.append("type", name);
+      }
+    }
+    const response = await fetch(`management/deploykey`, {
       method: "POST",
+      body,
     });
     if (response.status === 200) {
       setSrcUrl("");
       setName("");
       setModuleProvider("");
       setNamespace("");
-      notifyUser("success", `DeployKey ${id} for ${srcType} created`);
+      setScope("namespace");
+      notifyUser("success", `DeployKey for ${srcType} created`);
     } else {
       notifyUser(
         "error",
-        `DeployKey for ${srcType} ${id} could not be created`,
+        `DeployKey for ${srcType} could not be created`,
       );
     }
     return await response.json();
@@ -61,6 +91,8 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
             value={srcType}
             label="Type"
             onChange={handleSrcTypeChange}
+            required
+            sx={{ mb: 4 }}
           >
             <MenuItem value={"module"}>Module</MenuItem>
             <MenuItem value={"provider"}>Provider</MenuItem>
@@ -77,6 +109,20 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
           required
           sx={{ mb: 4 }}
         />
+        <FormControl fullWidth sx={{ mb: 4 }}>
+        <InputLabel id="tapir-scope-select-label">Scope</InputLabel>
+        <Select
+            labelId="tapir-scope-select-label"
+            id="tapir-scope-select"
+            value={scope}
+            label="Scope"
+            onChange={handleScopeChange}
+        >
+          {
+            (srcType === "module" ? ModuleScopes : ProviderScopes).map((s) => <MenuItem key={s} value={s}>{capitalize(s)}</MenuItem>)
+          }
+        </Select>
+        </FormControl>
         <TextField
           type="text"
           variant="outlined"
@@ -90,31 +136,42 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
         />
         {srcType === "module" ? (
           <>
-            <TextField
-              type="text"
-              variant="outlined"
-              color="secondary"
-              label="Name"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              required
-              fullWidth
-              sx={{ mb: 4 }}
-            />
-            <TextField
-              type="text"
-              variant="outlined"
-              color="secondary"
-              label="Provider"
-              onChange={(e) => setModuleProvider(e.target.value)}
-              value={moduleProvider}
-              required
-              fullWidth
-              sx={{ mb: 4 }}
-            />
+            {
+              scope === "name" || scope == "provider" ? (
+                  <TextField
+                      type="text"
+                      variant="outlined"
+                      color="secondary"
+                      label="Name"
+                      onChange={(e) => setName(e.target.value)}
+                      value={name}
+                      required
+                      fullWidth
+                      sx={{ mb: 4 }}
+                  />
+              ): null
+            }
+            {
+              scope == "provider" ? (
+                  <TextField
+                      type="text"
+                      variant="outlined"
+                      color="secondary"
+                      label="Provider"
+                      onChange={(e) => setModuleProvider(e.target.value)}
+                      value={moduleProvider}
+                      required
+                      fullWidth
+                      sx={{ mb: 4 }}
+                  />
+              ): null
+            }
           </>
         ) : (
           <>
+
+          {
+            scope == "type" ? (
             <TextField
               type="text"
               variant="outlined"
@@ -126,6 +183,8 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
               fullWidth
               sx={{ mb: 4 }}
             />
+                ): null
+          }
           </>
         )}
         <Button variant="outlined" color="secondary" type={"submit"}>

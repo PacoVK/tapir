@@ -34,6 +34,8 @@ public interface IRepository {
 
   DeployKey getDeployKeyById(String id) throws DeployKeyNotFoundException;
 
+  DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException;
+
   void saveDeployKey(DeployKey deployKey) throws Exception;
 
   void updateDeployKey(DeployKey deployKey) throws Exception;

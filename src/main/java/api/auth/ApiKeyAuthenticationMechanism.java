@@ -1,8 +1,13 @@
 package api.auth;
 
 import core.exceptions.DeployKeyNotFoundException;
+import core.exceptions.ModuleNotFoundException;
 import core.service.DeployKeyService;
+import core.service.ModuleService;
+import core.service.ProviderService;
 import core.tapir.DeployKey;
+import core.terraform.Module;
+import core.terraform.Provider;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.quarkus.security.AuthenticationFailedException;
@@ -33,17 +38,21 @@ public class ApiKeyAuthenticationMechanism implements HttpAuthenticationMechanis
       HttpCredentialTransport.Type.OTHER_HEADER, X_API_KEY_HEADER);
 
   DeployKeyService deployKeyService;
+  ModuleService moduleService;
+  ProviderService providerService;
 
-  public ApiKeyAuthenticationMechanism(DeployKeyService deployKeyService) {
+  public ApiKeyAuthenticationMechanism(DeployKeyService deployKeyService, ModuleService moduleService, ProviderService providerService) {
     this.deployKeyService = deployKeyService;
+    this.moduleService = moduleService;
+    this.providerService = providerService;
   }
 
   @Override
   public Uni<SecurityIdentity> authenticate(RoutingContext context, IdentityProviderManager identityProviderManager) {
     final String apiKeyHeader = context.request().getHeader(X_API_KEY_HEADER);
     try {
-      DeployKey deployKey = fetchDeployKeyByRequestPath(context.request().path());
-      if (apiKeyHeader.equals(deployKey.getKey())) {
+      DeployKey deployKey = fetchDeployKeyByValue(apiKeyHeader);
+      if (this.validateKeyByRequestPath(deployKey, context.request().path())) {
         return tapirSecurityIdentity();
       }
     } catch (DeployKeyNotFoundException e) {
@@ -71,16 +80,27 @@ public class ApiKeyAuthenticationMechanism implements HttpAuthenticationMechanis
     return Uni.createFrom().item(OIDC_SERVICE_TRANSPORT);
   }
 
-  private DeployKey fetchDeployKeyByRequestPath(String requestPath)
-      throws DeployKeyNotFoundException {
-    String keyId;
-    String[] split = requestPath.split("/v1/")[1].split("/");
+  private DeployKey fetchDeployKeyByValue(String apiKeyHeader) throws DeployKeyNotFoundException {
+    return deployKeyService.getDeployKeyByValue(apiKeyHeader);
+  }
+  private boolean validateKeyByRequestPath(DeployKey key, String requestPath) {
+    String resourceId = requestPath.split("/v1/")[1];
     if (requestPath.contains("modules")) {
-      keyId = String.format("%s-%s-%s", split[0], split[1], split[2]);
+      try {
+        Module module = moduleService.getModule(resourceId);
+        return key.ValidForModule(module);
+      } catch (Exception e) {
+        return false;
+      }
     } else {
-      keyId = String.format("%s-%s", split[0], split[1]);
+        Provider provider = null;
+        try {
+            provider = providerService.getProvider(resourceId);
+        } catch (Exception e) {
+          return false;
+        }
+        return key.ValidForProvider(provider);
     }
-    return deployKeyService.getDeployKey(keyId);
   }
 
   private Uni<SecurityIdentity> tapirSecurityIdentity() {

@@ -17,6 +17,7 @@ import io.vertx.core.json.JsonObject;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.HttpMethod;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
@@ -85,6 +86,19 @@ public class ElasticSearchRepository extends TapirRepository {
     } catch (IOException e) {
       throw new DeployKeyNotFoundException(id, e);
     }
+  }
+
+  @Override
+  public DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException {
+      try {
+        Collection<DeployKey> deployKeys = (Collection<DeployKey>) findDeployKeys("", 1, value).getEntities();
+        if (deployKeys == null || deployKeys.size() != 1) {
+          throw new DeployKeyNotFoundException("Could not find matching key");
+        }
+        return deployKeys.stream().findFirst().orElseThrow(() -> new DeployKeyNotFoundException("Could not find matching key"));
+      } catch (Exception e) {
+        throw new DeployKeyNotFoundException("Could not find matching key");
+      }
   }
 
   @Override

@@ -21,7 +21,7 @@ public abstract class AbstractDeployKeysBackendTest {
 
   @Test
   void saveAndUpdateDeployKey() throws Exception {
-    DeployKey deployKey = new DeployKey("mae", "son");
+    DeployKey deployKey = new DeployKey("namespace", "", "mae", "", "son");
     repository.saveDeployKey(deployKey);
     DeployKey persistedDeployKey = repository.getDeployKeyById(deployKey.getId());
     assertEquals(deployKey.getId(), persistedDeployKey.getId());
@@ -35,8 +35,8 @@ public abstract class AbstractDeployKeysBackendTest {
 
   @Test
   void findDeployKeys() throws Exception {
-    DeployKey deployKey1 = new DeployKey("foo", "bar");
-    DeployKey deployKey2 = new DeployKey("fred", "flintstone");
+    DeployKey deployKey1 = new DeployKey("namespace", "", "foo", "", "bar");
+    DeployKey deployKey2 = new DeployKey("namespace", "", "fred", "", "flintStone");
 
     repository.saveDeployKey(deployKey1);
     repository.saveDeployKey(deployKey2);
