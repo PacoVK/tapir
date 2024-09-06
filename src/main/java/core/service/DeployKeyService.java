@@ -18,8 +18,15 @@ public class DeployKeyService {
     this.tapirRepository = searchServiceInstance.get();
   }
 
-  public DeployKey createDeployKey(String id) throws Exception {
-    DeployKey deployKey = new DeployKey(id, generateKey());
+  public DeployKey createModuleDeployKey(String scope, String source, String namespace, String name, String provider) throws Exception {
+    DeployKey deployKey = new DeployKey(scope, source, namespace, name, provider, generateKey());
+    deployKey.setLastModifiedAt(Instant.now());
+    tapirRepository.saveDeployKey(deployKey);
+    return deployKey;
+  }
+
+  public DeployKey createProviderDeployKey(String scope, String source, String namespace, String type) throws Exception {
+    DeployKey deployKey = new DeployKey(scope, source, namespace, type, generateKey());
     deployKey.setLastModifiedAt(Instant.now());
     tapirRepository.saveDeployKey(deployKey);
     return deployKey;
@@ -35,6 +42,10 @@ public class DeployKeyService {
 
   public DeployKey getDeployKey(String id) throws DeployKeyNotFoundException {
     return tapirRepository.getDeployKeyById(id);
+  }
+
+  public DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException {
+    return tapirRepository.getDeployKeyById(value);
   }
 
   public void deleteDeployKey(String id) throws Exception {

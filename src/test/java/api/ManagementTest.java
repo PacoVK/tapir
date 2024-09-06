@@ -27,14 +27,14 @@ public class ManagementTest {
 
   @Test
   void getDeployKey() throws DeployKeyNotFoundException {
-    DeployKey fake = new DeployKey("foo-bar", "fake");
+    DeployKey fake = new DeployKey("namespace", "", "foo", "", "fake");
     fake.setLastModifiedAt(Instant.parse("2023-01-01T00:00:00Z"));
     when(deployKeyService.getDeployKey(any())).thenReturn(fake);
     given().get("/deploykey/foo-bar")
         .then()
         .statusCode(200)
         .body(
-            "\"id\"", is("foo-bar"),
+            "\"id\"", is("provider-foo"),
             "\"key\"", is("fake"),
             "\"lastModifiedAt\"", is("2023-01-01T00:00:00Z")
         );

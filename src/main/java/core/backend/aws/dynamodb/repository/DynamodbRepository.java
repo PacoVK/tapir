@@ -6,12 +6,15 @@ import core.exceptions.DeployKeyNotFoundException;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
+import core.tapir.CoreEntity;
 import core.tapir.DeployKey;
 import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.enterprise.context.ApplicationScoped;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -252,6 +255,14 @@ public class DynamodbRepository extends TapirRepository {
       throw new DeployKeyNotFoundException(id);
     }
     return deployKey;
+  }
+
+  public DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException {
+    Collection<DeployKey> deployKeys = (Collection<DeployKey>) findDeployKeys("", 1, value).getEntities();
+    if (deployKeys == null || deployKeys.size() != 1) {
+      throw new DeployKeyNotFoundException("Could not find matching key");
+    }
+    return deployKeys.stream().findFirst().orElseThrow(() -> new DeployKeyNotFoundException("Could not find matching key"));
   }
 
   public void deleteDeployKey(String id) {

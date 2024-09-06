@@ -30,7 +30,7 @@ class DynamodbDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
 
   @Test
   void cannotOverwriteDeployKey() throws Exception {
-    DeployKey deployKey = new DeployKey("double", "dcore");
+    DeployKey deployKey = new DeployKey("namespace", "", "double", "", "dcore");
     repository.saveDeployKey(deployKey);
     DeployKey persistedDeployKey = repository.getDeployKeyById(deployKey.getId());
     persistedDeployKey.setKey("changed");

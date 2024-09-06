@@ -19,6 +19,7 @@ import core.exceptions.DeployKeyNotFoundException;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
+import core.tapir.CoreEntity;
 import core.tapir.DeployKey;
 import core.terraform.Module;
 import core.terraform.Provider;
@@ -26,6 +27,8 @@ import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -246,6 +249,19 @@ public class CosmosDbRepository extends TapirRepository {
     } catch (NotFoundException cosmosException) {
       throw new DeployKeyNotFoundException(id, cosmosException);
     }
+  }
+
+  @Override
+  public DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException {
+      try {
+          Collection<DeployKey> deployKeys = (Collection<DeployKey>) findDeployKeys("", 1, value).getEntities();
+          if (deployKeys == null || deployKeys.size() != 1) {
+            throw new DeployKeyNotFoundException("Could not find matching key");
+          }
+          return deployKeys.stream().findFirst().orElseThrow(() -> new DeployKeyNotFoundException("Could not find matching key"));
+      } catch (Exception e) {
+          throw new DeployKeyNotFoundException("Could not find matching key");
+      }
   }
 
   @Override
