@@ -4,6 +4,7 @@ package api;
 import core.exceptions.TapirException;
 import core.service.DeployKeyService;
 import core.tapir.DeployKey;
+import core.tapir.DeployKeyScope;
 import core.terraform.Module;
 import core.upload.FormData;
 import extensions.core.Report;
@@ -39,7 +40,7 @@ public class Management {
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @Path("/deploykey")
   public Response createDeployKey(  @RestForm String resourceType,
-  @RestForm String scope,
+  @RestForm DeployKeyScope scope,
   @RestForm String namespace,
   @RestForm String source,
   @RestForm String provider,

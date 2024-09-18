@@ -2,6 +2,7 @@ package core.backend.aws.dynamodb.repository;
 
 import core.backend.AbstractDeployKeysBackendTest;
 import core.tapir.DeployKey;
+import core.tapir.DeployKeyScope;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,7 +31,7 @@ class DynamodbDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
 
   @Test
   void cannotOverwriteDeployKey() throws Exception {
-    DeployKey deployKey = new DeployKey("namespace", "", "double", "", "dcore");
+    DeployKey deployKey = new DeployKey(DeployKeyScope.NAMESPACE, "", "double", "", "dcore");
     repository.saveDeployKey(deployKey);
     DeployKey persistedDeployKey = repository.getDeployKeyById(deployKey.getId());
     persistedDeployKey.setKey("changed");
