@@ -3,6 +3,8 @@ package core.backend;
 import api.dto.PaginationDto;
 import core.tapir.DeployKey;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import core.tapir.DeployKeyScope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +23,7 @@ public abstract class AbstractDeployKeysBackendTest {
 
   @Test
   void saveAndUpdateDeployKey() throws Exception {
-    DeployKey deployKey = new DeployKey("namespace", "", "mae", "", "son");
+    DeployKey deployKey = new DeployKey(DeployKeyScope.NAMESPACE, "", "mae", "", "son");
     repository.saveDeployKey(deployKey);
     DeployKey persistedDeployKey = repository.getDeployKeyById(deployKey.getId());
     assertEquals(deployKey.getId(), persistedDeployKey.getId());
@@ -35,8 +37,8 @@ public abstract class AbstractDeployKeysBackendTest {
 
   @Test
   void findDeployKeys() throws Exception {
-    DeployKey deployKey1 = new DeployKey("namespace", "", "foo", "", "bar");
-    DeployKey deployKey2 = new DeployKey("namespace", "", "fred", "", "flintStone");
+    DeployKey deployKey1 = new DeployKey(DeployKeyScope.NAMESPACE, "", "foo", "", "bar");
+    DeployKey deployKey2 = new DeployKey(DeployKeyScope.NAMESPACE, "", "fred", "", "flintStone");
 
     repository.saveDeployKey(deployKey1);
     repository.saveDeployKey(deployKey2);

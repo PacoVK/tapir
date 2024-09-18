@@ -4,6 +4,7 @@ import api.dto.PaginationDto;
 import core.backend.TapirRepository;
 import core.exceptions.DeployKeyNotFoundException;
 import core.tapir.DeployKey;
+import core.tapir.DeployKeyScope;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import java.time.Instant;
@@ -18,14 +19,14 @@ public class DeployKeyService {
     this.tapirRepository = searchServiceInstance.get();
   }
 
-  public DeployKey createModuleDeployKey(String scope, String source, String namespace, String name, String provider) throws Exception {
+  public DeployKey createModuleDeployKey(DeployKeyScope scope, String source, String namespace, String name, String provider) throws Exception {
     DeployKey deployKey = new DeployKey(scope, source, namespace, name, provider, generateKey());
     deployKey.setLastModifiedAt(Instant.now());
     tapirRepository.saveDeployKey(deployKey);
     return deployKey;
   }
 
-  public DeployKey createProviderDeployKey(String scope, String source, String namespace, String type) throws Exception {
+  public DeployKey createProviderDeployKey(DeployKeyScope scope, String source, String namespace, String type) throws Exception {
     DeployKey deployKey = new DeployKey(scope, source, namespace, type, generateKey());
     deployKey.setLastModifiedAt(Instant.now());
     tapirRepository.saveDeployKey(deployKey);

@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class DeployKey extends CoreEntity {
   String resourceType;
-  String scope;
+  DeployKeyScope scope;
   String source;
   String namespace;
   String provider;
@@ -22,7 +22,7 @@ public class DeployKey extends CoreEntity {
 
   public DeployKey() {}
 
-  public DeployKey(String scope, String source, String namespace, String name, String provider, String key) {
+  public DeployKey(DeployKeyScope scope, String source, String namespace, String name, String provider, String key) {
     this.scope = scope;
     this.source = source;
     this.namespace = namespace;
@@ -33,7 +33,7 @@ public class DeployKey extends CoreEntity {
     setId(new ArrayList<>(Arrays.asList(this.resourceType, this.namespace, this.name, this.provider)));
   }
 
-  public DeployKey(String scope, String source, String namespace, String type, String key) {
+  public DeployKey(DeployKeyScope scope, String source, String namespace, String type, String key) {
     this.scope = scope;
     this.source = source;
     this.namespace = namespace;
@@ -80,14 +80,14 @@ public class DeployKey extends CoreEntity {
     if (!Objects.equals(this.namespace, module.getNamespace())) {
       return false;
     }
-    if (Objects.equals(this.scope, "namespace")) {
+    if (Objects.equals(this.scope, DeployKeyScope.NAMESPACE)) {
       // no need to go furter
       return true;
     }
     if (!Objects.equals(this.name, module.getName())) {
       return false;
     }
-    if (Objects.equals(this.scope, "name")) {
+    if (Objects.equals(this.scope, DeployKeyScope.NAME)) {
       // no need to go furter
       return true;
     }
@@ -101,7 +101,7 @@ public class DeployKey extends CoreEntity {
     if (!Objects.equals(this.namespace, provider.getNamespace())) {
       return false;
     }
-    if (Objects.equals(this.scope, "namespace")) {
+    if (Objects.equals(this.scope,  DeployKeyScope.NAMESPACE)) {
       // no need to check further
       return true;
     }

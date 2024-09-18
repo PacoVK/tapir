@@ -3,6 +3,7 @@ package api;
 import core.exceptions.DeployKeyNotFoundException;
 import core.service.DeployKeyService;
 import core.tapir.DeployKey;
+import core.tapir.DeployKeyScope;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
@@ -27,7 +28,7 @@ public class ManagementTest {
 
   @Test
   void getDeployKey() throws DeployKeyNotFoundException {
-    DeployKey fake = new DeployKey("namespace", "", "foo", "", "fake");
+    DeployKey fake = new DeployKey(DeployKeyScope.NAMESPACE, "", "foo", "", "fake");
     fake.setLastModifiedAt(Instant.parse("2023-01-01T00:00:00Z"));
     when(deployKeyService.getDeployKey(any())).thenReturn(fake);
     given().get("/deploykey/foo-bar")
