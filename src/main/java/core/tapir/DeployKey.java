@@ -76,6 +76,12 @@ public class DeployKey extends CoreEntity {
     if (!Objects.equals(this.resourceType, "module")) {
       return false;
     }
+    // Let's support the legacy keys
+    if (this.scope == null) {
+      // Let's reconstruct the expected key id
+      String expectedKeyId = String.format("%s-%s-%s", module.getNamespace(), module.getName(), module.getProvider());
+      return Objects.equals(this.id, expectedKeyId);
+    }
     // Let's first validate the namespace
     if (!Objects.equals(this.namespace, module.getNamespace())) {
       return false;
@@ -97,6 +103,12 @@ public class DeployKey extends CoreEntity {
   public boolean ValidForProvider(Provider provider) {
     if (!Objects.equals(this.resourceType, "provider")) {
       return false;
+    }
+    // Let's support the legacy keys
+    if (this.scope == null) {
+      // Let's reconstruct the expected key id
+      String expectedKeyId = String.format("%s-%s", provider.getNamespace(), provider.getType());
+      return Objects.equals(this.id, expectedKeyId);
     }
     if (!Objects.equals(this.namespace, provider.getNamespace())) {
       return false;
