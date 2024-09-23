@@ -1,10 +1,72 @@
+### Deploy-Keys
+
+
+Deploy Keys are used to authenticate upload requests. When creating a deploy key, you need to provide the following parameters:
+
+- **`resource-type`**: Specifies whether the deploy key is for a `module` or a `provider`.
+- **`source`**: The location of the module or provider, typically a Git repository.
+- **`scope`**: Defines the access level for the deploy key, allowing fine-grained control.
+- **`namespace`**: The namespace of the resource (applies to both `module` and `provider`).
+- **`name`**: The name of the resource (applies to `module`).
+- **`type`**: The type of resource (applies to `provider`).
+- **`provider`**: The provider of the resource (applies to `module`).
+
+#### Scope
+
+The scope parameter determines the hierarchy of access. You can choose the level of granularity for the deploy key based on the resource type.
+
+Resource hierarchy:
+- **Module**: `<namespace>/<name>/<provider>`
+- **Provider**: `<namespace>/<type>`
+
+Depending on the resource type, you can set the scope to one of these levels. The deploy key will grant access to all resources under the specified scope.
+
+##### Examples
+
+Given the following resources:
+
+- `tapir/networking/aws`
+- `tapir/networking/azure`
+- `tapir/compute/aws`
+- `tapir/compute/azure`
+- `anta/networking/aws`
+- `anta/networking/azure`
+- `anta/compute/aws`
+- `anta/compute/azure`
+
+1. **Scope: `namespace` (e.g., `namespace == tapir`)**
+
+   A deploy key with this scope would grant access to all `tapir` resources:
+
+  - `tapir/networking/aws`
+  - `tapir/networking/azure`
+  - `tapir/compute/aws`
+  - `tapir/compute/azure`
+
+2. **Scope: `name` (e.g., `namespace == anta`, `name == compute`)**
+
+   This scope limits access to the `compute` resources within the `anta` namespace:
+
+  - `anta/compute/aws`
+  - `anta/compute/azure`
+
+3. **Scope: `provider` (e.g., `namespace == tapir`, `name == networking`, `provider == azure`)**
+
+   This would restrict access to only the `tapir/networking/azure` module.
+
+  - `tapir/networking/azure`
+
+#### Legacy Deploy keys.
+
+Before version `0.9`, deploy keys were not **scopable**. While it is recommended to migrate to scopable keys, legacy deploy keys remain valid. They are treated as the most restrictive scope (`provider` for `modules` and `type` for `providers`), limiting access to a specific resource.
+
 ### Upload a module or provider
 
-To upload a module or provider you need to be authenticated via DeployKey. A DeployKey can be created and managed by Tapir administrators (see [authentication prerequisites](./configuration.md#Prerequisites)). After creating deploy keys, you can use them to authenticate against the REST-API. There is one DeployKey per namespace.
+To upload a module or provider you need to be authenticated via [DeployKey](#deploy-keys)
 
 #### Upload a module
 
-When you publish a Terraform module, a corresponding DeployKey must be created first.
+When you publish a Terraform module, you need a [DeployKey](#deploy-keys) giving permission to the new module.
 
 ##### Prerequisites:
 * The package name and version must be unique in the top-level namespace.
@@ -50,7 +112,8 @@ curl -XPOST  -H 'x-api-key: <API_KEY>' --fail-with-body -F archive=@archive.zip 
 > **Kubernetes:** kubernetes <br/>
 
 #### Upload a provider
-When you publish a Terraform provider, a corresponding DeployKey must be created first.
+When you publish a Terraform provider, you need a [DeployKey](#deploy-keys) giving permission to the new provider.
+
 
 Looking for the [troubleshooting docs](./TROUBLESHOOT.md)?
 

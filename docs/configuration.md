@@ -8,14 +8,14 @@ Tapir integrates well with [Keycloak](https://www.keycloak.org/).
 
 Tapir management needs the IDP client to put the role `admin` into the token.
 
-Tapir supports authentication via [OIDC](https://openid.net/connect/) and Deploy-Keys.
-While OIDC secures the app and Tapir management, Deploy-Keys are used for the REST-API in a CI/CD context.
+Tapir supports authentication via [OIDC](https://openid.net/connect/) and [Deploy-Keys](./usage.md#deploy-keys).
+While OIDC secures the app and Tapir management, [Deploy-Keys](./usage.md#deploy-keys) are used for the REST-API in a CI/CD context.
 
 **NOTE**: To use Tapir UI you need to be authenticated. However, you can read the registry without authentication. In particular the Terraform CLI will work without authentication, since Tapir does not yet support the [Login API](https://developer.hashicorp.com/terraform/internals/login-protocol).
 
 ##### OIDC vs. DeployKey
 
-The OIDC mechanism is used for the UI and Tapir management, while DeployKeys are used for the REST-API to publish modules and providers only.
+The OIDC mechanism is used for the UI and Tapir management, while [Deploy-Keys](./usage.md#deploy-keys) are used for the REST-API to publish modules and providers only.
 
 #### Backend
 
