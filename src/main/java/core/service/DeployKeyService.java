@@ -46,7 +46,7 @@ public class DeployKeyService {
   }
 
   public DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException {
-    return tapirRepository.getDeployKeyById(value);
+    return tapirRepository.getDeployKeyByValue(value);
   }
 
   public void deleteDeployKey(String id) throws Exception {
