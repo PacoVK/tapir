@@ -72,6 +72,30 @@ public class DeployKey extends CoreEntity {
     this.lastModifiedAt = lastModifiedAt;
   }
 
+  public DeployKeyScope getScope() {
+    return scope;
+  }
+
+  public String getResourceType() {
+    return resourceType;
+  }
+
+  public String getNamespace() {
+    return namespace;
+  }
+
+  public String getProvider() {
+    return provider;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getType() {
+    return type;
+  }
+
   public boolean ValidForModule(Module module) {
     if (!Objects.equals(this.resourceType, "module")) {
       return false;
