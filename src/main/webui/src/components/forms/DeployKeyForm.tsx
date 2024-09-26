@@ -57,7 +57,7 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
         body.append("provider", moduleProvider);
       }
     } else if (srcType === "provider") {
-      if (scope == "type") {
+      if (scope === "type") {
         body.append("type", name);
       }
     }
@@ -136,7 +136,7 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
         />
         {srcType === "module" ? (
           <>
-            {scope === "name" || scope == "provider" ? (
+            {scope === "name" || scope === "provider" ? (
               <TextField
                 type="text"
                 variant="outlined"
@@ -149,7 +149,7 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
                 sx={{ mb: 4 }}
               />
             ) : null}
-            {scope == "provider" ? (
+            {scope === "provider" ? (
               <TextField
                 type="text"
                 variant="outlined"
@@ -165,7 +165,7 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
           </>
         ) : (
           <>
-            {scope == "type" ? (
+            {scope === "type" ? (
               <TextField
                 type="text"
                 variant="outlined"
