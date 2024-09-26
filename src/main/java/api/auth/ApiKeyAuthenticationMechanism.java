@@ -85,21 +85,13 @@ public class ApiKeyAuthenticationMechanism implements HttpAuthenticationMechanis
   }
   private boolean validateKeyByRequestPath(DeployKey key, String requestPath) {
     String resourceId = requestPath.split("/v1/")[1];
+    String[] split = resourceId.split("/");
     if (requestPath.contains("modules")) {
-      try {
-        Module module = moduleService.getModule(resourceId);
-        return key.ValidForModule(module);
-      } catch (Exception e) {
-        return false;
-      }
+      Module module = new Module(split[0], split[1], split[2]);
+      return key.ValidForModule(module);
     } else {
-        Provider provider = null;
-        try {
-            provider = providerService.getProvider(resourceId);
-        } catch (Exception e) {
-          return false;
-        }
-        return key.ValidForProvider(provider);
+      Provider provider = new Provider(split[0], split[1]);
+      return key.ValidForProvider(provider);
     }
   }
 
