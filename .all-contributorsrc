@@ -104,6 +104,17 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "loispostula",
+      "name": "Loïs Postula",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1423612?v=4",
+      "profile": "https://lois.postu.la",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
