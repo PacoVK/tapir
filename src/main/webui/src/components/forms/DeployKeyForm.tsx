@@ -6,7 +6,8 @@ import {
   Select,
   FormControl,
   InputLabel,
-  SelectChangeEvent, capitalize,
+  SelectChangeEvent,
+  capitalize,
 } from "@mui/material";
 import { SnackBarSeverity } from "../notification/SnackBar";
 
@@ -39,7 +40,7 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
 
   const handleScopeChange = (event: SelectChangeEvent) => {
     setScope(event.target.value as string);
-  }
+  };
 
   const createResource = async (event: any) => {
     event.preventDefault();
@@ -72,10 +73,7 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
       setScope("namespace");
       notifyUser("success", `DeployKey for ${srcType} created`);
     } else {
-      notifyUser(
-        "error",
-        `DeployKey for ${srcType} could not be created`,
-      );
+      notifyUser("error", `DeployKey for ${srcType} could not be created`);
     }
     return await response.json();
   };
@@ -110,18 +108,20 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
           sx={{ mb: 4 }}
         />
         <FormControl fullWidth sx={{ mb: 4 }}>
-        <InputLabel id="tapir-scope-select-label">Scope</InputLabel>
-        <Select
+          <InputLabel id="tapir-scope-select-label">Scope</InputLabel>
+          <Select
             labelId="tapir-scope-select-label"
             id="tapir-scope-select"
             value={scope}
             label="Scope"
             onChange={handleScopeChange}
-        >
-          {
-            (srcType === "module" ? ModuleScopes : ProviderScopes).map((s) => <MenuItem key={s} value={s}>{capitalize(s)}</MenuItem>)
-          }
-        </Select>
+          >
+            {(srcType === "module" ? ModuleScopes : ProviderScopes).map((s) => (
+              <MenuItem key={s} value={s}>
+                {capitalize(s)}
+              </MenuItem>
+            ))}
+          </Select>
         </FormControl>
         <TextField
           type="text"
@@ -136,55 +136,48 @@ const DeployKeyForm = (props: DeployKeyFormProps) => {
         />
         {srcType === "module" ? (
           <>
-            {
-              scope === "name" || scope == "provider" ? (
-                  <TextField
-                      type="text"
-                      variant="outlined"
-                      color="secondary"
-                      label="Name"
-                      onChange={(e) => setName(e.target.value)}
-                      value={name}
-                      required
-                      fullWidth
-                      sx={{ mb: 4 }}
-                  />
-              ): null
-            }
-            {
-              scope == "provider" ? (
-                  <TextField
-                      type="text"
-                      variant="outlined"
-                      color="secondary"
-                      label="Provider"
-                      onChange={(e) => setModuleProvider(e.target.value)}
-                      value={moduleProvider}
-                      required
-                      fullWidth
-                      sx={{ mb: 4 }}
-                  />
-              ): null
-            }
+            {scope === "name" || scope == "provider" ? (
+              <TextField
+                type="text"
+                variant="outlined"
+                color="secondary"
+                label="Name"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                required
+                fullWidth
+                sx={{ mb: 4 }}
+              />
+            ) : null}
+            {scope == "provider" ? (
+              <TextField
+                type="text"
+                variant="outlined"
+                color="secondary"
+                label="Provider"
+                onChange={(e) => setModuleProvider(e.target.value)}
+                value={moduleProvider}
+                required
+                fullWidth
+                sx={{ mb: 4 }}
+              />
+            ) : null}
           </>
         ) : (
           <>
-
-          {
-            scope == "type" ? (
-            <TextField
-              type="text"
-              variant="outlined"
-              color="secondary"
-              label="Type"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              required
-              fullWidth
-              sx={{ mb: 4 }}
-            />
-                ): null
-          }
+            {scope == "type" ? (
+              <TextField
+                type="text"
+                variant="outlined"
+                color="secondary"
+                label="Type"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                required
+                fullWidth
+                sx={{ mb: 4 }}
+              />
+            ) : null}
           </>
         )}
         <Button variant="outlined" color="secondary" type={"submit"}>
