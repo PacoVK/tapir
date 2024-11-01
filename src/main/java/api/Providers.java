@@ -2,7 +2,9 @@ package api;
 
 import api.dto.ProviderTerraformDto;
 import api.dto.ProviderVersionsDto;
+import core.exceptions.InvalidVersionException;
 import core.service.ProviderService;
+import core.service.VersionService;
 import core.terraform.Provider;
 import core.upload.FormData;
 import core.upload.service.UploadService;
@@ -67,6 +69,9 @@ public class Providers {
   @Path("{namespace}/{type}/{version}")
   public Response uploadProvider(String namespace, String type, String version, FormData archive)
           throws Exception {
+    if(!VersionService.isValidProviderVersion(version)) {
+      throw new InvalidVersionException(version);
+    }
     Provider provider = new Provider(namespace, type);
     provider.setPublished_at(Instant.now());
     archive.setEntity(provider);

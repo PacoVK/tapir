@@ -1,5 +1,6 @@
 package api.mapper.exceptions;
 
+import core.exceptions.InvalidVersionException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import api.mapper.exceptions.response.ErrorResponse;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 class TapirExceptionMapperTest {
 
   TapirExceptionMapper mapper = new TapirExceptionMapper();
+
   @Test
   void getCorrectStatusWhenModuleNotFoundExceptionOccurs() {
     TapirException notFoundException = new ModuleNotFoundException("fake-id-version");
@@ -42,5 +44,15 @@ class TapirExceptionMapperTest {
     assertEquals(notFoundResponse.getStatus(), 500);
     assertEquals(errors.size(), 1);
     assertEquals(errors.get(0).getMessage(), "Module/ Provider with id fake-id-version could not be found");
+  }
+
+  @Test
+  void getCorrectStatusWhenRegistryComplianceExceptionOccurs() {
+    TapirException invalidVersionException = new InvalidVersionException("wrong-version");
+    Response badRequestResponse = mapper.toResponse(invalidVersionException);
+    List<ErrorResponse.ErrorMessage> errors = ((ErrorResponse) badRequestResponse.getEntity()).getErrors();
+    assertEquals(badRequestResponse.getStatus(), 400);
+    assertEquals(errors.size(), 1);
+    assertEquals(errors.get(0).getMessage(), "Version wrong-version is invalid and does not comply with the Terraform registry versioning specification");
   }
 }
