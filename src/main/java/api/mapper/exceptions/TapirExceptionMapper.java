@@ -2,6 +2,7 @@ package api.mapper.exceptions;
 
 import api.mapper.exceptions.response.ErrorResponse;
 import core.exceptions.NotFoundException;
+import core.exceptions.RegistryComplianceException;
 import core.exceptions.TapirException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -25,6 +26,9 @@ public class TapirExceptionMapper implements ExceptionMapper<TapirException> {
     Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
     if (e instanceof NotFoundException) {
       status = Response.Status.NOT_FOUND;
+    }
+    if(e instanceof RegistryComplianceException) {
+      status = Response.Status.BAD_REQUEST;
     }
     return Response.status(status)
             .entity(new ErrorResponse(errorId, errorMessage))

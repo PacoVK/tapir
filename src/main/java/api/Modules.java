@@ -1,8 +1,10 @@
 package api;
 
+import core.exceptions.InvalidVersionException;
 import core.exceptions.StorageException;
 import core.service.ModuleService;
 import core.service.StorageService;
+import core.service.VersionService;
 import core.storage.util.StorageUtil;
 import core.terraform.ArtifactVersion;
 import core.terraform.Module;
@@ -54,6 +56,9 @@ public class Modules {
   public Response uploadModule(
           String namespace, String name, String provider,
           String version, FormData archive) throws Exception {
+    if(!VersionService.isValidModuleVersion(version)) {
+      throw new InvalidVersionException(version);
+    }
     Module module = new Module(namespace, name, provider, version);
     module.setPublished_at(Instant.now());
     archive.setEntity(module);
