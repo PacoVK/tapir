@@ -71,7 +71,7 @@ When you publish a Terraform module, you need a [DeployKey](#deploy-keys) giving
 ##### Prerequisites:
 * The package name and version must be unique in the top-level namespace.
 * You need to specify a module namespace, a module name and the modules corresponding provider. For example `myorg/vpc/aws`.
-* Versioning must follow [Semantic Versioning](https://semver.org) specs
+* Versioning must follow [Semantic Versioning](https://semver.org) specs, can have an optional `v` prefix. (e.g.`1.0.0` or `v1.0.0`)
 * Currently only `.zip` is supported.
 
 **NOTE**: The zipped module directory layout should follow the [Terraform module structure](https://www.terraform.io/docs/language/modules/develop/structure.html).
@@ -122,7 +122,7 @@ To create and build the provider it is highly recommended to use the [official H
 ##### Prerequisites:
 * The provider name (aka. type) must be unique in the top-level namespace.
 * You need to specify a provider namespace, a provider type. For example `myorg/my-provider`.
-* Versioning must follow [Semantic Versioning](https://semver.org) specs
+* Versioning must follow [Semantic Versioning](https://semver.org) specs and **must** have a `v` prefix. (e.g. `v1.0.0`)
 * Currently only `.zip` is supported.
 * The `.zip` must contain all files that are described in [how to prepare release](https://developer.hashicorp.com/terraform/registry/providers/publishing#preparing-your-provider).
 
