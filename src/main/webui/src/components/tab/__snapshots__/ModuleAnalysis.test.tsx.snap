@@ -6,80 +6,65 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+        class="MuiTabs-root css-jhczcq-MuiTabs-root"
       >
         <div
-          class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+          class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
           style="overflow: hidden; margin-bottom: 0px;"
         >
           <div
             aria-label="module detail tabs"
-            class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+            class="MuiTabs-flexContainer css-1wxkzlj-MuiTabs-flexContainer"
             role="tablist"
           >
             <button
               aria-selected="true"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="0"
               type="button"
             >
               Inputs (1)
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
               aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="-1"
               type="button"
             >
               Outputs (2)
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
               aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="-1"
               type="button"
             >
               Dependencies (2)
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
               aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="-1"
               type="button"
             >
               Resources (1)
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
               aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="-1"
               type="button"
             >
               Security Report
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
           </div>
           <span
-            class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+            class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
             style="left: 0px; width: 0px;"
           />
         </div>
@@ -99,24 +84,24 @@ Object {
               class="MuiBox-root css-0"
             >
               <p
-                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
               >
                 <span
-                  class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                  class="MuiBadge-root css-63ezxx-MuiBadge-root"
                 >
                   <strong>
                     repositories
                   </strong>
                   <span
-                    class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-rt4zii-MuiBadge-badge"
+                    class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-drjizy-MuiBadge-badge"
                   />
                 </span>
               </p>
               <div
-                class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+                class="MuiContainer-root MuiContainer-maxWidthSm css-g3yzuj-MuiContainer-root"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                 >
                   List of repositories to create
                 </p>
@@ -125,7 +110,7 @@ Object {
                 >
                   <code
                     class="language-hcl"
-                    style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+                    style="white-space: pre; color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
                   >
                     <span>
                       map(object({force_delete : optional(bool, false)
@@ -169,80 +154,65 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+      class="MuiTabs-root css-jhczcq-MuiTabs-root"
     >
       <div
-        class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+        class="MuiTabs-scroller MuiTabs-fixed css-s2t35c-MuiTabs-scroller"
         style="overflow: hidden; margin-bottom: 0px;"
       >
         <div
           aria-label="module detail tabs"
-          class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+          class="MuiTabs-flexContainer css-1wxkzlj-MuiTabs-flexContainer"
           role="tablist"
         >
           <button
             aria-selected="true"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="0"
             type="button"
           >
             Inputs (1)
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="-1"
             type="button"
           >
             Outputs (2)
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="-1"
             type="button"
           >
             Dependencies (2)
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="-1"
             type="button"
           >
             Resources (1)
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1usuzwp-MuiButtonBase-root-MuiTab-root"
             role="tab"
             tabindex="-1"
             type="button"
           >
             Security Report
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <span
-          class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+          class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
           style="left: 0px; width: 0px;"
         />
       </div>
@@ -262,24 +232,24 @@ Object {
             class="MuiBox-root css-0"
           >
             <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
             >
               <span
-                class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                class="MuiBadge-root css-63ezxx-MuiBadge-root"
               >
                 <strong>
                   repositories
                 </strong>
                 <span
-                  class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-rt4zii-MuiBadge-badge"
+                  class="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular MuiBadge-colorSecondary css-drjizy-MuiBadge-badge"
                 />
               </span>
             </p>
             <div
-              class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+              class="MuiContainer-root MuiContainer-maxWidthSm css-g3yzuj-MuiContainer-root"
             >
               <p
-                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
               >
                 List of repositories to create
               </p>
@@ -288,7 +258,7 @@ Object {
               >
                 <code
                   class="language-hcl"
-                  style="color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
+                  style="white-space: pre; color: rgb(57, 58, 52); font-family: \\"Consolas\\", \\"Bitstream Vera Sans Mono\\", \\"Courier New\\", Courier, monospace; direction: ltr; text-align: left; word-spacing: normal; word-break: normal; font-size: .9em; line-height: 1.2em; tab-size: 4; hyphens: none;"
                 >
                   <span>
                     map(object({force_delete : optional(bool, false)

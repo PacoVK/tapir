@@ -6,7 +6,12 @@ import { BrowserRouter } from "react-router-dom";
 describe("<AppRouter /> spec", () => {
   it("renders the AppRouter", () => {
     const view = render(
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <AppRouter />
       </BrowserRouter>,
     );

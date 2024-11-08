@@ -6,12 +6,12 @@ Object {
   "baseElement": <body>
     <div>
       <h4
-        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
       >
         Module Dependencies
       </h4>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-y9smp5-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-t7zk8r-MuiTypography-root"
       >
          
         Dependencies are external modules that this module references. A module is considered external if it isn't within the same repository.
@@ -23,17 +23,17 @@ Object {
           class="MuiBox-root css-0"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           >
             <strong>
               terraform-aws-modules/security-group/aws
             </strong>
           </p>
           <div
-            class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+            class="MuiContainer-root MuiContainer-maxWidthSm css-g3yzuj-MuiContainer-root"
           >
             <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
             >
               Version:
                
@@ -45,15 +45,15 @@ Object {
         </div>
       </div>
       <hr
-        class="MuiDivider-root MuiDivider-fullWidth css-1hyyq6u-MuiDivider-root"
+        class="MuiDivider-root MuiDivider-fullWidth css-88ji4t-MuiDivider-root"
       />
       <h4
-        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
       >
         Provider Dependencies
       </h4>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-y9smp5-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-t7zk8r-MuiTypography-root"
       >
         Providers are Terraform plugins that will be automatically installed, if available on the Terraform Registry.
       </p>
@@ -64,17 +64,17 @@ Object {
           class="MuiBox-root css-0"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           >
             <strong>
               aws
             </strong>
           </p>
           <div
-            class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+            class="MuiContainer-root MuiContainer-maxWidthSm css-g3yzuj-MuiContainer-root"
           >
             <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
             >
               Version:
                
@@ -89,12 +89,12 @@ Object {
   </body>,
   "container": <div>
     <h4
-      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
     >
       Module Dependencies
     </h4>
     <p
-      class="MuiTypography-root MuiTypography-body1 css-y9smp5-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 css-t7zk8r-MuiTypography-root"
     >
        
       Dependencies are external modules that this module references. A module is considered external if it isn't within the same repository.
@@ -106,17 +106,17 @@ Object {
         class="MuiBox-root css-0"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
         >
           <strong>
             terraform-aws-modules/security-group/aws
           </strong>
         </p>
         <div
-          class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthSm css-g3yzuj-MuiContainer-root"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           >
             Version:
              
@@ -128,15 +128,15 @@ Object {
       </div>
     </div>
     <hr
-      class="MuiDivider-root MuiDivider-fullWidth css-1hyyq6u-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth css-88ji4t-MuiDivider-root"
     />
     <h4
-      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
     >
       Provider Dependencies
     </h4>
     <p
-      class="MuiTypography-root MuiTypography-body1 css-y9smp5-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 css-t7zk8r-MuiTypography-root"
     >
       Providers are Terraform plugins that will be automatically installed, if available on the Terraform Registry.
     </p>
@@ -147,17 +147,17 @@ Object {
         class="MuiBox-root css-0"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
         >
           <strong>
             aws
           </strong>
         </p>
         <div
-          class="MuiContainer-root MuiContainer-maxWidthSm css-10a3hyv-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthSm css-g3yzuj-MuiContainer-root"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           >
             Version:
              

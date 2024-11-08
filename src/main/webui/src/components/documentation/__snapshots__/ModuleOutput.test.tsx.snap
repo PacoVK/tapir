@@ -12,17 +12,17 @@ Object {
           class="MuiBox-root css-0"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           >
             <strong>
               github_roles
             </strong>
           </p>
           <div
-            class="MuiContainer-root MuiContainer-maxWidthSm css-cuefkz-MuiContainer-root"
+            class="MuiContainer-root MuiContainer-maxWidthSm css-zzzaw2-MuiContainer-root"
           >
             <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
             />
           </div>
         </div>
@@ -30,17 +30,17 @@ Object {
           class="MuiBox-root css-0"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           >
             <strong>
               registries
             </strong>
           </p>
           <div
-            class="MuiContainer-root MuiContainer-maxWidthSm css-cuefkz-MuiContainer-root"
+            class="MuiContainer-root MuiContainer-maxWidthSm css-zzzaw2-MuiContainer-root"
           >
             <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
             />
           </div>
         </div>
@@ -55,17 +55,17 @@ Object {
         class="MuiBox-root css-0"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
         >
           <strong>
             github_roles
           </strong>
         </p>
         <div
-          class="MuiContainer-root MuiContainer-maxWidthSm css-cuefkz-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthSm css-zzzaw2-MuiContainer-root"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           />
         </div>
       </div>
@@ -73,17 +73,17 @@ Object {
         class="MuiBox-root css-0"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
         >
           <strong>
             registries
           </strong>
         </p>
         <div
-          class="MuiContainer-root MuiContainer-maxWidthSm css-cuefkz-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthSm css-zzzaw2-MuiContainer-root"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
           />
         </div>
       </div>

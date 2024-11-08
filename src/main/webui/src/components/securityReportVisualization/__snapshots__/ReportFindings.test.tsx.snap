@@ -6,17 +6,17 @@ Object {
   "baseElement": <body>
     <div>
       <h4
-        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
       >
         Security Report
       </h4>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-19dapye-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-10377jk-MuiTypography-root"
       >
         Security findings by
          
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
           href="https://trivy.dev/"
           rel="noopener"
           target="_blank"
@@ -26,52 +26,57 @@ Object {
         :
       </p>
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1808mag-MuiPaper-root-MuiAccordion-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
       >
-        <div
-          aria-controls="damaged.tf-content"
-          aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
-          id="damaged.tf-header"
-          role="button"
-          tabindex="0"
+        <h3
+          class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
         >
           <div
-            class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
+            aria-controls="damaged.tf-content"
+            aria-expanded="false"
+            class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-jineix-MuiButtonBase-root-MuiAccordionSummary-root"
+            id="damaged.tf-header"
+            role="button"
+            tabindex="0"
           >
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            <div
+              class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-7iurs7-MuiAccordionSummary-content"
             >
-              damaged.tf
-               - Findings: 
-              1
-            </p>
-          </div>
-          <div
-            class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="ExpandMoreIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+              >
+                damaged.tf
+                 - Findings: 
+                1
+              </p>
+            </div>
+            <div
+              class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
             >
-              <path
-                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-              />
-            </svg>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
+        </h3>
         <div
-          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
           style="min-height: 0px;"
         >
           <div
-            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
           >
             <div
-              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
             >
               <div
                 aria-labelledby="damaged.tf-header"
@@ -80,59 +85,64 @@ Object {
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                  class="MuiAccordionDetails-root css-1lj39kh-MuiAccordionDetails-root"
                 >
                   <div
-                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1808mag-MuiPaper-root-MuiAccordion-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
-                    <div
-                      aria-controls="An ingress security group rule allows traffic from /0.0-content"
-                      aria-expanded="false"
-                      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
-                      id="An ingress security group rule allows traffic from /0.0-header"
-                      role="button"
-                      tabindex="0"
+                    <h3
+                      class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
                     >
                       <div
-                        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
+                        aria-controls="An ingress security group rule allows traffic from /0.0-content"
+                        aria-expanded="false"
+                        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-jineix-MuiButtonBase-root-MuiAccordionSummary-root"
+                        id="An ingress security group rule allows traffic from /0.0-header"
+                        role="button"
+                        tabindex="0"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                        <div
+                          class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-7iurs7-MuiAccordionSummary-content"
                         >
-                          aws_security_group.no_issue
-                          , Line:
-                           
-                          31
-                           -
-                           
-                          31
-                        </p>
-                      </div>
-                      <div
-                        class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                          data-testid="ExpandMoreIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                          >
+                            aws_security_group.no_issue
+                            , Line:
+                             
+                            31
+                             -
+                             
+                            31
+                          </p>
+                        </div>
+                        <div
+                          class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
                         >
-                          <path
-                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                          />
-                        </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                            data-testid="ExpandMoreIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
+                    </h3>
                     <div
-                      class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+                      class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
                       style="min-height: 0px;"
                     >
                       <div
-                        class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                        class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
                       >
                         <div
-                          class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                          class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                         >
                           <div
                             aria-labelledby="An ingress security group rule allows traffic from /0.0-header"
@@ -141,10 +151,10 @@ Object {
                             role="region"
                           >
                             <div
-                              class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                              class="MuiAccordionDetails-root css-1lj39kh-MuiAccordionDetails-root"
                             >
                               <p
-                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                               >
                                 <b>
                                   Severity:
@@ -153,7 +163,7 @@ Object {
                                 CRITICAL
                               </p>
                               <p
-                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                               >
                                 <b>
                                   Violation:
@@ -162,7 +172,7 @@ Object {
                                 An ingress security group rule allows traffic from /0.
                               </p>
                               <p
-                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                               >
                                 <b>
                                   Impact:
@@ -171,7 +181,7 @@ Object {
                                 Your port exposed to the internet
                               </p>
                               <p
-                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                               >
                                 <b>
                                   Solution:
@@ -180,7 +190,7 @@ Object {
                                 Set a more restrictive cidr range
                               </p>
                               <p
-                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                               >
                                 <b>
                                   Resource:
@@ -189,7 +199,7 @@ Object {
                                 aws_security_group.no_issue
                               </p>
                               <p
-                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                               >
                                 <b>
                                   From line:
@@ -198,7 +208,7 @@ Object {
                                 31
                               </p>
                               <p
-                                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                               >
                                 <b>
                                   To line:
@@ -207,7 +217,7 @@ Object {
                                 31
                               </p>
                               <a
-                                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                                 href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks"
                                 rel="noopener"
                                 target="_blank"
@@ -230,17 +240,17 @@ Object {
   </body>,
   "container": <div>
     <h4
-      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
     >
       Security Report
     </h4>
     <p
-      class="MuiTypography-root MuiTypography-body1 css-19dapye-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 css-10377jk-MuiTypography-root"
     >
       Security findings by
        
       <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
         href="https://trivy.dev/"
         rel="noopener"
         target="_blank"
@@ -250,52 +260,57 @@ Object {
       :
     </p>
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1808mag-MuiPaper-root-MuiAccordion-root"
+      style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
     >
-      <div
-        aria-controls="damaged.tf-content"
-        aria-expanded="false"
-        class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
-        id="damaged.tf-header"
-        role="button"
-        tabindex="0"
+      <h3
+        class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
       >
         <div
-          class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
+          aria-controls="damaged.tf-content"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-jineix-MuiButtonBase-root-MuiAccordionSummary-root"
+          id="damaged.tf-header"
+          role="button"
+          tabindex="0"
         >
-          <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          <div
+            class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-7iurs7-MuiAccordionSummary-content"
           >
-            damaged.tf
-             - Findings: 
-            1
-          </p>
-        </div>
-        <div
-          class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-            data-testid="ExpandMoreIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+            >
+              damaged.tf
+               - Findings: 
+              1
+            </p>
+          </div>
+          <div
+            class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
           >
-            <path
-              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-            />
-          </svg>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="ExpandMoreIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+          </div>
         </div>
-      </div>
+      </h3>
       <div
-        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
         style="min-height: 0px;"
       >
         <div
-          class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
         >
           <div
-            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
               aria-labelledby="damaged.tf-header"
@@ -304,59 +319,64 @@ Object {
               role="region"
             >
               <div
-                class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                class="MuiAccordionDetails-root css-1lj39kh-MuiAccordionDetails-root"
               >
                 <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1086bdv-MuiPaper-root-MuiAccordion-root"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1808mag-MuiPaper-root-MuiAccordion-root"
+                  style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                 >
-                  <div
-                    aria-controls="An ingress security group rule allows traffic from /0.0-content"
-                    aria-expanded="false"
-                    class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root"
-                    id="An ingress security group rule allows traffic from /0.0-header"
-                    role="button"
-                    tabindex="0"
+                  <h3
+                    class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
                   >
                     <div
-                      class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-eqpfi5-MuiAccordionSummary-content"
+                      aria-controls="An ingress security group rule allows traffic from /0.0-content"
+                      aria-expanded="false"
+                      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters severity-CRITICAL css-jineix-MuiButtonBase-root-MuiAccordionSummary-root"
+                      id="An ingress security group rule allows traffic from /0.0-header"
+                      role="button"
+                      tabindex="0"
                     >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                      <div
+                        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-7iurs7-MuiAccordionSummary-content"
                       >
-                        aws_security_group.no_issue
-                        , Line:
-                         
-                        31
-                         -
-                         
-                        31
-                      </p>
-                    </div>
-                    <div
-                      class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                        data-testid="ExpandMoreIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                        >
+                          aws_security_group.no_issue
+                          , Line:
+                           
+                          31
+                           -
+                           
+                          31
+                        </p>
+                      </div>
+                      <div
+                        class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
                       >
-                        <path
-                          d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                          data-testid="ExpandMoreIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                          />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
+                  </h3>
                   <div
-                    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+                    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
                     style="min-height: 0px;"
                   >
                     <div
-                      class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                      class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
                     >
                       <div
-                        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                       >
                         <div
                           aria-labelledby="An ingress security group rule allows traffic from /0.0-header"
@@ -365,10 +385,10 @@ Object {
                           role="region"
                         >
                           <div
-                            class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                            class="MuiAccordionDetails-root css-1lj39kh-MuiAccordionDetails-root"
                           >
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                             >
                               <b>
                                 Severity:
@@ -377,7 +397,7 @@ Object {
                               CRITICAL
                             </p>
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                             >
                               <b>
                                 Violation:
@@ -386,7 +406,7 @@ Object {
                               An ingress security group rule allows traffic from /0.
                             </p>
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                             >
                               <b>
                                 Impact:
@@ -395,7 +415,7 @@ Object {
                               Your port exposed to the internet
                             </p>
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                             >
                               <b>
                                 Solution:
@@ -404,7 +424,7 @@ Object {
                               Set a more restrictive cidr range
                             </p>
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                             >
                               <b>
                                 Resource:
@@ -413,7 +433,7 @@ Object {
                               aws_security_group.no_issue
                             </p>
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                             >
                               <b>
                                 From line:
@@ -422,7 +442,7 @@ Object {
                               31
                             </p>
                             <p
-                              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
                             >
                               <b>
                                 To line:
@@ -431,7 +451,7 @@ Object {
                               31
                             </p>
                             <a
-                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                               href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks"
                               rel="noopener"
                               target="_blank"

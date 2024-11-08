@@ -13,7 +13,7 @@ Object {
           src="tapir.png"
         />
         <p
-          class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-1xrrpwr-MuiTypography-root"
         >
           Found this Tapir, but no 
           foo
@@ -30,7 +30,7 @@ Object {
         src="tapir.png"
       />
       <p
-        class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-1xrrpwr-MuiTypography-root"
       >
         Found this Tapir, but no 
         foo

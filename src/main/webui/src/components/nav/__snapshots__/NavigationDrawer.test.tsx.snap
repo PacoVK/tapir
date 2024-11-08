@@ -6,35 +6,36 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="MuiDrawer-root MuiDrawer-docked css-owxqkk-MuiDrawer-docked"
+        class="MuiDrawer-root MuiDrawer-docked css-xe2jph-MuiDrawer-docked"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft css-12i7wg6-MuiPaper-root-MuiDrawer-paper"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft css-1lwhjos-MuiPaper-root-MuiDrawer-paper"
+          style="--Paper-shadow: none;"
         >
           <div
-            class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
+            class="MuiToolbar-root MuiToolbar-regular css-1u9o2lj-MuiToolbar-root"
           />
           <hr
-            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+            class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
           />
           <ul
-            class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+            class="MuiList-root MuiList-padding css-b7dj7n-MuiList-root"
           >
             <a
-              class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
+              class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
               href="/"
             >
               <div
-                class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root"
+                class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
                 role="button"
                 tabindex="0"
               >
                 <div
-                  class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+                  class="MuiListItemIcon-root css-cokf1l-MuiListItemIcon-root"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="ViewModuleIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -45,34 +46,31 @@ Object {
                   </svg>
                 </div>
                 <div
-                  class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                  class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
                 >
                   <span
-                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
                   >
                     Modules
                   </span>
                 </div>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </div>
             </a>
             <a
-              class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
+              class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
               href="/providers"
             >
               <div
-                class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root"
+                class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
                 role="button"
                 tabindex="0"
               >
                 <div
-                  class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+                  class="MuiListItemIcon-root css-cokf1l-MuiListItemIcon-root"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="AppsIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -83,17 +81,14 @@ Object {
                   </svg>
                 </div>
                 <div
-                  class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                  class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
                 >
                   <span
-                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
                   >
                     Providers
                   </span>
                 </div>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </div>
             </a>
           </ul>
@@ -103,35 +98,36 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="MuiDrawer-root MuiDrawer-docked css-owxqkk-MuiDrawer-docked"
+      class="MuiDrawer-root MuiDrawer-docked css-xe2jph-MuiDrawer-docked"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft css-12i7wg6-MuiPaper-root-MuiDrawer-paper"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft css-1lwhjos-MuiPaper-root-MuiDrawer-paper"
+        style="--Paper-shadow: none;"
       >
         <div
-          class="MuiToolbar-root MuiToolbar-regular css-r6ewbb-MuiToolbar-root"
+          class="MuiToolbar-root MuiToolbar-regular css-1u9o2lj-MuiToolbar-root"
         />
         <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
         />
         <ul
-          class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+          class="MuiList-root MuiList-padding css-b7dj7n-MuiList-root"
         >
           <a
-            class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
             href="/"
           >
             <div
-              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root"
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
               role="button"
               tabindex="0"
             >
               <div
-                class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+                class="MuiListItemIcon-root css-cokf1l-MuiListItemIcon-root"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="ViewModuleIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -142,34 +138,31 @@ Object {
                 </svg>
               </div>
               <div
-                class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
               >
                 <span
-                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
                 >
                   Modules
                 </span>
               </div>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </div>
           </a>
           <a
-            class="MuiListItem-root MuiListItem-gutters css-1nxmd3h-MuiListItem-root"
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
             href="/providers"
           >
             <div
-              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root"
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
               role="button"
               tabindex="0"
             >
               <div
-                class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+                class="MuiListItemIcon-root css-cokf1l-MuiListItemIcon-root"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="AppsIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -180,17 +173,14 @@ Object {
                 </svg>
               </div>
               <div
-                class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
               >
                 <span
-                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
                 >
                   Providers
                 </span>
               </div>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </div>
           </a>
         </ul>
