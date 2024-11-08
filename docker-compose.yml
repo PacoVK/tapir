@@ -1,14 +1,15 @@
 services:
 
   keycloak:
-    image: quay.io/keycloak/keycloak:22.0
+    image: quay.io/keycloak/keycloak:26.0
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./dev/scripts/keycloak:/opt/keycloak/data/import
     ports:
       - "8089:8080"
     command:
-      - start-dev --import-realm
+      - start-dev
+      - --import-realm
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
