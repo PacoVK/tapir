@@ -1,5 +1,12 @@
 import React from "react";
-import { Avatar, Chip, Grid, Paper, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Chip,
+  Grid2 as Grid,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import BuildCircle from "@mui/icons-material/BuildCircle";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { formatDate } from "../../util/DateUtil";
@@ -10,8 +17,7 @@ import { Link } from "react-router-dom";
 const ProviderElement = ({ provider }: { provider: Provider }) => {
   return (
     <Grid
-      item
-      xs={6}
+      size={{ xs: 6 }}
       key={`${provider.namespace}${provider.type}-Grid`}
       component={Link}
       to={`${provider.namespace}/${provider.type}`}

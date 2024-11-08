@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <h4
-        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
       >
         Resources
       </h4>
@@ -14,17 +14,17 @@ Object {
         class="MuiStack-root css-c08hs3-MuiStack-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-tialbm-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-1ts7lyk-MuiTypography-root"
         >
           This is the list of resources that the module may create. The module can create zero or more of each of these resources depending on the count value. The count value is determined at runtime. The goal of this page is to present the types of resources that may be created.
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 css-bbf04n-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-nnrnv-MuiTypography-root"
         >
           This list contains all the resources this plus any submodules may create. When using this module, it may create fewer resources if you use a submodule.
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
         >
           This module defines 
           <strong>
@@ -38,10 +38,10 @@ Object {
           >
             <li>
               <div
-                class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-16m7pga-MuiChip-root"
+                class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1d842rb-MuiChip-root"
               >
                 <span
-                  class="MuiChip-label MuiChip-labelMedium css-1jzq0dw-MuiChip-label"
+                  class="MuiChip-label MuiChip-labelMedium css-16cgrcw-MuiChip-label"
                 >
                   ecr_lifecycle_policy.this
                 </span>
@@ -54,7 +54,7 @@ Object {
   </body>,
   "container": <div>
     <h4
-      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h4 css-f84ov1-MuiTypography-root"
     >
       Resources
     </h4>
@@ -62,17 +62,17 @@ Object {
       class="MuiStack-root css-c08hs3-MuiStack-root"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 css-tialbm-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-1ts7lyk-MuiTypography-root"
       >
         This is the list of resources that the module may create. The module can create zero or more of each of these resources depending on the count value. The count value is determined at runtime. The goal of this page is to present the types of resources that may be created.
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-bbf04n-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-nnrnv-MuiTypography-root"
       >
         This list contains all the resources this plus any submodules may create. When using this module, it may create fewer resources if you use a submodule.
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
       >
         This module defines 
         <strong>
@@ -86,10 +86,10 @@ Object {
         >
           <li>
             <div
-              class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-16m7pga-MuiChip-root"
+              class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-1d842rb-MuiChip-root"
             >
               <span
-                class="MuiChip-label MuiChip-labelMedium css-1jzq0dw-MuiChip-label"
+                class="MuiChip-label MuiChip-labelMedium css-16cgrcw-MuiChip-label"
               >
                 ecr_lifecycle_policy.this
               </span>

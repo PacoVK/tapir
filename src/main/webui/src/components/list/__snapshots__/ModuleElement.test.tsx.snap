@@ -10,7 +10,8 @@ Object {
         href="/module/foo/bar/aws"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1gtchvp-MuiPaper-root"
+          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
         >
           <div
             class="MuiStack-root css-6xevoz-MuiStack-root"
@@ -24,7 +25,7 @@ Object {
               class="MuiBox-root css-0"
             >
               <h5
-                class="MuiTypography-root MuiTypography-h5 css-1sj8qfn-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h5 css-3e2kkb-MuiTypography-root"
               >
                 foo
                 /
@@ -36,11 +37,11 @@ Object {
             class="MuiStack-root css-3vpec0-MuiStack-root"
           >
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-gavykb-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-5c51lm-MuiChip-root"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-i4bv87-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-1umw9bq-MuiSvgIcon-root"
                 data-testid="DownloadIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -50,17 +51,17 @@ Object {
                 />
               </svg>
               <span
-                class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
               >
                 Total downloads: 0
               </span>
             </div>
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-gavykb-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-5c51lm-MuiChip-root"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-i4bv87-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-1umw9bq-MuiSvgIcon-root"
                 data-testid="InfoIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -70,17 +71,17 @@ Object {
                 />
               </svg>
               <span
-                class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
               >
                 Latest version: 1.0
               </span>
             </div>
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-gavykb-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-5c51lm-MuiChip-root"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-i4bv87-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-1umw9bq-MuiSvgIcon-root"
                 data-testid="RocketLaunchIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -90,7 +91,7 @@ Object {
                 />
               </svg>
               <span
-                class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
               >
                 Last published at: 10-10-2021
               </span>
@@ -106,7 +107,8 @@ Object {
       href="/module/foo/bar/aws"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1gtchvp-MuiPaper-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
       >
         <div
           class="MuiStack-root css-6xevoz-MuiStack-root"
@@ -120,7 +122,7 @@ Object {
             class="MuiBox-root css-0"
           >
             <h5
-              class="MuiTypography-root MuiTypography-h5 css-1sj8qfn-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h5 css-3e2kkb-MuiTypography-root"
             >
               foo
               /
@@ -132,11 +134,11 @@ Object {
           class="MuiStack-root css-3vpec0-MuiStack-root"
         >
           <div
-            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-gavykb-MuiChip-root"
+            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-5c51lm-MuiChip-root"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-1umw9bq-MuiSvgIcon-root"
               data-testid="DownloadIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -146,17 +148,17 @@ Object {
               />
             </svg>
             <span
-              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
             >
               Total downloads: 0
             </span>
           </div>
           <div
-            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-gavykb-MuiChip-root"
+            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-5c51lm-MuiChip-root"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-1umw9bq-MuiSvgIcon-root"
               data-testid="InfoIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -166,17 +168,17 @@ Object {
               />
             </svg>
             <span
-              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
             >
               Latest version: 1.0
             </span>
           </div>
           <div
-            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-gavykb-MuiChip-root"
+            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-5c51lm-MuiChip-root"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-icon MuiChip-iconMedium MuiChip-iconColorDefault css-1umw9bq-MuiSvgIcon-root"
               data-testid="RocketLaunchIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -186,7 +188,7 @@ Object {
               />
             </svg>
             <span
-              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
             >
               Last published at: 10-10-2021
             </span>

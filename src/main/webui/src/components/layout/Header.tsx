@@ -3,13 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useUserContext } from "../context/UserContext";
-import {
-  Avatar,
-  Unstable_Grid2 as Grid,
-  Button,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { Avatar, Grid2 as Grid, Button, Menu, MenuItem } from "@mui/material";
 import { deepOrange, orange } from "@mui/material/colors";
 import LaunchIcon from "@mui/icons-material/Launch";
 
@@ -40,8 +34,8 @@ const Header = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#474747" }}>
       <Grid container spacing={3} sx={{ flexGrow: 1 }}>
-        <Grid xs={4} mdOffset="auto"></Grid>
-        <Grid xs={4} xsOffset={0} mdOffset={0} alignSelf={"center"}>
+        <Grid size={{ xs: 4 }} offset={{ md: "auto" }}></Grid>
+        <Grid size={{ xs: 4 }} offset={{ md: 0, xs: 0 }} alignSelf={"center"}>
           <Toolbar disableGutters>
             <Typography
               variant="h6"
@@ -63,7 +57,7 @@ const Header = () => {
             </Typography>
           </Toolbar>
         </Grid>
-        <Grid xs={4} alignSelf={"center"}>
+        <Grid size={{ xs: 4 }} alignSelf={"center"}>
           <Avatar
             onClick={handleClick}
             component={Button}

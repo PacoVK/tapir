@@ -5,7 +5,13 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { CircularProgress, Grid, List, Stack, TextField } from "@mui/material";
+import {
+  CircularProgress,
+  Grid2 as Grid,
+  List,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { Provider } from "../types";
 import useDebounce from "../hooks/useDebounce";
 import ProviderElement from "../components/list/ProviderElement";

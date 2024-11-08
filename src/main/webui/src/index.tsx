@@ -30,7 +30,12 @@ root.render(
     <UserProvider fetchedUser={user}>
       <Header />
       <Box sx={{ display: "flex" }}>
-        <Router>
+        <Router
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
           <NavigationDrawer />
           <Stack spacing={2} m={"auto"} mt={"5vh"} sx={{ width: "75%" }}>
             <AppRouter />

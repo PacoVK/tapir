@@ -7,22 +7,22 @@ Object {
     <div>
       <div>
         <h3
-          class="MuiTypography-root MuiTypography-h3 css-gepadz-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h3 css-13msox4-MuiTypography-root"
         >
           Tapir Management
         </h3>
       </div>
       <span
-        class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary css-y6srfl-MuiCircularProgress-root"
+        class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary css-1gcdw72-MuiCircularProgress-root"
         role="progressbar"
         style="width: 40px; height: 40px;"
       >
         <svg
-          class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+          class="MuiCircularProgress-svg css-54pwck-MuiCircularProgress-svg"
           viewBox="22 22 44 44"
         >
           <circle
-            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-960umw-MuiCircularProgress-circle"
             cx="44"
             cy="44"
             fill="none"
@@ -36,22 +36,22 @@ Object {
   "container": <div>
     <div>
       <h3
-        class="MuiTypography-root MuiTypography-h3 css-gepadz-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h3 css-13msox4-MuiTypography-root"
       >
         Tapir Management
       </h3>
     </div>
     <span
-      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary css-y6srfl-MuiCircularProgress-root"
+      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary css-1gcdw72-MuiCircularProgress-root"
       role="progressbar"
       style="width: 40px; height: 40px;"
     >
       <svg
-        class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+        class="MuiCircularProgress-svg css-54pwck-MuiCircularProgress-svg"
         viewBox="22 22 44 44"
       >
         <circle
-          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-960umw-MuiCircularProgress-circle"
           cx="44"
           cy="44"
           fill="none"
