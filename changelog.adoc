@@ -16,6 +16,8 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === changed
 
+https://github.com/PacoVK/tapir/pull/459[#459 - Update UI dependencies and move to grid2]
+
 == 0.9.0
 
 === fixes
