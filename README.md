@@ -6,7 +6,7 @@
   <a href="https://hub.docker.com/r/pacovk/tapir">
     <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/pacovk/tapir">
   </a>
-<p>
+</p>
   
 ### A Private Terraform Registry
 
