@@ -259,10 +259,14 @@ public class DynamodbRepository extends TapirRepository {
 
   public DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException {
     Collection<DeployKey> deployKeys = (Collection<DeployKey>) findDeployKeys("", 1, value).getEntities();
-    if (deployKeys == null || deployKeys.size() != 1) {
+    if (deployKeys == null || deployKeys.isEmpty()) {
       throw new DeployKeyNotFoundException("Could not find matching key");
     }
-    return deployKeys.stream().findFirst().orElseThrow(() -> new DeployKeyNotFoundException("Could not find matching key"));
+    return deployKeys
+      .stream()
+      .filter(deployKey -> deployKey.getKey().equals(value)) // Ensure exact match
+      .findFirst()
+      .orElseThrow(() -> new DeployKeyNotFoundException("Could not find matching key"));
   }
 
   public void deleteDeployKey(String id) {
