@@ -42,9 +42,7 @@ class ElasticSearchDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest
         repository.saveDeployKey(deployKey);
 
         String deployKeyValue = deployKey.getKey();
-        Random random = new Random();
-        int end = random.nextInt(deployKeyValue.length() - 1);
-        String deployKeyValueSub = deployKeyValue.substring(0, end);
+        String deployKeyValueSub = deployKeyValue.substring(0, 4); // first 4 characters
 
         assertDoesNotThrow(() -> repository.getDeployKeyByValue(deployKeyValue));
         assertThrows(DeployKeyNotFoundException.class, () -> repository.getDeployKeyByValue(deployKeyValueSub));

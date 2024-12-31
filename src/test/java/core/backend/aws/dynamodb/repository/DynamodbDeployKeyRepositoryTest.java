@@ -51,9 +51,7 @@ class DynamodbDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
     repository.saveDeployKey(deployKey);
 
     String deployKeyValue = deployKey.getKey();
-    Random random = new Random();
-    int end = random.nextInt(deployKeyValue.length());
-    String deployKeyValueSub = deployKeyValue.substring(0, end + 1); // +1 to include the end character
+    String deployKeyValueSub = deployKeyValue.substring(0, 4); // first 4 characters
 
     assertDoesNotThrow(() -> repository.getDeployKeyByValue(deployKeyValue));
     assertThrows(DeployKeyNotFoundException.class, () -> repository.getDeployKeyByValue(deployKeyValueSub));
