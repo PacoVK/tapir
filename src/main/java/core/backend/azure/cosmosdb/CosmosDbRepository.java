@@ -255,7 +255,7 @@ public class CosmosDbRepository extends TapirRepository {
   public DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException {
       try {
           Collection<DeployKey> deployKeys = (Collection<DeployKey>) findDeployKeys("", 1, value).getEntities();
-          if (deployKeys == null || deployKeys.isEmpty() {
+          if (deployKeys == null || deployKeys.isEmpty()) {
             throw new DeployKeyNotFoundException("Could not find matching key");
           }
 
