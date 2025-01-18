@@ -13,6 +13,7 @@
 [![Test](https://github.com/PacoVK/tapir/actions/workflows/build.yml/badge.svg)](https://github.com/PacoVK/tapir/actions/workflows/build.yml)
 [![Release](https://github.com/PacoVK/tapir/actions/workflows/deploy.yml/badge.svg)](https://github.com/PacoVK/tapir/actions/workflows/deploy.yml)
 [![Docs-deployment](https://github.com/PacoVK/tapir/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/PacoVK/tapir/actions/workflows/pages/pages-build-deployment)
+[<img src="https://api.gitsponsors.com/api/badge/img?id=569890667" height="20">](https://api.gitsponsors.com/api/badge/link?p=Fhcl2QYOz9lq0noRGHOc9bUnaferItDiM0xElJWfcZ5IlK5OfxhJLKK+G6b3G5zETsIBgzbNnEMKUsAJTf2TFg==)
 
 ![Tapir overview](./docs/images/tapir.gif)
 
