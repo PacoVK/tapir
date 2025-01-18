@@ -1,7 +1,7 @@
 services:
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0
+    image: quay.io/keycloak/keycloak:26.1
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./dev/scripts/keycloak:/opt/keycloak/data/import
