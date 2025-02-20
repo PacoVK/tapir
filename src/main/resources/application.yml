@@ -44,6 +44,8 @@ registry:
       blobConnectionString: ${AZURE_BLOB_CONNECTION_STRING:DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;}
       containerName: ${AZURE_BLOB_CONTAINER_NAME:tf-registry}
     s3:
+      custom_endpoint: ${S3_STORAGE_CUSTOM_ENDPOINT}
+      use_path_style_access: ${S3_STORAGE_USE_PATH_STYLE_ACCESS:false}
       bucket:
         name: ${S3_STORAGE_BUCKET_NAME:tf-registry}
         region: ${S3_STORAGE_BUCKET_REGION:eu-central-1}
