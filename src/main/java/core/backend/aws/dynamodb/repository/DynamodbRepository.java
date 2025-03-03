@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -49,14 +50,23 @@ public class DynamodbRepository extends TapirRepository {
   final TableSchema<Report> reportsTableSchema = TableSchemas.reportsTableSchema;
   final TableSchema<DeployKey> deployKeyTableSchema = TableSchemas.deployKeysTableSchema;
 
+  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.modules")
+  String moduleTableName;
+  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.provider")
+  String providerTableName;
+  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.reports")
+  String reportsTableName;
+  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.deployKeys")
+  String deployKeyTableName;
+
   public DynamodbRepository(DynamoDbClient dynamoDbClient) {
     this.dynamoDbClient = dynamoDbClient;
     DynamoDbEnhancedClient dbEnhancedClient = DynamoDbEnhancedClient
             .builder().dynamoDbClient(dynamoDbClient).build();
-    this.modulesTable = dbEnhancedClient.table("Modules", moduleTableSchema);
-    this.providerTable = dbEnhancedClient.table("Providers", providerTableSchema);
-    this.reportsTable = dbEnhancedClient.table("Reports", reportsTableSchema);
-    this.deployKeysTable = dbEnhancedClient.table("DeployKeys", deployKeyTableSchema);
+    this.modulesTable = dbEnhancedClient.table(moduleTableName, moduleTableSchema);
+    this.providerTable = dbEnhancedClient.table(providerTableName, providerTableSchema);
+    this.reportsTable = dbEnhancedClient.table(reportsTableName, reportsTableSchema);
+    this.deployKeysTable = dbEnhancedClient.table(deployKeyTableName, deployKeyTableSchema);
   }
 
   @Override
