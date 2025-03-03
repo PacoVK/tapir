@@ -50,13 +50,16 @@ public class DynamodbRepository extends TapirRepository {
   final TableSchema<Report> reportsTableSchema = TableSchemas.reportsTableSchema;
   final TableSchema<DeployKey> deployKeyTableSchema = TableSchemas.deployKeysTableSchema;
 
-  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.modules")
+  @ConfigProperty(name = "registry.search.dynamodb.tables.modules")
   String moduleTableName;
-  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.provider")
+  
+  @ConfigProperty(name = "registry.search.dynamodb.tables.provider")
   String providerTableName;
-  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.reports")
+  
+  @ConfigProperty(name = "registry.search.dynamodb.tables.reports")
   String reportsTableName;
-  @ConfigProperty(name = "registry.search.backend.dynamodb.tables.deployKeys")
+  
+  @ConfigProperty(name = "registry.search.dynamodb.tables.deployKeys")
   String deployKeyTableName;
 
   public DynamodbRepository(DynamoDbClient dynamoDbClient) {
@@ -174,7 +177,7 @@ public class DynamodbRepository extends TapirRepository {
     }
     try (DynamoDbWaiter waiter = DynamoDbWaiter.builder().client(dynamoDbClient).build()) {
       ResponseOrException<DescribeTableResponse> response = waiter
-              .waitUntilTableExists(builder -> builder.tableName("Modules").build())
+              .waitUntilTableExists(builder -> builder.tableName(moduleTableName).build())
               .matched();
       response.response().orElseThrow(
               () -> new RuntimeException(

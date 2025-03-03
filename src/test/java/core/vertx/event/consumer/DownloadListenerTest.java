@@ -6,6 +6,7 @@ import core.backend.aws.dynamodb.repository.DynamodbRepository;
 import core.terraform.Module;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,12 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 class DownloadListenerTest {
 
   Module fakeModule = new Module("foo", "bar", "baz", "0.0.0");
+
+  @ConfigProperty(name = "registry.search.dynamodb.tables.modules")
+  String moduleTableName;
+
+  @ConfigProperty(name = "registry.search.dynamodb.tables.reports")
+  String reportsTableName;
 
   @Inject
   DynamodbRepository repository;
@@ -35,8 +42,8 @@ class DownloadListenerTest {
   @AfterEach
   void tearDown() {
     DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
-    enhancedClient.table("Modules", null).deleteTable();
-    enhancedClient.table("Reports", null).deleteTable();
+    enhancedClient.table(moduleTableName, null).deleteTable();
+    enhancedClient.table(reportsTableName, null).deleteTable();
   }
 
   @Test

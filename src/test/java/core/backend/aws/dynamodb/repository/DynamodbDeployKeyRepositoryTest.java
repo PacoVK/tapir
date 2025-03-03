@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Random;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,9 @@ class DynamodbDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
   DynamodbRepository repository;
   DynamoDbClient dynamoDbClient;
 
+  @ConfigProperty(name = "registry.search.dynamodb.tables.deployKeys")
+  String deployKeyTableName;
+
   public DynamodbDeployKeyRepositoryTest(DynamodbRepository repository, DynamoDbClient dynamoDbClient) {
     super(repository);
     this.repository = repository;
@@ -32,7 +36,7 @@ class DynamodbDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
   @AfterEach
   void tearDown() {
     DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
-    enhancedClient.table("DeployKeys", null).deleteTable();
+    enhancedClient.table(deployKeyTableName, null).deleteTable();
   }
 
   @Test
