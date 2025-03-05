@@ -17,12 +17,15 @@ import core.tapir.DeployKey;
 import core.tapir.DeployKeyScope;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.HttpMethod;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @QuarkusTest
 class ElasticSearchDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
 
     ElasticSearchRepository repository;
     RestClient restClient;
+    @ConfigProperty(name = "registry.search.bucket.names.deployKeys")
+    String deployKeyIndexName;
 
     public ElasticSearchDeployKeyRepositoryTest(ElasticSearchRepository repository, RestClient restClient) {
         super(repository);
@@ -30,9 +33,13 @@ class ElasticSearchDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest
         this.restClient = restClient;
     }
 
+    public String getDeployKeyIndexName() {
+      return deployKeyIndexName.toLowerCase().replaceAll("/[^a-z0-9]/", "");
+    }
+
     @AfterEach
     void tearDown() throws IOException {
-        restClient.performRequest(new Request(HttpMethod.DELETE, "/deploykeys"));
+        restClient.performRequest(new Request(HttpMethod.DELETE, String.format("/%s", deployKeyIndexName)));
     }
 
     @Test
