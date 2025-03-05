@@ -12,8 +12,7 @@ class DynamodbProviderRepositoryTest extends AbstractProviderBackendTest {
 
   DynamodbRepository repository;
   DynamoDbClient dynamoDbClient;
-
-  @ConfigProperty(name = "registry.search.dynamodb.tables.provider")
+  @ConfigProperty(name = "registry.search.bucket.names.provider")
   String providerTableName;
 
   public DynamodbProviderRepositoryTest(DynamodbRepository repository, DynamoDbClient dynamoDbClient) {

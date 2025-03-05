@@ -49,17 +49,13 @@ public class DynamodbRepository extends TapirRepository {
   final TableSchema<Module> moduleTableSchema = TableSchemas.moduleTableSchema;
   final TableSchema<Report> reportsTableSchema = TableSchemas.reportsTableSchema;
   final TableSchema<DeployKey> deployKeyTableSchema = TableSchemas.deployKeysTableSchema;
-
-  @ConfigProperty(name = "registry.search.dynamodb.tables.modules")
+  @ConfigProperty(name = "registry.search.bucket.names.modules")
   String moduleTableName;
-  
-  @ConfigProperty(name = "registry.search.dynamodb.tables.provider")
+  @ConfigProperty(name = "registry.search.bucket.names.provider")
   String providerTableName;
-  
-  @ConfigProperty(name = "registry.search.dynamodb.tables.reports")
+  @ConfigProperty(name = "registry.search.bucket.names.reports")
   String reportsTableName;
-  
-  @ConfigProperty(name = "registry.search.dynamodb.tables.deployKeys")
+  @ConfigProperty(name = "registry.search.bucket.names.deployKeys")
   String deployKeyTableName;
 
   public DynamodbRepository(DynamoDbClient dynamoDbClient) {

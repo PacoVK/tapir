@@ -36,8 +36,8 @@ registry:
     azure:
       master-key: ${BACKEND_AZURE_MASTER_KEY:C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==}
       endpoint: ${BACKEND_AZURE_ENDPOINT:https://localhost:8081}
-    dynamodb:
-      tables:
+    bucket:
+      names:
         modules: ${BACKEND_TABLE_MODULES:Modules}
         provider: ${BACKEND_TABLE_PROVIDER:Providers}
         reports: ${BACKEND_TABLE_REPORTS:Reports}

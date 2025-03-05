@@ -11,11 +11,9 @@ class DynamodbModuleRepositoryTest extends AbstractModuleBackendTest {
 
   DynamodbRepository repository;
   DynamoDbClient dynamoDbClient;
-
-  @ConfigProperty(name = "registry.search.dynamodb.tables.modules")
+  @ConfigProperty(name = "registry.search.bucket.names.modules")
   String moduleTableName;
-  
-  @ConfigProperty(name = "registry.search.dynamodb.tables.reports")
+  @ConfigProperty(name = "registry.search.bucket.names.reports")
   String reportsTableName;
   
   public DynamodbModuleRepositoryTest(DynamodbRepository repository, DynamoDbClient dynamoDbClient) {

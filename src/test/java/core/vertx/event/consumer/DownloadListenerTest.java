@@ -18,10 +18,10 @@ class DownloadListenerTest {
 
   Module fakeModule = new Module("foo", "bar", "baz", "0.0.0");
 
-  @ConfigProperty(name = "registry.search.dynamodb.tables.modules")
+  @ConfigProperty(name = "registry.search.bucket.names.modules")
   String moduleTableName;
 
-  @ConfigProperty(name = "registry.search.dynamodb.tables.reports")
+  @ConfigProperty(name = "registry.search.bucket.names.reports")
   String reportsTableName;
 
   @Inject

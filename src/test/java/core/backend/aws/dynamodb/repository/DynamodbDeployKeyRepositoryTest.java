@@ -23,8 +23,7 @@ class DynamodbDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
 
   DynamodbRepository repository;
   DynamoDbClient dynamoDbClient;
-
-  @ConfigProperty(name = "registry.search.dynamodb.tables.deployKeys")
+  @ConfigProperty(name = "registry.search.bucket.names.deployKeys")
   String deployKeyTableName;
 
   public DynamodbDeployKeyRepositoryTest(DynamodbRepository repository, DynamoDbClient dynamoDbClient) {
