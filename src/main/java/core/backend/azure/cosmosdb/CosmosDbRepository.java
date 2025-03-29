@@ -47,6 +47,14 @@ public class CosmosDbRepository extends TapirRepository {
   String endpoint;
   @ConfigProperty(name = "registry.search.azure.master-key")
   String masterKey;
+  @ConfigProperty(name = "registry.search.bucket.names.modules")
+  String moduleContainerName;
+  @ConfigProperty(name = "registry.search.bucket.names.provider")
+  String providerContainerName;
+  @ConfigProperty(name = "registry.search.bucket.names.reports")
+  String reportsContainerName;
+  @ConfigProperty(name = "registry.search.bucket.names.deployKeys")
+  String deployKeysContainerName;
 
   @PostConstruct
   public void initialize() {
@@ -57,19 +65,19 @@ public class CosmosDbRepository extends TapirRepository {
             .contentResponseOnWriteEnabled(true)
             .buildClient();
     this.database = client.getDatabase("tapir");
-    this.modulesContainer = database.getContainer("Modules");
-    this.providerContainer = database.getContainer("Providers");
-    this.reportsContainer = database.getContainer("Reports");
-    this.deployKeysContainer = database.getContainer("DeployKeys");
+    this.modulesContainer = database.getContainer(moduleContainerName);
+    this.providerContainer = database.getContainer(providerContainerName);
+    this.reportsContainer = database.getContainer(reportsContainerName);
+    this.deployKeysContainer = database.getContainer(deployKeysContainerName);
   }
 
   @Override
   public void bootstrap() throws Exception {
     client.createDatabaseIfNotExists("tapir");
-    createContainerIfNotExists("Modules");
-    createContainerIfNotExists("Providers");
-    createContainerIfNotExists("Reports");
-    createContainerIfNotExists("DeployKeys");
+    createContainerIfNotExists(moduleContainerName);
+    createContainerIfNotExists(providerContainerName);
+    createContainerIfNotExists(reportsContainerName);
+    createContainerIfNotExists(deployKeysContainerName);
   }
 
   private void createContainerIfNotExists(String name) {
@@ -79,15 +87,15 @@ public class CosmosDbRepository extends TapirRepository {
 
   @Override
   public PaginationDto findModules(String identifier, Integer limit, String term) {
+    String queryText = String.format("SELECT * FROM %s m WHERE m.namespace "
+            + "LIKE @namespace OR m.name LIKE @name OR m.provider LIKE @provider",
+            moduleContainerName.replaceAll("/[^A-Za-z0-9]/", ""));
     List<SqlParameter> paramList = List.of(
             new SqlParameter("@namespace", "%" + term + "%"),
             new SqlParameter("@name", "%" + term + "%"),
             new SqlParameter("@provider", "%" + term + "%")
     );
-    SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM Modules m WHERE m.namespace "
-                    + "LIKE @namespace OR m.name LIKE @name OR m.provider LIKE @provider",
-            paramList);
+    SqlQuerySpec querySpec = new SqlQuerySpec(queryText, paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<Module> feedResponse = modulesContainer
             .queryItems(
@@ -103,13 +111,13 @@ public class CosmosDbRepository extends TapirRepository {
 
   @Override
   public PaginationDto findProviders(String identifier, Integer limit, String term) {
+    String queryText = String.format("SELECT * FROM %s p WHERE p.namespace LIKE @namespace OR p.type LIKE @type",
+            providerContainerName.replaceAll("/[^A-Za-z0-9]/", ""));
     List<SqlParameter> paramList = List.of(
             new SqlParameter("@namespace", "%" + term + "%"),
             new SqlParameter("@type", "%" + term + "%")
     );
-    SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM Providers p WHERE p.namespace LIKE @namespace OR p.type LIKE @type",
-            paramList);
+    SqlQuerySpec querySpec = new SqlQuerySpec(queryText, paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<Provider> feedResponse = providerContainer
             .queryItems(
@@ -125,13 +133,13 @@ public class CosmosDbRepository extends TapirRepository {
 
   @Override
   public PaginationDto findDeployKeys(String identifier, Integer limit, String term) throws Exception {
+    String queryText = String.format("SELECT * FROM %s p WHERE p.id LIKE @id OR p.key LIKE @key",
+            deployKeysContainerName.replaceAll("/[^A-Za-z0-9]/", ""));
     List<SqlParameter> paramList = List.of(
         new SqlParameter("@id", "%" + term + "%"),
         new SqlParameter("@key", "%" + term + "%")
     );
-    SqlQuerySpec querySpec = new SqlQuerySpec(
-        "SELECT * FROM DeployKeys p WHERE p.id LIKE @id OR p.key LIKE @key",
-        paramList);
+    SqlQuerySpec querySpec = new SqlQuerySpec(queryText, paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<DeployKey> feedResponse = deployKeysContainer
         .queryItems(

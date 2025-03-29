@@ -2,6 +2,7 @@ package core.backend.aws.dynamodb.repository;
 
 import core.backend.AbstractProviderBackendTest;
 import io.quarkus.test.junit.QuarkusTest;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.AfterEach;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -11,6 +12,8 @@ class DynamodbProviderRepositoryTest extends AbstractProviderBackendTest {
 
   DynamodbRepository repository;
   DynamoDbClient dynamoDbClient;
+  @ConfigProperty(name = "registry.search.bucket.names.provider")
+  String providerTableName;
 
   public DynamodbProviderRepositoryTest(DynamodbRepository repository, DynamoDbClient dynamoDbClient) {
     super(repository);
@@ -21,6 +24,6 @@ class DynamodbProviderRepositoryTest extends AbstractProviderBackendTest {
   @AfterEach
   void tearDown() {
     DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
-    enhancedClient.table("Providers", null).deleteTable();
+    enhancedClient.table(providerTableName, null).deleteTable();
   }
 }
