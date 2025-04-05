@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
@@ -35,16 +36,41 @@ public class ElasticSearchRepository extends TapirRepository {
 
   static final Logger LOGGER = Logger.getLogger(ElasticSearchRepository.class.getName());
   RestClient restClient;
+  @ConfigProperty(name = "registry.search.bucket.names.modules")
+  String moduleIndexName;
+  @ConfigProperty(name = "registry.search.bucket.names.provider")
+  String providerIndexName;
+  @ConfigProperty(name = "registry.search.bucket.names.reports")
+  String reportsIndexName;
+  @ConfigProperty(name = "registry.search.bucket.names.deployKeys")
+  String deployKeyIndexName;
 
   public ElasticSearchRepository(RestClient restClient) {
     this.restClient = restClient;
+  }
+
+  public String getModuleIndexName() {
+    return moduleIndexName.toLowerCase().replaceAll("/[^a-z0-9]/", "");
+  }
+
+  public String getProviderIndexName() {
+    return providerIndexName.toLowerCase().replaceAll("/[^a-z0-9]/", "");
+  }
+
+  public String getReportsIndexName() {
+    return reportsIndexName.toLowerCase().replaceAll("/[^a-z0-9]/", "");
+  }
+
+  public String getDeployKeyIndexName() {
+    return deployKeyIndexName.toLowerCase().replaceAll("/[^a-z0-9]/", "");
   }
 
   @Override
   public void ingestModuleData(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/modules/_update/%s-%s-%s?refresh=wait_for",
+            String.format("/%s/_update/%s-%s-%s?refresh=wait_for",
+                    getModuleIndexName(),
                     module.getNamespace(),
                     module.getName(),
                     module.getProvider()
@@ -68,7 +94,8 @@ public class ElasticSearchRepository extends TapirRepository {
   public Provider getProvider(String id) throws Exception {
     Request request = new Request(
             HttpMethod.GET,
-            "/providers/_doc/" + id);
+            String.format("/%s/_doc/%s", getProviderIndexName(), id)
+    );
     try {
       return doRequestAndReturnEntity(request).mapTo(Provider.class);
     } catch (ResponseException e) {
@@ -80,7 +107,8 @@ public class ElasticSearchRepository extends TapirRepository {
   public DeployKey getDeployKeyById(String id) throws DeployKeyNotFoundException {
     Request request = new Request(
         HttpMethod.GET,
-        "/deploykeys/_doc/" + id);
+        String.format("/%s/_doc/%s", getDeployKeyIndexName(), id)
+    );
     try {
       return doRequestAndReturnEntity(request).mapTo(DeployKey.class);
     } catch (IOException e) {
@@ -109,7 +137,8 @@ public class ElasticSearchRepository extends TapirRepository {
   public void saveDeployKey(DeployKey deployKey) throws Exception {
     Request request = new Request(
         HttpMethod.POST,
-        String.format("/deploykeys/_doc/%s?refresh=wait_for",
+        String.format("/%s/_doc/%s?refresh=wait_for",
+            getDeployKeyIndexName(),
             deployKey.getId()
         )
     );
@@ -119,8 +148,10 @@ public class ElasticSearchRepository extends TapirRepository {
 
   @Override
   public void updateDeployKey(DeployKey deployKey) throws Exception {
-    String targetRequestPath = "/deploykeys/_doc/"
-        + deployKey.getId();
+    String targetRequestPath = String.format("/%s/_doc/%s",
+        getDeployKeyIndexName(),
+        deployKey.getId()
+    );
     Request request = new Request(
         HttpMethod.PUT,
         targetRequestPath
@@ -131,8 +162,10 @@ public class ElasticSearchRepository extends TapirRepository {
 
   @Override
   public void deleteDeployKey(String id) throws Exception {
-    String targetRequestPath = "/deploykeys/_doc/"
-        + id;
+    String targetRequestPath = String.format("/%s/_doc/%s",
+        getDeployKeyIndexName(),
+        id
+    );
     Request request = new Request(
         HttpMethod.DELETE,
         targetRequestPath
@@ -144,7 +177,8 @@ public class ElasticSearchRepository extends TapirRepository {
   public void ingestProviderData(Provider provider) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/providers/_update/%s?refresh=wait_for",
+            String.format("/%s/_update/%s?refresh=wait_for",
+                    getProviderIndexName(),
                     provider.getId()
             )
     );
@@ -166,14 +200,13 @@ public class ElasticSearchRepository extends TapirRepository {
 
   @Override
   public void ingestSecurityScanResult(Report report) throws IOException {
-    String targetRequestPath = "/reports/_doc/reports-"
-            + report.getModuleNamespace()
-            + "-"
-            + report.getModuleName()
-            + "-"
-            + report.getProvider()
-            + "-"
-            + report.getModuleVersion();
+    String targetRequestPath = String.format("/%s/_doc/reports-%s-%s-%s-%s",
+            getReportsIndexName(),
+            report.getModuleNamespace(),
+            report.getModuleName(),
+            report.getProvider(),
+            report.getModuleVersion()
+    );
     Request request = new Request(
             HttpMethod.POST,
             targetRequestPath
@@ -186,7 +219,8 @@ public class ElasticSearchRepository extends TapirRepository {
   public Module increaseDownloadCounter(Module module) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
-            String.format("/modules/_update/%s-%s-%s",
+            String.format("/%s/_update/%s-%s-%s",
+                    getModuleIndexName(),
                     module.getNamespace(),
                     module.getName(),
                     module.getProvider()
@@ -205,14 +239,13 @@ public class ElasticSearchRepository extends TapirRepository {
   @Override
   public Report getReportByModuleVersion(Module module)
           throws IOException, ReportNotFoundException {
-    String searchPath = "/reports/_doc/reports-"
-            + module.getNamespace()
-            + "-"
-            + module.getName()
-            + "-"
-            + module.getProvider()
-            + "-"
-            + module.getCurrentVersion();
+    String searchPath = String.format("/%s/_doc/reports-%s-%s-%s-%s",
+            getReportsIndexName(),
+            module.getNamespace(),
+            module.getName(),
+            module.getProvider(),
+            module.getCurrentVersion()
+    );
     Request request = new Request(
             HttpMethod.GET,
             searchPath);
@@ -224,10 +257,10 @@ public class ElasticSearchRepository extends TapirRepository {
   }
 
   public void bootstrap() throws IOException {
-    createIndexIfNotExists("modules");
-    createIndexIfNotExists("providers");
-    createIndexIfNotExists("reports");
-    createIndexIfNotExists("deploykeys");
+    createIndexIfNotExists(getModuleIndexName());
+    createIndexIfNotExists(getProviderIndexName());
+    createIndexIfNotExists(getReportsIndexName());
+    createIndexIfNotExists(getDeployKeyIndexName());
   }
 
   Boolean indexHasDocuments(String indexName) throws IOException {
@@ -288,7 +321,7 @@ public class ElasticSearchRepository extends TapirRepository {
                                    String term) throws IOException {
     String fields = "\"name\", \"namespace\", \"provider\"";
     String query = buildPaginationSearchQuery(identifier, limit, term, fields);
-    return getEntities("modules", query, Module.class);
+    return getEntities(getModuleIndexName(), query, Module.class);
   }
 
   @Override
@@ -296,7 +329,7 @@ public class ElasticSearchRepository extends TapirRepository {
           throws Exception {
     String fields = "\"namespace\", \"type\"";
     String query = buildPaginationSearchQuery(identifier, limit, term, fields);
-    return getEntities("providers", query, Provider.class);
+    return getEntities(getProviderIndexName(), query, Provider.class);
   }
 
   @Override
@@ -304,13 +337,13 @@ public class ElasticSearchRepository extends TapirRepository {
       throws Exception {
     String fields = "\"id\", \"key\"";
     String query = buildPaginationSearchQuery(identifier, limit, term, fields);
-    return getEntities("deploykeys", query, DeployKey.class);
+    return getEntities(getDeployKeyIndexName(), query, DeployKey.class);
   }
 
   public Module getModule(String id) throws IOException, ModuleNotFoundException {
     Request request = new Request(
             HttpMethod.GET,
-            String.format("/modules/_doc/%s", id));
+            String.format("/%s/_doc/%s", getModuleIndexName(), id));
     try {
       return doRequestAndReturnEntity(request).mapTo(Module.class);
     } catch (ResponseException e) {
