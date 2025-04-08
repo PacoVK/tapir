@@ -115,6 +115,15 @@
         "doc",
         "ideas"
       ]
+    },
+    {
+      "login": "techchicken",
+      "name": "techchicken",
+      "avatar_url": "https://avatars.githubusercontent.com/u/192054335?v=4",
+      "profile": "https://github.com/techchicken",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
