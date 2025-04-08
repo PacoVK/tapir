@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
-import java.util.Random;
-
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.RestClient;
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +30,7 @@ class ElasticSearchDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest
 
     @AfterEach
     void tearDown() throws IOException {
-        restClient.performRequest(new Request(HttpMethod.DELETE, "/deploykeys"));
+        restClient.performRequest(new Request(HttpMethod.DELETE, String.format("/%s", repository.getDeployKeyTableName())));
     }
 
     @Test

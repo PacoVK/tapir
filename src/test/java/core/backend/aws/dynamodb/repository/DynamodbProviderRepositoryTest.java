@@ -21,6 +21,6 @@ class DynamodbProviderRepositoryTest extends AbstractProviderBackendTest {
   @AfterEach
   void tearDown() {
     DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
-    enhancedClient.table("Providers", null).deleteTable();
+    enhancedClient.table(repository.getProviderTableName(), null).deleteTable();
   }
 }

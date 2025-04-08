@@ -3,8 +3,6 @@ package core.backend.aws.dynamodb.repository;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Random;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +30,7 @@ class DynamodbDeployKeyRepositoryTest extends AbstractDeployKeysBackendTest {
   @AfterEach
   void tearDown() {
     DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
-    enhancedClient.table("DeployKeys", null).deleteTable();
+    enhancedClient.table(repository.getDeployKeyTableName(), null).deleteTable();
   }
 
   @Test

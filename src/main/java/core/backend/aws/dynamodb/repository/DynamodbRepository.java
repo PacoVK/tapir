@@ -6,12 +6,12 @@ import core.exceptions.DeployKeyNotFoundException;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
-import core.tapir.CoreEntity;
 import core.tapir.DeployKey;
 import core.terraform.Module;
 import core.terraform.Provider;
 import extensions.core.Report;
 import io.quarkus.arc.lookup.LookupIfProperty;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Collection;
@@ -39,10 +39,10 @@ public class DynamodbRepository extends TapirRepository {
 
   static final Logger LOGGER = Logger.getLogger(DynamodbRepository.class.getName());
 
-  final DynamoDbTable<Module> modulesTable;
-  final DynamoDbTable<Report> reportsTable;
-  final DynamoDbTable<Provider> providerTable;
-  final DynamoDbTable<DeployKey> deployKeysTable;
+  DynamoDbTable<Module> modulesTable;
+  DynamoDbTable<Report> reportsTable;
+  DynamoDbTable<Provider> providerTable;
+  DynamoDbTable<DeployKey> deployKeysTable;
   final DynamoDbClient dynamoDbClient;
   final TableSchema<Provider> providerTableSchema = TableSchemas.providerTableSchema;
   final TableSchema<Module> moduleTableSchema = TableSchemas.moduleTableSchema;
@@ -51,12 +51,16 @@ public class DynamodbRepository extends TapirRepository {
 
   public DynamodbRepository(DynamoDbClient dynamoDbClient) {
     this.dynamoDbClient = dynamoDbClient;
+  }
+
+  @PostConstruct
+  void postConstruct() {
     DynamoDbEnhancedClient dbEnhancedClient = DynamoDbEnhancedClient
-            .builder().dynamoDbClient(dynamoDbClient).build();
-    this.modulesTable = dbEnhancedClient.table("Modules", moduleTableSchema);
-    this.providerTable = dbEnhancedClient.table("Providers", providerTableSchema);
-    this.reportsTable = dbEnhancedClient.table("Reports", reportsTableSchema);
-    this.deployKeysTable = dbEnhancedClient.table("DeployKeys", deployKeyTableSchema);
+        .builder().dynamoDbClient(dynamoDbClient).build();
+    this.modulesTable = dbEnhancedClient.table(getModuleTableName(), moduleTableSchema);
+    this.providerTable = dbEnhancedClient.table(getProviderTableName(), providerTableSchema);
+    this.reportsTable = dbEnhancedClient.table(getReportsTableName(), reportsTableSchema);
+    this.deployKeysTable = dbEnhancedClient.table(getDeployKeyTableName(), deployKeyTableSchema);
   }
 
   @Override
@@ -164,7 +168,7 @@ public class DynamodbRepository extends TapirRepository {
     }
     try (DynamoDbWaiter waiter = DynamoDbWaiter.builder().client(dynamoDbClient).build()) {
       ResponseOrException<DescribeTableResponse> response = waiter
-              .waitUntilTableExists(builder -> builder.tableName("Modules").build())
+              .waitUntilTableExists(builder -> builder.tableName(getModuleTableName()).build())
               .matched();
       response.response().orElseThrow(
               () -> new RuntimeException(

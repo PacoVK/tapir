@@ -12,12 +12,15 @@ import org.junit.jupiter.api.AfterEach;
 class ElasticSearchProviderRepositoryTest extends AbstractProviderBackendTest {
 
   RestClient restClient;
+  ElasticSearchRepository repository;
+
   public ElasticSearchProviderRepositoryTest(ElasticSearchRepository repository, RestClient restClient) {
     super(repository);
+    this.repository = repository;
     this.restClient = restClient;
   }
   @AfterEach
   void tearDown() throws IOException {
-    restClient.performRequest(new Request(HttpMethod.DELETE, "/providers"));
+    restClient.performRequest(new Request(HttpMethod.DELETE, String.format("/%s", repository.getProviderTableName())));
   }
 }
