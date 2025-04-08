@@ -19,7 +19,6 @@ import core.exceptions.DeployKeyNotFoundException;
 import core.exceptions.ModuleNotFoundException;
 import core.exceptions.ProviderNotFoundException;
 import core.exceptions.ReportNotFoundException;
-import core.tapir.CoreEntity;
 import core.tapir.DeployKey;
 import core.terraform.Module;
 import core.terraform.Provider;
@@ -56,20 +55,24 @@ public class CosmosDbRepository extends TapirRepository {
             .consistencyLevel(ConsistencyLevel.EVENTUAL)
             .contentResponseOnWriteEnabled(true)
             .buildClient();
+  }
+
+  @PostConstruct
+  void postConstruct() {
     this.database = client.getDatabase("tapir");
-    this.modulesContainer = database.getContainer("Modules");
-    this.providerContainer = database.getContainer("Providers");
-    this.reportsContainer = database.getContainer("Reports");
-    this.deployKeysContainer = database.getContainer("DeployKeys");
+    this.modulesContainer = database.getContainer(getModuleTableName());
+    this.providerContainer = database.getContainer(getProviderTableName());
+    this.reportsContainer = database.getContainer(getReportsTableName());
+    this.deployKeysContainer = database.getContainer(getDeployKeyTableName());
   }
 
   @Override
   public void bootstrap() throws Exception {
     client.createDatabaseIfNotExists("tapir");
-    createContainerIfNotExists("Modules");
-    createContainerIfNotExists("Providers");
-    createContainerIfNotExists("Reports");
-    createContainerIfNotExists("DeployKeys");
+    createContainerIfNotExists(getModuleTableName());
+    createContainerIfNotExists(getProviderTableName());
+    createContainerIfNotExists(getReportsTableName());
+    createContainerIfNotExists(getDeployKeyTableName());
   }
 
   private void createContainerIfNotExists(String name) {
@@ -80,12 +83,13 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findModules(String identifier, Integer limit, String term) {
     List<SqlParameter> paramList = List.of(
+        new SqlParameter("@modules", getModuleTableName()),
             new SqlParameter("@namespace", "%" + term + "%"),
             new SqlParameter("@name", "%" + term + "%"),
             new SqlParameter("@provider", "%" + term + "%")
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM Modules m WHERE m.namespace "
+            "SELECT * FROM @modules m WHERE m.namespace "
                     + "LIKE @namespace OR m.name LIKE @name OR m.provider LIKE @provider",
             paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
@@ -104,11 +108,12 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findProviders(String identifier, Integer limit, String term) {
     List<SqlParameter> paramList = List.of(
+            new SqlParameter("@providers", getProviderTableName()),
             new SqlParameter("@namespace", "%" + term + "%"),
             new SqlParameter("@type", "%" + term + "%")
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM Providers p WHERE p.namespace LIKE @namespace OR p.type LIKE @type",
+            "SELECT * FROM @providers p WHERE p.namespace LIKE @namespace OR p.type LIKE @type",
             paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<Provider> feedResponse = providerContainer
@@ -126,11 +131,12 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findDeployKeys(String identifier, Integer limit, String term) throws Exception {
     List<SqlParameter> paramList = List.of(
+        new SqlParameter("@deployKeys", getDeployKeyTableName()),
         new SqlParameter("@id", "%" + term + "%"),
         new SqlParameter("@key", "%" + term + "%")
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-        "SELECT * FROM DeployKeys p WHERE p.id LIKE @id OR p.key LIKE @key",
+        "SELECT * FROM @deployKeys p WHERE p.id LIKE @id OR p.key LIKE @key",
         paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<DeployKey> feedResponse = deployKeysContainer

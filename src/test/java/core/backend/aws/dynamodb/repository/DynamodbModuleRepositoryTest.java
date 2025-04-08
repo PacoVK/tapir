@@ -20,7 +20,7 @@ class DynamodbModuleRepositoryTest extends AbstractModuleBackendTest {
   @AfterEach
   void tearDown() {
     DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
-    enhancedClient.table("Modules", null).deleteTable();
-    enhancedClient.table("Reports", null).deleteTable();
+    enhancedClient.table(repository.getModuleTableName(), null).deleteTable();
+    enhancedClient.table(repository.getReportsTableName(), null).deleteTable();
   }
 }

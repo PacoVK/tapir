@@ -23,6 +23,9 @@ public class Bootstrap {
   }
 
   public void bootstrap() throws Exception {
+    boolean initialize = Boolean.parseBoolean(
+        ConfigProvider.getConfig().getConfigValue("registry.search.table.bootstrap").getValue()
+    );
     validateGpgKeys();
     LOGGER.info(
         String.format("Start to bootstrap registry database [%s]",
@@ -30,7 +33,11 @@ public class Bootstrap {
                 .getConfigValue("registry.search.backend").getValue()
         )
     );
-    tapirRepository.bootstrap();
+    if(initialize) {
+      tapirRepository.bootstrap();
+    } else {
+      LOGGER.info("Skipping bootstrap of registry database");
+    }
   }
 
   void validateGpgKeys() throws InvalidConfigurationException {

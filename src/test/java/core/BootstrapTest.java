@@ -43,4 +43,13 @@ class BootstrapTest {
     String actualMessage = exception.getMessage();
     assertTrue(actualMessage.contains(expectedMessage));
   }
+
+  @Test
+  void testInit() throws Exception {
+    TapirRepository tapirRepository = Mockito.mock(TapirRepository.class);
+    Mockito.when(searchService.get()).thenReturn(tapirRepository);
+    Bootstrap bootstrap = new Bootstrap(searchService, new SigningKeysMockImpl(Set.of()));
+    assertDoesNotThrow(bootstrap::bootstrap);
+    Mockito.verify(tapirRepository).bootstrap();
+  }
 }
