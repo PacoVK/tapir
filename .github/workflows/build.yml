@@ -13,7 +13,7 @@ jobs:
       AWS_REGION: eu-central-1
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Start containers
         run: docker compose -f "docker-compose.yml" up -d localstack opensearch-node1 azurite azurite_storage_init
       - name: Setup JDK
@@ -38,7 +38,7 @@ jobs:
         working-directory: src/main/webui
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: install
         run: yarn install
       - name: lint
