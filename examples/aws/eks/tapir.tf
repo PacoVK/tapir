@@ -189,6 +189,50 @@ resource "kubernetes_cluster_role_binding" "tapir" {
   }
 }
 
+resource "aws_dynamodb_table" "modules" {
+    name                        = "Modules"
+    billing_mode                = "PAY_PER_REQUEST" 
+    hash_key                    = "id"
+    region                      = data.aws_region.current.name
+    attribute {
+        name = "id"
+        type = "S"
+    }
+}
+
+resource "aws_dynamodb_table" "providers" {
+    name                        = "Providers"
+    billing_mode                = "PAY_PER_REQUEST" 
+    hash_key                    = "id"
+    region                      = data.aws_region.current.name
+    attribute {
+        name = "id"
+        type = "S"
+    }
+}
+
+resource "aws_dynamodb_table" "reports" {
+    name                        = "Reports"
+    billing_mode                = "PAY_PER_REQUEST" 
+    hash_key                    = "id"
+    region                      = data.aws_region.current.name
+    attribute {
+        name = "id"
+        type = "S"
+    }
+}
+
+resource "aws_dynamodb_table" "deploykeys" {
+    name                        = "DeployKeys"
+    billing_mode                = "PAY_PER_REQUEST" 
+    hash_key                    = "id"
+    region                      = data.aws_region.current.name
+    attribute {
+        name = "id"
+        type = "S"
+    }
+}
+
 resource "aws_iam_role" "tapir" {
   name               = local.name
   description        = "Role assumed by EKS ServiceAccount tapir"
