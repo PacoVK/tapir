@@ -124,6 +124,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "alchemyx",
+      "name": "Michał Margula",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3201201?v=4",
+      "profile": "https://tech.margula.pl/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
