@@ -1,10 +1,10 @@
-FROM aquasec/trivy:0.65.0 as SECURITY_SCANNER
+FROM aquasec/trivy:0.67.2 as SECURITY_SCANNER
 
-FROM golang:alpine3.19 as TERRAFORM_DOCS
+FROM golang:alpine3.22 as TERRAFORM_DOCS
 
-RUN go install github.com/terraform-docs/terraform-docs@v0.17.0
+RUN go install github.com/terraform-docs/terraform-docs@v0.20.0
 
-FROM amazoncorretto:21-alpine3.19-jdk
+FROM amazoncorretto:21-alpine3.22-jdk
 
 RUN mkdir -p /home/jboss/.cache/trivy \
     && chmod a+wr /home/jboss/.cache/trivy
