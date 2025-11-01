@@ -13,8 +13,8 @@ import org.eclipse.microprofile.health.Liveness;
 import org.eclipse.microprofile.health.Readiness;
 
 /**
- * Health check for the configured storage backend
- * This readiness probe verifies that the storage backend is accessible and functional.
+ * Health check for the configured storage backend.
+ * This class serves as both a readiness and liveness probe, verifying that the storage backend is accessible and functional.
  */
 @Readiness
 @Liveness
