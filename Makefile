@@ -24,7 +24,7 @@ dev: bootstrap
 
 backend:
 	@docker compose up -d
-	@mvn quarkus:dev
+	@./mvnw quarkus:dev
 
 terraform:
 	AWS_METADATA_URL=${localstackUrl} terraform -chdir=dev/example init
@@ -34,8 +34,8 @@ down:
 
 clean:
 	@docker compose down -v
-	@mvn clean
+	@./mvnw clean
 	@rm -rf dev/example/.terraform
 
 build:
-	@mvn clean install
+	@./mvnw clean install
