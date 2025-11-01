@@ -55,10 +55,6 @@ public class CosmosDbRepository extends TapirRepository {
             .consistencyLevel(ConsistencyLevel.EVENTUAL)
             .contentResponseOnWriteEnabled(true)
             .buildClient();
-  }
-
-  @PostConstruct
-  void postConstruct() {
     this.database = client.getDatabase("tapir");
     this.modulesContainer = database.getContainer(getModuleTableName());
     this.providerContainer = database.getContainer(getProviderTableName());
