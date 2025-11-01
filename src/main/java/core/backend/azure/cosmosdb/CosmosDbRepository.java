@@ -301,4 +301,13 @@ public class CosmosDbRepository extends TapirRepository {
             new CosmosItemRequestOptions()
     );
   }
+
+  @Override
+  public void checkHealth() throws Exception {
+    // Verify CosmosDB connectivity by reading the database
+    if (database == null) {
+      throw new IllegalStateException("CosmosDB database not initialized");
+    }
+    database.read();
+  }
 }

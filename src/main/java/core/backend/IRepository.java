@@ -12,6 +12,8 @@ import java.io.IOException;
 public interface IRepository {
   void bootstrap() throws Exception;
 
+  void checkHealth() throws Exception;
+
   PaginationDto findModules(String identifier, Integer limit, String term) throws Exception;
 
   PaginationDto findProviders(String identifier, Integer limit, String term) throws Exception;

@@ -302,4 +302,12 @@ public class DynamodbRepository extends TapirRepository {
     }
     return new PaginationDto(deployKeyPage.items());
   }
+
+  @Override
+  public void checkHealth() throws Exception {
+    // Perform a lightweight check by describing one of the tables
+    // This verifies both DynamoDB connectivity and table existence
+    dynamoDbClient.describeTable(request ->
+        request.tableName(getModuleTableName()));
+  }
 }
