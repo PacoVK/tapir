@@ -11,6 +11,8 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === added
 
+* Tapir exposes health check endpoints for monitoring and orchestration purposes
+
 === changed
 
 == 0.9.3

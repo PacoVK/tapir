@@ -91,6 +91,15 @@ Other deployment options available are:
 
 Tapir is configured via environment variables. You can learn how to set up Tapir [here](./docs/configuration.md).
 
+#### Health Checks
+
+Tapir exposes health check endpoints for monitoring and orchestration:
+
+**Endpoints:**
+- `/q/health` - Combined health status (all checks)
+- `/q/health/live` - Liveness probe (basic application is running)
+- `/q/health/ready` - Readiness probe (application + dependencies ready)
+
 ### How-to
 
 To see how to use Tapir, please read the [usage docs](./docs/usage.md).
