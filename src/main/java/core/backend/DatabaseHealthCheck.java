@@ -13,8 +13,8 @@ import org.eclipse.microprofile.health.Liveness;
 import org.eclipse.microprofile.health.Readiness;
 
 /**
- * Health check for the configured database backend
- * This readiness probe verifies that the backend is accessible and responsive.
+ * Health check for the configured database backend.
+ * This class serves as both a readiness and liveness probe, verifying that the backend is accessible and responsive.
  */
 @Readiness
 @Liveness
