@@ -126,10 +126,18 @@ public class LocalStorageRepository extends StorageRepository {
     Path testFile = baseDir.resolve(".health_check_test");
     try {
       Files.write(testFile, "test".getBytes());
-      Files.delete(testFile);
     } catch (IOException e) {
       throw new IllegalStateException(
           "Cannot write to storage directory: " + baseDir, e);
+    } finally {
+      try {
+        if (Files.exists(testFile)) {
+          Files.delete(testFile);
+        }
+      } catch (IOException deleteEx) {
+        Logger.getLogger(LocalStorageRepository.class.getName())
+            .warning("Failed to delete health check test file: " + testFile + " (" + deleteEx.getMessage() + ")");
+      }
     }
   }
 }
