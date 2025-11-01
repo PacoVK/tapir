@@ -9,6 +9,8 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[semantic version
 
 === fixes
 
+* https://github.com/PacoVK/tapir/pull/506[#493 - CosmosDB issues starting up container]
+
 === added
 
 * Tapir exposes health check endpoints for monitoring and orchestration purposes
