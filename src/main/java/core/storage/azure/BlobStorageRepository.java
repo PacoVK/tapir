@@ -92,4 +92,16 @@ public class BlobStorageRepository extends StorageRepository {
             .getBlobClient(blobName);
     blobClient.uploadFromFile(sourcePath, true);
   }
+
+  @Override
+  public void checkHealth() throws Exception {
+    // Verify Azure Blob connectivity by checking if container exists
+    if (blobContainerClient == null) {
+      throw new IllegalStateException("Azure Blob container client not initialized");
+    }
+    if (!blobContainerClient.exists()) {
+      throw new IllegalStateException(
+          "Azure Blob container does not exist: " + containerName);
+    }
+  }
 }

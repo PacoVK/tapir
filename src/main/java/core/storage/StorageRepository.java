@@ -12,6 +12,8 @@ public abstract class StorageRepository {
 
   public abstract void uploadProvider(FormData archive, String version) throws StorageException;
 
+  public abstract void checkHealth() throws Exception;
+
   protected Integer getAccessSessionDuration() {
     return ConfigProvider.getConfig().getValue(
             "registry.storage.access.session-duration", Integer.class);
