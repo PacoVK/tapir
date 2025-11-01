@@ -90,4 +90,46 @@ public class LocalStorageRepository extends StorageRepository {
       throw new StorageException(archive.getEntity().getId(), ex);
     }
   }
+
+  @Override
+  public void checkHealth() throws Exception {
+    // Verify the base directories exist and are writable
+    Path baseDir = Paths.get(BASE_RESOURCE_DIR);
+
+    if (!Files.exists(baseDir)) {
+      // Try to create it
+      Files.createDirectories(baseDir);
+    }
+
+    if (!Files.isDirectory(baseDir)) {
+      throw new IllegalStateException(
+          "Storage path is not a directory: " + baseDir);
+    }
+
+    if (!Files.isWritable(baseDir)) {
+      throw new IllegalStateException(
+          "Storage directory is not writable: " + baseDir);
+    }
+
+    // Verify module and provider directories
+    Path moduleDir = Paths.get(MODULE_RESOURCE_DIR);
+    if (!Files.exists(moduleDir)) {
+      Files.createDirectories(moduleDir);
+    }
+
+    Path providerDir = Paths.get(PROVIDER_RESOURCE_DIR);
+    if (!Files.exists(providerDir)) {
+      Files.createDirectories(providerDir);
+    }
+
+    // Test write permissions by creating and deleting a temporary file
+    Path testFile = baseDir.resolve(".health_check_test");
+    try {
+      Files.write(testFile, "test".getBytes());
+      Files.delete(testFile);
+    } catch (IOException e) {
+      throw new IllegalStateException(
+          "Cannot write to storage directory: " + baseDir, e);
+    }
+  }
 }

@@ -110,4 +110,10 @@ public class S3StorageRepository extends StorageRepository {
             .build();
     s3.putObject(putObjectRequest, pathToFile);
   }
+
+  @Override
+  public void checkHealth() throws Exception {
+    // Verify S3 connectivity by checking if the bucket exists and is accessible
+    s3.headBucket(request -> request.bucket(bucketName));
+  }
 }

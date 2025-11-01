@@ -108,6 +108,8 @@ quarkus:
     hosts: ${registry.search.elasticsearch.host}
     username: ${registry.search.elasticsearch.user}
     password: ${registry.search.elasticsearch.password}
+    health:
+      enabled: false
   http:
     auth:
       permission:
@@ -121,6 +123,7 @@ quarkus:
             # this is the path used for the local storage backend
             - /tapir/storage/*
             - /.well-known/*
+            - /q/health/*
         publish:
           policy: publish
           paths: /terraform/*
