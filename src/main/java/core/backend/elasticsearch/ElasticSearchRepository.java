@@ -382,4 +382,16 @@ String targetRequestPath = String.format("/%s/_doc/reports-%s-%s-%s-%s",
   public String getDeployKeyTableName() {
     return super.getDeployKeyTableName().toLowerCase();
   }
+
+  @Override
+  public void checkHealth() throws Exception {
+    // Perform a cluster health check to verify Elasticsearch connectivity
+    Request request = new Request(HttpMethod.GET, "/_cluster/health");
+    Response response = restClient.performRequest(request);
+    int statusCode = response.getStatusLine().getStatusCode();
+    if (statusCode >= 400) {
+      throw new RuntimeException(
+          "Elasticsearch cluster health check failed with status: " + statusCode);
+    }
+  }
 }
