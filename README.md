@@ -108,6 +108,10 @@ To see how to use Tapir, please read the [usage docs](./docs/usage.md).
 
 See [troubleshooting docs](./docs/TROUBLESHOOT.md)
 
+## Publications
+
+* [From Keycloak to Cognito: Building a Self-Hosted Terraform Registry on AWS](https://infrahouse.com/blog/2025-10-26-building-terraform-aws-registry/) - Blogpost about set up hosting Tapir on ECS with AWS Cognito - by [InfraHouse](https://infrahouse.com/) 
+
 ## Roadmap
 
 * Add more storage adapter
