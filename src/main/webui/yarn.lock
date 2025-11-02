@@ -2508,9 +2508,9 @@
   integrity sha512-kjQs65vKEXuVzXrZNJu8vREBRXG2+WY6+zq+YNqc/6vt8WZ2ma2rE2zf4si5K4s49nhpopb94Wc5JWVcMetsbg==
 
 "@types/react@^18.2.32":
-  version "18.3.24"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.24.tgz#f6a5a4c613242dfe3af0dcee2b4ec47b92d9b6bd"
-  integrity sha512-0dLEBsA1kI3OezMBF8nSsb7Nk19ZnsyE1LLhB8r27KbgU5H4pvuqZLdtE+aUkJVoXgTVuA+iLIwmZ0TuK4tx6A==
+  version "18.3.26"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.26.tgz#4c5970878d30db3d2a0bca1e4eb5f258e391bbeb"
+  integrity sha512-RFA/bURkcKzx/X9oumPG9Vp3D3JUgus/d0b67KB0t5S/raciymilkOa66olh78MUI92QLbEJevO7rvqU/kjwKA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
