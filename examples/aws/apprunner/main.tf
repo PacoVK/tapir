@@ -22,6 +22,10 @@ data "aws_region" "current" {}
 
 resource "aws_apprunner_service" "tapir" {
   service_name = "tapir"
+  health_check_configuration {
+    protocol = "HTTP"
+    path = "/q/health"
+  }
 
   source_configuration {
     image_repository {

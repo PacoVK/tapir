@@ -56,6 +56,12 @@ resource "azurerm_container_app" "container" {
       cpu    = 2
       memory = "4Gi"
 
+      liveness_probe {
+        port      = 8080
+        transport = "HTTP"
+        path      = "/q/health"
+      }
+
       env {
         name  = "BACKEND_CONFIG"
         value = "cosmosdb"
