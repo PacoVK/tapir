@@ -10,7 +10,7 @@
     <compiler-plugin.version>3.14.1</compiler-plugin.version>
     <jacoco.version>0.8.14</jacoco.version>
     <maven.compiler.release>17</maven.compiler.release>
-    <microsoft.azure.bom.version>1.3.0</microsoft.azure.bom.version>
+    <microsoft.azure.bom.version>1.3.2</microsoft.azure.bom.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
