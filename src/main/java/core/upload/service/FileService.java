@@ -56,8 +56,10 @@ public class FileService {
                 && !entry.getName().contains("MACOS")
                 && (entry.getName().endsWith(".tf")
                 || entry.getName().endsWith(".zip")
+                || entry.getName().endsWith(".exe")
                 || entry.getName().endsWith("SHA256SUMS.sig")
-                || entry.getName().endsWith("SHA256SUMS"))
+                || entry.getName().endsWith("SHA256SUMS")
+                || entry.getName().startsWith("terraform-provider-")))
         ) {
           File tempFile = createOrGetFile(entry.getName(), targetDir);
           FileOutputStream fileOutputStream = new FileOutputStream(tempFile);

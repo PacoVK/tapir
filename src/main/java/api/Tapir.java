@@ -26,7 +26,6 @@ public class Tapir {
 
   @GET
   @Path("/storage/{namespace}/{name}/{identifier}/{filename}")
-  @Produces("application/zip")
   public Response download(String namespace, String name, String identifier, String filename)
       throws ModuleNotFoundException, ProviderNotFoundException {
     String path = Paths.get(namespace, name, identifier, filename).toString();
@@ -48,8 +47,20 @@ public class Tapir {
       }
     }
 
+    // Determine content type based on file extension
+    String contentType = "application/octet-stream";
+    String lowerFilename = filename.toLowerCase();
+    if (lowerFilename.endsWith(".zip")) {
+      contentType = "application/zip";
+    } else if (lowerFilename.endsWith(".sig")) {
+      contentType = "application/pgp-signature";
+    } else if (lowerFilename.endsWith("sha256sums") || lowerFilename.endsWith("sha256sums.sig")) {
+      contentType = "text/plain";
+    }
+
     return Response
             .ok(artefact)
+            .type(contentType)
             .build();
   }
 
