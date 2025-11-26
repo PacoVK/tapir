@@ -79,13 +79,14 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findModules(String identifier, Integer limit, String term) {
     List<SqlParameter> paramList = List.of(
+        new SqlParameter("@modules", getModuleTableName()),
             new SqlParameter("@namespace", "%" + term + "%"),
             new SqlParameter("@name", "%" + term + "%"),
             new SqlParameter("@provider", "%" + term + "%")
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM c WHERE c.namespace "
-                    + "LIKE @namespace OR c.name LIKE @name OR c.provider LIKE @provider",
+            "SELECT * FROM @modules m WHERE m.namespace "
+                    + "LIKE @namespace OR m.name LIKE @name OR m.provider LIKE @provider",
             paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<Module> feedResponse = modulesContainer
@@ -103,11 +104,12 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findProviders(String identifier, Integer limit, String term) {
     List<SqlParameter> paramList = List.of(
+            new SqlParameter("@providers", getProviderTableName()),
             new SqlParameter("@namespace", "%" + term + "%"),
             new SqlParameter("@type", "%" + term + "%")
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM c WHERE c.namespace LIKE @namespace OR c.type LIKE @type",
+            "SELECT * FROM @providers p WHERE p.namespace LIKE @namespace OR p.type LIKE @type",
             paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<Provider> feedResponse = providerContainer
@@ -125,11 +127,12 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findDeployKeys(String identifier, Integer limit, String term) throws Exception {
     List<SqlParameter> paramList = List.of(
+        new SqlParameter("@deployKeys", getDeployKeyTableName()),
         new SqlParameter("@id", "%" + term + "%"),
         new SqlParameter("@key", "%" + term + "%")
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-        "SELECT * FROM c WHERE c.id LIKE @id OR c.key LIKE @key",
+        "SELECT * FROM @deployKeys p WHERE p.id LIKE @id OR p.key LIKE @key",
         paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<DeployKey> feedResponse = deployKeysContainer
