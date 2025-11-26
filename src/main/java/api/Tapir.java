@@ -32,10 +32,11 @@ public class Tapir {
     File artefact;
     if (identifier.matches(".*\\d.*")) {
       LOGGER.fine("Identifier is a version string, assume user requested a provider " + identifier);
-      LOGGER.info("Requested the download of provider " + path);
+      LOGGER.info("Requested the download of provider file: " + path);
       path = LocalStorageRepository.PROVIDER_RESOURCE_DIR + path;
       artefact = new File(path);
       if (!artefact.exists()) {
+        LOGGER.warning("Provider file not found: " + path + " (requested: " + filename + ")");
         throw new ProviderNotFoundException(path);
       }
     } else {
