@@ -4,7 +4,7 @@ FROM golang:alpine3.22 as TERRAFORM_DOCS
 
 RUN go install github.com/terraform-docs/terraform-docs@v0.20.0
 
-FROM amazoncorretto:21-alpine3.22-jdk
+FROM amazoncorretto:25-alpine3.22-jdk
 
 RUN mkdir -p /home/jboss/.cache/trivy \
     && chmod a+wr /home/jboss/.cache/trivy
