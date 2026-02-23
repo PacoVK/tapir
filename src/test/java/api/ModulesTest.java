@@ -12,6 +12,7 @@ import static io.restassured.RestAssured.given;
 import java.util.Set;
 import java.util.TreeSet;
 import static org.hamcrest.CoreMatchers.is;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,6 +22,8 @@ import static org.mockito.Mockito.when;
 @TestHTTPEndpoint(Modules.class)
 class ModulesTest {
 
+  static String accessToken;
+
   final Module fakeModule = new Module("foo", "bar", "baz", "0.0.0");
 
   @InjectMock
@@ -28,6 +31,20 @@ class ModulesTest {
 
   @InjectMock
   S3StorageRepository storageService;
+
+  @BeforeAll
+  static void obtainToken() {
+    accessToken = given()
+            .formParam("grant_type", "password")
+            .formParam("client_id", "tapir-cli")
+            .formParam("username", "tapir-test")
+            .formParam("password", "test")
+            .when()
+            .post("http://localhost:8089/realms/tapir/protocol/openid-connect/token")
+            .then()
+            .statusCode(200)
+            .extract().path("access_token");
+  }
 
   @BeforeEach
   void setUp() {
@@ -49,6 +66,7 @@ class ModulesTest {
     );
     when(moduleService.getModuleVersions(any())).thenReturn(fakeModule.getVersions());
     given().
+            header("Authorization", "Bearer " + accessToken).
             when().get(fakeUrl)
             .then()
             .statusCode(200)
@@ -65,6 +83,7 @@ class ModulesTest {
     );
     when(storageService.getDownloadUrlForArtifact(any())).thenReturn("https://fakeurl");
     given().
+            header("Authorization", "Bearer " + accessToken).
             when().get(fakeUrl)
             .then()
             .statusCode(204)

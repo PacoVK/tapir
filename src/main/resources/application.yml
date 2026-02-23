@@ -20,6 +20,12 @@ registry:
       givenName: ${AUTH_TOKEN_ATTRIBUTE_GIVEN_NAME:given_name}
       familyName: ${AUTH_TOKEN_ATTRIBUTE_FAMILY_NAME:family_name}
       preferredUsername: ${AUTH_TOKEN_ATTRIBUTE_PREFERRED_USERNAME:preferred_username}
+    login:
+      enabled: ${LOGIN_ENABLED:false}
+      client-id: ${LOGIN_CLIENT_ID:tapir-cli}
+      ports:
+        min: ${LOGIN_PORTS_MIN:10000}
+        max: ${LOGIN_PORTS_MAX:10010}
   proxy:
     enabled: ${PROXY_FORWARDED:false}
     forwarded-header: ${PROXY_FORWARDED_HEADER:X-ORIGINAL-HOST}
@@ -101,6 +107,13 @@ quarkus:
     end-session-path: ${registry.auth.end-session-path}
     authorization-path: ${registry.auth.auth-path}
     provider: ${registry.auth.provider}
+    cli:
+      auth-server-url: ${registry.auth.endpoint}
+      application-type: service
+      token:
+        audience: ${registry.auth.login.client-id}
+      roles:
+        source: ${registry.auth.role-source}
   s3:
     aws:
       region: ${registry.storage.s3.bucket.region}
@@ -124,6 +137,10 @@ quarkus:
             - /tapir/storage/*
             - /.well-known/*
             - /q/health/*
+        download:
+          policy: download
+          paths: /terraform/*
+          methods: GET
         publish:
           policy: publish
           paths: /terraform/*
@@ -161,6 +178,9 @@ quarkus:
    registry:
     hostname: "127.0.0.1"
     port: 8443
+    auth:
+      login:
+        enabled: true
    quarkus:
      dynamodb:
        endpoint-override: http://localhost:4566
@@ -175,6 +195,12 @@ quarkus:
      s3:
        endpoint-override: http://localhost:4566
        path-style-access: true
+       aws:
+         credentials:
+           type: static
+           static-provider:
+             access-key-id: test
+             secret-access-key: test
      quinoa:
        dev-server:
          port: 3000
@@ -193,6 +219,9 @@ quarkus:
   registry:
     hostname: "127.0.0.1"
     port: 8443
+    auth:
+      login:
+        enabled: true
   quarkus:
     dynamodb:
       endpoint-override: http://localhost:4566
@@ -207,3 +236,9 @@ quarkus:
     s3:
       endpoint-override: http://localhost:4566
       path-style-access: true
+      aws:
+        credentials:
+          type: static
+          static-provider:
+            access-key-id: test
+            secret-access-key: test
