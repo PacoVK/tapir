@@ -156,6 +156,9 @@ Thanks go to these wonderful people ([emoji key](https://allcontributors.org/doc
       <td align="center" valign="top" width="14.28%"><a href="https://tech.margula.pl/"><img src="https://avatars.githubusercontent.com/u/3201201?v=4?s=100" width="100px;" alt="Michał Margula"/><br /><sub><b>Michał Margula</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/commits?author=alchemyx" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kimxogus"><img src="https://avatars.githubusercontent.com/u/11684628?v=4?s=100" width="100px;" alt="Taehyun Kim"/><br /><sub><b>Taehyun Kim</b></sub></a><br /><a href="#ideas-kimxogus" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mgabathuler"><img src="https://avatars.githubusercontent.com/u/6018698?v=4?s=100" width="100px;" alt="Matthias"/><br /><sub><b>Matthias</b></sub></a><br /><a href="https://github.com/PacoVK/tapir/commits?author=mgabathuler" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
