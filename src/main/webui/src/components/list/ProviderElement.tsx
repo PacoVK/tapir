@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Avatar,
-  Chip,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Chip, Grid, Paper, Stack, Typography } from "@mui/material";
 import BuildCircle from "@mui/icons-material/BuildCircle";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { formatDate } from "../../util/DateUtil";
