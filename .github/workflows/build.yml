@@ -19,8 +19,8 @@ jobs:
       - name: Wait for Azurite storage init
         run: |
           for i in $(seq 1 30); do
-            STATUS=$(docker inspect --format='{{.State.Status}}' "$(docker compose ps -q azurite_storage_init)" 2>/dev/null)
-            [ "$STATUS" = "exited" ] && break
+            STATUS=$(docker inspect --format='{{.State.Status}}' "$(docker compose ps -q azurite_storage_init)" 2>/dev/null || true)
+            if [ "$STATUS" = "exited" ]; then break; fi
             sleep 1
           done
       - name: Wait for Keycloak
