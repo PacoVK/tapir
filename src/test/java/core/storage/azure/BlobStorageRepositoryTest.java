@@ -40,6 +40,9 @@ class BlobStorageRepositoryTest extends AbstractStorageTest {
             .connectionString(azureBlobConnectionString)
             .buildClient();
     this.blobContainerClient = client.getBlobContainerClient(containerName);
+    if (!blobContainerClient.exists()) {
+      blobContainerClient.create();
+    }
   }
 
   @AfterEach
