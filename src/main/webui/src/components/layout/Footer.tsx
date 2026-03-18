@@ -37,7 +37,7 @@ const Footer = () => {
       >
         <Container maxWidth="sm">
           <Typography variant="body1">
-            {`Terraform Private Registry v${process.env.REACT_APP_VERSION}`}
+            {`Terraform Private Registry v${import.meta.env.VITE_VERSION}`}
           </Typography>
           <SubInfo />
         </Container>

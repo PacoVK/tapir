@@ -21,7 +21,7 @@ const Header = () => {
   const openTapirInNewTab = () => {
     handleClose();
     window.open(
-      process.env.REACT_APP_TAPIR_DOCS,
+      import.meta.env.VITE_TAPIR_DOCS,
       "_blank",
       "noopener,noreferrer",
     );
