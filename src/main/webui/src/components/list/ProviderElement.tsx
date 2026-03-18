@@ -2,7 +2,7 @@ import React from "react";
 import {
   Avatar,
   Chip,
-  Grid2 as Grid,
+  Grid,
   Paper,
   Stack,
   Typography,
@@ -12,7 +12,7 @@ import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { formatDate } from "../../util/DateUtil";
 import InfoIcon from "@mui/icons-material/Info";
 import { Provider } from "../../types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const ProviderElement = ({ provider }: { provider: Provider }) => {
   return (

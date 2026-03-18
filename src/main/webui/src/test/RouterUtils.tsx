@@ -1,6 +1,6 @@
 import React, { isValidElement } from "react";
 import { render } from "@testing-library/react";
-import { RouterProvider, createMemoryRouter } from "react-router-dom";
+import { RouterProvider, createMemoryRouter } from "react-router";
 import { UserProvider } from "../components/context/UserContext";
 import { User } from "../types";
 import { createUser } from "./mocks/fixtures";

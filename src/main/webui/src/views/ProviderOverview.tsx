@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import {
   CircularProgress,
-  Grid2 as Grid,
+  Grid,
   List,
   Stack,
   TextField,
