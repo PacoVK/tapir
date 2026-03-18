@@ -15,9 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Start containers
-        run: docker compose -f "docker-compose.yml" up -d localstack opensearch-node1 azurite azurite_storage_init keycloak
-      - name: Wait for Azurite storage init
-        run: docker wait $(docker compose ps -aq azurite_storage_init)
+        run: docker compose -f "docker-compose.yml" up -d localstack opensearch-node1 azurite keycloak
       - name: Wait for Keycloak
         run: |
           for i in $(seq 1 30); do
