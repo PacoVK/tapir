@@ -16,9 +16,6 @@ export default defineConfig({
       "/q": "http://localhost:8080",
     },
   },
-  build: {
-    outDir: "build",
-  },
   test: {
     globals: true,
     environment: "jsdom",
