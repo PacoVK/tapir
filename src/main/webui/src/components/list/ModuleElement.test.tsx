@@ -1,22 +1,42 @@
+import { screen } from "@testing-library/react";
+import { axe } from "jest-axe";
 import ModuleElement from "./ModuleElement";
-import { ProviderType } from "../../types";
 import { renderWithRouter } from "../../test/RouterUtils";
+import { createModule } from "../../test/mocks/fixtures";
 
-describe("<ModuleElement /> spec", () => {
-  it("renders the ModuleElement", () => {
-    const view = renderWithRouter(
-      <ModuleElement
-        module={{
-          id: "foo/bar/baz",
-          namespace: "foo",
-          name: "bar",
-          provider: ProviderType.AWS,
-          downloads: 0,
-          versions: [{ version: "1.0" }],
-          published_at: "2021-10-10T10:10:10.000Z",
-        }}
-      />,
+describe("<ModuleElement />", () => {
+  it("renders module name as namespace/name", () => {
+    renderWithRouter(<ModuleElement module={createModule()} />);
+    expect(screen.getByText("foo/bar")).toBeInTheDocument();
+  });
+
+  it("renders total downloads chip", () => {
+    renderWithRouter(<ModuleElement module={createModule()} />);
+    expect(screen.getByText("Total downloads: 42")).toBeInTheDocument();
+  });
+
+  it("renders latest version chip", () => {
+    renderWithRouter(<ModuleElement module={createModule()} />);
+    expect(screen.getByText("Latest version: 1.0.0")).toBeInTheDocument();
+  });
+
+  it("renders last published at chip", () => {
+    renderWithRouter(<ModuleElement module={createModule()} />);
+    expect(
+      screen.getByText("Last published at: 15-01-2024"),
+    ).toBeInTheDocument();
+  });
+
+  it("renders provider logo image", () => {
+    renderWithRouter(<ModuleElement module={createModule()} />);
+    expect(screen.getByAltText("Provider logo")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    const { container } = renderWithRouter(
+      <ModuleElement module={createModule()} />,
     );
-    expect(view).toMatchSnapshot();
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

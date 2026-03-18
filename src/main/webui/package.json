@@ -2,16 +2,13 @@
   "name": "webapp",
   "version": "0.9.4",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^5.0.0",
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
-    "@testing-library/jest-dom": "^6.1.3",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/user-event": "^14.0.0",
-    "@types/jest": "^30.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^18.2.32",
     "@types/react-dom": "^18.2.14",
@@ -20,28 +17,17 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
-    "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.6.1",
     "typescript": "^5.2.2",
     "web-vitals": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "TZ=UTC react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "TZ=UTC vitest run",
+    "test:watch": "TZ=UTC vitest",
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "/node_modules/(?!(react-syntax-highlighter)/)"
-    ]
   },
   "browserslist": {
     "production": [
@@ -56,9 +42,18 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/dom": "^10.1.0",
-    "prettier": "3.6.2"
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.0.0",
+    "@types/jest-axe": "^3.5.9",
+    "@vitejs/plugin-react": "^6.0.1",
+    "jest-axe": "^9.0.0",
+    "jsdom": "^29.0.0",
+    "msw": "^2.7.0",
+    "prettier": "3.6.2",
+    "vite": "^8.0.0",
+    "vitest": "^4.1.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
