@@ -36,6 +36,9 @@ nb-configuration.xml
 *.orig
 *.rej
 
+# Claude Code
+.claude
+
 # Local environment
 dev/certs
 src/main/resources/META-INF/resources/*
