@@ -12,7 +12,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Box, Stack } from "@mui/material";
 import NavigationDrawer from "./components/nav/NavigationDrawer";
 import { UserProvider } from "./components/context/UserContext";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 
 const fetchUser = async () => {
   const response = await fetch("/tapir/user");

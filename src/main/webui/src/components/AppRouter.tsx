@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 import ModuleOverview from "../views/ModuleOverview";
 import ModuleDetails from "../views/ModuleDetails";
 import ProviderOverview from "../views/ProviderOverview";

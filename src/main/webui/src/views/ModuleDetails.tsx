@@ -15,7 +15,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import InfoIcon from "@mui/icons-material/Info";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { formatDate } from "../util/DateUtil";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router";
 import ModuleAnalysisTab from "../components/tab/ModuleAnalysisTab";
 
 const ModuleDetails = () => {

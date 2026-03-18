@@ -7,7 +7,7 @@ import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import InfoIcon from "@mui/icons-material/Info";
 import { getProviderLogo } from "../../util/LogoUtil";
 import { formatDate } from "../../util/DateUtil";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const ModuleElement = ({ module }: { module: Module }) => {
   return (

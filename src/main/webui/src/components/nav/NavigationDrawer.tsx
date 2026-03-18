@@ -13,7 +13,7 @@ import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import AppsIcon from "@mui/icons-material/Apps";
 import KeyIcon from "@mui/icons-material/Key";
 import { useUserContext } from "../context/UserContext";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const NavigationDrawer = () => {
   const { isAdmin } = useUserContext();
