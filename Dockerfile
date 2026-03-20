@@ -1,4 +1,4 @@
-FROM aquasec/trivy:0.67.2 as SECURITY_SCANNER
+FROM aquasec/trivy:0.69.3 as SECURITY_SCANNER
 
 FROM golang:alpine3.22 as TERRAFORM_DOCS
 
