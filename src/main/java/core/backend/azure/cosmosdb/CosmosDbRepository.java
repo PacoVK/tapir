@@ -79,13 +79,13 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findModules(String identifier, Integer limit, String term) {
     List<SqlParameter> paramList = List.of(
-            new SqlParameter("@namespace", "%" + term + "%"),
-            new SqlParameter("@name", "%" + term + "%"),
-            new SqlParameter("@provider", "%" + term + "%")
+            new SqlParameter("@namespace", term),
+            new SqlParameter("@name", term),
+            new SqlParameter("@provider", term)
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM c WHERE c.namespace "
-                    + "LIKE @namespace OR c.name LIKE @name OR c.provider LIKE @provider",
+            "SELECT * FROM c WHERE CONTAINS(c.namespace, @namespace) "
+                    + "OR CONTAINS(c.name, @name) OR CONTAINS(c.provider, @provider)",
             paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<Module> feedResponse = modulesContainer
@@ -103,11 +103,11 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findProviders(String identifier, Integer limit, String term) {
     List<SqlParameter> paramList = List.of(
-            new SqlParameter("@namespace", "%" + term + "%"),
-            new SqlParameter("@type", "%" + term + "%")
+            new SqlParameter("@namespace", term),
+            new SqlParameter("@type", term)
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-            "SELECT * FROM c WHERE c.namespace LIKE @namespace OR c.type LIKE @type",
+            "SELECT * FROM c WHERE CONTAINS(c.namespace, @namespace) OR CONTAINS(c.type, @type)",
             paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<Provider> feedResponse = providerContainer
@@ -125,11 +125,11 @@ public class CosmosDbRepository extends TapirRepository {
   @Override
   public PaginationDto findDeployKeys(String identifier, Integer limit, String term) throws Exception {
     List<SqlParameter> paramList = List.of(
-        new SqlParameter("@id", "%" + term + "%"),
-        new SqlParameter("@key", "%" + term + "%")
+        new SqlParameter("@id", term),
+        new SqlParameter("@key", term)
     );
     SqlQuerySpec querySpec = new SqlQuerySpec(
-        "SELECT * FROM c WHERE c.id LIKE @id OR c.key LIKE @key",
+        "SELECT * FROM c WHERE CONTAINS(c.id, @id) OR CONTAINS(c.key, @key)",
         paramList);
     String continuationToken = identifier.isEmpty() ? null : identifier;
     FeedResponse<DeployKey> feedResponse = deployKeysContainer
