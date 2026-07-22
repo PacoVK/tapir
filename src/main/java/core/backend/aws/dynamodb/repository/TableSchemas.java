@@ -4,6 +4,7 @@ import core.tapir.DeployKey;
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 
 import core.backend.aws.dynamodb.converter.ArtifactVersionsConverter;
+import core.backend.aws.dynamodb.converter.ModuleProviderDependenciesConverter;
 import core.backend.aws.dynamodb.converter.ProviderPlatformsConverter;
 import core.backend.aws.dynamodb.converter.SecurityReportConverter;
 import core.backend.aws.dynamodb.converter.TerraformDocumentationConverter;
@@ -12,6 +13,7 @@ import core.terraform.Provider;
 import extensions.core.Report;
 import extensions.docs.report.TerraformDocumentation;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -69,6 +71,10 @@ public class TableSchemas {
                   .addAttribute(Instant.class, a -> a.name("published_at")
                           .getter(Module::getPublished_at)
                           .setter(Module::setPublished_at))
+                  .addAttribute(List.class, a -> a.name("providerDependencies")
+                          .getter(Module::getProviderDependencies)
+                          .setter(Module::setProviderDependencies)
+                          .attributeConverter((AttributeConverter) new ModuleProviderDependenciesConverter()))
                   .build();
 
   static final TableSchema<Report> reportsTableSchema =

@@ -87,6 +87,15 @@ public class DynamodbRepository extends TapirRepository {
   }
 
   @Override
+  public void updateModuleProviderDependencies(Module module) {
+    Module existingModule = modulesTable.getItem(module);
+    if (existingModule != null) {
+      existingModule.setProviderDependencies(module.getProviderDependencies());
+      modulesTable.updateItem(existingModule);
+    }
+  }
+
+  @Override
   public void ingestProviderData(Provider provider) {
     Provider providerToIngest;
     Provider existingProvider = providerTable.getItem(provider);

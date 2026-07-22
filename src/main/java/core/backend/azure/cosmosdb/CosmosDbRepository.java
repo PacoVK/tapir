@@ -176,6 +176,25 @@ public class CosmosDbRepository extends TapirRepository {
   }
 
   @Override
+  public void updateModuleProviderDependencies(Module module) {
+    try {
+      Module existingModule = modulesContainer.readItem(
+          module.getId(),
+          new PartitionKey(module.getId()),
+          Module.class
+      ).getItem();
+      existingModule.setProviderDependencies(module.getProviderDependencies());
+      modulesContainer.upsertItem(
+          existingModule,
+          new PartitionKey(module.getId()),
+          new CosmosItemRequestOptions()
+      );
+    } catch (NotFoundException e) {
+      // Module doesn't exist yet, nothing to update
+    }
+  }
+
+  @Override
   public void ingestProviderData(Provider provider) {
     Provider providerToIngest;
     try {

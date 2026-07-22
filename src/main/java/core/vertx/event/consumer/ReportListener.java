@@ -2,6 +2,7 @@ package core.vertx.event.consumer;
 
 import core.backend.TapirRepository;
 import core.terraform.Module;
+import core.terraform.Module.ModuleProviderDependency;
 import core.upload.FormData;
 import extensions.core.Report;
 import extensions.docs.report.TerraformDocumentation;
@@ -12,6 +13,7 @@ import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -52,6 +54,7 @@ public class ReportListener {
     report.setSecurityReport(securityReport);
     report.setDocumentation(documentation);
     eventBus.requestAndForget("module.report.finished", report);
+    updateModuleProviderDependencies(module, documentation);
     return "ok";
   }
 
@@ -63,5 +66,20 @@ public class ReportListener {
     );
     tapirRepository.ingestSecurityScanResult(report);
     return "ok";
+  }
+
+  private void updateModuleProviderDependencies(Module module, TerraformDocumentation documentation) throws Exception {
+    if (documentation == null || documentation.getProviders() == null || documentation.getProviders().isEmpty()) {
+      return;
+    }
+    List<ModuleProviderDependency> deps = new ArrayList<>();
+    for (TerraformDocumentation.Provider docProvider : documentation.getProviders()) {
+      ModuleProviderDependency dep = new ModuleProviderDependency();
+      dep.setName(docProvider.getName());
+      dep.setVersion(docProvider.getVersion());
+      deps.add(dep);
+    }
+    module.setProviderDependencies(deps);
+    tapirRepository.updateModuleProviderDependencies(module);
   }
 }
