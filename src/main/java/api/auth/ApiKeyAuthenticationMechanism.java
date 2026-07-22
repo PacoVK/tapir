@@ -84,12 +84,24 @@ public class ApiKeyAuthenticationMechanism implements HttpAuthenticationMechanis
     return deployKeyService.getDeployKeyByValue(apiKeyHeader);
   }
   private boolean validateKeyByRequestPath(DeployKey key, String requestPath) {
-    String resourceId = requestPath.split("/v1/")[1];
-    String[] split = resourceId.split("/");
+    String[] parts = requestPath.split("/v1/");
+    if (parts.length < 2) {
+      LOGGER.warning("Invalid request path format (missing /v1/): " + requestPath);
+      return false;
+    }
+    String[] split = parts[1].split("/");
     if (requestPath.contains("modules")) {
+      if (split.length < 3) {
+        LOGGER.warning("Invalid module path format: " + requestPath);
+        return false;
+      }
       Module module = new Module(split[0], split[1], split[2]);
       return key.ValidForModule(module);
     } else {
+      if (split.length < 2) {
+        LOGGER.warning("Invalid provider path format: " + requestPath);
+        return false;
+      }
       Provider provider = new Provider(split[0], split[1]);
       return key.ValidForProvider(provider);
     }
