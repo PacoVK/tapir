@@ -15,6 +15,14 @@ registry:
     auth-path: ${AUTH_PATH}
     role-source: ${AUTH_ROLE_SOURCE:accesstoken}
     end-session-path: ${END_SESSION_PATH:/protocol/openid-connect/logout}
+    # Microsoft Entra ID (Azure AD) configuration:
+    # When using AUTH_PROVIDER=microsoft, set these additional environment variables:
+    #   QUARKUS_OIDC_TOKEN_CUSTOMIZER_NAME=azure-access-token-customizer
+    #   QUARKUS_OIDC_ROLES_ROLE_CLAIM_PATH=roles
+    #   QUARKUS_OIDC_ROLES_SOURCE=idtoken
+    #   QUARKUS_OIDC_AUTHENTICATION_FORCE_REDIRECT_HTTPS_SCHEME=true
+    #   QUARKUS_OIDC_TOKEN_AUDIENCE=api://<client-id>
+    # The AUTH_ENDPOINT should be: https://login.microsoftonline.com/<tenant-id>/v2.0/
     token-attributes:
       email: ${AUTH_TOKEN_ATTRIBUTE_EMAIL:email}
       givenName: ${AUTH_TOKEN_ATTRIBUTE_GIVEN_NAME:given_name}
