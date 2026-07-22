@@ -38,6 +38,8 @@ public interface IRepository {
 
   DeployKey getDeployKeyByValue(String value) throws DeployKeyNotFoundException;
 
+  void updateModuleProviderDependencies(Module module) throws Exception;
+
   void saveDeployKey(DeployKey deployKey) throws Exception;
 
   void updateDeployKey(DeployKey deployKey) throws Exception;

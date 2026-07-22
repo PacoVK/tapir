@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import core.tapir.CoreEntity;
 import jakarta.validation.constraints.NotEmpty;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -38,6 +39,7 @@ public class Module extends CoreEntity {
   private String provider;
   private Instant published_at;
   private Integer downloads = 0;
+  private List<ModuleProviderDependency> providerDependencies;
 
   @JsonIgnore
   public String getCurrentVersion() {
@@ -104,6 +106,45 @@ public class Module extends CoreEntity {
     this.downloads = downloads;
   }
 
+  public List<ModuleProviderDependency> getProviderDependencies() {
+    return providerDependencies;
+  }
+
+  public void setProviderDependencies(List<ModuleProviderDependency> providerDependencies) {
+    this.providerDependencies = providerDependencies;
+  }
+
+  public static class ModuleProviderDependency {
+    private String name;
+    private String source;
+    private String version;
+
+    public ModuleProviderDependency() {}
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public String getSource() {
+      return source;
+    }
+
+    public void setSource(String source) {
+      this.source = source;
+    }
+
+    public String getVersion() {
+      return version;
+    }
+
+    public void setVersion(String version) {
+      this.version = version;
+    }
+  }
 }
 
 

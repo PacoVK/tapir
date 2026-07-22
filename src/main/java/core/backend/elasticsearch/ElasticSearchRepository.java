@@ -166,6 +166,27 @@ public class ElasticSearchRepository extends TapirRepository {
   }
 
   @Override
+  public void updateModuleProviderDependencies(Module module) throws IOException {
+    String docId = String.format("%s-%s-%s", module.getNamespace(), module.getName(), module.getProvider());
+    try {
+      Request request = new Request(
+          HttpMethod.POST,
+          String.format("/%s/_update/%s?refresh=wait_for", moduleIndexName, docId)
+      );
+      JsonObject doc = new JsonObject();
+      if (module.getProviderDependencies() != null) {
+        doc.put("providerDependencies",
+            new JsonObject(io.vertx.core.json.Json.encode(module.getProviderDependencies())));
+      }
+      String payload = JsonObject.of("doc", doc).toString();
+      request.setJsonEntity(payload);
+      restClient.performRequest(request);
+    } catch (ResponseException e) {
+      // Module doesn't exist yet, nothing to update
+    }
+  }
+
+  @Override
   public void ingestProviderData(Provider provider) throws IOException {
     Request request = new Request(
             HttpMethod.POST,
