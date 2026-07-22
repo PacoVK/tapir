@@ -173,6 +173,7 @@ quarkus:
       origins: ${registry.cors.origins}
       methods: "*"
       headers: "*"
+      access-control-allow-credentials: true
 
 "%dev":
    registry:

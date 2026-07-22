@@ -23,7 +23,7 @@ public class SpaRouter {
       "/tapir/",
       "/search/",
       "/reports/",
-      "/management/deploykey/",
+      "/management/deploykey",
       "/.well-known/"
   };
   private static final Predicate<String> FILE_NAME_PREDICATE =
