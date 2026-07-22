@@ -76,24 +76,56 @@ public class DeployKey extends CoreEntity {
     return scope;
   }
 
+  public void setScope(DeployKeyScope scope) {
+    this.scope = scope;
+  }
+
   public String getResourceType() {
     return resourceType;
+  }
+
+  public void setResourceType(String resourceType) {
+    this.resourceType = resourceType;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
   }
 
   public String getNamespace() {
     return namespace;
   }
 
+  public void setNamespace(String namespace) {
+    this.namespace = namespace;
+  }
+
   public String getProvider() {
     return provider;
+  }
+
+  public void setProvider(String provider) {
+    this.provider = provider;
   }
 
   public String getName() {
     return name;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public String getType() {
     return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
   public boolean ValidForModule(Module module) {

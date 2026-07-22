@@ -1,6 +1,7 @@
 package core.backend.aws.dynamodb.repository;
 
 import core.tapir.DeployKey;
+import core.tapir.DeployKeyScope;
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 
 import core.backend.aws.dynamodb.converter.ArtifactVersionsConverter;
@@ -109,6 +110,27 @@ public class TableSchemas {
                           .getter(DeployKey::getId)
                           .setter(DeployKey::setId)
                           .tags(primaryPartitionKey()))
+                  .addAttribute(String.class, a -> a.name("resourceType")
+                          .getter(DeployKey::getResourceType)
+                          .setter(DeployKey::setResourceType))
+                  .addAttribute(String.class, a -> a.name("scope")
+                          .getter(k -> k.getScope() != null ? k.getScope().name() : null)
+                          .setter((k, v) -> k.setScope(v != null ? DeployKeyScope.valueOf(v) : null)))
+                  .addAttribute(String.class, a -> a.name("source")
+                          .getter(DeployKey::getSource)
+                          .setter(DeployKey::setSource))
+                  .addAttribute(String.class, a -> a.name("namespace")
+                          .getter(DeployKey::getNamespace)
+                          .setter(DeployKey::setNamespace))
+                  .addAttribute(String.class, a -> a.name("provider")
+                          .getter(DeployKey::getProvider)
+                          .setter(DeployKey::setProvider))
+                  .addAttribute(String.class, a -> a.name("name")
+                          .getter(DeployKey::getName)
+                          .setter(DeployKey::setName))
+                  .addAttribute(String.class, a -> a.name("type")
+                          .getter(DeployKey::getType)
+                          .setter(DeployKey::setType))
                   .addAttribute(String.class, a -> a.name("key")
                           .getter(DeployKey::getKey)
                           .setter(DeployKey::setKey))
